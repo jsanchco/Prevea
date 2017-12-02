@@ -1,0 +1,150 @@
+﻿@model Document
+
+@{
+    ViewBag.Title = "AddDocumentWithParent";
+}
+
+<script>
+    AddDocumentWithParent.init("@Model.Id", "@Model.AreaId");
+</script>
+
+<div  class="row" id="pageAddDocumentWithParent" style="margin: 8px">
+    
+    <div class="row"><H1>Biblioteca</H1></div><br />
+
+    <div class="row">
+        <div class="col-sm-12">
+            <ol class="breadcrumb bc-2">
+                <li class="active">
+                    <a id="br-documents" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                        <i class="icon-book"></i>
+                        Documentos
+                    </a>
+                </li>
+                <li class="active">
+                    <a id="br-document-detailDocument" onclick="AddDocumentWithParent.goToDetailDocument()" style="cursor: pointer;">
+                        Detalle Documento
+                    </a>
+                </li>
+                <li class="active">
+                    <a id="br-document-addDocumentWithParent" onclick="AddDocumentWithParent.goToAddDocumentWithParent()" style="cursor: pointer;">
+                        <strong>Agregar Documento</strong>
+                    </a>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="tile-stats tile-blue">
+
+                <div class="num">@Model.Name</div>
+
+                <h3>@Model.Description</h3>
+                <p>@Model.Observations</p>
+
+            </div>
+
+        </div>
+    </div>
+
+    @if (ViewBag.Error != null)
+    {
+        <div id="errorFromBack" class="alert alert-danger alert-dismissable" style="">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <ul>
+                @foreach (var error in ViewBag.Error)
+                {
+                    <li>
+                        @error
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+
+    <div id="errorFromFront" class="alert alert-danger alert-dismissable" style="display: none">
+    </div>
+
+
+    @if (ViewBag.Error == null)
+    {
+        <div class="well well-sm" id="information">
+            <h4>Por favor rellena los datos del documento</h4>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <blockquote class="blockquote-default">
+                @using (Ajax.BeginForm("SaveDocumentWithParent", "Document", null, new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    UpdateTargetId = "framePpal"
+                }, new {id = "formAddDocumentWithParent"}))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-sm-12 control-label">Observaciones</label>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                @Html.TextAreaFor(model => model.Observations, new {@id = "textAreaObservations", @class = "form-control autogrow", style = "width:100%", placeholder = "Observaciones"})
+                            </div>
+                        </div>
+                    </div>
+
+                    <br/>
+
+                    <div class="row">
+                        <div class="col-sm-4">
+
+                            @(Html.Kendo().Upload()
+                                  .Name("files")
+                                  .HtmlAttributes(new {accept = ".doc,.docx,.pdf,.xls,.xlsx"})
+                                  .Multiple(false)
+                                  .Messages(m => m.Select("Seleccionar archivo"))
+                                  .Async(async => async
+                                      .Save("SaveFile", "Document")
+                                  )
+                                  .Events(c => c
+                                      .Upload("AddDocumentWithParent.onUpload")
+                                      .Success("AddDocumentWithParent.onSuccess")
+                                  )
+                                  )
+
+                        </div>
+                    </div>
+
+                    <br/>
+                    <br/>
+                    <br/>
+
+
+                    <div class="form-actions">
+
+                        @Html.HiddenFor(model => model.DocumentParentId)
+                        @Html.HiddenFor(model => model.Description)
+
+                        <input type="submit" id="btnValidate" value="Guardar" class="btn btn-prevea btn"/>
+                        <input type="button" id="btnCancel" value="Cancelar" class="btn"/>
+                    </div>
+
+                }
+
+            </blockquote>
+
+        </div>
+    </div>
+
+</div>
+
+<br />

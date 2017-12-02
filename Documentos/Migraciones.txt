@@ -1,0 +1,89 @@
+﻿MIGRACIONES
+***********
+
+1º enable-migrations -ContextProjectName Prevea.Repository -StartUpProjectName Prevea.ConsoleTestModel -ContextTypeName Prevea.Repository.Repository.Context -Migrations:Migrations
+
+2º Sobreescribir Configuration con ...
+
+namespace Prevea.ConsoleTestModel.Migrations
+{
+    #region Using
+
+    using System.Collections.Generic;
+    using Model.Model;
+    using System;
+    using System.Data.Entity.Migrations;
+
+    #endregion
+
+    internal sealed class Configuration : DbMigrationsConfiguration<Repository.Repository.Context>
+    {
+        public Configuration()
+        {
+            AutomaticMigrationsEnabled = true;
+            MigrationsDirectory = @"Migrations";
+        }
+
+        protected override void Seed(Repository.Repository.Context context)
+        {
+            var users = new List<User>
+            {
+                new User { FirstName = "Jesús", LastName = "Sánchez", Initials = "JSC", Email = "jsanchco@gmail.com", Nick = "jsanchco", Password = "123456", Guid = Guid.NewGuid(), DNI = "50963841G" },
+                new User { FirstName = "Juan Manuel", LastName = "Carrasco Martínez", Initials = "JMCM", Email = "jmcarrasco@preveaspa.com", Nick = "jmcarrasco", Password = "123456", Guid = Guid.NewGuid(), DNI = "1899945P"},
+                new User { FirstName = "Virgilio", LastName = "Carrasco Martínez", Initials = "VCM", Email = "vcarrasco@preveaspa.com", Nick = "vcarrasco", Password = "123456", Guid = Guid.NewGuid(), DNI = "1899946P"},
+            };
+            users.ForEach(p => context.Users.AddOrUpdate(s => s.Id, p));
+            context.SaveChanges();
+
+            var roles = new List<Role>
+            {
+                new Role { Name = "SuperAdmin"},
+                new Role { Name = "Admin"},
+                new Role { Name = "Library"},
+                new Role { Name = "Validate"}
+            };
+            roles.ForEach(p => context.Roles.AddOrUpdate(s => s.Id, p));
+            context.SaveChanges();
+
+            var userroles = new List<UserRole>
+            {
+                new UserRole { UserId = 1, RoleId = 1 },
+                new UserRole { UserId = 2, RoleId = 4 },
+                new UserRole { UserId = 1, RoleId = 3 },
+                new UserRole { UserId = 1, RoleId = 4 },
+                new UserRole { UserId = 3, RoleId = 3 }
+            };
+            userroles.ForEach(p => context.UserRoles.AddOrUpdate(s => s.Id, p));
+            context.SaveChanges();
+
+            var areas = new List<LibraryArea>
+            {
+                new LibraryArea { Name = "ADM", Description = "Administración" },
+                new LibraryArea { Name = "FOR", Description = "Formación" },
+                new LibraryArea { Name = "TEC", Description = "Técnicas" },
+                new LibraryArea { Name = "MET", Description = "Medicina trabajo" },
+                new LibraryArea { Name = "COM", Description = "Comercial" }
+            };
+            areas.ForEach(p => context.LibraryAreas.AddOrUpdate(s => s.Id, p));
+            context.SaveChanges();
+
+            var designations = new List<LibraryDesignation>
+            {
+                new LibraryDesignation { Name = "ANX", Description = "Anexo Contrato" },
+            };
+            designations.ForEach(p => context.LibraryDesignations.AddOrUpdate(s => s.Id, p));
+            context.SaveChanges();
+
+            var libraries = new List<Library>
+            {
+                new Library { Description = "Documento de prueba 1", DateInitial = DateTime.Now, DateModication = DateTime.Now, LibraryAreaId = 1, LibraryDesignationId = 1, Name = "ADM_ANX_001", UserId = 1, DocumentNumber = "001", Edition = 1 },
+                new Library { Description = "Documento de prueba 2", DateInitial = DateTime.Now, DateModication = DateTime.Now.AddDays(1), LibraryAreaId = 1, LibraryDesignationId = 1, Name = "ADM_ANX_001", UserId = 1, DocumentNumber = "001", Edition = 2, ParentId = 1 },
+                new Library { Description = "Documento de prueba 3", DateInitial = DateTime.Now, DateModication = DateTime.Now, LibraryAreaId = 2, LibraryDesignationId = 1, Name = "FOR_ANX_001", UserId = 2, DocumentNumber = "001", Edition = 1 },
+            };
+            libraries.ForEach(p => context.Libraries.AddOrUpdate(s => s.Id, p));
+            context.SaveChanges();
+        }
+    }
+}
+
+3º Update-Database -ConfigurationTypeName Prevea.ConsoleTestModel.Migrations.Configuration -Verbose

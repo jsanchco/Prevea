@@ -1,0 +1,162 @@
+﻿@model UserViewModel
+
+@{
+    ViewBag.Title = "DeleteContactPerson";
+}
+
+<script>
+    DeleteContactPersonCompany.init(@Model.CompanyId, @Model.Id);
+</script>
+
+<div class="row" id="pageDeleteContactPerson" style="margin: 8px">
+
+    <span id="spanNotification" style="display: none;"></span>
+
+    <div class="row"><H1>Herramienta Comercial</H1></div><br />
+
+    <div class="row">
+        <div class="col-sm-12">
+            <ol class="breadcrumb bc-2">
+                <li class="active">
+                    <a id="br-companies" onclick="DeleteContactPersonCompany.goToCompanies()" style="cursor: pointer;">
+                        <i class="icon-folder"></i>
+                        Gestión de Empresas
+                    </a>
+                </li>
+                <li class="active">
+                    <a id="br-company-contactPerson" onclick="DeleteContactPersonCompany.goToDetailCompany()" style="cursor: pointer;">
+                        Detalle Empresa
+                    </a>
+                </li>
+                <li class="active">
+                    <a id="br-company-deleteContactPerson" onclick="DeleteContactPersonCompany.goToDeleteContactPersonCompany()" style="cursor: pointer;">
+                        <strong>Borrar Persona de Contacto</strong>
+                    </a>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    @if (ViewBag.Error != null)
+    {
+        <div id="errorFromBack" class="alert alert-danger alert-dismissable" style="">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <ul>
+                @foreach (var error in ViewBag.Error)
+                {
+                    <li>
+                        @error
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+
+    <div id="errorFromFront" class="alert alert-danger alert-dismissable" style="display: none">
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="tile-stats tile-blue">
+
+                <div class="num">@Model.CompanyEnrollment</div>
+
+                <h3>@Model.CompanyName</h3>
+
+            </div>
+
+        </div>
+    </div>
+    
+    <div id="confirm"></div>
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <blockquote class="blockquote-default">
+                @using (Ajax.BeginForm("DeleteContactPersonCompany", "Company", null, new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    UpdateTargetId = "framePpal"
+                }, new { id = "formDeleteContactPersonCompany" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Nombre</label>
+                            <label class="col-sm-4 control-label">Apellidos</label>
+                            <label class="col-sm-4 control-label">DNI/NIF</label>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.FirstName, new { @id = "textBoxFirstName", @class = "form-control", @readonly = "readonly", style = "width:100%", placeholder = "Nombre" })
+                            </div>
+
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.LastName, new { @id = "textBoxLastName", @class = "form-control", @readonly = "readonly", style = "width:100%", placeholder = "Apellidos" })
+                            </div>
+
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.DNI, new { @id = "textBoxDNI", @class = "form-control", @readonly = "readonly", style = "width:100%", placeholder = "DNI/NIF" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Teléfono/s</label>
+                            <label class="col-sm-4 control-label">Email</label>
+                            <label class="col-sm-4 control-label">Puesto</label>
+                        </div>
+
+
+                        <div class="form-group">
+                            
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.PhoneNumber, new { @id = "textPhoneNumber", @class = "form-control", @readonly = "readonly", style = "width:100%", placeholder = "Número/s de Teléfono/s" })
+                            </div>
+
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.Email, new { @id = "textEmail", @class = "form-control", @readonly = "readonly", style = "width:100%", placeholder = "Email/Correo" })
+                            </div>
+
+                            <div class="col-sm-4">
+                                @Html.TextBoxFor(model => model.WorkStation, new { @id = "textWorkStation", @class = "form-control", @readonly = "readonly", style = "width:100%", placeholder = "Puesto de Trabajo" })
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <br />
+                    <br />
+                    <br />
+
+
+                    <div class="form-actions">
+                        
+                        @Html.HiddenFor(model => model.Id)
+
+                        <input type="button" id="btnDelete" value="Borrar" class="btn btn-prevea btn"/>
+                        <input type="button" id="btnUnsubscribe" value="Dar de Baja" class="btn btn-prevea btn"/>
+                        <input type="button" id="btnCancel" value="Cancelar" class="btn"/>
+                    
+                    </div>
+
+                }
+
+            </blockquote>
+
+        </div>
+    </div>
+
+</div>
+
+<br />
+

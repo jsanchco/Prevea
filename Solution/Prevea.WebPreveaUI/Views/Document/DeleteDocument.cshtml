@@ -1,0 +1,93 @@
+﻿@model Document
+
+@{
+    ViewBag.Title = "DeleteDocument";
+}
+
+<script>
+    DeleteDocument.init();
+</script>
+
+<div class="row" id="DeleteDocument" style="margin: 8px">
+    
+    <span id="spanNotification" style="display: none;"></span>
+    
+    <div class="row"><H1>Biblioteca</H1></div><br/>
+
+    <div class="row">
+        
+        <div class="col-sm-12">
+            <ol class="breadcrumb bc-2">
+                <li class="active">
+                    <a id="br-documents" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                        <i class="icon-book"></i>
+                        Documentos
+                    </a>
+                </li>
+                <li class="active">
+                    <a id="br-documents-deleteDocument" onclick="DeleteDocument.goToDeleteDocument(this)" style="cursor: pointer;">
+                        <strong>Borrar Documento</strong>
+                    </a>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="col-sm-12 tile-stats tile-blue">
+                <div class="col-sm-11">
+                    <div class="num">@Model.Name</div>
+
+                    <h3>@Model.Description</h3>
+                    <p>@Model.Observations</p>
+                </div>
+
+                <div class="col-sm-1" id="iconViewFile"></div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div id="errorFromFront" class="alert alert-danger alert-dismissable" style="display: none">
+    </div>
+
+    <div id="confirm"></div>
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <blockquote class="blockquote-default">
+
+                <div class="row" id="rowGridLibraryDetail">
+                    <div class="col-sm-12">
+                        <div id="gridDocumentDetail"></div>
+                    </div>
+                </div>
+
+                <br/>
+                <br/>
+
+                <div class="form-actions">
+
+                    @Html.HiddenFor(x => x.Id)
+                    @Html.HiddenFor(x => x.DocumentParentId)
+                    @Html.HiddenFor(x => x.Icon)
+
+                    <input type="button" id="btnDelete" value="Borrar" class="btn btn-prevea btn"/>
+                    <input type="button" id="btnUnsubscribe" value="Dar de Baja" class="btn btn-prevea btn"/>
+                    <input type="button" id="btnCancel" value="Cancelar" class="btn"/>
+                </div>
+
+
+            </blockquote>
+
+        </div>
+    </div>
+
+</div>
+
+<br />
+

@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Prevea - Administración";
+}
+
+<script type="text/javascript">
+
+</script>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-primary" data-collapsed="0" style="background: #f5f5f5;">
+            <!-- panel head -->
+            <div class="panel-heading" style="border-color: transparent; background: #f5f5f5">
+                <div class="panel-options">
+                    <a href="#" data-rel="close"><i class="icon-cancel"></i></a>
+                </div>
+            </div>
+            <!-- panel body -->
+            <div class="panel-body">
+                <h1>
+                    @DateTime.Now.ToString("d MMMM, yyyy")
+                </h1>
+                <h3>
+                    Bienvenido a PREVEA
+                    <strong>
+                        @{
+                            var name = String.Format("{0} {1}",
+                                Model.FirstName,
+                                Model.LastName);
+                        }
+                        @name
+                    </strong>
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,79 @@
+/**
+ *
+ * Apply Here your Custom CSS
+ *
+*/
+
+body {
+	
+}
+
+.tile-stats.tile-blue {
+    background: #007CC0;
+}
+
+.btn-prevea {
+    background-color: #FF9E19;
+    color: white;
+    border-color: #B26700;
+}
+
+.btn-prevea:hover {
+    color: white;
+}
+
+.k-grid .k-filter-row th, .k-grid-header th.k-header {
+    border-width: 0 1px 1px;
+}
+
+.k-grid .k-grid-header .k-header {
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.k-grid {
+    font-size: 12px;
+}
+
+.k-grid .k-filter-row th, .k-grid-header th.k-header {
+    border-width: 0 1px 1px;
+}
+
+.k-autocomplete.k-state-default, .k-dropdown-wrap.k-state-default, .k-numeric-wrap.k-state-default, .k-picker-wrap.k-state-default {
+    border-color: #ebebeb;
+}
+
+.one-line {
+    /*overflow: hidden;*/
+    width: 150px;
+    white-space: nowrap;
+}
+
+.one-line > div {
+    display: inline-block;
+}
+
+.one-line > div:first-child {
+    font-weight: bold;
+    color: #365f91;
+    width: 60%;
+}
+
+.one-line > div:last-child {
+    width: 40%;
+}
+
+.unSubscribe {
+    background: #F9A938;
+}
+
+.control-label {
+    color: #4b4b4b;
+    font-size: 15px;
+}
+
+.form-control {
+    box-sizing: border-box;
+    font-size: inherit;
+}

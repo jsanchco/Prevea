@@ -1,0 +1,66 @@
+﻿@model Document
+
+<script>
+    DetailDocument.init("@Model.Id", "@Model.DocumentParentId");
+</script>
+
+<div class="row" id="pageDetailDocument" style="margin: 8px">
+    
+    <div class="row"><H1>Biblioteca</H1></div><br />
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <!-- Breadcrumb 2 -->
+            <ol class="breadcrumb bc-2">
+                <li class="active">
+                    <a id="br-documents" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                        <i class="icon-book"></i>
+                        Documentos
+                    </a>
+                </li>
+                <li class="active">
+                    <a onclick="DetailDocument.goToDetailDocument(this)" style="cursor: pointer;">
+                        <strong>Detalle Documento</strong>
+                    </a>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="tile-stats tile-blue">
+
+                <div class="num">@Model.Name</div>
+
+                <h3>@Model.Description</h3>
+                <p>@Model.Observations</p>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <p class="bs-example">
+                <button id="documents-addDocument" type="button" class="btn btn-prevea" onclick="DetailDocument.goToAddDocumentWithParent()">
+                    Agregar Documento
+                </button>
+            </p>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="gridDocumentDetail"></div>
+        </div>
+    </div>
+
+</div>
+

@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Prevea - Dashboard";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <!-- Breadcrumb 2 -->
+        <ol class="breadcrumb bc-2">
+            <li class="active">
+                @*<a href="~/Dashboard/Index">*@
+                <a id="br-dashboard" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">    
+                    <i class="icon-home"></i>
+                    Escritorio
+                </a>
+            </li>
+        </ol>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <div id="partial_1">
+
+            <div class="panel panel-default panel-shadow" data-collapsed="0">
+                <!-- to apply shadow add class "panel-shadow" --> <!-- panel head -->
+                <div class="panel-heading">
+                    <div class="panel-title">Usuarios y Proyectos</div>
+                    <div class="panel-options">
+                        <a href="#" data-rel="collapse"><i class="icon-down-open"></i></a>
+                    </div>
+                </div>
+                <!-- panel body -->
+                <div class="panel-body">
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

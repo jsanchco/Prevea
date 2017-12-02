@@ -1,0 +1,156 @@
+﻿@model DocumentViewModel
+
+@{
+    ViewBag.Title = "EditDocument";
+}
+
+<script>
+    EditDocument.init("@Model.Icon", "@ViewBag.Notification");
+</script>
+
+<div class="row" id="pageEditDocument" style="margin: 8px">
+
+    <span id="spanNotification" style="display: none;"></span>
+
+    <div class="row">
+        <H1>Biblioteca</H1>
+    </div><br/>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <ol class="breadcrumb bc-2">
+                <li class="active">
+                    <a id="br-documents" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                        <i class="icon-book"></i>
+                        Documentos
+                    </a>
+                </li>
+                <li class="active">
+                    <a id="br-documents-editDocument" onclick="EditDocument.goToEditDocument(this)" style="cursor: pointer;">
+                        <strong>Editar Documento</strong>
+                    </a>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="col-sm-12 tile-stats tile-blue">
+                <div class="col-sm-11">
+                    <div class="num">@Model.Name</div>
+
+                    <h3>@Model.Description</h3>
+                    <p>@Model.Observations</p>
+                </div>
+
+                <div class="col-sm-1" id="iconViewFile"></div>
+
+            </div>
+
+        </div>
+    </div>
+
+    @if (ViewBag.Error != null)
+    {
+        <div id="errorFromBack" class="alert alert-danger alert-dismissable" style="">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <ul>
+                @foreach (var error in ViewBag.Error)
+                {
+                    <li>
+                        @error
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+
+    <div id="errorFromFront" class="alert alert-danger alert-dismissable" style="display: none">
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <blockquote class="blockquote-default">
+                @using (Ajax.BeginForm("EditDocument", "Document", null, new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    UpdateTargetId = "framePpal",                    
+                }, new {id = "formEditDocument"}))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label">Descripción</label>
+                            <label class="col-sm-6 control-label">Observaciones</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+
+                            <div class="col-sm-6">
+                                @Html.TextAreaFor(model => model.Description, new {@id = "textAreaDescription", @class = "form-control autogrow", style = "width:100%", placeholder = "Descripción"})
+                            </div>
+
+                            <div class="col-sm-6">
+                                @Html.TextAreaFor(model => model.Observations, new {@id = "textAreaObservations", @class = "form-control autogrow", style = "width:100%", placeholder = "Observaciones"})
+                            </div>
+                        </div>
+
+                        <p>&nbsp;</p>
+                    </div>
+
+                    <div class="row" id="rowFiles">
+
+                        <br/>
+
+                        <div class="col-sm-4">
+
+                            @(Html.Kendo().Upload()
+                                  .Name("files")
+                                  .HtmlAttributes(new {accept = ".doc,.docx,.pdf,.xls,.xlsx"})
+                                  .Multiple(false)
+                                  .Messages(m => m.Select("Cambiar archivo"))
+                                  .Async(async => async
+                                      .Save("SaveFile", "Document")
+                                      .Remove("RemoveFile", "Document")
+                                  )
+                                  .Events(c => c
+                                      .Upload("EditDocument.onUpload")
+                                      .Success("EditDocument.onSuccess")
+                                      .Remove("EditDocument.onRemove")
+                                  )
+                                  )
+
+                        </div>
+                    </div>
+
+                    <br/>
+                    <br/>
+
+
+                    <div>
+
+                        @Html.HiddenFor(x => x.Id)
+                        @Html.HiddenFor(x => x.UpdateFile)
+
+                        <input type="submit" id="btnValidate" value="Actualizar" class="btn btn-prevea btn"/>
+                        <input type="button" id="btnCancel" value="Cancelar" class="btn"/>
+                    </div>
+
+                }
+
+            </blockquote>
+
+        </div>
+    </div>
+
+</div>
+
+<br />

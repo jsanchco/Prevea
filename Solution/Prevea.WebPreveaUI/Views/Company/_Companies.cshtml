@@ -1,0 +1,49 @@
+﻿<script>
+    _Companies.init();
+</script>
+
+
+<div class="row" id="_pageCompanies" style="margin: 8px">
+
+    <div class="row"><H1>Herramienta Comercial</H1></div><br />
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <!-- Breadcrumb 2 -->
+            <ol class="breadcrumb bc-2">
+                <li class="active">
+                    <a id="br-companies" onclick="_Companies.goToCompanies()" style="cursor: pointer;">
+                        <i class="icon-folder"></i>
+                        <strong>Gestión de Empresas</strong>
+                    </a>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+
+    @if (ViewBag.Error != null)
+    {
+        <div id="errorFromBack" class="alert alert-danger alert-dismissable" style="">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <ul>
+                @foreach (var error in ViewBag.Error)
+                {
+                    <li>
+                        @error
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+
+    <div id="confirm"></div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="_gridCompanies"></div>
+        </div>
+    </div>
+
+</div>

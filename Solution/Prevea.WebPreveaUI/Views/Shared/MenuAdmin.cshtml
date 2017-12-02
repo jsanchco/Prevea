@@ -1,0 +1,67 @@
+﻿<ul class="main-menu" id="main-menu">
+    <li class="root-level">
+        <a id="dashboard" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+            <i class="icon-home"></i>
+            <span class="title">Escritorio</span>
+        </a>
+    </li>
+    <li class="root-level">
+        <a id="library">
+            <i class="icon-box"></i>
+            <span class="title">Biblioteca</span>
+        </a>
+        <ul>
+            <li>
+                <a id="library|documents" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                    <i class="icon-book"></i>
+                    <span class="title">Documentos</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="has-sub">
+        <a id="company">
+            <i class="glyphicon glyphicon-th-list"></i>
+            <span class="title">Empresas</span>
+        </a>
+        <ul>
+            <li>
+                <a id="company|administration" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                    <i class="icon-folder"></i>
+                    <span class="title">Gestión de Empresas</span>
+                </a>
+            </li>
+            <li>
+                <a id="company|simulator" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                    <i class="fa fa-magic"></i>
+                    <span class="title">Simulación</span>
+                </a>
+            </li>
+            <li>
+                <a id="company|resumen">
+                    <i class="entypo-flow-line"></i>
+                    <span class="title">Resumen</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="has-sub">
+        <a href="#">
+            <i id="employee" class="icon-users"></i>
+            <span class="title">Trabajadores</span>
+        </a>
+        <ul>
+            <li>
+                <a id="employee|administration">
+                    <span class="title">Administración</span>
+                </a>
+            </li>
+            <li>
+                <a id="employee|resumen">
+                    <span class="title">Resumen</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>
+

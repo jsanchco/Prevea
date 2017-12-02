@@ -1,0 +1,225 @@
+﻿@using Prevea.WebPreveaUI.HelpersClass
+@model User
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Prevea Panel">
+    <meta name="author" content="Jesús Sánchez">
+
+    <link rel="icon" href="~/Images/favicon_FondoBlanco_32x32.png" sizes="32x32">
+
+    <title>@ViewBag.Title</title>
+
+    <link rel="stylesheet" href="~/Scripts/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
+    <link rel="stylesheet" href="~/Content/font-icons/entypo/font/entypo.css">
+    <link rel="stylesheet" href="~/Content/font-icons/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic">  
+    <link rel="stylesheet" href="~/Content/bootstrap.css">
+    <link rel="stylesheet" href="~/Content/neon-core.css">
+    <link rel="stylesheet" href="~/Content/neon-theme.css">
+    <link rel="stylesheet" href="~/Content/neon-forms.css">
+    <link rel="stylesheet" href="~/Content/skins/prevea.css">
+
+    <link rel="stylesheet" href="~/Content/select2/select2-bootstrap.css" id="style-resource-1">
+    <link rel="stylesheet" href="~/Content/select2/select2.css" id="style-resource-2">
+    <link rel="stylesheet" href="~/Content/selectBoxIt/jquery.selectBoxIt.css" id="style-resource-3">
+    <link rel="stylesheet" href="~/Content/daterangepicker/daterangepicker-bs3.css" id="style-resource-4">
+    <link rel="stylesheet" href="~/Content/icheck/skins/minimal/_all.css" id="style-resource-5">
+    <link rel="stylesheet" href="~/Content/icheck/skins/square/_all.css" id="style-resource-6">
+    <link rel="stylesheet" href="~/Content/icheck/skins/flat/_all.css" id="style-resource-7">
+    <link rel="stylesheet" href="~/Content/icheck/skins/futurico/futurico.css" id="style-resource-8">
+    <link rel="stylesheet" href="~/Content/icheck/skins/polaris/polaris.css" id="style-resource-9">
+
+    @RenderSection("style", required: false)
+
+    <script src="http://www.google-analytics.com/ga.js" type="text/javascript" async=""></script>
+    <script src="~/Scripts/jquery-1.11.3.min.js"></script>
+
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
+
+    <script id="script-resource-1" src="~/Scripts/gsap/TweenMax.min.js"></script>
+    <script id="script-resource-2" src="~/Scripts/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
+    <script id="script-resource-3" src="~/Scripts/bootstrap.js"></script>
+    <script id="script-resource-4" src="~/Scripts/joinable.js"></script>
+    <script id="script-resource-5" src="~/Scripts/resizeable.js"></script>
+    <script id="script-resource-6" src="~/Scripts/neon-api.js"></script>
+    <script id="script-resource-7" src="~/Scripts/bootstrap-switch.min.js"></script>
+    <script id="script-resource-8" src="~/Scripts/cookies.min.js"></script>
+    <script id="script-resource-9" src="~/Scripts/toastr.js"></script>
+    <script id="script-resource-10" src="~/Scripts/icheck/icheck.min.js"></script>
+    <script id="script-resource-11" src="~/Scripts/select2/select2.min.js"></script>
+    <script id="script-resource-12" src="~/Scripts/bootstrap-tagsinput.min.js"></script>
+    <script id="script-resource-13" src="~/Scripts/typeahead.min.js"></script>
+    <script id="script-resource-14" src="~/Scripts/selectboxit/jquery.selectBoxIt.min.js"></script>
+    <script id="script-resource-15" src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script id="script-resource-16" src="~/Scripts/bootstrap-timepicker.min.js"></script>
+    <script id="script-resource-17" src="~/Scripts/bootstrap-colorpicker.min.js"></script>
+    <script id="script-resource-18" src="~/Scripts/moment.min.js"></script>
+    <script id="script-resource-19" src="~/Scripts/daterangepicker/daterangepicker.js"></script>
+    <script id="script-resource-20" src="~/Scripts/jquery.multi-select.js"></script>    
+
+    <!-- JavaScripts initializations and stuff -->
+    <script id="script-resource-21" src="~/Scripts/neon-custom.js"></script>
+    <!-- Demo Settings -->
+    <script id="script-resource-22" src="~/Scripts/neon-demo.js"></script>
+    <script id="script-resource-23" src="~/Scripts/neon-skins.js"></script>
+
+    <link href="@Url.Content("~/Content/kendo/2016.3.1118/kendo.common.min.css")" rel="stylesheet" type="text/css"/>
+    <link href="@Url.Content("~/Content/kendo/2016.3.1118/kendo.mobile.all.min.css")" rel="stylesheet" type="text/css"/>
+    <link href="@Url.Content("~/Content/kendo/2016.3.1118/kendo.fiori.min.css")" rel="stylesheet" type="text/css"/>
+    <link href="@Url.Content("~/Content/kendo/2016.3.1118/kendo.fiori.mobile.min.css")" rel="stylesheet" type="text/css"/>
+    
+    <link rel="stylesheet" href="~/Content/custom.css">
+    
+    @*<link href="@Url.Content("~/Content/kendo/2016.3.1118/kendo.material.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2016.3.1118/kendo.material.mobile.min.css")" rel="stylesheet" type="text/css" />*@
+
+    <script src="@Url.Content("~/Scripts/kendo/2016.3.1118/jquery.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2016.3.1118/jszip.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2016.3.1118/kendo.all.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2016.3.1118/kendo.culture.es-ES.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2016.3.1118/kendo.aspnetmvc.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+
+    <script src="~/js/GeneralData.js"></script>
+    <script src="~/js/Document/Documents.js"></script>
+    <script src="~/js/Document/AddDocument.js"></script>
+    <script src="~/js/Document/DetailDocument.js"></script>
+    <script src="~/js/Document/EditDocument.js"></script>
+    <script src="~/js/Document/DeleteDocument.js"></script>
+    <script src="~/js/Document/AddDocumentWithParent.js"></script>
+    <script src="~/js/Document/HistoricDownloadDocuments.js"></script>
+    <script src="~/js/Company/Companies.js"></script>
+    <script src="~/js/Company/_Companies.js"></script>
+    <script src="~/js/Company/GeneralDataCompany.js"></script>
+    <script src="~/js/Company/AddCompany.js"></script>
+    <script src="~/js/Company/DetailCompany.js"></script>
+    <script src="~/js/Company/AddContactPersonCompany.js"></script>
+    <script src="~/js/Company/DeleteContactPersonCompany.js"></script>
+    <script src="~/js/Company/ContactPersonsCompany.js"></script>
+    <script src="~/js/Company/_ContactPersonsCompany.js"></script>
+    <script src="~/js/Company/EmployeesCompany.js"></script>
+    <script src="~/js/Company/_EmployeesCompany.js"></script>
+    <script src="~/js/Company/AddEmployeeCompany.js"></script>
+    <script src="~/js/Company/DeleteEmployeeCompany.js"></script>
+    <script src="~/js/Company/AgencyCompany.js"></script>
+    <script src="~/js/Company/EconomicDataCompany.js"></script>
+    <script src="~/js/Company/ContractualsDocumentsCompany.js"></script>
+    <script src="~/js/Company/PaymentMethodCompany.js"></script>
+    <script src="~/js/Company/Simulators.js"></script>
+    <script src="~/js/Company/EditSimulator.js"></script>
+    <script src="~/js/User/Users.js"></script>
+    <script src="~/js/Error/ErrorPage.js"></script>
+    <script src="~/js/Shared/Templates.js"></script>
+    <script src="~/js/Shared/Constants.js"></script>
+
+    @RenderSection("script", required: false)
+
+</head>
+<body class="page-body skin-red loaded page-fade">
+<div class="page-container" id="pageContainer">
+    <!-- sidebar-menu -->
+    <div class="sidebar-menu" id="menuPpal">
+        <div class="sidebar-menu-inner">
+            <header class="logo-env">
+                <!-- logo -->
+                <div class="logo">
+                    <a href="#">
+                        <img width="120" alt="" src="~/Images/Logo.png">
+                    </a>
+                </div>
+                <!-- logo collapse icon -->
+                <div class="sidebar-collapse">
+                    <a class="sidebar-collapse-icon" href="#">
+                        <!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
+                        <i class="icon-menu"></i>
+                    </a>
+                </div>
+                <!-- open/close menu icon (do not remove if you want to enable menu on mobile devices) -->
+                <div class="sidebar-mobile-menu visible-xs">
+                    <a class="with-animation" href="#">
+                        <!-- add class "with-animation" to support animation -->
+                        <i class="icon-menu"></i>
+                    </a>
+                </div>
+            </header>
+            <div class="sidebar-user-info">
+                <div class="sui-normal">
+                    <a class="user-link" href="#">
+                        @{
+                            var pathPhoto = "image_not_found.png";
+                            var name = "";
+                            if (Model != null)
+                            {
+                                if (File.Exists(String.Format("{0}/user_{1}.png", Server.MapPath("~/Images"), Model.Id)))
+                                {
+                                    pathPhoto = String.Format("user_{0}.png", Model.Id);
+                                }
+                                name = String.Format("{0} {1}", Model.FirstName, Model.LastName);
+                            }
+                        }
+                        <img width="55" class="img-circle" alt="" src="~/Images/@pathPhoto">
+                        @*<img width="55" class="img-circle" alt="" src="~/Images/image_not_found.png">*@
+                        <span>Hola,</span>
+                        <strong>@name</strong>
+                    </a>
+                </div>
+                <div class="sui-hover inline-links animate-in">
+                    <a href="#">
+                        <i class="icon-attention"></i>
+                        Avisos
+                    </a>
+                    <a href="#">
+                        <i class="icon-doc-text"></i>
+                        Ajustes
+                    </a>
+                    <a id="logOff" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                        <i class="icon-lock"></i>
+                        Log Off
+                    </a>
+                    <span class="close-sui-popup">×</span>
+                </div>
+            </div>
+            
+            @Html.MenuRole(Model)
+           
+            @*@Html.Partial("MenuSuper")*@
+
+        </div>
+    </div>
+    <!-- sidebar-menu -->
+    <div class="main-content">
+        
+        <span id="spanErrorPpal"></span>
+        <span id="notification" style="display: none;"></span>
+
+        <div id="framePpal">
+            @RenderBody()
+        </div>
+
+        <!-- Footer -->
+        <footer class="main">
+
+            &copy; 2017 <strong>AdminPrevea</strong> Designed by Jesús Sánchez
+
+        </footer>
+
+    </div>
+
+</div>
+    
+<script type="text/javascript">
+
+    $(document).ready(function () {
+    });
+
+</script>
+
+</body>
+
+</html>

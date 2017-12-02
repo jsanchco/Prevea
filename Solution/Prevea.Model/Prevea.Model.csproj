@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{92421E54-5D72-4CA0-969C-E1CA7FD2367C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Prevea.Model</RootNamespace>
+    <AssemblyName>Prevea.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Helpers\HelperClass.cs" />
+    <Compile Include="Model\Agency.cs" />
+    <Compile Include="Model\Area.cs" />
+    <Compile Include="Model\Cnae.cs" />
+    <Compile Include="Model\Company.cs" />
+    <Compile Include="Model\CompanyCnae.cs" />
+    <Compile Include="Model\CompanyState.cs" />
+    <Compile Include="Model\ContactPerson.cs" />
+    <Compile Include="Model\ContractualDocumentType.cs" />
+    <Compile Include="Model\Document.cs" />
+    <Compile Include="Model\ContractualDocumentCompany.cs" />
+    <Compile Include="Model\DocumentUserCreator.cs" />
+    <Compile Include="Model\DocumentUserOwner.cs" />
+    <Compile Include="Model\EconomicData.cs" />
+    <Compile Include="Model\Entity.cs" />
+    <Compile Include="Model\HistoricDownloadDocument.cs" />
+    <Compile Include="Model\ModePayment.cs" />
+    <Compile Include="Model\ModePaymentMedicalExamination.cs" />
+    <Compile Include="Model\Notification.cs" />
+    <Compile Include="Model\NotificationType.cs" />
+    <Compile Include="Model\PaymentMethod.cs" />
+    <Compile Include="Model\Simulator.cs" />
+    <Compile Include="Model\SimulatorCompany.cs" />
+    <Compile Include="Model\StretcheEmployee.cs" />
+    <Compile Include="Model\TrainingCourse.cs" />
+    <Compile Include="Model\TrainingCourseFamilyType.cs" />
+    <Compile Include="Model\UserState.cs" />
+    <Compile Include="ViewModel\AgencyViewModel.cs" />
+    <Compile Include="ViewModel\CompanyViewModel.cs" />
+    <Compile Include="ViewModel\ContractualDocumentCompanyViewModel.cs" />
+    <Compile Include="ViewModel\DocumentViewModel.cs" />
+    <Compile Include="Model\Employee.cs" />
+    <Compile Include="Model\Role.cs" />
+    <Compile Include="Model\DocumentState.cs" />
+    <Compile Include="Model\UserRole.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\EconomicDataViewModel.cs" />
+    <Compile Include="ViewModel\HistoricDownloadDocumentViewModel.cs" />
+    <Compile Include="ViewModel\PaymentMethodViewModel.cs" />
+    <Compile Include="ViewModel\PaymentModeViewModel.cs" />
+    <Compile Include="ViewModel\SimulatorViewModel.cs" />
+    <Compile Include="ViewModel\UserViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

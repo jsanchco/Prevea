@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Prevea Panel">
+    <meta name="author" content="Jesús Sánchez">
+
+    <link rel="icon" href="~/Images/favicon_FondoBlanco_32x32.png" sizes="32x32">
+
+    <title>PreveaAdmin | Administración Prevea</title>
+
+    <link id="style-resource-1" href="~/Scripts/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css" rel="stylesheet">
+    <link id="style-resource-2" href="~/Content/font-icons/entypo/font/entypo.css" rel="stylesheet">
+    <link id="style-resource-3" href="http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic" rel="stylesheet">
+    <link id="style-resource-4" href="~/Content/bootstrap.css" rel="stylesheet">
+    <link id="style-resource-5" href="~/Content/neon-core.css" rel="stylesheet">
+    <link id="style-resource-6" href="~/Content/neon-theme.css" rel="stylesheet">
+    <link id="style-resource-7" href="~/Content/neon-forms.css" rel="stylesheet">
+    <link id="style-resource-8" href="~/Content/custom.css" rel="stylesheet">
+    <link id="style-resource-9" href="~/Content/skins/prevea.css" rel="stylesheet">
+
+    <script src="http://www.google-analytics.com/ga.js" type="text/javascript" async=""></script>
+    <script src="~/Scripts/jquery-1.11.3.min.js"></script>
+
+    <script id="script-resource-1" src="~/Scripts/gsap/TweenMax.min.js"></script>
+    <script id="script-resource-2" src="~/Scripts/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
+    <script id="script-resource-3" src="~/Scripts/bootstrap.js"></script>
+    <script id="script-resource-4" src="~/Scripts/joinable.js"></script>
+    <script id="script-resource-5" src="~/Scripts/resizeable.js"></script>
+    <script id="script-resource-6" src="~/Scripts/neon-api.js"></script>
+    <script id="script-resource-7" src="~/Scripts/cookies.min.js"></script>
+    <script id="script-resource-8" src="~/Scripts/jquery.validate.min.js"></script>
+    <script id="script-resource-9" src="~/Scripts/neon-login.js"></script>
+
+    <!-- JavaScripts initializations and stuff -->
+    <script id="script-resource-17" src="~/Scripts/neon-custom.js"></script>
+    <!-- Demo Settings -->
+    <script id="script-resource-18" src="~/Scripts/neon-demo.js"></script>
+    <script id="script-resource-19" src="~/Scripts/neon-skins.js"></script>
+    
+    <link href="@Url.Content("~/Content/kendo/2016.3.1118/kendo.common.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2016.3.1118/kendo.mobile.all.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2016.3.1118/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2016.3.1118/kendo.default.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2016.3.1118/kendo.dataviz.default.min.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/kendo/2016.3.1118/jquery.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2016.3.1118/jszip.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2016.3.1118/kendo.all.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2016.3.1118/kendo.aspnetmvc.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+    
+    <script src="~/js/GeneralData.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+        });
+
+    </script>
+
+</head>
+
+<body class="page-body login-page login-form-fall">
+    <div class="page-container">
+        <div class="main-content" style="background: #365F91; padding: 0;">
+
+            @RenderBody()
+
+        </div>
+    </div>
+</body>
+</html>

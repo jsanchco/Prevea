@@ -1,0 +1,29 @@
+﻿@model Company
+
+<script>
+    ContactPersonsCompany.init("@Model.Id");
+</script>
+
+<div class="row" id="pageContactPersonsCompany" style="margin: 8px">
+
+    <div class="row">
+        
+        <div class="col-sm-6">
+            <p class="bs-example">
+                <button id="btnAddContactPersonCompany" type="button" class="btn btn-prevea" onclick="ContactPersonsCompany.goToAddContactPersonCompany()">
+                    Agregar Persona de Contacto
+                </button>
+            </p>
+        </div>
+
+    </div>
+    
+    <div id="confirm"></div>
+
+    <div class="row">        
+        <div class="col-sm-12" style="width: 98%">
+            <div id="gridContactPersonsCompany"></div>
+        </div>
+    </div>
+
+</div>

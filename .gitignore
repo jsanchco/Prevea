@@ -240,3 +240,4 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/Solution/lib/KENDOUIMVC/2016.3.1118.545
