@@ -65,6 +65,8 @@
     <Compile Include="Repository\RepositoryHistoricDownloadDocuments.cs" />
     <Compile Include="Repository\RepositoryModesPayment.cs" />
     <Compile Include="Repository\RepositoryModesPaymentMedicalExamination.cs" />
+    <Compile Include="Repository\RepositoryNotifications.cs" />
+    <Compile Include="Repository\RepositoryNotificationTypes.cs" />
     <Compile Include="Repository\RepositoryPaymentMethods.cs" />
     <Compile Include="Repository\RepositorySimulatorCompanies.cs" />
     <Compile Include="Repository\RepositorySimulators.cs" />

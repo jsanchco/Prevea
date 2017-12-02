@@ -160,5 +160,25 @@
         Result SendToCompanies(int simulatorId);
 
         #endregion
+
+        #region Notification
+
+        List<Notification> GetNotifications();
+        Notification GetNotification(int notificationId);
+        Result SaveNotification(Notification notification);
+        Result UpdateNotification(int notificationId, Notification notification);
+        Result DeleteNotification(int notificationId);
+
+        List<Notification> GetNotificationsByUserId(int userId);
+        List<Notification> GetNotificationsByRoleId(int roleId);
+
+        #endregion
+
+        #region Notification Type
+
+        List<NotificationType> GetNotificationTypes();
+        NotificationType GetNotificationType(int notificationTypeId);
+
+        #endregion
     }
 }

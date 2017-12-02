@@ -3,6 +3,7 @@
     #region Using
 
     using System.ComponentModel.DataAnnotations;
+    using System;
 
     #endregion
 
@@ -13,5 +14,9 @@
 
         public int NotificationTypeId { get; set; }
         public virtual NotificationType NotificationType { get; set; }
+
+        public string Observations { get; set; }
+        public DateTime DateCreation { get; set; }
+        public DateTime? DateModification { get; set; }
     }
 }

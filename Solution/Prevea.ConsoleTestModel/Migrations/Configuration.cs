@@ -212,6 +212,16 @@ namespace Prevea.ConsoleTestModel.Migrations
                 context.ContractualDocumentTypes.AddOrUpdate(new ContractualDocumentType { Name = dType.ToString() });
             }
             context.SaveChanges();
+
+            var notificationTypes = (EnNotificationType[])Enum.GetValues(typeof(EnNotificationType));
+            foreach (var dType in notificationTypes)
+            {
+                if (dType == EnNotificationType.NotMapped)
+                    continue;
+
+                context.NotificationTypes.AddOrUpdate(new NotificationType { Name = dType.ToString() });
+            }
+            context.SaveChanges();
         }
     }
 }

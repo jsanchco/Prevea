@@ -53,6 +53,8 @@
     <Compile Include="Service\ServiceHistoricDownloadDocuments.cs" />
     <Compile Include="Service\ServiceModesPayment.cs" />
     <Compile Include="Service\ServiceModesPaymentMedicalExamination.cs" />
+    <Compile Include="Service\ServiceNotifications.cs" />
+    <Compile Include="Service\ServiceNotificationTypes.cs" />
     <Compile Include="Service\ServicePaymentMethods.cs" />
     <Compile Include="Service\ServiceSimulators.cs" />
     <Compile Include="Service\ServiceStretchesEmployees.cs" />

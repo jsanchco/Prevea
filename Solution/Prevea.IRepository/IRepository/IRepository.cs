@@ -10,7 +10,7 @@
 
     public interface IRepository
     {
-        #region Users
+        #region User
 
         #region Generic
         List<User> GetUsers();
@@ -193,6 +193,26 @@
         SimulatorCompany SaveSimulatorCompany(int simulatorId, int? companyId = null);
         SimulatorCompany UpdateSimulatorCompany(int simulatorId, int companyId);
         bool DeleteSimulatorCompany(int simulatorId, int companyId);
+        #endregion
+
+        #region Notification
+
+        List<Notification> GetNotifications();
+        Notification GetNotification(int id);
+        Notification SaveNotification(Notification notification);
+        Notification UpdateNotification(int id, Notification notification);
+        bool DeleteNotification(int id);
+
+        List<Notification> GetNotificationsByUserId(int userId);
+        List<Notification> GetNotificationsByRoleId(int roleId);
+
+        #endregion
+
+        #region Notification Type
+
+        List<NotificationType> GetNotificationTypes();
+        NotificationType GetNotificationType(int id);
+
         #endregion
     }
 }

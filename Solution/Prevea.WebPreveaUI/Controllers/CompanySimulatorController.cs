@@ -122,7 +122,14 @@
         [HttpPost]
         public JsonResult SendToCompanies(int simulatorId)
         {
-            var result = Service.SendToCompanies(simulatorId);
+            //var result = Service.SendToCompanies(simulatorId);
+            var notification = new Model.Model.Notification
+            {
+                DateCreation = DateTime.Now,
+                NotificationTypeId = (int)EnNotificationType.FromSimulator,
+                Observations = $"Notificación {Service.GetNotifications().Count + 1}"
+            };
+            var result = Service.SaveNotification(notification);
 
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
