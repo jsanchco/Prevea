@@ -61,7 +61,6 @@
                        
         public virtual ICollection<HistoricDownloadDocument> HistoricDownloadDocuments { get; set; }
 
-
         #region Constructor
 
         public Document()
