@@ -232,6 +232,16 @@ namespace Prevea.ConsoleTestModel.Migrations
                 context.NotificationStates.AddOrUpdate(new NotificationState { Name = dState.ToString() });
             }
             context.SaveChanges();
+
+            var simulatorStates = (EnSimulatorState[])Enum.GetValues(typeof(EnSimulatorState));
+            foreach (var dState in simulatorStates)
+            {
+                if (dState == EnSimulatorState.NotMapped)
+                    continue;
+
+                context.SimulatorStates.AddOrUpdate(new SimulatorState { Name = dState.ToString() });
+            }
+            context.SaveChanges();
         }
     }
 }

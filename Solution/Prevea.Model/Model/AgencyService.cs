@@ -6,14 +6,12 @@
 
     #endregion
 
-    public class ForeignPreventionService
+    public class AgencyService
     {
         [ForeignKey("Simulator")]
         public int Id { get; set; }
 
-        public decimal? AmountTecniques { get; set; }
-        public decimal? AmountHealthVigilance { get; set; }
-        public decimal? AmountMedicalExamination { get; set; }
+        public string Observations { get; set; }
 
         public virtual Simulator Simulator { get; set; }
     }

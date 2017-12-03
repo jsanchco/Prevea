@@ -33,7 +33,11 @@
         public DbSet<ModePaymentMedicalExamination> ModesPaymentMedicalExamination { get; set; }
         public DbSet<StretchEmployee> StretchesEmployees { get; set; }
         public DbSet<Simulator> Simulators { get; set; }
+        public DbSet<ForeignPreventionService> ForeignPreventionServices { get; set; }
+        public DbSet<AgencyService> AgencyServices { get; set; }
+        public DbSet<TrainingService> TrainingServices { get; set; }
         public DbSet<SimulatorCompany> SimulatorCompanies { get; set; }
+        public DbSet<SimulatorState> SimulatorStates { get; set; }
         public DbSet<CompanyState> CompanyStates { get; set; }
         public DbSet<ContractualDocumentCompany> ContractualsDocumentsCompany { get; set; }
         public DbSet<ContractualDocumentType> ContractualDocumentTypes { get; set; }

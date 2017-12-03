@@ -155,7 +155,6 @@
                     };
                 }
 
-                simulator.IsBlocked = true;
                 simulator = Repository.UpdateSimulator(simulatorId, simulator);
                 if (simulator == null)
                 {
@@ -169,7 +168,7 @@
 
                 var company = new Company
                 {
-                    Name = simulator.Name,
+                    Name = simulator.CompanyName,
                     NIF = simulator.NIF,
                     FromSimulator = true,
                     GestorId = simulator.UserId
@@ -211,9 +210,9 @@
                 var economicData = new EconomicData
                 {
                     Id = company.Id,
-                    AmountTecniques = simulator.AmountTecniques,
-                    AmountHealthVigilance = simulator.AmountHealthVigilance,
-                    AmountMedicalExamination = simulator.AmountMedicalExamination,
+                    //AmountTecniques = simulator.AmountTecniques,
+                    //AmountHealthVigilance = simulator.AmountHealthVigilance,
+                    //AmountMedicalExamination = simulator.AmountMedicalExamination,
                 };
                 var resultEconomicData = SaveEconomicData(economicData);
                 if (resultEconomicData.Status == Status.Error)

@@ -71,7 +71,10 @@
                     return "Reasignada";
                 case "Validated":
                     return "Validada";
-
+                case "ValidationPending":
+                    return "Pendiente de Validación";
+                case "Modificated":
+                    return "Modificada";
                 default:
                     return name;
             }

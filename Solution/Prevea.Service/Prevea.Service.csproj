@@ -44,12 +44,14 @@
     <Compile Include="Service\Service.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ServiceAgencies.cs" />
+    <Compile Include="Service\ServiceAgencyServices.cs" />
     <Compile Include="Service\ServiceAreas.cs" />
     <Compile Include="Service\ServiceCnaes.cs" />
     <Compile Include="Service\ServiceCompanies.cs" />
     <Compile Include="Service\ServiceContractualsDocuments.cs" />
     <Compile Include="Service\ServiceDocuments.cs" />
     <Compile Include="Service\ServiceEconomicsDatas.cs" />
+    <Compile Include="Service\ServiceForeignPreventionServices.cs" />
     <Compile Include="Service\ServiceHistoricDownloadDocuments.cs" />
     <Compile Include="Service\ServiceModesPayment.cs" />
     <Compile Include="Service\ServiceModesPaymentMedicalExamination.cs" />
@@ -58,6 +60,7 @@
     <Compile Include="Service\ServicePaymentMethods.cs" />
     <Compile Include="Service\ServiceSimulators.cs" />
     <Compile Include="Service\ServiceStretchesEmployees.cs" />
+    <Compile Include="Service\ServiceTrainingServices.cs" />
     <Compile Include="Service\ServiceUsers.cs" />
   </ItemGroup>
   <ItemGroup>

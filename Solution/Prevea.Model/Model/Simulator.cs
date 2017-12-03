@@ -1,12 +1,11 @@
-﻿using System.Linq;
-
-namespace Prevea.Model.Model
+﻿namespace Prevea.Model.Model
 {
     #region Using
 
     using System.ComponentModel.DataAnnotations;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     #endregion
 
@@ -25,7 +24,7 @@ namespace Prevea.Model.Model
         public int Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string CompanyName { get; set; }
 
         [Required]
         public string NIF { get; set; }
@@ -33,11 +32,12 @@ namespace Prevea.Model.Model
         [Required]
         public int NumberEmployees { get; set; }
 
-        public decimal? AmountTecniques { get; set; }
-        public decimal? AmountHealthVigilance { get; set; }
-        public decimal? AmountMedicalExamination { get; set; }
+        public int SimulatorStateId { get; set; }
+        public virtual SimulatorState SimulatorState { get; set; }
 
-        public bool IsBlocked { get; set; }
+        public virtual ForeignPreventionService ForeignPreventionService { get; set; }
+        public virtual AgencyService AgencyService { get; set; }
+        public virtual TrainingService TrainingService { get; set; }
 
         public DateTime Date { get; set; }
 

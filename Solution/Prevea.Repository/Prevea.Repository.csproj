@@ -52,6 +52,7 @@
     <Compile Include="Repository\Context.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\RepositoryAgencies.cs" />
+    <Compile Include="Repository\RepositoryAgencyServices.cs" />
     <Compile Include="Repository\RepositoryAreas.cs" />
     <Compile Include="Repository\RepositoryBase.cs" />
     <Compile Include="Repository\RepositoryCnaes.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Repository\RepositoryEconomicsDatas.cs" />
     <Compile Include="Repository\RepositoryEmployees.cs" />
     <Compile Include="Repository\RepositoryEntities.cs" />
+    <Compile Include="Repository\RepositoryForeignPreventionServices.cs" />
     <Compile Include="Repository\RepositoryHistoricDownloadDocuments.cs" />
     <Compile Include="Repository\RepositoryModesPayment.cs" />
     <Compile Include="Repository\RepositoryModesPaymentMedicalExamination.cs" />
@@ -71,6 +73,7 @@
     <Compile Include="Repository\RepositorySimulatorCompanies.cs" />
     <Compile Include="Repository\RepositorySimulators.cs" />
     <Compile Include="Repository\RepositoryStretchesEmployees.cs" />
+    <Compile Include="Repository\RepositoryTrainingServices.cs" />
     <Compile Include="Repository\RepositoryUsers.cs" />
   </ItemGroup>
   <ItemGroup>

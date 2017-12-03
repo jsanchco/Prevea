@@ -188,6 +188,27 @@
 
         #endregion
 
+        #region Foreign Prevention Service
+
+        ForeignPreventionService GetForeignPreventionService(int id);
+        ForeignPreventionService SaveForeignPreventionService(ForeignPreventionService foreignPreventionService);
+
+        #endregion
+
+        #region Agency Service
+
+        AgencyService GetAgencyService(int id);
+        AgencyService SaveAgencyService(AgencyService agencyService);
+
+        #endregion
+
+        #region Training Service
+
+        TrainingService GetTrainingService(int id);
+        TrainingService SaveTrainingService(TrainingService trainingService);
+
+        #endregion
+
         #region SimulatorCompany
         SimulatorCompany GetSimulatorCompany(int simulatorId, int? companyId = null);
         SimulatorCompany SaveSimulatorCompany(int simulatorId, int? companyId = null);

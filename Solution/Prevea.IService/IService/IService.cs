@@ -161,6 +161,27 @@
 
         #endregion
 
+        #region Foreign Prevention Service
+
+        ForeignPreventionService GetForeignPreventionService(int foreignPreventionServiceId);
+        Result SaveForeignPreventionService(ForeignPreventionService foreignPreventionService);
+
+        #endregion
+
+        #region Agency Service
+
+        AgencyService GetAgencyService(int agencyServiceId);
+        Result SaveAgencyService(AgencyService agencyService);
+
+        #endregion
+
+        #region Training Service
+
+        TrainingService GetTrainingService(int trainingServiceId);
+        Result SaveTrainingService(TrainingService trainingService);
+
+        #endregion
+
         #region Notification
 
         List<Notification> GetNotifications();
