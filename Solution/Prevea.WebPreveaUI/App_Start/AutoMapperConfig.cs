@@ -60,6 +60,13 @@
             AutoMapper.Mapper.CreateMap<ContractualDocumentCompany, ContractualDocumentCompanyViewModel>()
                 .ForMember(x => x.ContractualDocumentTypeName, x => x.MapFrom(y => y.ContractualDocumentType.Name));
             AutoMapper.Mapper.CreateMap<ContractualDocumentCompanyViewModel, ContractualDocumentCompany>();
+
+            AutoMapper.Mapper.CreateMap<Notification, NotificationViewModel>()
+                .ForMember(x => x.NotificationTypeName, x => x.MapFrom(y => y.NotificationType.Name))
+                .ForMember(x => x.NotificationTypeDescription, x => x.MapFrom(y => y.NotificationType.Description))
+                .ForMember(x => x.NotificationStateName, x => x.MapFrom(y => y.NotificationState.Name))
+                .ForMember(x => x.NotificationStateDescription, x => x.MapFrom(y => y.NotificationState.Description));
+            AutoMapper.Mapper.CreateMap<NotificationViewModel, Notification>();
         }
     }
 }

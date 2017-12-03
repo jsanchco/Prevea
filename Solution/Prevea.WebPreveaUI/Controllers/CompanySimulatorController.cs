@@ -120,16 +120,24 @@
         }
 
         [HttpPost]
-        public JsonResult SendToCompanies(int simulatorId)
+        public JsonResult SendNotificationFromSimulator(int simulatorId)
         {
-            //var result = Service.SendToCompanies(simulatorId);
             var notification = new Model.Model.Notification
             {
                 DateCreation = DateTime.Now,
                 NotificationTypeId = (int)EnNotificationType.FromSimulator,
+                NotificationStateId = (int)EnNotificationState.Issued,
                 Observations = $"Notificación {Service.GetNotifications().Count + 1}"
             };
             var result = Service.SaveNotification(notification);
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult SendToCompanies(int simulatorId)
+        {
+            var result = Service.SendToCompanies(simulatorId);
 
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }

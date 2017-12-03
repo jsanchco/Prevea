@@ -169,6 +169,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\CompanySimulatorController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\StartController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -656,6 +657,7 @@
     <Content Include="js\Company\_Companies.js" />
     <Content Include="js\Company\_ContactPersonsCompany.js" />
     <Content Include="js\Company\_EmployeesCompany.js" />
+    <Content Include="js\Notification\Notifications.js" />
     <Content Include="js\Shared\Constants.js" />
     <Content Include="js\Document\AddDocument.js" />
     <Content Include="js\Document\AddDocumentWithParent.js" />
@@ -667,6 +669,7 @@
     <Content Include="js\Error\ErrorPage.js" />
     <Content Include="js\GeneralData.js" />
     <Content Include="js\Shared\Templates.js" />
+    <Content Include="js\Start\Start.js" />
     <Content Include="js\User\Users.js" />
     <Content Include="Scripts\bootstrap-colorpicker.min.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
@@ -1098,6 +1101,7 @@
     <Content Include="Views\Company\PaymentMethodCompany.cshtml" />
     <Content Include="Views\Company\ContractualsDocumentsCompany.cshtml" />
     <Content Include="Views\User\Users.cshtml" />
+    <Content Include="Views\Notification\Notifications.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

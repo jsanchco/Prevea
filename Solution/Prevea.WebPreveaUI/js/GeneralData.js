@@ -45,7 +45,11 @@
 
             case "br-document-addDocument":
                 url = "/Document/AddDocument";
-                break;                    
+                break;
+
+            case "notifications":
+                url = "/Notification/Notifications";
+                break;
 
             default:
                 break;

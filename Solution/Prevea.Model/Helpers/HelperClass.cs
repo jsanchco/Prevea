@@ -63,6 +63,15 @@
                     return "Desde SEDE";
                 case "FromUser":
                     return "Desde Usuario";
+                case "Issued":
+                    return "Emitida";
+                case "Assigned":
+                    return "Asignada";
+                case "ReAssigned":
+                    return "Reasignada";
+                case "Validated":
+                    return "Validada";
+
                 default:
                     return name;
             }

@@ -1,22 +1,22 @@
-﻿namespace Prevea.Model.Model
+﻿namespace Prevea.Model.ViewModel
 {
     #region Using
 
-    using System.ComponentModel.DataAnnotations;
     using System;
 
     #endregion
 
-    public class Notification
+    public class NotificationViewModel
     {
-        [Key, Required]
         public int Id { get; set; }
 
         public int NotificationTypeId { get; set; }
-        public virtual NotificationType NotificationType { get; set; }
+        public string NotificationTypeName { get; set; }
+        public string NotificationTypeDescription { get; set; }
 
         public int NotificationStateId { get; set; }
-        public virtual NotificationState NotificationState { get; set; }
+        public string NotificationStateName { get; set; }
+        public string NotificationStateDescription { get; set; }
 
         public string Observations { get; set; }
         public DateTime DateCreation { get; set; }

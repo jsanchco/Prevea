@@ -87,6 +87,7 @@
     <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
 
     <script src="~/js/GeneralData.js"></script>
+    <script src="~/js/Start/Start.js"></script>
     <script src="~/js/Document/Documents.js"></script>
     <script src="~/js/Document/AddDocument.js"></script>
     <script src="~/js/Document/DetailDocument.js"></script>
@@ -114,6 +115,7 @@
     <script src="~/js/Company/Simulators.js"></script>
     <script src="~/js/Company/EditSimulator.js"></script>
     <script src="~/js/User/Users.js"></script>
+    <script src="~/js/Notification/Notifications.js"></script>
     <script src="~/js/Error/ErrorPage.js"></script>
     <script src="~/js/Shared/Templates.js"></script>
     <script src="~/js/Shared/Constants.js"></script>
@@ -170,9 +172,10 @@
                     </a>
                 </div>
                 <div class="sui-hover inline-links animate-in">
-                    <a href="#">
+                    <a id="notifications" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
                         <i class="icon-attention"></i>
-                        Avisos
+                        <span id="numberNotifications" style="font-size:xx-small; margin-left: -5px; margin-top: -5px; vertical-align: text-top;"></span>
+                        Avisos 
                     </a>
                     <a href="#">
                         <i class="icon-doc-text"></i>

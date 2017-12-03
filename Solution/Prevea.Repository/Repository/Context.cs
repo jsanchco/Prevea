@@ -39,6 +39,7 @@
         public DbSet<ContractualDocumentType> ContractualDocumentTypes { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<NotificationType> NotificationTypes { get; set; }
+        public DbSet<NotificationState> NotificationStates { get; set; }
 
         #endregion
 

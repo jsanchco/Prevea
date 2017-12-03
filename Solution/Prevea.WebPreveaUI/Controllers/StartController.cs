@@ -27,7 +27,7 @@
             if (user == null)
                 return RedirectToAction("Index", "Login");
 
-            ViewBag.HasKendo = true;
+            ViewBag.Notifications = 2;
 
             return View(user);
         }

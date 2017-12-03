@@ -17,6 +17,7 @@
     lblTotalId: "lblTotal",
     btnValidateId: "btnValidate",
     btnSendToCompaniesId: "btnSendToCompanies",
+    btnSendNotificationId: "btnSendNotification",
     btnCancelId: "btnCancel",
 
     errorFromFrontId: "errorFromFront",
@@ -74,6 +75,10 @@
             format: "c",
             decimals: 1,
             change: EditSimulator.onChangeTextAmountMedicalExamination
+        });
+
+        $("#" + this.btnSendNotificationId).click(function () {
+            EditSimulator.sendNotificationFromSimulator();
         });
 
         $("#" + this.btnSendToCompaniesId).click(function () {
@@ -348,6 +353,28 @@
                         }
                     };
                     GeneralData.goToActionController(params);
+                }
+                if (data.result.Status === 1) {
+                    GeneralData.showNotification(Constants.ko, "", "error");
+                }
+            },
+            error: function() {
+                GeneralData.showNotification(Constants.ko, "", "error");
+            }
+        });
+    },
+
+    sendNotificationFromSimulator: function () {
+        $.ajax({
+            url: "/Company/SendNotificationFromSimulator",
+            data: {
+                simulatorId: this.simulatorId
+            },
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                if (data.result.Status === 0) {
+                    GeneralData.showNotification(Constants.ok, "", "success");
                 }
                 if (data.result.Status === 1) {
                     GeneralData.showNotification(Constants.ko, "", "error");
