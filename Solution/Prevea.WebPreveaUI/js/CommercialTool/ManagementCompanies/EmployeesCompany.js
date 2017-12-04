@@ -1,6 +1,6 @@
-﻿var _EmployeesCompany = kendo.observable({
+﻿var EmployeesCompany = kendo.observable({
 
-    gridEmployeesCompanyId: "_gridEmployeesCompany",
+    gridEmployeesCompanyId: "gridEmployeesCompany",
     confirmId: "confirm",
 
     companyId: null,
@@ -55,7 +55,7 @@
                 width: 120,
                 groupable: "false",
                 filterable: false,                
-                template: "#= _EmployeesCompany.getColumnTemplateCommands(data) #"
+                template: "#= EmployeesCompany.getColumnTemplateCommands(data) #"
             }],
             pageable: {
                 buttonCount: 2,
@@ -159,20 +159,20 @@
             },
             transport: {
                 read: {
-                    url: "/Company/_EmployeesCompany_Read",
+                    url: "/Company/EmployeesCompany_Read",
                     dataType: "jsonp",
                     data: { companyId: this.companyId }
                 },
                 update: {
-                    url: "/Company/_EmployeesCompany_Update",
+                    url: "/Company/EmployeesCompany_Update",
                     dataType: "jsonp"
                 },
                 destroy: {
-                    url: "/Company/_EmployeesCompany_Destroy",
+                    url: "/Company/EmployeesCompany_Destroy",
                     dataType: "jsonp"
                 },
                 create: {
-                    url: "/Company/_EmployeesCompany_Create",
+                    url: "/Company/EmployeesCompany_Create",
                     dataType: "jsonp"
                 },
                 parameterMap: function (options, operation) {
@@ -213,10 +213,10 @@
     getColumnTemplateCommands: function (data) {
         var html = "<div align='center'>";        
         if (data.UserStateId === 2 || data.UserStateId === 3) {
-            html += kendo.format("<a toggle='tooltip' title='Dar de Alta' onclick='_EmployeesCompany.goToSubscribeEmployeeCompany(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-thumbs-up' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+            html += kendo.format("<a toggle='tooltip' title='Dar de Alta' onclick='EmployeesCompany.goToSubscribeEmployeeCompany(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-thumbs-up' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
         } else {
-            html += kendo.format("<a toggle='tooltip' title='Editar' onclick='_EmployeesCompany.goToEditEmployeeCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
-            html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='_EmployeesCompany.goToDeleteEmployeeCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+            html += kendo.format("<a toggle='tooltip' title='Editar' onclick='EmployeesCompany.goToEditEmployeeCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+            html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='EmployeesCompany.goToDeleteEmployeeCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
         }        
         html += kendo.format("</div>");
 
@@ -224,7 +224,7 @@
     },
 
     goToEditEmployeeCompany: function (userId) {
-        var grid = $("#" + _EmployeesCompany.gridEmployeesCompanyId).data("kendoGrid");
+        var grid = $("#" + EmployeesCompany.gridEmployeesCompanyId).data("kendoGrid");
         var item = grid.dataSource.get(userId);
         var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
 
@@ -253,7 +253,7 @@
                 {
                     text: "Borrar", action: function ()
                     {
-                        var grid = $("#" + _EmployeesCompany.gridEmployeesCompanyId).data("kendoGrid");
+                        var grid = $("#" + EmployeesCompany.gridEmployeesCompanyId).data("kendoGrid");
                         var item = grid.dataSource.get(userId);
                         var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
 
@@ -269,7 +269,7 @@
         var that = this;
 
         $.ajax({
-            url: "/Company/_EmployeesCompany_Subscribe",
+            url: "/Company/EmployeesCompany_Subscribe",
             type: "post",
             cache: false,
             datatype: "json",
@@ -279,7 +279,7 @@
                 subscribe: subscribe
             },
             success: function (result) {
-                var grid = $("#" + _EmployeesCompany.gridEmployeesCompanyId).data("kendoGrid");
+                var grid = $("#" + EmployeesCompany.gridEmployeesCompanyId).data("kendoGrid");
                 var item = grid.dataSource.get(userId);
                 var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
 

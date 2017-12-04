@@ -35,7 +35,7 @@
 
             case "company|administration":
             case "br-companies":
-                url = "/Company/_Companies";
+                url = "/Company/Companies";
                 break;
 
             case "company|simulator":

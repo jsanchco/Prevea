@@ -28,15 +28,6 @@
         }
 
         [HttpGet]
-        [AppAuthorize(Roles = "Super,Admin")]
-        public JsonResult Companies_Read([DataSourceRequest] DataSourceRequest request)
-        {
-            var data = AutoMapper.Mapper.Map<List<CompanyViewModel>>(Service.GetCompanies());
-
-            return this.Jsonp(data);
-        }
-
-        [HttpGet]
         public ActionResult DetailCompany(int id, int selectTabId)
         {
             var company = Service.GetCompany(id);
@@ -47,33 +38,44 @@
         }
 
         [HttpGet]
-        public ActionResult AddCompany()
+        [AppAuthorize(Roles = "Super,Admin")]
+        public JsonResult Companies_Read([DataSourceRequest] DataSourceRequest request)
         {
-            return PartialView();
+            var data = AutoMapper.Mapper.Map<List<CompanyViewModel>>(Service.GetCompanies());
+
+            return this.Jsonp(data);
         }
 
-        [HttpPost]
-        public ActionResult SaveCompany(Company company)
+        public JsonResult Companies_Create()
         {
             try
             {
-                company.GestorId = User.Id;
+                var company = this.DeserializeObject<Company>("company");
+                if (company == null)
+                {
+                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación de la Empresa" });
+                }
 
+                company.FromSimulator = false;
+                company.GestorId = User.Id;
                 var result = Service.SaveCompany(company);
 
-                if (result.Status != Status.Error)
-                    return PartialView("Companies");
-
-                ViewBag.Error = new List<string> { result.Message };
-
-                return PartialView("Companies");
+                return result.Status != Status.Error ? this.Jsonp(company) : this.Jsonp(new { Errors = "Se ha producido un error en la Grabación de la Empresa" });
             }
             catch (Exception e)
             {
-                ViewBag.Error = new List<string> { e.Message };
+                System.Diagnostics.Debug.WriteLine(e.Message);
 
-                return PartialView("Companies");
+                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación de la Empresa" });
             }
+        }
+
+        [HttpPost]
+        public JsonResult Company_Subscribe(int companyId, bool subscribe)
+        {
+            var result = Service.SubscribeCompany(companyId, subscribe);
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
@@ -130,200 +132,6 @@
 
         #endregion
 
-        #region ContactPersons
-
-        [HttpGet]
-        public ActionResult ContactPersonsCompany(int companyId)
-        {
-            return PartialView(Service.GetCompany(companyId));
-        }
-
-        [HttpGet]
-        [AppAuthorize(Roles = "Super,Admin")]
-        public JsonResult ContactPersonsCompany_Read([DataSourceRequest] DataSourceRequest request, int companyId)
-        {
-            var data = AutoMapper.Mapper.Map<List<UserViewModel>>(Service.GetContactPersonsByCompany(companyId));
-
-            return this.Jsonp(data);
-        }
-
-        [HttpGet]
-        public ActionResult AddContactPersonCompany(int companyId, int userId)
-        {
-            var company = Service.GetCompany(companyId);
-
-            if (userId != 0)
-            {
-                var data = AutoMapper.Mapper.Map<UserViewModel>(Service.GetUser(userId));
-
-                data.CompanyId = companyId;
-                data.CompanyName = company.Name;
-                data.CompanyEnrollment = company.Enrollment;
-
-                return PartialView(data);
-            }
-
-            return PartialView(new UserViewModel
-            {
-                CompanyId = companyId,
-                CompanyName = company.Name,
-                CompanyEnrollment = company.Enrollment,
-                UserStateId = (int)EnUserState.Alta
-            });
-        }
-
-        [HttpGet]
-        [AppAuthorize(Roles = "Super,Admin")]
-        public ActionResult DeleteContactPersonCompany(int companyId, int userId)
-        {
-            var company = Service.GetCompany(companyId);
-
-            if (userId != 0)
-            {
-                var data = AutoMapper.Mapper.Map<UserViewModel>(Service.GetUser(userId));
-
-                data.CompanyId = companyId;
-                data.CompanyName = company.Name;
-                data.CompanyEnrollment = company.Enrollment;
-
-                return PartialView(data);
-            }
-
-            return PartialView(new UserViewModel
-            {
-                CompanyId = companyId,
-                CompanyName = company.Name,
-                CompanyEnrollment = company.Enrollment,
-                UserStateId = (int)EnUserState.Alta
-            });
-        }
-
-        public ActionResult DeleteContactPerson(int companyId, int userId)
-        {
-            try
-            {
-                var company = Service.GetCompany(companyId);
-
-                var result = Service.DeleteContactPersonCompany(companyId, userId);
-
-                ViewBag.SelectTabId = 1;
-
-                if (result.Status != Status.Error)
-                {
-                    ViewBag.Notification = result.Message;
-
-                    return PartialView("DetailCompany", company);
-                }
-
-                ViewBag.Error = new List<string> { result.Message };
-
-                var data = AutoMapper.Mapper.Map<UserViewModel>(Service.GetUser(userId));
-
-                data.CompanyId = companyId;
-                data.CompanyName = company.Name;
-                data.CompanyEnrollment = company.Enrollment;
-
-                return PartialView("DeleteContactPersonCompany", data);
-
-            }
-            catch (Exception e)
-            {
-                var company = Service.GetCompany(companyId);
-
-                ViewBag.Error = new List<string> { e.Message };
-
-                var data = AutoMapper.Mapper.Map<UserViewModel>(Service.GetUser(userId));
-
-                data.CompanyId = companyId;
-                data.CompanyName = company.Name;
-                data.CompanyEnrollment = company.Enrollment;
-
-                return PartialView("DeleteContactPersonCompany", data);
-            }
-        }
-
-        public ActionResult SubscribeContactPersonCompany(int companyId, int userId, bool subscribe)
-        {
-            try
-            {
-                var company = Service.GetCompany(companyId);
-
-                var result = Service.SubscribeContactPersonCompany(companyId, userId, subscribe);
-
-                ViewBag.SelectTabId = 1;
-
-                if (result.Status != Status.Error)
-                {
-                    ViewBag.Notification = result.Message;
-
-                    return PartialView("DetailCompany", company);
-                }
-
-                ViewBag.Error = new List<string> { result.Message };
-
-                var data = AutoMapper.Mapper.Map<UserViewModel>(Service.GetUser(userId));
-
-                data.CompanyId = companyId;
-                data.CompanyName = company.Name;
-                data.CompanyEnrollment = company.Enrollment;
-
-                return PartialView("DeleteContactPersonCompany", data);
-            }
-            catch (Exception e)
-            {
-                var company = Service.GetCompany(companyId);
-
-                ViewBag.Error = new List<string> { e.Message };
-
-                var data = AutoMapper.Mapper.Map<UserViewModel>(Service.GetUser(userId));
-
-                data.CompanyId = companyId;
-                data.CompanyName = company.Name;
-                data.CompanyEnrollment = company.Enrollment;
-
-                return PartialView("DeleteContactPersonCompany", data);
-            }
-        }
-
-        [HttpPost]
-        public ActionResult SaveContactPersonCompany(UserViewModel userViewModel)
-        {
-            try
-            {
-                var data = AutoMapper.Mapper.Map<User>(userViewModel);
-
-                if (userViewModel.CompanyId == null)
-                {
-                    ViewBag.Notification = "Se ha producido un error en la Grabación de la Persona de Contacto";
-
-                    return PartialView("Companies");
-                }
-
-                var result = Service.SaveContactPersonCompany((int)EnRole.ContactPerson, (int)userViewModel.CompanyId, data);
-                if (result.Status != Status.Error)
-                {
-                    var company = Service.GetCompany((int)userViewModel.CompanyId);
-
-                    ViewBag.SelectTabId = 1;
-                    ViewBag.Notification = "La Persona de Contacto se ha guardado correctamente";
-
-                    return PartialView("DetailCompany", company);
-                }
-
-                ViewBag.Error = new List<string> { result.Message };
-
-                return PartialView("AddContactPersonCompany", new UserViewModel { CompanyId = userViewModel.CompanyId });
-            }
-            catch (Exception e)
-            {
-                ViewBag.Error = new List<string> { e.Message };
-
-                return PartialView("Companies");
-            }
-        }
-
-        #endregion
-
         #region Agency
 
         [HttpGet]
@@ -369,199 +177,6 @@
                 ViewBag.Error = new List<string> { e.Message };
 
                 return PartialView("DetailCompany", company);
-            }
-        }
-
-        #endregion
-
-        #region Employees
-
-        [HttpGet]
-        public ActionResult EmployeesCompany(int companyId)
-        {
-            return PartialView(Service.GetCompany(companyId));
-        }
-
-        [HttpGet]
-        [AppAuthorize(Roles = "Super,Admin")]
-        public JsonResult EmployeesCompany_Read([DataSourceRequest] DataSourceRequest request, int companyId)
-        {
-            var data = AutoMapper.Mapper.Map<List<UserViewModel>>(Service.GetEmployeesByCompany(companyId));
-
-            return this.Jsonp(data);
-        }
-
-        [HttpGet]
-        public ActionResult AddEmployeeCompany(int companyId, int userId)
-        {
-            var company = Service.GetCompany(companyId);
-
-            if (userId != 0)
-            {
-                var data = AutoMapper.Mapper.Map<UserViewModel>(Service.GetUser(userId));
-
-                data.CompanyId = companyId;
-                data.CompanyName = company.Name;
-                data.CompanyEnrollment = company.Enrollment;
-
-                return PartialView(data);
-            }
-
-            return PartialView(new UserViewModel
-            {
-                CompanyId = companyId,
-                CompanyName = company.Name,
-                CompanyEnrollment = company.Enrollment,
-                UserStateId = (int)EnUserState.Alta
-            });
-        }
-
-        [HttpGet]
-        [AppAuthorize(Roles = "Super,Admin")]
-        public ActionResult DeleteEmployeeCompany(int companyId, int userId)
-        {
-            var company = Service.GetCompany(companyId);
-
-            if (userId != 0)
-            {
-                var data = AutoMapper.Mapper.Map<UserViewModel>(Service.GetUser(userId));
-
-                data.CompanyId = companyId;
-                data.CompanyName = company.Name;
-                data.CompanyEnrollment = company.Enrollment;
-
-                return PartialView(data);
-            }
-
-            return PartialView(new UserViewModel
-            {
-                CompanyId = companyId,
-                CompanyName = company.Name,
-                CompanyEnrollment = company.Enrollment,
-                UserStateId = (int)EnUserState.Alta
-            });
-        }
-
-        public ActionResult DeleteEmployee(int companyId, int userId)
-        {
-            try
-            {
-                var company = Service.GetCompany(companyId);
-
-                var result = Service.DeleteEmployeeCompany(companyId, userId);
-
-                ViewBag.SelectTabId = 3;
-
-                if (result.Status != Status.Error)
-                {
-                    ViewBag.Notification = result.Message;
-
-                    return PartialView("DetailCompany", company);
-                }
-
-                ViewBag.Error = new List<string> { result.Message };
-
-                var data = AutoMapper.Mapper.Map<UserViewModel>(Service.GetUser(userId));
-
-                data.CompanyId = companyId;
-                data.CompanyName = company.Name;
-                data.CompanyEnrollment = company.Enrollment;
-
-                return PartialView("DeleteEmployeeCompany", data);
-            }
-            catch (Exception e)
-            {
-                var company = Service.GetCompany(companyId);
-
-                ViewBag.Error = new List<string> { e.Message };
-
-                var data = AutoMapper.Mapper.Map<UserViewModel>(Service.GetUser(userId));
-
-                data.CompanyId = companyId;
-                data.CompanyName = company.Name;
-                data.CompanyEnrollment = company.Enrollment;
-
-                return PartialView("DeleteEmployeeCompany", data);
-            }
-        }
-
-        public ActionResult SubscribeEmployeeCompany(int companyId, int userId, bool subscribe)
-        {
-            try
-            {
-                var company = Service.GetCompany(companyId);
-
-                var result = Service.SubscribeEmployeeCompany(companyId, userId, subscribe);
-
-                ViewBag.SelectTabId = 3;
-
-                if (result.Status != Status.Error)
-                {
-                    ViewBag.Notification = result.Message;
-
-                    return PartialView("DetailCompany", company);
-                }
-
-                ViewBag.Error = new List<string> { result.Message };
-
-                var data = AutoMapper.Mapper.Map<UserViewModel>(Service.GetUser(userId));
-
-                data.CompanyId = companyId;
-                data.CompanyName = company.Name;
-                data.CompanyEnrollment = company.Enrollment;
-
-                return PartialView("DeleteEmployeeCompany", data);
-            }
-            catch (Exception e)
-            {
-                var company = Service.GetCompany(companyId);
-
-                ViewBag.Error = new List<string> { e.Message };
-
-                var data = AutoMapper.Mapper.Map<UserViewModel>(Service.GetUser(userId));
-
-                data.CompanyId = companyId;
-                data.CompanyName = company.Name;
-                data.CompanyEnrollment = company.Enrollment;
-
-                return PartialView("DeleteEmployeeCompany", data);
-            }
-        }
-
-        [HttpPost]
-        public ActionResult SaveEmployeeCompany(UserViewModel userViewModel)
-        {
-            try
-            {
-                var data = AutoMapper.Mapper.Map<User>(userViewModel);
-
-                if (userViewModel.CompanyId == null)
-                {
-                    ViewBag.Notification = "Se ha producido un error en la Grabación del Trabajador";
-
-                    return PartialView("Companies");
-                }
-
-                var result = Service.SaveEmployeeCompany((int)EnRole.Employee, (int)userViewModel.CompanyId, data);
-                if (result.Status != Status.Error)
-                {
-                    var company = Service.GetCompany((int)userViewModel.CompanyId);
-
-                    ViewBag.SelectTabId = 3;
-                    ViewBag.Notification = "El Trabajador se ha guardado correctamente";
-
-                    return PartialView("DetailCompany", company);
-                }
-
-                ViewBag.Error = new List<string> { result.Message };
-
-                return PartialView("AddEmployeeCompany", new UserViewModel { CompanyId = userViewModel.CompanyId });
-            }
-            catch (Exception e)
-            {
-                ViewBag.Error = new List<string> { e.Message };
-
-                return PartialView("AddEmployeeCompany", new UserViewModel { CompanyId = userViewModel.CompanyId });
             }
         }
 
@@ -754,17 +369,17 @@
 
         #endregion
 
-        #region _Employees
+        #region Employees
 
         [HttpGet]
-        public ActionResult _EmployeesCompany(int companyId)
+        public ActionResult EmployeesCompany(int companyId)
         {
             return PartialView(Service.GetCompany(companyId));
         }
 
         [HttpGet]
         [AppAuthorize(Roles = "Super,Admin")]
-        public JsonResult _EmployeesCompany_Read([DataSourceRequest] DataSourceRequest request, int companyId)
+        public JsonResult EmployeesCompany_Read([DataSourceRequest] DataSourceRequest request, int companyId)
         {
             var data = AutoMapper.Mapper.Map<List<UserViewModel>>(Service.GetEmployeesByCompany(companyId));
             foreach (var employee in data)
@@ -783,7 +398,7 @@
             return this.Jsonp(data);
         }
 
-        public JsonResult _EmployeesCompany_Update()
+        public JsonResult EmployeesCompany_Update()
         {
             try
             {
@@ -806,7 +421,7 @@
             }
         }
 
-        public ActionResult _EmployeesCompany_Destroy()
+        public ActionResult EmployeesCompany_Destroy()
         {
             try
             {
@@ -833,7 +448,7 @@
             }
         }
 
-        public ActionResult _EmployeesCompany_Create()
+        public ActionResult EmployeesCompany_Create()
         {
             try
             {
@@ -865,7 +480,7 @@
         }
 
         [HttpPost]
-        public JsonResult _EmployeesCompany_Subscribe(int companyId, int userId, bool subscribe)
+        public JsonResult EmployeesCompany_Subscribe(int companyId, int userId, bool subscribe)
         {
             try
             {
@@ -883,17 +498,17 @@
 
         #endregion
 
-        #region _ContactPersons
+        #region ContactPersons
 
         [HttpGet]
-        public ActionResult _ContactPersonsCompany(int companyId)
+        public ActionResult ContactPersonsCompany(int companyId)
         {
             return PartialView(Service.GetCompany(companyId));
         }
 
         [HttpGet]
         [AppAuthorize(Roles = "Super,Admin")]
-        public JsonResult _ContactPersonsCompany_Read([DataSourceRequest] DataSourceRequest request, int companyId)
+        public JsonResult ContactPersonsCompany_Read([DataSourceRequest] DataSourceRequest request, int companyId)
         {
             var data = AutoMapper.Mapper.Map<List<UserViewModel>>(Service.GetContactPersonsByCompany(companyId));
             foreach (var contactPerson in data)
@@ -904,7 +519,7 @@
             return this.Jsonp(data);
         }
 
-        public JsonResult _ContactPersonsCompany_Update()
+        public JsonResult ContactPersonsCompany_Update()
         {
             try
             {
@@ -927,7 +542,7 @@
             }
         }
 
-        public ActionResult _ContactPersonsCompany_Destroy()
+        public ActionResult ContactPersonsCompany_Destroy()
         {
             try
             {
@@ -954,7 +569,7 @@
             }
         }
 
-        public ActionResult _ContactPersonsCompany_Create()
+        public ActionResult ContactPersonsCompany_Create()
         {
             try
             {
@@ -986,7 +601,7 @@
         }
 
         [HttpPost]
-        public JsonResult _ContactPersonsCompany_Subscribe(int companyId, int userId, bool subscribe)
+        public JsonResult ContactPersonsCompany_Subscribe(int companyId, int userId, bool subscribe)
         {
             try
             {
@@ -1000,58 +615,6 @@
 
                 return Json(subscribe ? new { Errors = "Se ha producido un error al Dar de Alta a la Persona de Contacto" } : new { Errors = "Se ha producido un error al Dar de Baja a la Persona de Contacto" });
             }
-        }
-
-        #endregion
-
-        #region _Companies
-
-        [HttpGet]
-        [AppAuthorize(Roles = "Super,Admin")]
-        public ActionResult _Companies()
-        {
-            return PartialView();
-        }
-
-        [HttpGet]
-        [AppAuthorize(Roles = "Super,Admin")]
-        public JsonResult _Companies_Read([DataSourceRequest] DataSourceRequest request)
-        {
-            var data = AutoMapper.Mapper.Map<List<CompanyViewModel>>(Service.GetCompanies());
-
-            return this.Jsonp(data);
-        }
-
-        public JsonResult _Companies_Create()
-        {
-            try
-            {
-                var company = this.DeserializeObject<Company>("company");
-                if (company == null)
-                {
-                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación de la Empresa" });
-                }
-
-                company.FromSimulator = false;
-                company.GestorId = User.Id;
-                var result = Service.SaveCompany(company);
-
-                return result.Status != Status.Error ? this.Jsonp(company) : this.Jsonp(new { Errors = "Se ha producido un error en la Grabación de la Empresa" });
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine(e.Message);
-
-                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación de la Empresa" });
-            }
-        }
-
-        [HttpPost]
-        public JsonResult _Company_Subscribe(int companyId, bool subscribe)
-        {
-            var result = Service.SubscribeCompany(companyId, subscribe);
-
-            return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
