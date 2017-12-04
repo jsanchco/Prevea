@@ -38,9 +38,13 @@
                 url = "/Company/Companies";
                 break;
 
-            case "company|simulator":
-            case "br-simulators":
-                url = "/Company/Simulators";
+            //case "company|simulator":
+            //case "br-simulators":
+            //    url = "/Company/Simulators";
+            //    break;
+
+            case "commercialTool|simulations":
+                url = "/Simulations/Simulations";
                 break;
 
             case "br-document-addDocument":
