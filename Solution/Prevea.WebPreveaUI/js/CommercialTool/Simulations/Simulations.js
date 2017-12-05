@@ -1,17 +1,19 @@
-﻿var Simulators = kendo.observable({
+﻿/// <reference path="~/Scripts/kendo/2016.3.1118/kendo.all-vsdoc.js" />
 
-    gridSimulatorsId: "gridSimulators",
+var Simulations = kendo.observable({
+
+    gridSimulationsId: "gridSimulations",
     confirmId: "confirm",
 
-    simulatorsDataSource: null,
+    simulationsDataSource: null,
 
     init: function () {
-        this.createSimulatorsDataSource();
-        this.createGridSimulators();
+        this.createSimulationsDataSource();
+        this.createGridSimulations();
     },
 
-    createSimulatorsDataSource: function () {
-        this.simulatorsDataSource = new kendo.data.DataSource({
+    createSimulationsDataSource: function () {
+        this.simulationsDataSource = new kendo.data.DataSource({
             schema: {
                 model: {
                     id: "Id",
@@ -27,20 +29,20 @@
             },
             transport: {
                 read: {
-                    url: "/Company/Simulators_Read",
+                    url: "/CommercialTool/Simulations/Simulations_Read",
                     dataType: "jsonp"
                 },
                 destroy: {
-                    url: "/Company/Simulators_Destroy",
+                    url: "/CommercialTool/Simulations/Simulations_Destroy",
                     dataType: "jsonp"
                 },
                 create: {
-                    url: "/Company/Simulators_Create",
+                    url: "/CommercialTool/Simulations/Simulations_Create",
                     dataType: "jsonp"
                 },
                 parameterMap: function (options, operation) {
                     if (operation !== "read" && options) {
-                        return { simulator: kendo.stringify(options) };
+                        return { simulation: kendo.stringify(options) };
                     }
 
                     return null;
@@ -61,9 +63,9 @@
         });
     },
 
-    createGridSimulators: function () {
+    createGridSimulations: function () {
         //var that = this;
-        $("#" + this.gridSimulatorsId).kendoGrid({
+        $("#" + this.gridSimulationsId).kendoGrid({
             columns: [
                 {
                     field: "Name",
@@ -91,7 +93,7 @@
                     width: 130,
                     groupable: "false",
                     filterable: false,
-                    template: "#= Simulators.getColumnTemplateCommands(data) #"
+                    template: "#= Simulations.getColumnTemplateCommands(data) #"
                 }],
             pageable: {
                 buttonCount: 2,
@@ -136,7 +138,7 @@
                     }
                 }
             },
-            dataSource: this.simulatorsDataSource,
+            dataSource: this.simulationsDataSource,
             toolbar: this.getTemplateToolBar(),
             editable: {
                 mode: "inline",
@@ -161,12 +163,12 @@
             }
 
         });
-        kendo.bind($("#" + this.gridSimulatorsId), this);
+        kendo.bind($("#" + this.gridSimulationsId), this);
     },
 
     getTemplateToolBar: function () {
         var html = "<div class='toolbar'>";
-        html += "<span name='create' class='k-grid-add' id='createUser'>";
+        html += "<span name='create' class='k-grid-add' id='createSimulation'>";
         html += "<a class='btn btn-prevea' role='button'> Agregar nuevo</a>";
         html += "</span></div>";
 
@@ -176,35 +178,35 @@
     getColumnTemplateCommands: function (data) {
         var html = "<div align='center'>";
         if (data.IsBlocked === true) {
-            html += kendo.format("<a toggle='tooltip' title='Ir a Empresa' onclick='Simulators.goToCompanyFromSimulator(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+            html += kendo.format("<a toggle='tooltip' title='Ir a Empresa' onclick='Simulations.goToCompanyFromSimulation(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
         } else {
-            html += kendo.format("<a toggle='tooltip' title='Detalle' onclick='Simulators.goToEditSimulator(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
-            html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='Simulators.goToDeleteSimulator(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+            html += kendo.format("<a toggle='tooltip' title='Detalle' onclick='Simulations.goToEditSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+            html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
         }
         html += kendo.format("</div>");
 
         return html;
     },
 
-    goToSimulators: function () {
+    goToSimulations: function () {
         var params = {
-            url: "/Company/Simulators",
+            url: "/CommercialTool/Simulations/Simulations",
             data: {}
         };
         GeneralData.goToActionController(params);
     },
 
-    goToEditSimulator: function (id) {
+    goToEditSimulation: function (id) {
         var params = {
-            url: "/Company/EditSimulator",
+            url: "/CommercialTool/Simulations/EditSimulator",
             data: {
-                simulatorId: id
+                simulationId: id
             }
         };
         GeneralData.goToActionController(params);
     },
 
-    goToDeleteSimulator: function (simulatorId) {
+    goToDeleteSimulation: function (simulationId) {
         var dialog = $("#" + this.confirmId);
         dialog.kendoDialog({
             width: "400px",
@@ -218,8 +220,8 @@
                 },
                 {
                     text: "Borrar", action: function () {
-                        var grid = $("#" + Simulators.gridSimulatorsId).data("kendoGrid");
-                        var item = grid.dataSource.get(simulatorId);
+                        var grid = $("#" + Simulations.gridSimulationsId).data("kendoGrid");
+                        var item = grid.dataSource.get(simulationId);
                         var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
 
                         grid.removeRow(tr);
@@ -230,9 +232,9 @@
         dialog.data("kendoDialog").open();
     },
 
-    goToCompanyFromSimulator: function (id) {
+    goToCompanyFromSimulation: function (id) {
         var params = {
-            url: "/Company/CompanyFromSimulator",
+            url: "/CommercialTool/Simulations/CompanyFromSimulation",
             data: {
                 simulatorId: id
             }

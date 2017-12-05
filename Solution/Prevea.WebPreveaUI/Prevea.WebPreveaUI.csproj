@@ -179,6 +179,7 @@
     </Compile>
     <Compile Include="HelpersClass\AppAuthorize.cs" />
     <Compile Include="HelpersClass\BaseController.cs" />
+    <Compile Include="HelpersClass\PreveaViewEngine.cs" />
     <Compile Include="HelpersClass\RenderPartialMenuRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\AppAuthorizeAttribute.cs" />
@@ -644,10 +645,10 @@
     <Content Include="js\CommercialTool\ManagementCompanies\DetailCompany.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\ContractualsDocumentsCompany.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\EconomicDataCompany.js" />
-    <Content Include="js\CommercialTool\Simulations\EditSimulator.js" />
+    <Content Include="js\CommercialTool\Simulations\EditSimulation.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\GeneralDataCompany.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\PaymentMethodCompany.js" />
-    <Content Include="js\CommercialTool\Simulations\Simulators.js" />
+    <Content Include="js\CommercialTool\Simulations\Simulations.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\Companies.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\ContactPersonsCompany.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\EmployeesCompany.js" />
@@ -1088,7 +1089,8 @@
     <Content Include="Views\Company\ContractualsDocumentsCompany.cshtml" />
     <Content Include="Views\User\Users.cshtml" />
     <Content Include="Views\Notification\Notifications.cshtml" />
-    <Content Include="Views\Simulations\Simulations.cshtml" />
+    <Content Include="Views\CommercialTool\Simulations\Simulations.cshtml" />
+    <Content Include="Views\CommercialTool\Simulations\EditSimulation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
