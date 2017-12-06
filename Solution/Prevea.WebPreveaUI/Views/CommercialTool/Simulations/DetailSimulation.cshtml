@@ -1,0 +1,103 @@
+﻿@model Simulation
+
+<script>
+    DetailSimulation.init("@Model.Id", @ViewBag.SelectTabId);
+</script>
+
+<style>    
+     .k-dropdown .k-input, .k-dropdown .k-state-focused .k-input, .k-menu .k-popup {
+         color: #999999;
+         height: 31px;
+         padding: 6px;
+    }
+
+    .k-autocomplete.k-state-default, .k-dropdown-wrap.k-state-default, .k-numeric-wrap.k-state-default, .k-picker-wrap.k-state-default {
+        border: 1px solid #ebebeb;
+        border-radius: 3px;
+    }
+
+    #tabStripDetailSimulation {
+        border-width: 0;
+    }
+
+    #tabStripDetailSimulation .k-panelbar > li.k-state-default > .k-link, .k-tabstrip-items .k-state-default .k-link {
+        font-weight: bold;
+        font-size: 15px;
+        padding: 0.8em;
+    }
+
+    #tabStripDetailSimulation .k-panelbar .k-tabstrip-top .k-tabstrip-items .k-state-active, .k-tabstrip-top .k-tabstrip-items .k-state-active {
+        border-bottom-width: 6px;
+        border-top-width: 0;
+        border-left-width: 0;
+        border-right-width: 0;
+    }
+
+    #tabStripDetailSimulation .k-animation-container, .k-animation-container *, .k-animation-container ::after, .k-block .k-header, .k-list-container, .k-widget, .k-widget *, .k-widget ::before {
+        box-sizing: border-box;
+    }
+
+    .k-multiselect-wrap {
+        height: 31px;
+    }
+
+    .k-dropdown .k-input, .k-dropdown .k-state-focused .k-input, .k-menu .k-popup {
+        color: #555555;
+    }
+</style>
+
+<div class="row" id="pageDetailSimulation" style="margin: 8px">
+
+    <span id="spanNotification" style="display: none;"></span>
+
+    <div class="row">
+        <H1>Herramienta Comercial</H1>
+    </div><br />
+
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <!-- Breadcrumb 2 -->
+            <ol class="breadcrumb bc-2">
+                <li class="active">
+                    <a id="br-simulations" onclick="DetailSimulation.goToSimulations(this)" style="cursor: pointer;">
+                        <i class="fa fa-magic"></i>
+                        Simulaciones
+                    </a>
+                </li>
+                <li class="active">
+                    <a onclick="DetailSimulation.goToDetailSimulation(this)" style="cursor: pointer;">
+                        <strong>Detalle Simulación</strong>
+                    </a>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="tile-stats tile-blue">
+
+                <div class="num">@Model.NIF</div>
+
+                <h3><strong>@Model.CompanyName </strong>(@Model.NumberEmployees empleados)</h3>
+
+            </div>
+
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div id="tabStripDetailSimulation"></div>
+
+        </div>
+    </div>
+
+</div>

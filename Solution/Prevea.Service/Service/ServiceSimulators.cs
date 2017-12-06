@@ -11,21 +11,21 @@
 
     public partial class Service
     {
-        public Simulator GetSimulator(int simulatorId)
+        public Simulation GetSimulation(int simulatorId)
         {
-            return Repository.GetSimulator(simulatorId);
+            return Repository.GetSimulation(simulatorId);
         }
 
-        public List<Simulator> GetSimulators()
+        public List<Simulation> GetSimulations()
         {
-            return Repository.GetSimulators();
+            return Repository.GetSimulations();
         }
 
-        public Result SaveSimulator(Simulator simulator)
+        public Result SaveSimulation(Simulation simulator)
         {
             try
             {
-                simulator = Repository.SaveSimulator(simulator);                
+                simulator = Repository.SaveSimulation(simulator);                
 
                 if (simulator == null)
                 {
@@ -37,7 +37,7 @@
                     };
                 }
 
-                var simulatorCompany = Repository.SaveSimulatorCompany(simulator.Id);
+                var simulatorCompany = Repository.SaveSimulationCompany(simulator.Id);
 
                 if (simulatorCompany == null)
                 {
@@ -67,11 +67,11 @@
             }
         }
 
-        public Result UpdateSimulator(int simulatorId, Simulator simulator)
+        public Result UpdateSimulation(int simulatorId, Simulation simulator)
         {
             try
             {
-                simulator = Repository.UpdateSimulator(simulatorId, simulator);
+                simulator = Repository.UpdateSimulation(simulatorId, simulator);
 
                 if (simulator == null)
                 {
@@ -101,11 +101,11 @@
             }
         }
 
-        public Result DeleteSimulator(int simulatorId)
+        public Result DeleteSimulation(int simulatorId)
         {
             try
             {
-                var result = Repository.DeleteSimulator(simulatorId);
+                var result = Repository.DeleteSimulation(simulatorId);
 
                 if (result == false)
                 {
@@ -135,16 +135,16 @@
             }
         }
 
-        public List<Simulator> GetSimulatorsByUser(int userId)
+        public List<Simulation> GetSimulationsByUser(int userId)
         {
-            return Repository.GetSimulatorsByUser(userId);
+            return Repository.GetSimulationByUser(userId);
         }
 
         public Result SendToCompanies(int simulatorId)
         {
             try
             {
-                var simulator = Repository.GetSimulator(simulatorId);
+                var simulator = Repository.GetSimulation(simulatorId);
                 if (simulator == null)
                 {
                     return new Result
@@ -155,7 +155,7 @@
                     };
                 }
 
-                simulator = Repository.UpdateSimulator(simulatorId, simulator);
+                simulator = Repository.UpdateSimulation(simulatorId, simulator);
                 if (simulator == null)
                 {
                     return new Result
@@ -224,7 +224,7 @@
                         Status = Status.Error
                     };
                 }
-                var simulatorCompany = Repository.UpdateSimulatorCompany(simulatorId, company.Id);
+                var simulatorCompany = Repository.UpdateSimulationCompany(simulatorId, company.Id);
                 if (simulatorCompany == null)
                 {
                     return new Result

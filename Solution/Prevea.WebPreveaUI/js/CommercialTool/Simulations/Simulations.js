@@ -19,11 +19,12 @@ var Simulations = kendo.observable({
                     id: "Id",
                     fields: {
                         Id: { type: "number", defaultValue: 0 },
-                        Name: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
+                        CompanyName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         NIF: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         NumberEmployees: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         Date: { type: "date", editable: false },
-                        IsBlocked: { type: "boolean" }
+                        SimulationStateName: { type: "string" },
+                        SimulationStateDescription: { type: "string" }
                     }
                 }
             },
@@ -68,10 +69,10 @@ var Simulations = kendo.observable({
         $("#" + this.gridSimulationsId).kendoGrid({
             columns: [
                 {
-                    field: "Name",
+                    field: "CompanyName",
                     title: "Razón Social",
                     groupable: "false",
-                    template: "#= Templates.getColumnTemplateIncrease(data.Name) #"
+                    template: "#= Templates.getColumnTemplateIncrease(data.CompanyName) #"
                 }, {
                     field: "NIF",
                     title: "NIF",
@@ -87,6 +88,10 @@ var Simulations = kendo.observable({
                     title: "Fecha",
                     groupable: "false",
                     template: "#= Templates.getColumnTemplateDate(data.Date) #"
+                }, {
+                    title: "Estado",
+                    field: "SimulationStateDescription",
+                    template: "#= Simulations.getTemplateSimulationState(data) #"
                 }, {
                     title: "Comandos",
                     field: "Commands",
@@ -175,12 +180,22 @@ var Simulations = kendo.observable({
         return html;
     },
 
+    getTemplateSimulationState: function (data) {
+        var html = "<div class='one-line' style='width: 100%'>";
+        html += kendo.format("<div style='width: 90%; color: #333'>{0}</div>", data.SimulationStateDescription);
+        html += "<div id='circle'></div>";
+        
+        html += "</div>";
+
+        return html;
+    },
+
     getColumnTemplateCommands: function (data) {
         var html = "<div align='center'>";
         if (data.IsBlocked === true) {
             html += kendo.format("<a toggle='tooltip' title='Ir a Empresa' onclick='Simulations.goToCompanyFromSimulation(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
         } else {
-            html += kendo.format("<a toggle='tooltip' title='Detalle' onclick='Simulations.goToEditSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+            html += kendo.format("<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
             html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
         }
         html += kendo.format("</div>");
@@ -196,11 +211,12 @@ var Simulations = kendo.observable({
         GeneralData.goToActionController(params);
     },
 
-    goToEditSimulation: function (id) {
+    goToDetailSimulation: function (id) {
         var params = {
-            url: "/CommercialTool/Simulations/EditSimulator",
+            url: "/CommercialTool/Simulations/DetailSimulation",
             data: {
-                simulationId: id
+                simulationId: id,
+                selectTabId: 0
             }
         };
         GeneralData.goToActionController(params);

@@ -174,17 +174,17 @@
 
         #endregion
 
-        #region Simulator
+        #region Simulation
 
         #region Generic
-        Simulator GetSimulator(int id);
-        List<Simulator> GetSimulators();
-        Simulator SaveSimulator(Simulator simulator);
-        Simulator UpdateSimulator(int id, Simulator simulator);
-        bool DeleteSimulator(int id);
+        Simulation GetSimulation(int id);
+        List<Simulation> GetSimulations();
+        Simulation SaveSimulation(Simulation simulation);
+        Simulation UpdateSimulation(int id, Simulation simulation);
+        bool DeleteSimulation(int id);
         #endregion
 
-        List<Simulator> GetSimulatorsByUser(int userId);
+        List<Simulation> GetSimulationByUser(int userId);
 
         #endregion
 
@@ -209,11 +209,11 @@
 
         #endregion
 
-        #region SimulatorCompany
-        SimulatorCompany GetSimulatorCompany(int simulatorId, int? companyId = null);
-        SimulatorCompany SaveSimulatorCompany(int simulatorId, int? companyId = null);
-        SimulatorCompany UpdateSimulatorCompany(int simulatorId, int companyId);
-        bool DeleteSimulatorCompany(int simulatorId, int companyId);
+        #region Simulation Company
+        SimulationCompany GetSimulatìonCompany(int simulationId, int? companyId = null);
+        SimulationCompany SaveSimulationCompany(int simulationId, int? companyId = null);
+        SimulationCompany UpdateSimulationCompany(int simulationId, int companyId);
+        bool DeleteSimulationCompany(int simulationId, int companyId);
         #endregion
 
         #region Notification

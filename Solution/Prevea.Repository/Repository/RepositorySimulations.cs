@@ -12,29 +12,32 @@
 
     public partial class Repository
     {
-        public Simulator GetSimulator(int id)
+        public Simulation GetSimulation(int id)
         {
-            return Context.Simulators
+            return Context.Simulations
                 .Include(x => x.User)
-                .Include(x => x.SimulatorCompanies)
+                .Include(x => x.SimulationState)
+                .Include(x => x.SimulationCompanies)
                 .FirstOrDefault(m => m.Id == id);
         }
 
-        public List<Simulator> GetSimulators()
+        public List<Simulation> GetSimulations()
         {
-            return Context.Simulators
+            return Context.Simulations
                 .Include(x => x.User)
+                .Include(x => x.SimulationState)
+                .Include(x => x.SimulationCompanies)
                 .OrderBy(x => x.Date)
                 .ToList();
         }
 
-        public Simulator SaveSimulator(Simulator simulator)
+        public Simulation SaveSimulation(Simulation simulator)
         {
             using (var dbContextTransaction = Context.Database.BeginTransaction())
             {
                 try
                 {
-                    Context.Simulators.Add(simulator);
+                    Context.Simulations.Add(simulator);
                     Context.SaveChanges();
 
                     dbContextTransaction.Commit();
@@ -52,13 +55,13 @@
             }
         }
 
-        public Simulator UpdateSimulator(int id, Simulator simulator)
+        public Simulation UpdateSimulation(int id, Simulation simulator)
         {
             using (var dbContextTransaction = Context.Database.BeginTransaction())
             {
                 try
                 {
-                    var simulatorFind = Context.Simulators.Find(id);
+                    var simulatorFind = Context.Simulations.Find(id);
                     if (simulatorFind == null)
                         return null;
 
@@ -79,14 +82,14 @@
             }
         }
 
-        public bool DeleteSimulator(int id)
+        public bool DeleteSimulation(int id)
         {
             using (var dbContextTransaction = Context.Database.BeginTransaction())
             {
                 try
                 {
-                    var simulator = GetSimulator(id);
-                    Context.Simulators.Remove(simulator);
+                    var simulator = GetSimulation(id);
+                    Context.Simulations.Remove(simulator);
 
                     Context.SaveChanges();
 
@@ -104,10 +107,12 @@
             }
         }
 
-        public List<Simulator> GetSimulatorsByUser(int userId)
+        public List<Simulation> GetSimulationByUser(int userId)
         {
-            return Context.Simulators
+            return Context.Simulations
                 .Include(x => x.User)
+                .Include(x => x.SimulationState)
+                .Include(x => x.SimulationCompanies)
                 .OrderBy(x => x.Date)
                 .Where(x => x.User.Id == userId)
                 .ToList();

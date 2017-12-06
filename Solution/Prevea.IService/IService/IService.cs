@@ -146,18 +146,18 @@
 
         #endregion
 
-        #region Simulator
+        #region Simulation
 
         #region Generic
-        Simulator GetSimulator(int simulatorId);
-        List<Simulator> GetSimulators();
-        Result SaveSimulator(Simulator simulator);
-        Result UpdateSimulator(int simulatorId, Simulator simulator);
-        Result DeleteSimulator(int simulatorId);
+        Simulation GetSimulation(int simulationId);
+        List<Simulation> GetSimulations();
+        Result SaveSimulation(Simulation simulation);
+        Result UpdateSimulation(int simulationId, Simulation simulation);
+        Result DeleteSimulation(int simulationId);
         #endregion
 
-        List<Simulator> GetSimulatorsByUser(int userId);
-        Result SendToCompanies(int simulatorId);
+        List<Simulation> GetSimulationsByUser(int userId);
+        Result SendToCompanies(int simulationId);
 
         #endregion
 

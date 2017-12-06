@@ -70,8 +70,8 @@
     <Compile Include="Repository\RepositoryNotifications.cs" />
     <Compile Include="Repository\RepositoryNotificationTypes.cs" />
     <Compile Include="Repository\RepositoryPaymentMethods.cs" />
-    <Compile Include="Repository\RepositorySimulatorCompanies.cs" />
-    <Compile Include="Repository\RepositorySimulators.cs" />
+    <Compile Include="Repository\RepositorySimulationCompanies.cs" />
+    <Compile Include="Repository\RepositorySimulations.cs" />
     <Compile Include="Repository\RepositoryStretchesEmployees.cs" />
     <Compile Include="Repository\RepositoryTrainingServices.cs" />
     <Compile Include="Repository\RepositoryUsers.cs" />

@@ -72,6 +72,6 @@
         public virtual ICollection<UserRole> UserRoles { get; set; }
         public virtual ICollection<HistoricDownloadDocument> HistoricDownloadDocuments { get; set; }
         public virtual ICollection<Company> Companies { get; set; }
-        public virtual ICollection<Simulator> Simulators { get; set; }
+        public virtual ICollection<Simulation> Simulators { get; set; }
     }
 }

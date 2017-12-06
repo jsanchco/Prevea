@@ -6,13 +6,13 @@
 
     #endregion
 
-    public class SimulatorCompany
+    public class SimulationCompany
     {
         [Key, Required]
         public int Id { get; set; }
 
         public int SimulatorId { get; set; }
-        public virtual Simulator Simulator { get; set; }
+        public virtual Simulation Simulator { get; set; }
 
         public int? CompanyId { get; set; }
         public virtual Company Company { get; set; }

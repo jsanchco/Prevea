@@ -6,14 +6,15 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     #endregion
 
-    public class Simulator
+    public class Simulation
     {
         #region Constructor
 
-        public Simulator()
+        public Simulation()
         {
             Date = DateTime.Now;
         }
@@ -32,8 +33,8 @@
         [Required]
         public int NumberEmployees { get; set; }
 
-        public int SimulatorStateId { get; set; }
-        public virtual SimulatorState SimulatorState { get; set; }
+        public int SimulationStateId { get; set; }
+        public virtual SimulationState SimulationState { get; set; }
 
         public virtual ForeignPreventionService ForeignPreventionService { get; set; }
         public virtual AgencyService AgencyService { get; set; }
@@ -44,8 +45,9 @@
         public int UserId { get; set; }
         public virtual User User { get; set; }
 
-        public SimulatorCompany SimulatorCompany => SimulatorCompanies?.FirstOrDefault();
+        [NotMapped]
+        public SimulationCompany SimulationCompany => SimulationCompanies?.FirstOrDefault();
 
-        public virtual ICollection<SimulatorCompany> SimulatorCompanies { get; set; }
+        public virtual ICollection<SimulationCompany> SimulationCompanies { get; set; }
     }
 }

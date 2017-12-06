@@ -233,13 +233,13 @@ namespace Prevea.ConsoleTestModel.Migrations
             }
             context.SaveChanges();
 
-            var simulatorStates = (EnSimulatorState[])Enum.GetValues(typeof(EnSimulatorState));
+            var simulatorStates = (EnSimulationState[])Enum.GetValues(typeof(EnSimulationState));
             foreach (var dState in simulatorStates)
             {
-                if (dState == EnSimulatorState.NotMapped)
+                if (dState == EnSimulationState.NotMapped)
                     continue;
 
-                context.SimulatorStates.AddOrUpdate(new SimulatorState { Name = dState.ToString() });
+                context.SimulationStates.AddOrUpdate(new SimulationState { Name = dState.ToString() });
             }
             context.SaveChanges();
         }

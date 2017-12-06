@@ -26,7 +26,7 @@
         [AppAuthorize(Roles = "Super,Admin")]
         public JsonResult Simulators_Read([DataSourceRequest] DataSourceRequest request)
         {
-            var data = AutoMapper.Mapper.Map<List<SimulatorViewModel>>(Service.GetSimulatorsByUser(User.Id));
+            var data = AutoMapper.Mapper.Map<List<SimulationViewModel>>(Service.GetSimulationsByUser(User.Id));
 
             return this.Jsonp(data);
         }
@@ -35,16 +35,16 @@
         {
             try
             {
-                var simulator = this.DeserializeObject<SimulatorViewModel>("simulator");
+                var simulator = this.DeserializeObject<SimulationViewModel>("simulator");
                 if (simulator == null)
                 {
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación de la Simulación" });
                 }
 
-                var data = AutoMapper.Mapper.Map<Simulator>(simulator);
+                var data = AutoMapper.Mapper.Map<Simulation>(simulator);
 
                 data.UserId = User.Id;
-                var result = Service.SaveSimulator(data);
+                var result = Service.SaveSimulation(data);
 
                 if (result.Status == Status.Error)
                     return this.Jsonp(new {Errors = "Se ha producido un error en la Grabación de la Simulación"});
@@ -63,16 +63,16 @@
         [AppAuthorize(Roles = "Super,Admin")]
         public ActionResult EditSimulator(int simulatorId)
         {
-            return PartialView(Service.GetSimulator(simulatorId));
+            return PartialView(Service.GetSimulation(simulatorId));
         }
 
         [HttpPost]
-        public ActionResult EditSimulator(Simulator simulator)
+        public ActionResult EditSimulator(Simulation simulator)
         {
             try
             {
                 simulator.UserId = User.Id;
-                var result = Service.UpdateSimulator(simulator.Id, simulator);
+                var result = Service.UpdateSimulation(simulator.Id, simulator);
 
                 return Json(result);
             }
@@ -88,13 +88,13 @@
         {
             try
             {
-                var simulator = this.DeserializeObject<Simulator>("simulator");
+                var simulator = this.DeserializeObject<Simulation>("simulator");
                 if (simulator == null)
                 {
                     return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado de la Simulación" });
                 }
 
-                var result = Service.DeleteSimulator(simulator.Id);
+                var result = Service.DeleteSimulation(simulator.Id);
 
                 if (result.Status != Status.Error)
                 {
@@ -145,11 +145,11 @@
         [AppAuthorize(Roles = "Super,Admin")]
         public ActionResult CompanyFromSimulator(int simulatorId)
         {
-            var simulator = Service.GetSimulator(simulatorId);
+            var simulator = Service.GetSimulation(simulatorId);
 
             ViewBag.SelectTabId = 0;
 
-            return PartialView("DetailCompany", simulator.SimulatorCompany.Company);           
+            return PartialView("DetailCompany", simulator.SimulationCompany.Company);           
         }
     }
 }

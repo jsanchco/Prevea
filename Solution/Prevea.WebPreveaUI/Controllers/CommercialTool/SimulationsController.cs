@@ -31,27 +31,28 @@
 
         [HttpGet]
         [AppAuthorize(Roles = "Super,Admin")]
-        public JsonResult Simulators_Read([DataSourceRequest] DataSourceRequest request)
+        public JsonResult Simulations_Read([DataSourceRequest] DataSourceRequest request)
         {
-            var data = AutoMapper.Mapper.Map<List<SimulatorViewModel>>(Service.GetSimulatorsByUser(User.Id));
+            var data = AutoMapper.Mapper.Map<List<SimulationViewModel>>(Service.GetSimulationsByUser(User.Id));
 
             return this.Jsonp(data);
         }
 
-        public JsonResult Simulators_Create()
+        public JsonResult Simulations_Create()
         {
             try
             {
-                var simulation = this.DeserializeObject<SimulatorViewModel>("simulation");
+                var simulation = this.DeserializeObject<SimulationViewModel>("simulation");
                 if (simulation == null)
                 {
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación de la Simulación" });
                 }
 
-                var data = AutoMapper.Mapper.Map<Simulator>(simulation);
+                var data = AutoMapper.Mapper.Map<Simulation>(simulation);
 
                 data.UserId = User.Id;
-                var result = Service.SaveSimulator(data);
+                data.SimulationStateId = (int) EnSimulationState.ValidationPending;
+                var result = Service.SaveSimulation(data);
 
                 if (result.Status == Status.Error)
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación de la Simulación" });
@@ -68,19 +69,28 @@
         }
 
         [AppAuthorize(Roles = "Super,Admin")]
-        public ActionResult EditSimulator(int simulatorId)
+        public ActionResult EditSimulation(int simulationId)
         {
             return PartialView("~/Views/CommercialTool/Simulations/EditSimulation.cshtml",
-                Service.GetSimulator(simulatorId));
+                Service.GetSimulation(simulationId));
+        }
+
+        [AppAuthorize(Roles = "Super,Admin")]
+        public ActionResult DetailSimulation(int simulationId, int selectTabId)
+        {
+            ViewBag.SelectTabId = selectTabId;
+
+            return PartialView("~/Views/CommercialTool/Simulations/DetailSimulation.cshtml",
+                Service.GetSimulation(simulationId));
         }
 
         [HttpPost]
-        public ActionResult EditSimulator(Simulator simulator)
+        public ActionResult EditSimulation(Simulation simulation)
         {
             try
             {
-                simulator.UserId = User.Id;
-                var result = Service.UpdateSimulator(simulator.Id, simulator);
+                simulation.UserId = User.Id;
+                var result = Service.UpdateSimulation(simulation.Id, simulation);
 
                 return Json(result);
             }
@@ -92,17 +102,17 @@
             }
         }
 
-        public ActionResult Simulators_Destroy()
+        public ActionResult Simulations_Destroy()
         {
             try
             {
-                var simulator = this.DeserializeObject<Simulator>("simulator");
+                var simulator = this.DeserializeObject<Simulation>("simulator");
                 if (simulator == null)
                 {
                     return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado de la Simulación" });
                 }
 
-                var result = Service.DeleteSimulator(simulator.Id);
+                var result = Service.DeleteSimulation(simulator.Id);
 
                 if (result.Status != Status.Error)
                 {
@@ -128,7 +138,7 @@
         }
 
         [HttpPost]
-        public JsonResult SendNotificationFromSimulator(int simulatorId)
+        public JsonResult SendNotificationFromSimulation(int simulationId)
         {
             var notification = new Model.Model.Notification
             {
@@ -143,9 +153,9 @@
         }
 
         [HttpPost]
-        public JsonResult SendToCompanies(int simulatorId)
+        public JsonResult SendToCompanies(int simulationId)
         {
-            var result = Service.SendToCompanies(simulatorId);
+            var result = Service.SendToCompanies(simulationId);
 
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }

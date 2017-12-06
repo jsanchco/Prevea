@@ -13,6 +13,6 @@
 
         public string Observations { get; set; }
 
-        public virtual Simulator Simulator { get; set; }
+        public virtual Simulation Simulator { get; set; }
     }
 }

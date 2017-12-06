@@ -62,7 +62,7 @@
         public virtual ICollection<ContactPerson> ContactPersons { get; set; }
         public virtual ICollection<Employee> Employees{ get; set; }
 
-        public virtual ICollection<SimulatorCompany> SimulatorCompanies { get; set; }
+        public virtual ICollection<SimulationCompany> SimulatorCompanies { get; set; }
 
         public virtual ICollection<ContractualDocumentCompany> ContractualsDocumentsCompany { get; set; }
 

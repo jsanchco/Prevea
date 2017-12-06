@@ -15,6 +15,6 @@
         public decimal? AmountHealthVigilance { get; set; }
         public decimal? AmountMedicalExamination { get; set; }
 
-        public virtual Simulator Simulator { get; set; }
+        public virtual Simulation Simulator { get; set; }
     }
 }
