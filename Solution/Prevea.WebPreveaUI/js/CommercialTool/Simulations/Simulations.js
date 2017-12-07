@@ -181,9 +181,8 @@ var Simulations = kendo.observable({
     },
 
     getTemplateSimulationState: function (data) {
-        var html = "<div class='one-line' style='width: 100%'>";
-        html += kendo.format("<div style='width: 90%; color: #333'>{0}</div>", data.SimulationStateDescription);
-        html += "<div id='circle'></div>";
+        var html = kendo.format("<div style='float: left; text-align: left; display: inline;'>{0}</div>", data.SimulationStateDescription);
+        html += "<div id='circle' style='float: right; text-align: right;'></div>";
         
         html += "</div>";
 
