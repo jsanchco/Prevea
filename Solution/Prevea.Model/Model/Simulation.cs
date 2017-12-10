@@ -45,6 +45,8 @@
         public int UserId { get; set; }
         public virtual User User { get; set; }
 
+        public virtual ICollection<Notification> Notifications { get; set; }
+
         [NotMapped]
         public SimulationCompany SimulationCompany => SimulationCompanies?.FirstOrDefault();
 

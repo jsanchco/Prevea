@@ -1,6 +1,6 @@
 ﻿@using Prevea.WebPreveaUI.HelpersClass
 @model User
-
+    
 <!DOCTYPE html>
 
 <html lang="en">
@@ -104,13 +104,16 @@
     <script src="~/js/CommercialTool/ManagementCompanies/ContractualsDocumentsCompany.js"></script>
     <script src="~/js/CommercialTool/ManagementCompanies/PaymentMethodCompany.js"></script>
     <script src="~/js/CommercialTool/Simulations/Simulations.js"></script>
-    <script src="~/js/CommercialTool/Simulations/EditSimulation.js"></script>
     <script src="~/js/CommercialTool/Simulations/DetailSimulation.js"></script>
+    <script src="~/js/CommercialTool/Simulations/ForeignPreventionService.js"></script>
+    <script src="~/js/CommercialTool/Simulations/AgencyService.js"></script>
+    <script src="~/js/CommercialTool/Simulations/TrainingService.js"></script>
     <script src="~/js/User/Users.js"></script>
-    <script src="~/js/Notification/Notifications.js"></script>
+    <script src="~/js/Notifications/Notifications.js"></script>
     <script src="~/js/Error/ErrorPage.js"></script>
     <script src="~/js/Shared/Templates.js"></script>
     <script src="~/js/Shared/Constants.js"></script>
+    <script src="~/js/Shared/jsEnums.js"></script>
 
     @RenderSection("script", required: false)
 
@@ -182,8 +185,8 @@
             </div>
             
             @Html.MenuRole(Model)
-           
-            @*@Html.Partial("MenuSuper")*@
+            
+            <div id="footerRole" style="position: fixed; bottom: 0; width: 100%; margin-left: 20px; font-weight: bold; font-size: large; color: white;"></div>
 
         </div>
     </div>

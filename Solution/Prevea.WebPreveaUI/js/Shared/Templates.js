@@ -23,6 +23,10 @@
     },
 
     getColumnTemplateIncrease: function (text) {
+        if (text === null) {
+            return "";
+        }
+
         var html = kendo.format("<div style='font-size: 15px; font-weight: bold'>{0}</div>",
             text);
 
@@ -30,6 +34,10 @@
     },
 
     getColumnTemplateIncreaseRight: function (text) {
+        if (text === null) {
+            return "";
+        }
+
         var html = kendo.format("<div align='right' style='font-size: 15px; font-weight: bold'>{0}</div>",
             text);
 
@@ -37,6 +45,10 @@
     },
 
     getColumnTemplateDate: function (date) {
+        if (date === null) {
+            return "";
+        }
+
         var html = kendo.format("<div align='center'>{0}</div>",
             kendo.toString(date, "dd/MM/yy"));
 
@@ -44,6 +56,10 @@
     },
 
     getColumnTemplateDateWithHour: function (date) {
+        if (date === null) {
+            return "";
+        }
+
         var html = kendo.format("<div align='center'>{0}</div>",
             kendo.toString(date, "dd/MM/yy HH:mm"));
 

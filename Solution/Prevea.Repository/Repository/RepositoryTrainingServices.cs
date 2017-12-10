@@ -15,7 +15,7 @@
         public TrainingService GetTrainingService(int id)
         {
             return Context.TrainingServices
-                .Include(x => x.Simulator)
+                .Include(x => x.Simulation)
                 .FirstOrDefault(x => x.Id == id);
         }
 

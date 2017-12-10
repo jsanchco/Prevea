@@ -15,7 +15,7 @@
         public ForeignPreventionService GetForeignPreventionService(int id)
         {
             return Context.ForeignPreventionServices
-                .Include(x => x.Simulator)
+                .Include(x => x.Simulation)
                 .FirstOrDefault(x => x.Id == id);
         }
 

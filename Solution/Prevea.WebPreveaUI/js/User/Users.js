@@ -29,9 +29,11 @@
                         RoleName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         RoleDescription: { type: "string" },
                         PhoneNumber: { type: "string" },
-                        Email: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
+                        Email: { type: "string" },
                         DNI: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
-                        UserStateId: { type: "number", defaultValue: 1 }
+                        UserStateId: { type: "number", defaultValue: 1 },
+                        UserParentId: { type: "number", defaultValue: GeneralData.userId },
+                        UserParentInitials: { type: "string" }
                     }
                 }
             },
@@ -114,10 +116,14 @@
             }, {
                 field: "RoleId",
                 title: "Rol",
-                width: "180px",
+                width: "90px",
                 editor: Users.rolesDropDownEditor,
                 template: "#=RoleName#",
                 groupHeaderTemplate: "Agrupado : #= Users.getRoleName(value) #"
+            }, {
+                field: "UserParentInitials",
+                title: "Creado por",
+                width: "90px"
             }, {
                 field: "PhoneNumber",
                 title: "Teléfono",
@@ -223,6 +229,11 @@
             }
         });
         kendo.bind($("#" + this.gridUsersId), this);
+
+        if (GeneralData.userRoleId !== jsEnums.role.Super) {
+            var grid = $("#" + this.gridUsersId).data("kendoGrid");
+            grid.hideColumn("UserParentInitials");
+        }
     },
 
     rolesDropDownEditor: function (container, options) {

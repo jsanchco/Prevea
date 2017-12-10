@@ -19,6 +19,8 @@ namespace Prevea.Repository.Repository
         {
             return Context.Notifications
                 .Include(x => x.NotificationType)
+                .Include(x => x.ToUser)
+                .Include(x => x.ToRole)
                 .ToList();
         }
 
@@ -26,6 +28,8 @@ namespace Prevea.Repository.Repository
         {
             return Context.Notifications
                 .Include(x => x.NotificationType)
+                .Include(x => x.ToUser)
+                .Include(x => x.ToRole)
                 .FirstOrDefault(x => x.Id == id);
         }
 

@@ -3,6 +3,18 @@
     spanErrorPpalId: "spanErrorPpal",
     notificationId: "notification",
 
+    userId: null,
+    userRoleId: null,
+    userRoleName: null,
+    userRoleDescription: null,
+
+    setRoleUser: function (id, roleId, roleName, roleDescription) {
+        this.userId = id;
+        this.userRoleId = roleId;
+        this.userRoleName = roleName;
+        this.roleDescription = roleDescription;
+    },
+
     loadPage: function (element) {
         var id = $(element).attr("id");
         var url = null;
@@ -52,7 +64,7 @@
                 break;
 
             case "notifications":
-                url = "/Notification/Notifications";
+                url = "/Notifications/Notifications";
                 break;
 
             default:

@@ -31,9 +31,8 @@ namespace Prevea.ConsoleTestModel.Migrations
 
             var users = new List<User>
             {
-                new User { FirstName = "Jesús", LastName = "Sánchez Corzo", Email = "jsanchco@gmail.com", Nick = "jsanchco", DNI = "50963841G" },
-                new User { FirstName = "Juan Manuel", LastName = "Carrasco Martínez", Email = "jmcarrasco@preveaspa.com", Nick = "jmcarrasco", DNI = "1899945P" },
-                new User { FirstName = "Virgilio", LastName = "Carrasco Martínez", Email = "vcarrasco@preveaspa.com", Nick = "vcarrasco", DNI = "1899946P" }
+                new User { FirstName = "Jesús", LastName = "Sánchez Corzo", Email = "jsanchco@gmail.com", DNI = "50963841G", Nick = "SU-50963841G"},
+                new User { FirstName = "Juan Manuel", LastName = "Carrasco Martínez", Email = "jmcarrasco@preveaspa.com", DNI = "1899945P", Nick = "SU-1899945P"},
             };
             users.ForEach(p => context.Users.AddOrUpdate(s => s.Id, p));
             context.SaveChanges();
@@ -51,8 +50,7 @@ namespace Prevea.ConsoleTestModel.Migrations
             var userroles = new List<UserRole>
             {
                 new UserRole { UserId = 1, RoleId = 1 },
-                new UserRole { UserId = 2, RoleId = 2 },
-                new UserRole { UserId = 3, RoleId = 3 },
+                new UserRole { UserId = 2, RoleId = 1 }
             };
             userroles.ForEach(p => context.UserRoles.AddOrUpdate(s => s.Id, p));
             context.SaveChanges();

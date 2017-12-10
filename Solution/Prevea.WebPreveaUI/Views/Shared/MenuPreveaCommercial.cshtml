@@ -1,0 +1,48 @@
+﻿<ul class="main-menu" id="main-menu">
+    <li class="root-level">
+        <a id="dashboard" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+            <i class="icon-home"></i>
+            <span class="title">Escritorio</span>
+        </a>
+    </li>
+    <li class="root-level">
+        <a id="users" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+            <i class="fa fa-users"></i>
+            <span class="title">Usuarios</span>
+        </a>
+    </li>
+    <li class="has-sub">
+        <a id="library">
+            <i class="icon-box"></i>
+            <span class="title">Biblioteca</span>
+        </a>
+        <ul>
+            <li>
+                <a id="library|documents" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                    <i class="icon-book"></i>
+                    <span class="title">Documentos</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="has-sub">
+        <a id="company">
+            <i class="glyphicon glyphicon-th-list"></i>
+            <span class="title">Herramienta Comercial</span>
+        </a>
+        <ul>
+            <li>
+                <a id="commercialTool|simulations" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                    <i class="fa fa-magic"></i>
+                    <span class="title">Simulaciones</span>
+                </a>
+            </li>
+            <li>
+                <a id="company|administration" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                    <i class="icon-folder"></i>
+                    <span class="title">Gestión de Empresas</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>

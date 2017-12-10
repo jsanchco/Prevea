@@ -55,14 +55,38 @@
         {
             switch (name)
             {
-                case "FromSimulator":
-                    return "Desde el Simulador";
-                case "FromFormation":
+                case "Super":
+                    return "Super Administrador";
+                case "Admin":
+                    return "Administrador";
+                case "ContactPerson":
+                    return "Persona de Contacto";
+                case "Employee":
+                    return "Trabajador";
+                case "Agency":
+                    return "Gestor";  
+                case "Doctor":
+                    return "Médico";
+                case "PreveaPersonal":
+                    return "Personal de Prevea";
+                case "PreveaCommercial":
+                    return "Comercial de Prevea";
+                case "ExternalPersonal":
+                    return "Personal Externo";
+                case "FromSimulation":
+                    return "Desde la Simulación";
+                case "FromForeignPrevention":
+                    return "Desde el Servicio de Prevención Agena";
+                case "FromAgency":
+                    return "Desde Gestoría";
+                case "FromTraining":
                     return "Desde Formación";
                 case "FromSede":
                     return "Desde SEDE";
                 case "FromUser":
                     return "Desde Usuario";
+                case "FromRole":
+                    return "Desde Rol";
                 case "Issued":
                     return "Emitida";
                 case "Assigned":

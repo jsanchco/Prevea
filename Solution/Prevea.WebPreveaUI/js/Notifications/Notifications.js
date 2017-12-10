@@ -16,9 +16,11 @@
                 model: {
                     id: "Id",
                     fields: {
-                        Id: { type: "number", defaultValue: 0 },
+                        Id: { type: "number" },
+                        SimulationId: { type: "number" },
                         NotificationTypeDescription: { type: "string" },
                         NotificationStateDescription: { type: "string" },
+                        ToUserInitials: { type: "string" },
                         Observations: { type: "string" },
                         DateCreation: { type: "date" },
                         DateModification: { type: "date" }
@@ -27,15 +29,7 @@
             },
             transport: {
                 read: {
-                    url: "/Notification/Notifications_Read",
-                    dataType: "jsonp"
-                },
-                destroy: {
-                    url: "/Notification/Notifications_Destroy",
-                    dataType: "jsonp"
-                },
-                create: {
-                    url: "/Notification/Notifications_Create",
+                    url: "/Notifications/Notifications_Read",
                     dataType: "jsonp"
                 },
                 parameterMap: function (options, operation) {
@@ -44,17 +38,6 @@
                     }
 
                     return null;
-                }
-            },
-            requestEnd: function (e) {
-                if ((e.type === "update" || e.type === "destroy" || e.type === "create") &&
-                    e.response !== null) {
-                    if (typeof e.response.Errors !== "undefined") {
-                        GeneralData.showNotification(Constants.ko, "", "error");
-                        this.cancelChanges();
-                    } else {
-                        GeneralData.showNotification(Constants.ok, "", "success");
-                    }
                 }
             },
             pageSize: 10
@@ -72,6 +55,11 @@
                     field: "NotificationStateDescription",
                     title: "Estado",
                     width: 180
+                }, {
+                    field: "ToUserInitials",
+                    title: "Asignado",
+                    width: 150,
+                    template: "#= Templates.getColumnTemplateIncrease(data.ToUserInitials) #"
                 }, {
                     field: "Observations",
                     title: "Observaciones",
@@ -154,15 +142,6 @@
                 messages: {
                     empty: "Arrastre un encabezado de columna y póngalo aquí para agrupar por ella"
                 }
-            },
-            edit: function (e) {
-                var commandCell = e.container.find("td:last");
-                var html = "<div align='center'>";
-                html += "<a class='k-grid-update' toggle='tooltip' title='Guardar' style='cursor: pointer;'><i class='glyphicon glyphicon-saved' style='font-size: 18px;'></i></a>&nbsp;&nbsp;";
-                html += "<a class='k-grid-cancel' toggle='tooltip' title='Cancelar' style='cursor: pointer;'><i class='glyphicon glyphicon-ban-circle' style='font-size: 18px;'></i></a>";
-                html += "</div>";
-
-                commandCell.html(html);
             }
 
         });
@@ -186,7 +165,7 @@
         if (data === null) {
             html += kendo.format("<div align='center'>{0}</div>", "");
         } else {
-           html += kendo.format("<div align='center'>{0}</div>", kendo.toString(date, "dd/MM/yy HH:mm"));
+           html += kendo.format("<div align='center'>{0}</div>", kendo.toString(data, "dd/MM/yy HH:mm"));
         }
         html += kendo.format("</div>");
 
@@ -195,12 +174,9 @@
 
     getColumnTemplateCommands: function (data) {
         var html = "<div align='center'>";
-        if (data.IsBlocked === true) {
-            html += kendo.format("<a toggle='tooltip' title='Ir a Empresa' onclick='Notifications.goToCompanyFromSimulator(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
-        } else {
-            html += kendo.format("<a toggle='tooltip' title='Detalle' onclick='Simulators.goToEditSimulator(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
-            html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='Simulators.goToDeleteSimulator(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
-        }
+
+        html += kendo.format("<a toggle='tooltip' title='Asignar' onclick='Notifications.goToAssignNotification(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-hand-o-left' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+        html += kendo.format("<a toggle='tooltip' title='Ir a Simulación' onclick='Notifications.goToSimulationFromNotification(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.SimulationId);
         html += kendo.format("</div>");
 
         return html;
@@ -208,46 +184,44 @@
 
     goToNotifications: function () {
         var params = {
-            url: "/Notification/Notifications",
+            url: "/Notifications/Notifications",
             data: {}
         };
         GeneralData.goToActionController(params);
     },
 
-    goToEditNotification: function (id) {
-        var params = {
-            url: "/Notification/EditSimulator",
+    goToAssignNotification: function (notificationId) {
+        $.ajax({
+            url: "/Notifications/AssignNotification",
             data: {
-                simulatorId: id
+                notificationId: notificationId
+            },
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                if (data.result.Status === 0) {
+                    Notifications.notificationsDataSource.read();
+                    GeneralData.showNotification(Constants.ok, "", "success");
+                }
+                if (data.result.Status === 1) {
+                    GeneralData.showNotification(Constants.ko, "", "error");
+                }
+            },
+            error: function () {
+                GeneralData.showNotification(Constants.ko, "", "error");
+            }
+        });
+    },
+
+    goToSimulationFromNotification: function(simulationId) {
+        var params = {
+            url: "/CommercialTool/Simulations/DetailSimulation",
+            data: {
+                simulationId: simulationId,
+                selectTabId: 0
             }
         };
         GeneralData.goToActionController(params);
-    },
-
-    goToDeleteNotification: function (simulatorId) {
-        var dialog = $("#" + this.confirmId);
-        dialog.kendoDialog({
-            width: "400px",
-            title: "<strong>Simulaciones</strong>",
-            closable: false,
-            modal: true,
-            content: "¿Quieres <strong>Borrar</strong> esta Simulación?",
-            actions: [
-                {
-                    text: "Cancelar", primary: true
-                },
-                {
-                    text: "Borrar", action: function () {
-                        var grid = $("#" + Simulators.gridSimulatorsId).data("kendoGrid");
-                        var item = grid.dataSource.get(simulatorId);
-                        var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
-
-                        grid.removeRow(tr);
-                    }
-                }
-            ]
-        });
-        dialog.data("kendoDialog").open();
     }
 
 });

@@ -15,7 +15,7 @@
         public AgencyService GetAgencyService(int id)
         {
             return Context.AgencyServices
-                .Include(x => x.Simulator)
+                .Include(x => x.Simulation)
                 .FirstOrDefault(x => x.Id == id);
         }
 

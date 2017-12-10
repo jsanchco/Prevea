@@ -42,6 +42,11 @@
             return Repository.GetEmployeesByCompany(companyId);
         }
 
+        public List<User> GetUsersByUser(int id)
+        {
+            return Repository.GetUsersByUser(id);
+        }
+
         public Result SaveUser(int? roleId, User user)
         {
             try

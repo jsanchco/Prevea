@@ -1,7 +1,4 @@
-﻿var EditSimulation = kendo.observable({
-    textBoxNameId: "textBoxName",
-    textBoxNIFId: "textBoxNIF",
-    textNumberEmployeesId: "textNumberEmployees",
+﻿var ForeignPreventionService = kendo.observable({
     textAmountTecniquesId: "textAmountTecniques",
     textAmountHealthVigilanceId: "textAmountHealthVigilance",
     textAmountMedicalExaminationId: "textAmountMedicalExamination",
@@ -15,153 +12,145 @@
     lblTotalByEmployeeInHealthVigilanceId: "lblTotalByEmployeeInHealthVigilance",
     lblTotalByEmployeeInMedicalExaminationId: "lblTotalByEmployeeInMedicalExamination",
     lblTotalId: "lblTotal",
-    btnValidateId: "btnValidate",
-    btnSendToCompaniesId: "btnSendToCompanies",
-    btnSendNotificationId: "btnSendNotification",
-    btnCancelId: "btnCancel",
+    btnValidateId: "btnValidateForeignPreventionService",
 
     errorFromFrontId: "errorFromFront",
 
-    simulatorId: null,
+    simulationId: null,
+    numberEmployees: null,
     stretchCalculate: null,
 
     percentege: 80,
     total: 0,
     firstTime: true,
 
-    init: function(id) {
+    init: function (id, numberEmployees) {
         kendo.culture("es-ES");
 
         this.firstTime = true;
 
-        this.simulatorId = id;
+        this.simulationId = id;
+        this.numberEmployees = numberEmployees;
 
         this.setKendoUIWidgets();
 
-        this.onChangeTextNumberEmployees();
+        this.getStretchCalculateByNumberEmployees();
     },
 
     updateView: function() {
-        var strValue = kendo.format("{0} €", EditSimulation.stretchCalculate.AmountByEmployeeInTecniques);
+        var strValue = kendo.format("{0} €", ForeignPreventionService.stretchCalculate.AmountByEmployeeInTecniques);
         $("#" + this.lblAmountByEmployeeInTecniquesId).text(strValue);
         this.onChangeTextAmountTecniques();
 
-        strValue = kendo.format("{0} €", EditSimulation.stretchCalculate.AmountByEmployeeInHealthVigilance);
+        strValue = kendo.format("{0} €", ForeignPreventionService.stretchCalculate.AmountByEmployeeInHealthVigilance);
         $("#" + this.lblAmountByEmployeeInHealthVigilanceId).text(strValue);
         this.onChangeTextAmountHealthVigilance();
 
-        strValue = kendo.format("{0} €", EditSimulation.stretchCalculate.AmountByEmployeeInMedicalExamination);
+        strValue = kendo.format("{0} €", ForeignPreventionService.stretchCalculate.AmountByEmployeeInMedicalExamination);
         $("#" + this.lblAmountByEmployeeInMedicalExaminationId).text(strValue);
         this.onChangeTextAmountMedicalExamination();
     },
 
     setKendoUIWidgets: function() {
-        $("#" + this.textNumberEmployeesId).kendoNumericTextBox({
-            decimals: 0,
-            format: "0",
-            change: EditSimulation.onChangeTextNumberEmployees
-        });
         $("#" + this.textAmountTecniquesId).kendoNumericTextBox({
             format: "c",
             decimals: 1,
-            change: EditSimulation.onChangeTextAmountTecniques
+            change: ForeignPreventionService.onChangeTextAmountTecniques
         });
         $("#" + this.textAmountHealthVigilanceId).kendoNumericTextBox({
             format: "c",
             decimals: 1,
-            change: EditSimulation.onChangeTextAmountHealthVigilance
+            change: ForeignPreventionService.onChangeTextAmountHealthVigilance
         });
         $("#" + this.textAmountMedicalExaminationId).kendoNumericTextBox({
             format: "c",
             decimals: 1,
-            change: EditSimulation.onChangeTextAmountMedicalExamination
+            change: ForeignPreventionService.onChangeTextAmountMedicalExamination
         });
 
         $("#" + this.btnSendNotificationId).click(function () {
-            EditSimulation.sendNotificationFromSimulator();
+            ForeignPreventionService.sendNotificationFromSimulator();
         });
 
         $("#" + this.btnSendToCompaniesId).click(function () {
-            EditSimulation.sendToCompanies();
+            ForeignPreventionService.sendToCompanies();
         });
 
         $("#" + this.btnCancelId).click(function () {
-            EditSimulation.goToSimulators();
+            ForeignPreventionService.goToSimulators();
         });
 
         $("#" + this.textBoxNameId).change(function () {
-            $("#" + EditSimulation.btnValidateId).removeAttr("disabled");
-            $("#" + EditSimulation.btnValidateId).prop("disabled", false);
-            $("#" + EditSimulation.btnSendToCompaniesId).removeAttr("disabled");
-            $("#" + EditSimulation.btnSendToCompaniesId).prop("disabled", true);
+            $("#" + ForeignPreventionService.btnValidateId).removeAttr("disabled");
+            $("#" + ForeignPreventionService.btnValidateId).prop("disabled", false);
+            $("#" + ForeignPreventionService.btnSendToCompaniesId).removeAttr("disabled");
+            $("#" + ForeignPreventionService.btnSendToCompaniesId).prop("disabled", true);
         });
 
         $("#" + this.textBoxNIFId).change(function () {
-            $("#" + EditSimulation.btnValidateId).removeAttr("disabled");
-            $("#" + EditSimulation.btnValidateId).prop("disabled", false);
-            $("#" + EditSimulation.btnSendToCompaniesId).removeAttr("disabled");
-            $("#" + EditSimulation.btnSendToCompaniesId).prop("disabled", true);
+            $("#" + ForeignPreventionService.btnValidateId).removeAttr("disabled");
+            $("#" + ForeignPreventionService.btnValidateId).prop("disabled", false);
+            $("#" + ForeignPreventionService.btnSendToCompaniesId).removeAttr("disabled");
+            $("#" + ForeignPreventionService.btnSendToCompaniesId).prop("disabled", true);
         });
     },
 
-    onChangeTextNumberEmployees: function () {
+    getStretchCalculateByNumberEmployees: function () {
         $.ajax({
-            url: "/Company/GetStretchCalculateByNumberEmployees",
+            url: "/CommercialTool/Simulations/GetStretchCalculateByNumberEmployees",
             data: {
-                numberEmployees: parseFloat($("#" + EditSimulation.textNumberEmployeesId).val())
+                numberEmployees: this.numberEmployees
             },
             type: "post",
             dataType: "json",
             success: function (response) {
                 if (response.stretchCalculate !== null) {
-                    EditSimulation.stretchCalculate = response.stretchCalculate;
-                    EditSimulation.updateView();
+                    ForeignPreventionService.stretchCalculate = response.stretchCalculate;
+                    ForeignPreventionService.updateView();
 
-                    if (!EditSimulation.firstTime) {
-                        $("#" + EditSimulation.btnValidateId).removeAttr("disabled");
-                        $("#" + EditSimulation.btnValidateId).prop("disabled", false);
-                        $("#" + EditSimulation.btnSendToCompaniesId).removeAttr("disabled");
-                        $("#" + EditSimulation.btnSendToCompaniesId).prop("disabled", true);
+                    if (!ForeignPreventionService.firstTime) {
+                        $("#" + ForeignPreventionService.btnValidateId).removeAttr("disabled");
+                        $("#" + ForeignPreventionService.btnValidateId).prop("disabled", false);
+                        $("#" + ForeignPreventionService.btnSendToCompaniesId).removeAttr("disabled");
+                        $("#" + ForeignPreventionService.btnSendToCompaniesId).prop("disabled", true);
                     } else {
-                        $("#" + EditSimulation.btnValidateId).removeAttr("disabled");
-                        $("#" + EditSimulation.btnValidateId).prop("disabled", true);
-                        $("#" + EditSimulation.btnSendToCompaniesId).removeAttr("disabled");
-                        $("#" + EditSimulation.btnSendToCompaniesId).prop("disabled", false);                        
+                        $("#" + ForeignPreventionService.btnValidateId).removeAttr("disabled");
+                        $("#" + ForeignPreventionService.btnValidateId).prop("disabled", true);
+                        $("#" + ForeignPreventionService.btnSendToCompaniesId).removeAttr("disabled");
+                        $("#" + ForeignPreventionService.btnSendToCompaniesId).prop("disabled", false);                        
                     }
 
-                    EditSimulation.firstTime = false;
+                    ForeignPreventionService.firstTime = false;
                 }
             }
         });
     },
 
     onChangeTextAmountTecniques: function () {
-        var value = parseFloat($("#" + EditSimulation.textAmountTecniquesId).val());
+        var value = parseFloat($("#" + ForeignPreventionService.textAmountTecniquesId).val());
         if (isNaN(value)) {
             return;
         }
 
-        $("#" + EditSimulation.btnValidateId).removeAttr("disabled");
-        $("#" + EditSimulation.btnValidateId).prop("disabled", false);
-        $("#" + EditSimulation.btnSendToCompaniesId).removeAttr("disabled");
-        $("#" + EditSimulation.btnSendToCompaniesId).prop("disabled", true);
+        $("#" + ForeignPreventionService.btnValidateId).removeAttr("disabled");
+        $("#" + ForeignPreventionService.btnValidateId).prop("disabled", false);
 
-        var widget = $("#" + EditSimulation.textAmountTecniquesId).kendoNumericTextBox().data("kendoNumericTextBox");
+        var widget = $("#" + ForeignPreventionService.textAmountTecniquesId).kendoNumericTextBox().data("kendoNumericTextBox");
         if (value === 0) {
             widget.wrapper.find("input").css("background-color", "white");
             widget.wrapper.find("input").css("color", "#4b4b4b");
             widget.wrapper.width("100%");
-            $("#" + EditSimulation.lblPercentegeByEmployeeInTecniquesId).text("%");
-            $("#" + EditSimulation.lblTotalByEmployeeInTecniquesId).text("€");
+            $("#" + ForeignPreventionService.lblPercentegeByEmployeeInTecniquesId).text("%");
+            $("#" + ForeignPreventionService.lblTotalByEmployeeInTecniquesId).text("€");
 
-            EditSimulation.calculateTotal();
+            ForeignPreventionService.calculateTotal();
 
             return;
         }
 
-        var strVal = $("#" + EditSimulation.lblAmountByEmployeeInTecniquesId).text();
+        var strVal = $("#" + ForeignPreventionService.lblAmountByEmployeeInTecniquesId).text();
         var valueFix = parseFloat(strVal.substring(0, strVal.length - 2));
-        var percentegeValueFix = valueFix * EditSimulation.percentege / 100;
+        var percentegeValueFix = valueFix * ForeignPreventionService.percentege / 100;
         if (value < percentegeValueFix) {
             widget.wrapper.find("input").css("background-color", "#f56954");
             widget.wrapper.find("input").css("color", "black");
@@ -176,40 +165,40 @@
         }
         widget.wrapper.width("100%");
         var percentegeCalculate = value * 100 / valueFix;
-        $("#" + EditSimulation.lblPercentegeByEmployeeInTecniquesId).text((percentegeCalculate - 100).toFixed(2) + "%");
-        $("#" + EditSimulation.lblTotalByEmployeeInTecniquesId).text((value * parseFloat($("#" + EditSimulation.textNumberEmployeesId).val())).toFixed(2) + " €");
+        $("#" + ForeignPreventionService.lblPercentegeByEmployeeInTecniquesId).text((percentegeCalculate - 100).toFixed(2) + "%");
+        $("#" + ForeignPreventionService.lblTotalByEmployeeInTecniquesId).text((value * ForeignPreventionService.numberEmployees).toFixed(2) + " €");
 
-        EditSimulation.calculateTotal();
+        ForeignPreventionService.calculateTotal();
     },
 
     onChangeTextAmountHealthVigilance: function () {
-        var value = parseFloat($("#" + EditSimulation.textAmountHealthVigilanceId).val());
+        var value = parseFloat($("#" + ForeignPreventionService.textAmountHealthVigilanceId).val());
         if (isNaN(value)) {
             return;
         }
 
-        $("#" + EditSimulation.btnValidateId).removeAttr("disabled");
-        $("#" + EditSimulation.btnValidateId).prop("disabled", false);
-        $("#" + EditSimulation.btnSendToCompaniesId).removeAttr("disabled");
-        $("#" + EditSimulation.btnSendToCompaniesId).prop("disabled", true);
+        $("#" + ForeignPreventionService.btnValidateId).removeAttr("disabled");
+        $("#" + ForeignPreventionService.btnValidateId).prop("disabled", false);
+        $("#" + ForeignPreventionService.btnSendToCompaniesId).removeAttr("disabled");
+        $("#" + ForeignPreventionService.btnSendToCompaniesId).prop("disabled", true);
 
 
-        var widget = $("#" + EditSimulation.textAmountHealthVigilanceId).kendoNumericTextBox().data("kendoNumericTextBox");
+        var widget = $("#" + ForeignPreventionService.textAmountHealthVigilanceId).kendoNumericTextBox().data("kendoNumericTextBox");
         if (value === 0) {
             widget.wrapper.find("input").css("background-color", "white");
             widget.wrapper.find("input").css("color", "#4b4b4b");
             widget.wrapper.width("100%");
-            $("#" + EditSimulation.lblPercentegeByEmployeeInHealthVigilanceId).text("%");
-            $("#" + EditSimulation.lblTotalByEmployeeInHealthVigilanceId).text("€");
+            $("#" + ForeignPreventionService.lblPercentegeByEmployeeInHealthVigilanceId).text("%");
+            $("#" + ForeignPreventionService.lblTotalByEmployeeInHealthVigilanceId).text("€");
 
-            EditSimulation.calculateTotal();
+            ForeignPreventionService.calculateTotal();
 
             return;
         }
 
-        var strVal = $("#" + EditSimulation.lblAmountByEmployeeInHealthVigilanceId).text();
+        var strVal = $("#" + ForeignPreventionService.lblAmountByEmployeeInHealthVigilanceId).text();
         var valueFix = parseFloat(strVal.substring(0, strVal.length - 2));
-        var percentegeValueFix = valueFix * EditSimulation.percentege / 100;
+        var percentegeValueFix = valueFix * ForeignPreventionService.percentege / 100;
         if (value < percentegeValueFix) {
             widget.wrapper.find("input").css("background-color", "#f56954");
             widget.wrapper.find("input").css("color", "black");
@@ -224,39 +213,39 @@
         }
         widget.wrapper.width("100%");
         var percentegeCalculate = value * 100 / valueFix;
-        $("#" + EditSimulation.lblPercentegeByEmployeeInHealthVigilanceId).text((percentegeCalculate - 100).toFixed(2) + "%");
-        $("#" + EditSimulation.lblTotalByEmployeeInHealthVigilanceId).text((value * parseFloat($("#" + EditSimulation.textNumberEmployeesId).val())).toFixed(2) + " €");
+        $("#" + ForeignPreventionService.lblPercentegeByEmployeeInHealthVigilanceId).text((percentegeCalculate - 100).toFixed(2) + "%");
+        $("#" + ForeignPreventionService.lblTotalByEmployeeInHealthVigilanceId).text((value * ForeignPreventionService.numberEmployees).toFixed(2) + " €");
 
-        EditSimulation.calculateTotal();
+        ForeignPreventionService.calculateTotal();
     },
 
     onChangeTextAmountMedicalExamination: function () {
-        var value = parseFloat($("#" + EditSimulation.textAmountMedicalExaminationId).val());
+        var value = parseFloat($("#" + ForeignPreventionService.textAmountMedicalExaminationId).val());
         if (isNaN(value)) {
             return;
         }
 
-        $("#" + EditSimulation.btnValidateId).removeAttr("disabled");
-        $("#" + EditSimulation.btnValidateId).prop("disabled", false);
-        $("#" + EditSimulation.btnSendToCompaniesId).removeAttr("disabled");
-        $("#" + EditSimulation.btnSendToCompaniesId).prop("disabled", true);
+        $("#" + ForeignPreventionService.btnValidateId).removeAttr("disabled");
+        $("#" + ForeignPreventionService.btnValidateId).prop("disabled", false);
+        $("#" + ForeignPreventionService.btnSendToCompaniesId).removeAttr("disabled");
+        $("#" + ForeignPreventionService.btnSendToCompaniesId).prop("disabled", true);
 
-        var widget = $("#" + EditSimulation.textAmountMedicalExaminationId).kendoNumericTextBox().data("kendoNumericTextBox");
+        var widget = $("#" + ForeignPreventionService.textAmountMedicalExaminationId).kendoNumericTextBox().data("kendoNumericTextBox");
         if (value === 0) {
             widget.wrapper.find("input").css("background-color", "white");
             widget.wrapper.find("input").css("color", "#4b4b4b");
             widget.wrapper.width("100%");
-            $("#" + EditSimulation.lblPercentegeByEmployeeInMedicalExaminationId).text("%");
-            $("#" + EditSimulation.lblTotalByEmployeeInMedicalExaminationId).text("€");
+            $("#" + ForeignPreventionService.lblPercentegeByEmployeeInMedicalExaminationId).text("%");
+            $("#" + ForeignPreventionService.lblTotalByEmployeeInMedicalExaminationId).text("€");
 
-            EditSimulation.calculateTotal();
+            ForeignPreventionService.calculateTotal();
 
             return;
         }
 
-        var strVal = $("#" + EditSimulation.lblAmountByEmployeeInMedicalExaminationId).text();
+        var strVal = $("#" + ForeignPreventionService.lblAmountByEmployeeInMedicalExaminationId).text();
         var valueFix = parseFloat(strVal.substring(0, strVal.length - 2));
-        var percentegeValueFix = valueFix * EditSimulation.percentege / 100;
+        var percentegeValueFix = valueFix * ForeignPreventionService.percentege / 100;
         if (value < percentegeValueFix) {
             widget.wrapper.find("input").css("background-color", "#f56954");
             widget.wrapper.find("input").css("color", "black");
@@ -271,52 +260,46 @@
         }
         widget.wrapper.width("100%");
         var percentegeCalculate = value * 100 / valueFix;
-        $("#" + EditSimulation.lblPercentegeByEmployeeInMedicalExaminationId).text((percentegeCalculate - 100).toFixed(2) + "%");
-        $("#" + EditSimulation.lblTotalByEmployeeInMedicalExaminationId).text((value * parseFloat($("#" + EditSimulation.textNumberEmployeesId).val())).toFixed(2) + " €");
+        $("#" + ForeignPreventionService.lblPercentegeByEmployeeInMedicalExaminationId).text((percentegeCalculate - 100).toFixed(2) + "%");
+        $("#" + ForeignPreventionService.lblTotalByEmployeeInMedicalExaminationId).text((value * ForeignPreventionService.numberEmployees).toFixed(2) + " €");
 
-        EditSimulation.calculateTotal();
+        ForeignPreventionService.calculateTotal();
     },
 
     calculateTotal: function () {
-        var strValue = $("#" + EditSimulation.lblTotalByEmployeeInTecniquesId).text();
+        var strValue = $("#" + ForeignPreventionService.lblTotalByEmployeeInTecniquesId).text();
         strValue = strValue.substring(0, strValue.length - 1);
         var totalByEmployeeInTecniques = 0;
         if (strValue !== "") {
             totalByEmployeeInTecniques = parseFloat(strValue);
         }
 
-        strValue = $("#" + EditSimulation.lblTotalByEmployeeInHealthVigilanceId).text();
+        strValue = $("#" + ForeignPreventionService.lblTotalByEmployeeInHealthVigilanceId).text();
         strValue = strValue.substring(0, strValue.length - 1);
         var totalByEmployeeInHealthVigilance = 0;
         if (strValue !== "") {
             totalByEmployeeInHealthVigilance = parseFloat(strValue);
         }
 
-        strValue = $("#" + EditSimulation.lblTotalByEmployeeInMedicalExaminationId).text();
+        strValue = $("#" + ForeignPreventionService.lblTotalByEmployeeInMedicalExaminationId).text();
         strValue = strValue.substring(0, strValue.length - 1);
         var totalByEmployeeInMedicalExamination = 0;
         if (strValue !== "") {
             totalByEmployeeInMedicalExamination = parseFloat(strValue);
         }
 
-        $("#" + EditSimulation.lblTotalId).text(
+        $("#" + ForeignPreventionService.lblTotalId).text(
             (totalByEmployeeInTecniques +
                 totalByEmployeeInHealthVigilance +
                 totalByEmployeeInMedicalExamination).toFixed(2) + " €");
     },
 
-    goToSimulators: function () {
+    goToForeignPreventionService: function () {
         var params = {
-            url: "/Company/Simulators"
-        };
-        GeneralData.goToActionController(params);
-    },
-
-    goToEditSimulation: function () {
-        var params = {
-            url: "/Company/EditSimulation",
+            url: "/CommercialTool/Simulations/DetailSimulation",
             data: {
-                simulatorId: this.simulatorId
+                simulationId: this.simulationId,
+                selectTabId: 0
             }
         };
         GeneralData.goToActionController(params);
@@ -330,14 +313,14 @@
             GeneralData.showNotification(Constants.ko, "", "error");
         }
 
-        EditSimulation.goToEditSimulation();
+        ForeignPreventionService.goToForeignPreventionService();
     },
 
     sendToCompanies: function () {
         $.ajax({
             url: "/Company/SendToCompanies",
             data: {
-                simulatorId: this.simulatorId
+                simulationId: this.simulationId
             },
             type: "post",
             dataType: "json",
@@ -368,7 +351,7 @@
         $.ajax({
             url: "/Company/SendNotificationFromSimulator",
             data: {
-                simulatorId: this.simulatorId
+                simulationId: this.simulationId
             },
             type: "post",
             dataType: "json",

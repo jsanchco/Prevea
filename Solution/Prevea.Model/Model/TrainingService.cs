@@ -8,11 +8,11 @@
 
     public class TrainingService
     {
-        [ForeignKey("Simulator")]
+        [ForeignKey("Simulation")]
         public int Id { get; set; }
 
         public string Observations { get; set; }
 
-        public virtual Simulation Simulator { get; set; }
+        public virtual Simulation Simulation { get; set; }
     }
 }

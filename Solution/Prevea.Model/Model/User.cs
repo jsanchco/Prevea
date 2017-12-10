@@ -58,7 +58,7 @@
 
         public string Email { get; set; }
         public string Nick { get; set; }
-
+ 
         [Required]
         public string Password { get; set; }
 
@@ -73,5 +73,6 @@
         public virtual ICollection<HistoricDownloadDocument> HistoricDownloadDocuments { get; set; }
         public virtual ICollection<Company> Companies { get; set; }
         public virtual ICollection<Simulation> Simulators { get; set; }
+        public virtual ICollection<Notification> Notifications { get; set; }
     }
 }

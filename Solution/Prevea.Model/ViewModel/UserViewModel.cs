@@ -32,6 +32,8 @@
         public string Email { get; set; }
         public string Nick { get; set; }
         public string Password { get; set; }
+        public int? UserParentId { get; set; }
+        public string UserParentInitials { get; set; }
         public int? CompanyId { get; set; }
         public string CompanyName { get; set; }
         public string CompanyEnrollment { get; set; }

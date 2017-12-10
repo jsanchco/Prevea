@@ -30,6 +30,7 @@
         List<User> GetUsersInRoles(List<string> roles);
         List<User> GetContatcPersonsByCompany(int companyId);
         List<User> GetEmployeesByCompany(int companyId);
+        List<User> GetUsersByUser(int id);
 
         #endregion
 

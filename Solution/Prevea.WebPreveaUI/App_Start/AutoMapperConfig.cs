@@ -40,7 +40,8 @@
             AutoMapper.Mapper.CreateMap<User, UserViewModel>()
                 .ForMember(x => x.RoleId, x => x.MapFrom(y => y.UserRoles.FirstOrDefault().Role.Id))
                 .ForMember(x => x.RoleName, x => x.MapFrom(y => y.UserRoles.FirstOrDefault().Role.Name))
-                .ForMember(x => x.UserStateName, x => x.MapFrom(y => y.UserState.Name));
+                .ForMember(x => x.UserStateName, x => x.MapFrom(y => y.UserState.Name))
+                .ForMember(x => x.UserParentInitials, x => x.MapFrom(y => y.UserParent.Initials));
             AutoMapper.Mapper.CreateMap<UserViewModel, User>();
 
             AutoMapper.Mapper.CreateMap<AgencyViewModel, Agency>();
@@ -67,7 +68,9 @@
                 .ForMember(x => x.NotificationTypeName, x => x.MapFrom(y => y.NotificationType.Name))
                 .ForMember(x => x.NotificationTypeDescription, x => x.MapFrom(y => y.NotificationType.Description))
                 .ForMember(x => x.NotificationStateName, x => x.MapFrom(y => y.NotificationState.Name))
-                .ForMember(x => x.NotificationStateDescription, x => x.MapFrom(y => y.NotificationState.Description));
+                .ForMember(x => x.NotificationStateDescription, x => x.MapFrom(y => y.NotificationState.Description))
+                .ForMember(x => x.ToRolName, x => x.MapFrom(y => y.ToRole.Description))
+                .ForMember(x => x.ToUserInitials, x => x.MapFrom(y => y.ToUser.Initials));
             AutoMapper.Mapper.CreateMap<NotificationViewModel, Notification>();
         }
     }

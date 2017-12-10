@@ -42,6 +42,7 @@
         List<User> GetUsers();
         List<User> GetContactPersonsByCompany(int companyId);
         List<User> GetEmployeesByCompany(int companyId);
+        List<User> GetUsersByUser(int id);
         Result SaveUser(int? roleId, User user);
         Result SaveContactPersonCompany(int roleId, int companyId, User user);
         Result SaveEmployeeCompany(int roleId, int companyId, User user);

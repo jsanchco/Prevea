@@ -1,0 +1,51 @@
+﻿@model TrainingService
+
+<script>
+    TrainingService.init(@Model.Id, @Model.Simulation.NumberEmployees);
+</script>
+
+<div class="row" id="pageTrainingService" style="margin: 8px">
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            @using (Ajax.BeginForm("TrainingService", "Simulations", null, new AjaxOptions
+            {
+                HttpMethod = "POST",
+                UpdateTargetId = "framePpal",
+                OnSuccess = "TrainingService.onSuccessUpdate"
+            }, new { id = "formTrainingService" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+                <div class="row form-group">
+                    <label class="col-sm-4 control-label">Observaciones</label>
+                    <label class="col-sm-4 control-label"></label>
+                    <label class="col-sm-4 control-label"></label>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-sm-12">
+                        @Html.TextAreaFor(model => model.Observations, new { @id = "textAreaObservationsTrainingService", @class = "form-control autogrow", style = "width:100%", placeholder = "Observaciones" })
+                    </div>
+                </div>
+
+                <br />
+
+                <div>
+                    @Html.HiddenFor(x => x.Id)
+
+                    <input type="submit" id="btnValidateTrainingService" value="Guardar" class="btn btn-prevea btn" />
+                </div>
+
+            }
+
+        </div>
+    </div>
+
+</div>
+
+<br />
+
+

@@ -8,13 +8,13 @@
 
     public class ForeignPreventionService
     {
-        [ForeignKey("Simulator")]
+        [ForeignKey("Simulation")]
         public int Id { get; set; }
 
         public decimal? AmountTecniques { get; set; }
         public decimal? AmountHealthVigilance { get; set; }
         public decimal? AmountMedicalExamination { get; set; }
 
-        public virtual Simulation Simulator { get; set; }
+        public virtual Simulation Simulation { get; set; }
     }
 }

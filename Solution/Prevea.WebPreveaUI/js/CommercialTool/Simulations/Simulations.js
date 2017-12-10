@@ -23,8 +23,9 @@ var Simulations = kendo.observable({
                         NIF: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         NumberEmployees: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         Date: { type: "date", editable: false },
-                        SimulationStateName: { type: "string" },
-                        SimulationStateDescription: { type: "string" }
+                        SimulationStateId: { type: "number", editable: false, defaultValue: 1 },
+                        SimulationStateName: { type: "string", editable: false, defaultValue: "ValidationPending" },
+                        SimulationStateDescription: { type: "string", editable: false, defaultValue: "Pendiente de Validación" }
                     }
                 }
             },
@@ -182,9 +183,16 @@ var Simulations = kendo.observable({
 
     getTemplateSimulationState: function (data) {
         var html = kendo.format("<div style='float: left; text-align: left; display: inline;'>{0}</div>", data.SimulationStateDescription);
-        html += "<div id='circle' style='float: right; text-align: right;'></div>";
-        
-        html += "</div>";
+
+        if (data.SimulationStateId === 1) {
+            html += kendo.format("<div id='circleError' style='float: right; text-align: right;'></div></div>");
+        }
+        if (data.SimulationStateId === 2) {
+            html += kendo.format("<div id='circleWarning' style='float: right; text-align: right;'></div></div>");
+        }
+        if (data.SimulationStateId === 3) {
+            html += kendo.format("<div id='circleSuccess' style='float: right; text-align: right;'></div></div>");
+        }
 
         return html;
     },

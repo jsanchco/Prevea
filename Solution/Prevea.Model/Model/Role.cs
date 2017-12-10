@@ -4,6 +4,8 @@
 
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System;
 
     #endregion
 
@@ -14,8 +16,12 @@
 
         [Required]
         public string Name { get; set; }
-       
+
+        [NotMapped]
+        public string Description => Helpers.HelperClass.GetDescription(Enum.GetName(typeof(EnRole), Id));
+
         public virtual ICollection<UserRole> UserRoles { get; set; }
+        public virtual ICollection<Notification> Notifications { get; set; }
     }
         
     public enum EnRole { NotMapped, Super, Admin, Library, ContactPerson, Employee, Agency, Doctor, Manager, PreveaPersonal, PreveaCommercial, ExternalPersonal }

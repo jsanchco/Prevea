@@ -18,7 +18,7 @@
 
         public Notification GetNotification(int notificationId)
         {
-            throw new System.NotImplementedException();
+            return Repository.GetNotification(notificationId);
         }
 
         public Result SaveNotification(Notification notification)

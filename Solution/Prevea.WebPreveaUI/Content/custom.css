@@ -36,6 +36,12 @@ body {
     font-size: 12px;
 }
 
+.k-grid-header > div > table,
+.k-grid-content > table
+{
+    width: 100% !important;
+}
+
 .k-grid .k-filter-row th, .k-grid-header th.k-header {
     border-width: 0 1px 1px;
 }

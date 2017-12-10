@@ -125,7 +125,7 @@
             var notification = new Model.Model.Notification
             {
                 DateCreation = DateTime.Now,
-                NotificationTypeId = (int)EnNotificationType.FromSimulator,
+                NotificationTypeId = (int)EnNotificationType.FromSimulation,
                 NotificationStateId = (int)EnNotificationState.Issued,
                 Observations = $"Notificación {Service.GetNotifications().Count + 1}"
             };

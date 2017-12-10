@@ -4,7 +4,7 @@
 
     using System.Web.Mvc;
     using HelpersClass;
-    using IRepository.IRepository;
+    using System.Linq;
     using IService.IService;
 
     #endregion
@@ -27,7 +27,15 @@
             if (user == null)
                 return RedirectToAction("Index", "Login");
 
+            var userRole = user.UserRoles.FirstOrDefault();
+            if (userRole == null)
+                return RedirectToAction("Index", "Login");
+
             ViewBag.Notifications = 2;
+            ViewBag.UserId = user.Id;
+            ViewBag.UserRoleId = userRole.Role.Id;
+            ViewBag.UserRoleName = userRole.Role.Name;
+            ViewBag.UserRoleDescription = userRole.Role.Description;
 
             return View(user);
         }

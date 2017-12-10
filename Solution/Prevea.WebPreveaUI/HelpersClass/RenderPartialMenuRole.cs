@@ -16,15 +16,23 @@
             var userRole = user.UserRoles.FirstOrDefault();
             if (userRole != null)
             {
-                var roleName = userRole.Role.Name;
-                switch (roleName)
+                var roleId = userRole.Role.Id;
+                switch (roleId)
                 {
-                    case "Super":
+                    case (int)EnRole.Super:
                         html.RenderPartial("MenuSuper");
                         break;
 
-                    case "Admin":
+                    case (int)EnRole.Admin:
                         html.RenderPartial("MenuAdmin");
+                        break;
+
+                    case (int)EnRole.PreveaPersonal:
+                        html.RenderPartial("MenuPreveaPersonal");
+                        break;
+
+                    case (int)EnRole.PreveaCommercial:
+                        html.RenderPartial("MenuPreveaCommercial");
                         break;
 
                     default:

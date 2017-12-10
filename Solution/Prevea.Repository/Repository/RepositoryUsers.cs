@@ -80,7 +80,12 @@
             {
                 try
                 {
-                    if (Context.Users.Any(m => m.Email == user.Email) || Context.Users.Any(m => m.DNI == user.DNI))
+                    if (roleId == null)
+                        return null;
+
+                    user.Nick = GetNick((int)roleId, user.DNI);
+
+                    if (Context.Users.FirstOrDefault(x => x.Nick == user.Nick) != null)
                         return null;
 
                     Context.Users.Add(user);
@@ -119,7 +124,11 @@
                     if (userFind?.UserRoles.FirstOrDefault() == null)
                         return null;
 
-                    if (roleId != null && userFind.UserRoles.FirstOrDefault().RoleId != roleId)
+                    var roleFind = userFind.UserRoles.FirstOrDefault();
+                    if (roleFind == null)
+                        return null;
+
+                    if (roleId != null && roleFind.RoleId != roleId)
                     {
                         var userRole = Context.UserRoles.FirstOrDefault(x => x.UserId == user.Id);
                         if (userRole != null && userRole.RoleId != roleId)
@@ -147,6 +156,8 @@
                             return null;
                         }
                     }
+
+                    user.Nick = GetNick((int)roleId, user.DNI);
 
                     Context.Entry(userFind).CurrentValues.SetValues(user);
                     Context.SaveChanges();
@@ -242,24 +253,47 @@
 
         public User ValidateUser(string user, string password)
         {
-            return (Context.Users
-                .FirstOrDefault((m => (m.Email == user && m.Password == password))));
+            return Context.Users
+                .FirstOrDefault(m => m.Nick == user && m.Password == password);
         }
 
         public async Task<User> ValidateUserAsync(string user, string password)
         {
-            return (await Context.Users.FirstAsync((m => (m.Email == user && m.Password == password))));
+            return await Context.Users.FirstAsync(m => m.Nick == user && m.Password == password);
+        }
+
+        public List<User> GetUsersByUser(int id)
+        {
+            var user = Context.Users.FirstOrDefault(x => x.Id == id);
+
+            var userRole = user?.UserRoles.FirstOrDefault();
+            if (userRole == null)
+                return null;
+            switch (userRole.RoleId)
+            {
+                case (int)EnRole.Super:
+                    var roles = new List<string>
+                                {
+                                    Enum.GetName(typeof(EnRole), (int)EnRole.Super),
+                                    Enum.GetName(typeof(EnRole), (int)EnRole.Library),
+                                    Enum.GetName(typeof(EnRole), (int)EnRole.PreveaPersonal),
+                                    Enum.GetName(typeof(EnRole), (int)EnRole.PreveaCommercial),
+                                    Enum.GetName(typeof(EnRole), (int)EnRole.ExternalPersonal)
+                                };
+
+                    return GetUsersInRoles(roles);
+                default:
+                    return Context.Users.Where(x => x.UserParentId == id).ToList();
+            }
         }
 
         public List<User> GetUsersInRoles(List<string> roles)
         {
-            //Context.Configuration.ProxyCreationEnabled = false;
-
             var users = from ur in Context.UserRoles
-                             join r in Context.Roles on ur.RoleId equals r.Id
-                             join u in Context.Users on ur.UserId equals u.Id
-                        where (roles.Contains(r.Name))
-                             select u;
+                join r in Context.Roles on ur.RoleId equals r.Id
+                join u in Context.Users on ur.UserId equals u.Id
+                where roles.Contains(r.Name)
+                select u;
 
             return users.ToList();
         }
@@ -269,7 +303,7 @@
             var users = from cp in Context.ContactPersons
                         join c in Context.Companies on cp.CompanyId equals c.Id
                         join u in Context.Users on cp.UserId equals u.Id
-                        where (c.Id == companyId)
+                        where c.Id == companyId
                         select u;
 
             return users.ToList();
@@ -280,10 +314,42 @@
             var users = from cp in Context.Employees
                 join c in Context.Companies on cp.CompanyId equals c.Id
                 join u in Context.Users on cp.UserId equals u.Id
-                where (c.Id == companyId)
+                where c.Id == companyId
                 select u;
 
             return users.ToList();
+        }
+
+        private string GetNick(int roleId, string dni)
+        {
+            switch (roleId)
+            {
+                case (int)EnRole.Super:
+                    return $"SU-{dni}";
+                case (int)EnRole.Admin:
+                    return $"AD-{dni}";
+                case (int)EnRole.PreveaPersonal:
+                    return $"PP-{dni}";
+                case (int)EnRole.Agency:
+                    return $"GE-{dni}";
+                case (int)EnRole.ContactPerson:
+                    return $"PC-{dni}";
+                case (int)EnRole.Doctor:
+                    return $"ME-{dni}";
+                case (int)EnRole.Employee:
+                    return $"TR-{dni}";
+                case (int)EnRole.ExternalPersonal:
+                    return $"PE-{dni}";
+                case (int)EnRole.Library:
+                    return $"BI-{dni}";
+                case (int)EnRole.PreveaCommercial:
+                    return $"CP-{dni}";
+                case (int)EnRole.Manager:
+                    return $"DI-{dni}";
+
+                default:
+                    return string.Empty;
+            }
         }
     }
 }
