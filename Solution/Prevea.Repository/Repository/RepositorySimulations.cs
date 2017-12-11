@@ -109,13 +109,38 @@
 
         public List<Simulation> GetSimulationByUser(int userId)
         {
-            return Context.Simulations
-                .Include(x => x.User)
-                .Include(x => x.SimulationState)
-                .Include(x => x.SimulationCompanies)
-                .OrderBy(x => x.Date)
-                .Where(x => x.User.Id == userId)
-                .ToList();
+            var user = Context.Users.FirstOrDefault(x => x.Id == userId);
+
+            var userRole = user?.UserRoles.FirstOrDefault();
+            if (userRole == null)
+                return null;
+            switch (userRole.RoleId)
+            {
+                case (int) EnRole.Super:
+                    return Context.Simulations
+                        .Include(x => x.User)
+                        .Include(x => x.SimulationState)
+                        .Include(x => x.SimulationCompanies)
+                        .OrderBy(x => x.Date)
+                        .ToList();
+
+                case (int)EnRole.PreveaPersonal:
+                    var simulations = from n in Context.Notifications
+                        join s in Context.Simulations on n.SimulationId equals s.Id
+                        where n.ToUserId == userId
+                        select s;
+
+                    return simulations.ToList();
+
+                default:
+                    return Context.Simulations
+                        .Include(x => x.User)
+                        .Include(x => x.SimulationState)
+                        .Include(x => x.SimulationCompanies)
+                        .OrderBy(x => x.Date)
+                        .Where(x => x.UserId == userId)
+                        .ToList();
+            }
         }
     }
 }

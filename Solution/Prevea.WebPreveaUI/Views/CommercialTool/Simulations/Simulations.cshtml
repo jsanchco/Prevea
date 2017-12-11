@@ -39,7 +39,7 @@
         <div class="col-sm-12">
 
             <!-- Breadcrumb 2 -->
-            <ol class="breadcrumb bc-2">
+            <ol class="breadcrumb bc-2" id="breadcrumbSimulations">
                 <li class="active">
                     <a id="br-simulations" onclick="Simulations.goToSimulations()" style="cursor: pointer;">
                         <i class="fa fa-magic"></i>
@@ -50,21 +50,6 @@
 
         </div>
     </div>
-
-    @if (ViewBag.Error != null)
-    {
-        <div id="errorFromBack" class="alert alert-danger alert-dismissable" style="">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <ul>
-                @foreach (var error in ViewBag.Error)
-                {
-                    <li>
-                        @error
-                    </li>
-                }
-            </ul>
-        </div>
-    }
 
     <div id="confirm"></div>
 

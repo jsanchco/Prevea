@@ -654,7 +654,6 @@
     <Content Include="js\CommercialTool\ManagementCompanies\ContactPersonsCompany.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\EmployeesCompany.js" />
     <Content Include="js\CommercialTool\Simulations\TrainingService.js" />
-    <Content Include="js\Shared\jsEnums.js" />
     <Content Include="js\Notifications\Notifications.js" />
     <Content Include="js\Shared\Constants.js" />
     <Content Include="js\Document\AddDocument.js" />

@@ -25,6 +25,7 @@
                         Id: { type: "number", defaultValue: 0 },
                         FirstName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         LastName: { type: "string" },
+                        Initials: { type: "string" },
                         RoleId: { type: "number", validation: { required: { message: " Campo Obligatorio " } } },
                         RoleName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         RoleDescription: { type: "string" },
@@ -33,7 +34,7 @@
                         DNI: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         UserStateId: { type: "number", defaultValue: 1 },
                         UserParentId: { type: "number", defaultValue: GeneralData.userId },
-                        UserParentInitials: { type: "string" }
+                        UserParentInitials: { type: "string", editable: false, defaultValue: GeneralData.userInitials }
                     }
                 }
             },
@@ -114,6 +115,12 @@
                 width: 130,
                 groupable: "false"
             }, {
+                field: "Initials",
+                title: "Iniciales",
+                width: 110,
+                groupable: "false",
+                template: "#= Templates.getColumnTemplateIncrease(data.Initials) #"
+            }, {
                 field: "RoleId",
                 title: "Rol",
                 width: "90px",
@@ -123,7 +130,7 @@
             }, {
                 field: "UserParentInitials",
                 title: "Creado por",
-                width: "90px"
+                width: 90
             }, {
                 field: "PhoneNumber",
                 title: "Teléfono",
@@ -230,7 +237,7 @@
         });
         kendo.bind($("#" + this.gridUsersId), this);
 
-        if (GeneralData.userRoleId !== jsEnums.role.Super) {
+        if (GeneralData.userRoleId !== Constants.role.Super) {
             var grid = $("#" + this.gridUsersId).data("kendoGrid");
             grid.hideColumn("UserParentInitials");
         }

@@ -39,6 +39,8 @@ namespace Prevea.WebPreveaUI.Controllers
                 var user = Service.ValidateUser(infoUser.User, infoUser.Password);
                 if (user != null)
                 {
+                    FormsAuthentication.SetAuthCookie(infoUser.User, false);
+
                     var roles = Service.GetRolesByUser(user.Id);
 
                     var serializeModel = new AppPrincipalSerializeModel
@@ -52,7 +54,7 @@ namespace Prevea.WebPreveaUI.Controllers
                     var userData = JsonConvert.SerializeObject(serializeModel);
                     var authTicket = new FormsAuthenticationTicket(
                         1,
-                        user.Email,
+                        user.Nick,
                         DateTime.Now,
                         DateTime.Now.AddMinutes(15),
                         false,

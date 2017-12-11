@@ -3,10 +3,11 @@
     numberNotificationsId: "numberNotifications",
     footerRoleId: "footerRole",
 
-    init: function (numberNotifications, userId, userRoleId, userRoleName, userRoleDescription) {
+    init: function (numberNotifications, userId, userInitials, userRoleId, userRoleName, userRoleDescription) {
         $("#" + this.numberNotificationsId).text(numberNotifications);
 
         GeneralData.userId = userId;
+        GeneralData.userInitials = userInitials;
         GeneralData.userRoleId = userRoleId;
         GeneralData.userRoleName = userRoleName;
         GeneralData.userRoleDescription = userRoleDescription;

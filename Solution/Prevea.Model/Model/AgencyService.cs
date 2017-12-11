@@ -13,6 +13,8 @@
 
         public string Observations { get; set; }
 
+        public decimal Total { get; set; }
+
         public virtual Simulation Simulation { get; set; }
     }
 }

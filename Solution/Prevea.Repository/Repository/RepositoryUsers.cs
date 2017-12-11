@@ -19,6 +19,7 @@
         {
             return Context.Users
                 .Include(x => x.UserState)
+                .Include(x => x.UserParent)
                 .Include(x => x.UserRoles.Select(y => y.Role))
                 .ToList();
         }
@@ -27,6 +28,7 @@
         {
             return Context.Users
                 .Include(x => x.UserState)
+                .Include(x => x.UserParent)
                 .Include(x => x.UserRoles.Select(y => y.Role))
                 .FirstOrDefault((m => (m.Id == id)));
         }
@@ -102,7 +104,7 @@
 
                     dbContextTransaction.Commit();
 
-                    return user;
+                    return GetUser(user.Id);
                 }
                 catch (Exception ex)
                 {

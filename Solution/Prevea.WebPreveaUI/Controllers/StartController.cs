@@ -33,6 +33,7 @@
 
             ViewBag.Notifications = 2;
             ViewBag.UserId = user.Id;
+            ViewBag.UserInitials = user.Initials;
             ViewBag.UserRoleId = userRole.Role.Id;
             ViewBag.UserRoleName = userRole.Role.Name;
             ViewBag.UserRoleDescription = userRole.Role.Description;

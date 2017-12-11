@@ -23,14 +23,13 @@
 
         #endregion
 
-        // GET: Simulations
+        [AppAuthorize(Roles = "Super,PreveaPersonal,PreveaCommercial")]
         public ActionResult Simulations()
         {
             return PartialView("~/Views/CommercialTool/Simulations/Simulations.cshtml");
         }
 
         [HttpGet]
-        [AppAuthorize(Roles = "Super,Admin")]
         public JsonResult Simulations_Read([DataSourceRequest] DataSourceRequest request)
         {
             var data = AutoMapper.Mapper.Map<List<SimulationViewModel>>(Service.GetSimulationsByUser(User.Id));
@@ -84,7 +83,7 @@
             }
         }
 
-        [AppAuthorize(Roles = "Super,Admin")]
+        [AppAuthorize(Roles = "Super,PreveaPersonal,PreveaCommercial")]
         public ActionResult DetailSimulation(int simulationId, int selectTabId)
         {
             ViewBag.SelectTabId = selectTabId;
@@ -93,7 +92,6 @@
                 Service.GetSimulation(simulationId));
         }
 
-        [AppAuthorize(Roles = "Super,Admin")]
         public ActionResult ForeignPreventionService(int simulationId)
         {
             var foreignPreventionService = Service.GetForeignPreventionService(simulationId) ?? new ForeignPreventionService
@@ -106,7 +104,6 @@
                 foreignPreventionService);
         }
 
-        [AppAuthorize(Roles = "Super,Admin")]
         public ActionResult AgencyService(int simulationId)
         {
             var agencyService = Service.GetAgencyService(simulationId) ?? new AgencyService
@@ -119,7 +116,6 @@
                 agencyService);
         }
 
-        [AppAuthorize(Roles = "Super,Admin")]
         public ActionResult TrainingService(int simulationId)
         {
             var trainingService = Service.GetTrainingService(simulationId) ?? new TrainingService

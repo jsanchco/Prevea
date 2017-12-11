@@ -4,12 +4,20 @@ var Simulations = kendo.observable({
 
     gridSimulationsId: "gridSimulations",
     confirmId: "confirm",
+    btnCreateSimulationId: "btnCreateSimulation",
+    breadcrumbSimulationsId: "breadcrumbSimulations",
 
     simulationsDataSource: null,
 
     init: function () {
         this.createSimulationsDataSource();
         this.createGridSimulations();
+
+        //if (GeneralData.userRoleId === Constants.role.PreveaCommercial || GeneralData.userRoleId === Constants.role.Super) {
+        //    $("#" + Simulations.breadcrumbSimulationsId).show();
+        //} else {
+        //    $("#" + Simulations.breadcrumbSimulationsId).hide();
+        //}
     },
 
     createSimulationsDataSource: function () {
@@ -19,6 +27,8 @@ var Simulations = kendo.observable({
                     id: "Id",
                     fields: {
                         Id: { type: "number", defaultValue: 0 },
+                        UserId: { type: "number" },
+                        UserInitials: { type: "string" },
                         CompanyName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         NIF: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         NumberEmployees: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
@@ -89,6 +99,10 @@ var Simulations = kendo.observable({
                     title: "Fecha",
                     groupable: "false",
                     template: "#= Templates.getColumnTemplateDate(data.Date) #"
+                }, {
+                    title: "Creado por",
+                    field: "UserInitials",
+                    width: 130
                 }, {
                     title: "Estado",
                     field: "SimulationStateDescription",
@@ -170,12 +184,26 @@ var Simulations = kendo.observable({
 
         });
         kendo.bind($("#" + this.gridSimulationsId), this);
+
+        if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {
+            var grid = $("#" + this.gridSimulationsId).data("kendoGrid");
+            grid.hideColumn("UserInitials");
+        }
+
+        if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {
+            $("#" + Simulations.btnCreateSimulationId).removeAttr("disabled");
+            $("#" + Simulations.btnCreateSimulationId).prop("disabled", false);
+        } else {
+            $("#" + Simulations.btnCreateSimulationId).removeAttr("disabled");
+            $("#" + Simulations.btnCreateSimulationId).prop("disabled", true);
+        }
+ 
     },
 
     getTemplateToolBar: function () {
         var html = "<div class='toolbar'>";
         html += "<span name='create' class='k-grid-add' id='createSimulation'>";
-        html += "<a class='btn btn-prevea' role='button'> Agregar nuevo</a>";
+        html += "<a class='btn btn-prevea' role='button' id='btnCreateSimulation'> Agregar nuevo</a>";
         html += "</span></div>";
 
         return html;
@@ -203,7 +231,11 @@ var Simulations = kendo.observable({
             html += kendo.format("<a toggle='tooltip' title='Ir a Empresa' onclick='Simulations.goToCompanyFromSimulation(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
         } else {
             html += kendo.format("<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
-            html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+            if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {
+                html += kendo.format(
+                    "<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                    data.Id);
+            }
         }
         html += kendo.format("</div>");
 

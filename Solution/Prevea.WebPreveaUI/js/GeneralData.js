@@ -4,12 +4,14 @@
     notificationId: "notification",
 
     userId: null,
+    userInitials: null,
     userRoleId: null,
     userRoleName: null,
     userRoleDescription: null,
 
-    setRoleUser: function (id, roleId, roleName, roleDescription) {
+    setRoleUser: function (id, initials, roleId, roleName, roleDescription) {
         this.userId = id;
+        this.userInitials = initials;
         this.userRoleId = roleId;
         this.userRoleName = roleName;
         this.roleDescription = roleDescription;

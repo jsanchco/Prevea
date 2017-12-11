@@ -1,10 +1,9 @@
-﻿using System.Web.Routing;
-
-namespace Prevea.WebPreveaUI.HelpersClass
+﻿namespace Prevea.WebPreveaUI.HelpersClass
 {
     #region Using
 
     using System.Web.Mvc;
+    using System.Web.Routing;
 
     #endregion
 
@@ -14,11 +13,11 @@ namespace Prevea.WebPreveaUI.HelpersClass
         {
             if (!filterContext.HttpContext.User.Identity.IsAuthenticated)
             {
-                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Error", action = "UserNoRegistred" }));
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Error", action = "AccessDenied" }));
             }
             else
             {
-                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Error", action = "AccessDenied" }));
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Error", action = "UserNoRegistred" }));
             }
         }
     }
