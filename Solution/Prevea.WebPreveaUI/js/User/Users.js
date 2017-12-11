@@ -25,7 +25,7 @@
                         Id: { type: "number", defaultValue: 0 },
                         FirstName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         LastName: { type: "string" },
-                        Initials: { type: "string" },
+                        Initials: { type: "string", editable: false },
                         RoleId: { type: "number", validation: { required: { message: " Campo Obligatorio " } } },
                         RoleName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         RoleDescription: { type: "string" },
