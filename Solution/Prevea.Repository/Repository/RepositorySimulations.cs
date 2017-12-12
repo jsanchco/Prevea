@@ -16,6 +16,7 @@
         {
             return Context.Simulations
                 .Include(x => x.User)
+                .Include(x => x.UserAssigned)
                 .Include(x => x.SimulationState)
                 .Include(x => x.SimulationCompanies)
                 .FirstOrDefault(m => m.Id == id);
@@ -25,6 +26,7 @@
         {
             return Context.Simulations
                 .Include(x => x.User)
+                .Include(x => x.UserAssigned)
                 .Include(x => x.SimulationState)
                 .Include(x => x.SimulationCompanies)
                 .OrderBy(x => x.Date)
@@ -119,6 +121,7 @@
                 case (int) EnRole.Super:
                     return Context.Simulations
                         .Include(x => x.User)
+                        .Include(x => x.UserAssigned)
                         .Include(x => x.SimulationState)
                         .Include(x => x.SimulationCompanies)
                         .OrderBy(x => x.Date)
@@ -135,6 +138,7 @@
                 default:
                     return Context.Simulations
                         .Include(x => x.User)
+                        .Include(x => x.UserAssigned)
                         .Include(x => x.SimulationState)
                         .Include(x => x.SimulationCompanies)
                         .OrderBy(x => x.Date)

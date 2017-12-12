@@ -47,6 +47,9 @@
         public int UserId { get; set; }
         public virtual User User { get; set; }
 
+        public int? UserAssignedId { get; set; }
+        public virtual User UserAssigned { get; set; }
+
         public virtual ICollection<Notification> Notifications { get; set; }
 
         [NotMapped]

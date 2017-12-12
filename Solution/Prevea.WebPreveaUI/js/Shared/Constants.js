@@ -24,6 +24,13 @@
         PreveaPersonal: 9,
         PreveaCommercial: 10,
         ExternalPersonal: 11
+    },
+
+    simulationState: {
+        ValidationPending: 1,
+        Modificated: 2,
+        Validated: 3,
+        SedToCompany: 4
     }
 
 });

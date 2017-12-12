@@ -11,6 +11,8 @@
         public int Id { get; set; }
         public int UserId { get; set; }
         public string UserInitials { get; set; }
+        public int? UserAssignedId { get; set; }
+        public string UserAssignedInitials { get; set; }
         public string CompanyName { get; set; }
         public string NIF { get; set; }
         public int NumberEmployees { get; set; }

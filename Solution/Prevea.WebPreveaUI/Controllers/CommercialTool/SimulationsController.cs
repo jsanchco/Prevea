@@ -58,19 +58,19 @@
                 if (result.Status == Status.Error)
                     return this.Jsonp(new { Errors = errorSimulation });
 
-                var notification = new Model.Model.Notification
-                {
-                    DateCreation = DateTime.Now,
-                    NotificationTypeId = (int)EnNotificationType.FromSimulation,
-                    NotificationStateId = (int)EnNotificationState.Issued,
-                    SimulationId = data.Id,
-                    ToRoleId = (int)EnRole.PreveaPersonal,
-                    Observations = $"{Service.GetUser(User.Id).Initials} - Creación de la Simulación"
-                };
-                var resultNotification = Service.SaveNotification(notification);
+                //var notification = new Model.Model.Notification
+                //{
+                //    DateCreation = DateTime.Now,
+                //    NotificationTypeId = (int)EnNotificationType.FromSimulation,
+                //    NotificationStateId = (int)EnNotificationState.Issued,
+                //    SimulationId = data.Id,
+                //    ToRoleId = (int)EnRole.PreveaPersonal,
+                //    Observations = $"{Service.GetUser(User.Id).Initials} - Creación de la Simulación"
+                //};
+                //var resultNotification = Service.SaveNotification(notification);
 
-                if (resultNotification.Status == Status.Error)
-                    return this.Jsonp(new { Errors = errorSimulation });
+                //if (resultNotification.Status == Status.Error)
+                //    return this.Jsonp(new { Errors = errorSimulation });
 
                 simulation.Id = data.Id;
                 return this.Jsonp(simulation);

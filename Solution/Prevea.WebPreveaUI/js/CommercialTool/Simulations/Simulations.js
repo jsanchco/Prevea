@@ -28,7 +28,9 @@ var Simulations = kendo.observable({
                     fields: {
                         Id: { type: "number", defaultValue: 0 },
                         UserId: { type: "number" },
-                        UserInitials: { type: "string" },
+                        UserInitials: { type: "string", editable: false },
+                        UserAssignedId: { type: "number" },
+                        UserAssignedInitials: { type: "string", editable: false },
                         CompanyName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         NIF: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         NumberEmployees: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
@@ -102,6 +104,10 @@ var Simulations = kendo.observable({
                 }, {
                     title: "Creado por",
                     field: "UserInitials",
+                    width: 130
+                }, {
+                    title: "Asignado a",
+                    field: "UserAssignedInitials",
                     width: 130
                 }, {
                     title: "Estado",
@@ -227,14 +233,26 @@ var Simulations = kendo.observable({
 
     getColumnTemplateCommands: function (data) {
         var html = "<div align='center'>";
-        if (data.IsBlocked === true) {
+        if (data.SimulationStateId === Constants.simulationState.SedToCompany) {
             html += kendo.format("<a toggle='tooltip' title='Ir a Empresa' onclick='Simulations.goToCompanyFromSimulation(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
         } else {
-            html += kendo.format("<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
             if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {
-                html += kendo.format(
-                    "<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
-                    data.Id);
+                html += kendo.format("<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+                html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+            }
+            if (GeneralData.userRoleId === Constants.role.Super) {
+                if (GeneralData.userId !== data.UserAssignedId) {
+                    html += kendo.format("<a toggle='tooltip' title='Asignar' onclick='Notifications.goToAssignNotification(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-hand-o-left' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+                }                
+                html += kendo.format("<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+                html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+            }
+            if (GeneralData.userRoleId === Constants.role.PreveaPersonal) {                
+                if (GeneralData.userId === data.UserAssignedId) {
+                    html += kendo.format("<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+                } else {
+                    html += kendo.format("<a toggle='tooltip' title='Asignar' onclick='Notifications.goToAssignNotification(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-hand-o-left' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+                }
             }
         }
         html += kendo.format("</div>");
