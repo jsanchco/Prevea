@@ -51,13 +51,15 @@
                     field: "NotificationTypeDescription",
                     title: "Tipo de Notificación",
                     width: 200
-                }, {
-                    field: "NotificationStateDescription",
-                    title: "Estado",
-                    width: 180
-                }, {
+                },
+                //{
+                //    field: "NotificationStateDescription",
+                //    title: "Estado",
+                //    width: 180
+                //},
+                {
                     field: "ToUserInitials",
-                    title: "Asignado",
+                    title: "Asignado a",
                     width: 150,
                     template: "#= Templates.getColumnTemplateIncrease(data.ToUserInitials) #"
                 }, {
@@ -69,19 +71,22 @@
                     title: "Fecha de Creación",
                     width: 200,
                     template: "#= Templates.getColumnTemplateDateWithHour(data.DateCreation) #"
-                }, {
-                    field: "DateModification",
-                    title: "Fecha de Modificación",
-                    width: 200,
-                    template: "#= Notifications.getColumnTemplateDateModication(data.DateModification) #"
-                }, {
+                },
+                //{
+                //    field: "DateModification",
+                //    title: "Fecha de Modificación",
+                //    width: 200,
+                //    template: "#= Notifications.getColumnTemplateDateModication(data.DateModification) #"
+                //},
+                {
                     title: "Comandos",
                     field: "Commands",
                     width: 130,
                     groupable: "false",
                     filterable: false,
                     template: "#= Notifications.getColumnTemplateCommands(data) #"
-                }],
+                }
+            ],
             pageable: {
                 buttonCount: 2,
                 pageSizes: [10, 20, "all"],
@@ -175,7 +180,6 @@
     getColumnTemplateCommands: function (data) {
         var html = "<div align='center'>";
 
-        html += kendo.format("<a toggle='tooltip' title='Asignar' onclick='Notifications.goToAssignNotification(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-hand-o-left' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
         html += kendo.format("<a toggle='tooltip' title='Ir a Simulación' onclick='Notifications.goToSimulationFromNotification(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.SimulationId);
         html += kendo.format("</div>");
 

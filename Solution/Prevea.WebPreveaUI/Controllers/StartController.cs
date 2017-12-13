@@ -31,7 +31,7 @@
             if (userRole == null)
                 return RedirectToAction("Index", "Login");
 
-            ViewBag.Notifications = 2;
+            ViewBag.Notifications = Service.GetNumberNotificationsByUserId(userId);
             ViewBag.UserId = user.Id;
             ViewBag.UserInitials = user.Initials;
             ViewBag.UserRoleId = userRole.Role.Id;

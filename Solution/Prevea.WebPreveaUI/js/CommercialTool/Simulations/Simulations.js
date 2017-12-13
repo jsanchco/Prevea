@@ -326,6 +326,7 @@ var Simulations = kendo.observable({
             success: function (data) {
                 if (data.result.Status === Constants.resultStatus.Ok) {
                     Simulations.simulationsDataSource.read();
+                    GeneralData.showNotification(Constants.ok, "", "success");
                 }
                 if (data.result.Status === Constants.resultStatus.Error) {
                     GeneralData.showNotification(Constants.ko, "", "error");

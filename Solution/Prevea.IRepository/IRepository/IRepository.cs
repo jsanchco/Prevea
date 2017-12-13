@@ -228,6 +228,8 @@
         List<Notification> GetNotificationsByUserId(int userId);
         List<Notification> GetNotificationsByRoleId(int roleId);
 
+        int GetNumberNotificationsByUserId(int userId);
+
         #endregion
 
         #region Notification Type

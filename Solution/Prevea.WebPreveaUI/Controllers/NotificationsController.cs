@@ -9,7 +9,6 @@
     using Model.ViewModel;
     using Common;
     using System;
-    using Model.Model;
 
     #endregion
 
@@ -32,7 +31,7 @@
         //[AppAuthorize(Roles = "Super,Admin")]
         public JsonResult Notifications_Read([DataSourceRequest] DataSourceRequest request)
         {
-            var data = AutoMapper.Mapper.Map<List<NotificationViewModel>>(Service.GetNotifications());
+            var data = AutoMapper.Mapper.Map<List<NotificationViewModel>>(Service.GetNotificationsByUserId(User.Id));
 
             return this.Jsonp(data);
         }

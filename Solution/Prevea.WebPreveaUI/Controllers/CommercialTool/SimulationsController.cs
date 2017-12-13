@@ -8,15 +8,17 @@
     using Kendo.Mvc.UI;
     using IService.IService;
     using Model.Model;
-    using Model.ViewModel;
+    using System.Linq;
     using Common;
     using HelpersClass;
+    using Model.ViewModel;
 
     #endregion
 
     public class SimulationsController : BaseController
     {
         #region Constructor
+
         public SimulationsController(IService service) : base(service)
         {
         }
@@ -42,11 +44,11 @@
             const string errorSimulation = "Se ha producido un error en la Grabación de la Simulación";
 
             try
-            {                
+            {
                 var simulation = this.DeserializeObject<SimulationViewModel>("simulation");
                 if (simulation == null)
                 {
-                    return this.Jsonp(new { Errors = errorSimulation });
+                    return this.Jsonp(new {Errors = errorSimulation});
                 }
 
                 var data = AutoMapper.Mapper.Map<Simulation>(simulation);
@@ -56,21 +58,7 @@
                 var result = Service.SaveSimulation(data);
 
                 if (result.Status == Status.Error)
-                    return this.Jsonp(new { Errors = errorSimulation });
-
-                //var notification = new Model.Model.Notification
-                //{
-                //    DateCreation = DateTime.Now,
-                //    NotificationTypeId = (int)EnNotificationType.FromSimulation,
-                //    NotificationStateId = (int)EnNotificationState.Issued,
-                //    SimulationId = data.Id,
-                //    ToRoleId = (int)EnRole.PreveaPersonal,
-                //    Observations = $"{Service.GetUser(User.Id).Initials} - Creación de la Simulación"
-                //};
-                //var resultNotification = Service.SaveNotification(notification);
-
-                //if (resultNotification.Status == Status.Error)
-                //    return this.Jsonp(new { Errors = errorSimulation });
+                    return this.Jsonp(new {Errors = errorSimulation});
 
                 simulation.Id = data.Id;
                 return this.Jsonp(simulation);
@@ -79,7 +67,7 @@
             {
                 System.Diagnostics.Debug.WriteLine(e.Message);
 
-                return this.Jsonp(new { Errors = errorSimulation });
+                return this.Jsonp(new {Errors = errorSimulation});
             }
         }
 
@@ -94,11 +82,12 @@
 
         public ActionResult ForeignPreventionService(int simulationId)
         {
-            var foreignPreventionService = Service.GetForeignPreventionService(simulationId) ?? new ForeignPreventionService
-            {
-                Id = simulationId,
-                Simulation = Service.GetSimulation(simulationId)
-            };
+            var foreignPreventionService = Service.GetForeignPreventionService(simulationId) ??
+                                           new ForeignPreventionService
+                                           {
+                                               Id = simulationId,
+                                               Simulation = Service.GetSimulation(simulationId)
+                                           };
 
             return PartialView("~/Views/CommercialTool/Simulations/ForeignPreventionService.cshtml",
                 foreignPreventionService);
@@ -133,15 +122,30 @@
         {
             try
             {
-                var result = Service.SaveForeignPreventionService(foreignPreventionService);
+                var resultService = Service.SaveForeignPreventionService(foreignPreventionService);
 
-                return Json(result);
+                if (UpdateSimulation(foreignPreventionService.Id) == Status.Error)
+                {
+                    var resultUpdateSimulation = new Result
+                    {
+                        Status = Status.Error,
+                        Object = null,
+                        Message = "Error en la actualización de la Simulación"
+                    };
+                    return Json(resultUpdateSimulation);
+                }
+
+                return Json(resultService);
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e.Message);
 
-                return Json(new Result { Status = Status.Error, Message = "Ha ocurrido un error en la Grabación de la Simulación" });
+                return Json(new Result
+                {
+                    Status = Status.Error,
+                    Message = "Ha ocurrido un error en la Grabación de la Simulación"
+                });
             }
         }
 
@@ -158,7 +162,11 @@
             {
                 System.Diagnostics.Debug.WriteLine(e.Message);
 
-                return Json(new Result { Status = Status.Error, Message = "Ha ocurrido un error en la Grabación de la Simulación" });
+                return Json(new Result
+                {
+                    Status = Status.Error,
+                    Message = "Ha ocurrido un error en la Grabación de la Simulación"
+                });
             }
         }
 
@@ -175,7 +183,11 @@
             {
                 System.Diagnostics.Debug.WriteLine(e.Message);
 
-                return Json(new Result { Status = Status.Error, Message = "Ha ocurrido un error en la Grabación de la Simulación" });
+                return Json(new Result
+                {
+                    Status = Status.Error,
+                    Message = "Ha ocurrido un error en la Grabación de la Simulación"
+                });
             }
         }
 
@@ -186,7 +198,7 @@
                 var simulator = this.DeserializeObject<Simulation>("simulator");
                 if (simulator == null)
                 {
-                    return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado de la Simulación" });
+                    return this.Jsonp(new {Errors = "Se ha producido un error en el Borrado de la Simulación"});
                 }
 
                 var result = Service.DeleteSimulation(simulator.Id);
@@ -196,13 +208,15 @@
                     return this.Jsonp(simulator);
                 }
 
-                return result.Status != Status.Error ? this.Jsonp(simulator) : this.Jsonp(new { Errors = "Se ha producido un error en el Borrado de la Simulación" });
+                return result.Status != Status.Error
+                    ? this.Jsonp(simulator)
+                    : this.Jsonp(new {Errors = "Se ha producido un error en el Borrado de la Simulación"});
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e.Message);
 
-                return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado de la Simulación" });
+                return this.Jsonp(new {Errors = "Se ha producido un error en el Borrado de la Simulación"});
             }
         }
 
@@ -211,7 +225,7 @@
         {
             var stretchCalculate = Service.GetStretchCalculateByNumberEmployees(numberEmployees);
 
-            return Json(new { stretchCalculate }, JsonRequestBehavior.AllowGet);
+            return Json(new {stretchCalculate}, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -220,13 +234,13 @@
             var notification = new Model.Model.Notification
             {
                 DateCreation = DateTime.Now,
-                NotificationTypeId = (int)EnNotificationType.FromSimulation,
-                NotificationStateId = (int)EnNotificationState.Issued,
+                NotificationTypeId = (int) EnNotificationType.FromSimulation,
+                NotificationStateId = (int) EnNotificationState.Issued,
                 Observations = $"Notificación {Service.GetNotifications().Count + 1}"
             };
             var result = Service.SaveNotification(notification);
 
-            return Json(new { result }, JsonRequestBehavior.AllowGet);
+            return Json(new {result}, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -234,7 +248,7 @@
         {
             var result = Service.SendToCompanies(simulationId);
 
-            return Json(new { result }, JsonRequestBehavior.AllowGet);
+            return Json(new {result}, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -244,9 +258,95 @@
             simulation.UserAssignedId = User.Id;
             simulation.DateAssigned = DateTime.Now;
 
-            var result = Service.UpdateSimulation(simulationId, simulation);
+            var resultSimulation = Service.UpdateSimulation(simulationId, simulation);
+            if (resultSimulation.Status == Status.Error)
+                return Json(new {result = resultSimulation}, JsonRequestBehavior.AllowGet);
 
-            result.Object = AutoMapper.Mapper.Map<SimulationViewModel>(result.Object);
+            var notification = new Model.Model.Notification
+            {
+                DateCreation = DateTime.Now,
+                NotificationTypeId = (int) EnNotificationType.FromSimulation,
+                NotificationStateId = (int) EnNotificationState.Issued,
+                SimulationId = simulationId,
+                ToUserId = User.Id,
+                ToRoleId = (int) EnRole.PreveaPersonal,
+                Observations =
+                    $"{Service.GetUser(User.Id).Initials} - Asignada la Simulación [{simulation.CompanyName}]"
+            };
+            var resultNotification = Service.SaveNotification(notification);
+
+            if (resultNotification.Status == Status.Error)
+                return Json(new {result = resultSimulation}, JsonRequestBehavior.AllowGet);
+
+            resultSimulation.Object = AutoMapper.Mapper.Map<SimulationViewModel>(resultSimulation.Object);
+
+            return Json(new {result = resultSimulation}, JsonRequestBehavior.AllowGet);
+        }
+
+        private Status UpdateSimulation(int simulationId)
+        {
+            var user = Service.GetUser(User.Id);
+            var simulation = Service.GetSimulation(simulationId);
+
+            Result resultSimulation;
+            switch (user.UserRoles.First().RoleId)
+            {
+                case (int) EnRole.Super:
+                case (int) EnRole.PreveaPersonal:
+                    simulation.SimulationStateId = (int) EnSimulationState.Modificated;
+                    resultSimulation = Service.UpdateSimulation(simulation.Id, simulation);
+
+                    if (resultSimulation.Status == Status.Error)
+                        return Status.Error;
+
+                    var notification = new Model.Model.Notification
+                    {
+                        DateCreation = DateTime.Now,
+                        NotificationTypeId = (int) EnNotificationType.FromSede,
+                        NotificationStateId = (int) EnNotificationState.Issued,
+                        SimulationId = simulationId,
+                        ToUserId = simulation.UserId,
+                        Observations =
+                            $"{Service.GetUser(User.Id).Initials} - Modificada la Simulación [{simulation.CompanyName}]"
+                    };
+                    var resultNotification = Service.SaveNotification(notification);
+
+                    if (resultNotification.Status == Status.Error)
+                        return Status.Error;
+
+                    return Status.Ok;
+
+                case (int)EnRole.PreveaCommercial:
+                    simulation.SimulationStateId = (int)EnSimulationState.ValidationPending;
+                    resultSimulation = Service.UpdateSimulation(simulation.Id, simulation);
+
+                    if (resultSimulation.Status == Status.Error)
+                        return Status.Error;
+
+                    return Status.Ok;
+
+                default:
+                    return Status.Ok;
+            }
+        }
+
+        [HttpPost]
+        public JsonResult SendToSEDE(int simulationId)
+        {
+            var simulation = Service.GetSimulation(simulationId);
+            var notification = new Model.Model.Notification
+            {
+                DateCreation = DateTime.Now,
+                NotificationTypeId = (int)EnNotificationType.FromSimulation,
+                NotificationStateId = (int)EnNotificationState.Issued,
+                SimulationId = simulationId,
+                ToRoleId = (int)EnRole.PreveaPersonal,
+                Observations =
+                    $"{Service.GetUser(User.Id).Initials} - Creación/Modificación de la Simulación [{simulation.CompanyName}]"
+            };
+            var result = Service.SaveNotification(notification);
+
+            result.Object = AutoMapper.Mapper.Map<NotificationViewModel>(result.Object);
 
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }

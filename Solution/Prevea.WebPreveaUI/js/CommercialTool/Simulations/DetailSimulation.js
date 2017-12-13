@@ -27,7 +27,7 @@
             $("#" + this.btnSendToCompaniesId).prop("disabled", true);
         }
 
-        if (GeneralData.userRoleId !== Constants.role.PreveaCommercial) {
+        if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {
             $("#" + this.btnValidatedBySEDEId).show();
         } else {
             $("#" + this.btnValidatedBySEDEId).hide();
@@ -106,6 +106,28 @@
             }
         };
         GeneralData.goToActionController(params);
+    },
+
+    goToSendToSEDE: function () {
+        $.ajax({
+            url: "/Simulations/SendToSEDE",
+            data: {
+                simulationId: DetailSimulation.simulationId
+            },
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                if (data.result.Status === Constants.resultStatus.Ok) {
+                    GeneralData.showNotification("Enviada Notificación a SEDE", "", "success");
+                }
+                if (data.result.Status === Constants.resultStatus.Error) {
+                    GeneralData.showNotification(Constants.ko, "", "error");
+                }
+            },
+            error: function () {
+                GeneralData.showNotification(Constants.ko, "", "error");
+            }
+        });
     }
 
 });

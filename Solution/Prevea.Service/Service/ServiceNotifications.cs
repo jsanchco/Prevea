@@ -125,12 +125,17 @@
 
         public List<Notification> GetNotificationsByUserId(int userId)
         {
-            throw new System.NotImplementedException();
+            return Repository.GetNotificationsByUserId(userId);
         }
 
         public List<Notification> GetNotificationsByRoleId(int roleId)
         {
-            throw new System.NotImplementedException();
+            return Repository.GetNotificationsByRoleId(roleId);
+        }
+
+        public int GetNumberNotificationsByUserId(int userId)
+        {
+            return Repository.GetNumberNotificationsByUserId(userId);
         }
     }
 }

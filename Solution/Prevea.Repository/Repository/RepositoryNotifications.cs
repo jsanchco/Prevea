@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices.WindowsRuntime;
-
-namespace Prevea.Repository.Repository
+﻿namespace Prevea.Repository.Repository
 {
     #region Using
 
@@ -21,6 +19,7 @@ namespace Prevea.Repository.Repository
                 .Include(x => x.NotificationType)
                 .Include(x => x.ToUser)
                 .Include(x => x.ToRole)
+                .OrderBy(x => x.DateCreation)
                 .ToList();
         }
 
@@ -89,12 +88,65 @@ namespace Prevea.Repository.Repository
 
         public List<Notification> GetNotificationsByUserId(int userId)
         {
-            throw new System.NotImplementedException();
-        }
+            var user = Context.Users.FirstOrDefault(x => x.Id == userId);
 
+            var userRole = user?.UserRoles.FirstOrDefault();
+            if (userRole == null)
+                return null;
+            switch (userRole.RoleId)
+            {
+                case (int) EnRole.Super:
+                    return Context.Notifications
+                        .Include(x => x.NotificationType)
+                        .Include(x => x.ToUser)
+                        .Include(x => x.ToRole)
+                        .OrderBy(x => x.DateCreation)
+                        .ToList();
+                case (int) EnRole.PreveaPersonal:
+                    return Context.Notifications
+                        .Include(x => x.NotificationType)
+                        .Include(x => x.ToUser)
+                        .Include(x => x.ToRole)
+                        .OrderBy(x => x.DateCreation)
+                        .Where(x => x.ToRoleId == (int) EnRole.PreveaPersonal || x.ToUserId == userId)
+                        .ToList();
+                case (int) EnRole.PreveaCommercial:
+                    return Context.Notifications
+                        .Include(x => x.NotificationType)
+                        .Include(x => x.ToUser)
+                        .Include(x => x.ToRole)
+                        .OrderBy(x => x.DateCreation)
+                        .Where(x => x.ToUserId == userId)
+                        .ToList();
+                default:
+                    return Context.Notifications
+                        .Include(x => x.NotificationType)
+                        .Include(x => x.ToUser)
+                        .Include(x => x.ToRole)
+                        .OrderBy(x => x.DateCreation)
+                        .ToList();
+            }
+        }
         public List<Notification> GetNotificationsByRoleId(int roleId)
         {
-            throw new System.NotImplementedException();
+            return Context.Notifications
+                .Include(x => x.NotificationType)
+                .Include(x => x.ToUser)
+                .Include(x => x.ToRole)
+                .OrderBy(x => x.DateCreation)
+                .Where(x => x.ToRoleId == roleId)
+                .ToList();
+        }
+
+        public int GetNumberNotificationsByUserId(int userId)
+        {
+            var user = Context.Users.FirstOrDefault(x => x.Id == userId);
+
+            var userRole = user?.UserRoles.FirstOrDefault();
+            if (userRole == null)
+                return 0;
+
+            return Context.Notifications.Count(x => x.ToUserId == userId || x.ToRoleId == userRole.RoleId);
         }
     }
 }
