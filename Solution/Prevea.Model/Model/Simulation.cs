@@ -41,6 +41,7 @@
         public virtual TrainingService TrainingService { get; set; }
 
         public DateTime Date { get; set; }
+        public DateTime? DateAssigned { get; set; }
 
         public decimal Total { get; set; }
 

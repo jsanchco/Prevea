@@ -236,5 +236,19 @@
 
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult AssignSimulation(int simulationId)
+        {
+            var simulation = Service.GetSimulation(simulationId);
+            simulation.UserAssignedId = User.Id;
+            simulation.DateAssigned = DateTime.Now;
+
+            var result = Service.UpdateSimulation(simulationId, simulation);
+
+            result.Object = AutoMapper.Mapper.Map<SimulationViewModel>(result.Object);
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

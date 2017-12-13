@@ -29,7 +29,7 @@ var Simulations = kendo.observable({
                         Id: { type: "number", defaultValue: 0 },
                         UserId: { type: "number" },
                         UserInitials: { type: "string", editable: false },
-                        UserAssignedId: { type: "number" },
+                        UserAssignedId: { type: "number", defaultValue: null },
                         UserAssignedInitials: { type: "string", editable: false },
                         CompanyName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         NIF: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
@@ -242,7 +242,7 @@ var Simulations = kendo.observable({
             }
             if (GeneralData.userRoleId === Constants.role.Super) {
                 if (GeneralData.userId !== data.UserAssignedId) {
-                    html += kendo.format("<a toggle='tooltip' title='Asignar' onclick='Notifications.goToAssignNotification(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-hand-o-left' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+                    html += kendo.format("<a toggle='tooltip' title='Asignar' onclick='Simulations.goToAssignSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-hand-o-left' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
                 }                
                 html += kendo.format("<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
                 html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
@@ -251,7 +251,7 @@ var Simulations = kendo.observable({
                 if (GeneralData.userId === data.UserAssignedId) {
                     html += kendo.format("<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
                 } else {
-                    html += kendo.format("<a toggle='tooltip' title='Asignar' onclick='Notifications.goToAssignNotification(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-hand-o-left' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+                    html += kendo.format("<a toggle='tooltip' title='Asignar' onclick='Simulations.goToAssignSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-hand-o-left' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
                 }
             }
         }
@@ -313,5 +313,27 @@ var Simulations = kendo.observable({
             }
         };
         GeneralData.goToActionController(params);
+    },
+
+    goToAssignSimulation: function (simulationId) {
+        $.ajax({
+            url: "/Simulations/AssignSimulation",
+            data: {
+                simulationId: simulationId
+            },
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                if (data.result.Status === Constants.resultStatus.Ok) {
+                    Simulations.simulationsDataSource.read();
+                }
+                if (data.result.Status === Constants.resultStatus.Error) {
+                    GeneralData.showNotification(Constants.ko, "", "error");
+                }
+            },
+            error: function () {
+                GeneralData.showNotification(Constants.ko, "", "error");
+            }
+        });
     }
 });

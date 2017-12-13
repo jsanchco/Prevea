@@ -128,12 +128,14 @@
                         .ToList();
 
                 case (int)EnRole.PreveaPersonal:
-                    var simulations = from n in Context.Notifications
-                        join s in Context.Simulations on n.SimulationId equals s.Id
-                        where n.ToUserId == userId
-                        select s;
-
-                    return simulations.ToList();
+                    return Context.Simulations
+                    .Include(x => x.User)
+                    .Include(x => x.UserAssigned)
+                    .Include(x => x.SimulationState)
+                    .Include(x => x.SimulationCompanies)
+                    .OrderBy(x => x.Date)
+                    .Where(x => x.SimulationStateId != (int)EnSimulationState.Validated || x.UserAssignedId == userId)
+                    .ToList();
 
                 default:
                     return Context.Simulations

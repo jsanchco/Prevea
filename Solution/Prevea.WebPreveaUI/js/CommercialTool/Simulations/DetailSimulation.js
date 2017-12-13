@@ -2,6 +2,8 @@
     tabStripDetailSimulationId: "tabStripDetailSimulation",
     spanNotificationId: "spanNotification",
     iconSimulationStateId: "iconSimulationState",
+    btnSendToCompaniesId: "btnSendToCompanies",
+    btnValidatedBySEDEId: "btnValidatedBySEDE",
     
     // Fields
     simulationId: null,
@@ -15,17 +17,44 @@
 
         this.createIconSimulationState();
         this.createKendoWidgets();
+
+        if (GeneralData.userRoleId === Constants.role.PreveaCommercial &&
+            this.simulationStateId === Constants.simulationState.Modificated) {
+            $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
+            $("#" + this.btnSendToCompaniesId).prop("disabled", false);
+        } else {
+            $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
+            $("#" + this.btnSendToCompaniesId).prop("disabled", true);
+        }
+
+        if (GeneralData.userRoleId !== Constants.role.PreveaCommercial) {
+            $("#" + this.btnValidatedBySEDEId).show();
+        } else {
+            $("#" + this.btnValidatedBySEDEId).hide();
+        }
+
+        if (this.simulationStateId === Constants.simulationState.Validated ||
+            this.simulationStateId === Constants.simulationState.SedToCompany) {
+            $("#" + this.btnValidatedBySEDEId).removeAttr("disabled");
+            $("#" + this.btnValidatedBySEDEId).prop("disabled", true);
+        } else {
+            $("#" + this.btnValidatedBySEDEId).removeAttr("disabled");
+            $("#" + this.btnValidatedBySEDEId).prop("disabled", false);
+        }
     },
 
     createIconSimulationState: function () {
         var html = "";
-        if (this.simulationStateId === 1) {
+        if (this.simulationStateId === Constants.simulationState.ValidationPending) {
             html = "<div id='circleError' class='pull-right'></div>";
         }
-        if (this.simulationStateId === 2) {
+        if (this.simulationStateId === Constants.simulationState.Modificated) {
             html = "<div id='circleWarning' class='pull-right'></div>";
         }
-        if (this.simulationStateId === 3) {
+        if (this.simulationStateId === Constants.simulationState.Validated) {
+            html = "<div id='circleSuccess' class='pull-right'></div>";
+        }
+        if (this.simulationStateId === Constants.simulationState.SedToCompany) {
             html = "<div id='circleSuccess' class='pull-right'></div>";
         }
 
