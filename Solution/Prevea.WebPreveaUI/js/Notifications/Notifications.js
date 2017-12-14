@@ -151,6 +151,11 @@
 
         });
         kendo.bind($("#" + this.gridNotificationsId), this);
+
+        if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {
+            var grid = $("#" + this.gridNotificationsId).data("kendoGrid");
+            grid.hideColumn("ToUserInitials");
+        }
     },
 
     getTemplateToolBar: function () {

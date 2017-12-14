@@ -60,6 +60,20 @@
                 if (result.Status == Status.Error)
                     return this.Jsonp(new {Errors = errorSimulation});
 
+                var notification = new Model.Model.Notification
+                {
+                    DateCreation = DateTime.Now,
+                    NotificationTypeId = (int)EnNotificationType.FromSimulation,
+                    NotificationStateId = (int)EnNotificationState.Assigned,
+                    SimulationId = simulation.Id,
+                    ToUserId = simulation.UserId,
+                    Observations =
+                        $"{Service.GetUser(User.Id).Initials} - Creación de la Simulación [{simulation.CompanyName}]"
+                };
+                var resultNotification = Service.SaveNotification(notification);
+                if (resultNotification.Status == Status.Error)
+                    return this.Jsonp(new { Errors = resultNotification });
+
                 simulation.Id = data.Id;
                 return this.Jsonp(simulation);
             }
@@ -342,7 +356,7 @@
                 SimulationId = simulationId,
                 ToRoleId = (int)EnRole.PreveaPersonal,
                 Observations =
-                    $"{Service.GetUser(User.Id).Initials} - Creación/Modificación de la Simulación [{simulation.CompanyName}]"
+                    $"{Service.GetUser(User.Id).Initials} - Modificación de la Simulación [{simulation.CompanyName}]"
             };
             var result = Service.SaveNotification(notification);
 

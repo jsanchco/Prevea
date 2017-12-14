@@ -18,32 +18,7 @@
         this.createIconSimulationState();
         this.createKendoWidgets();
 
-        if (GeneralData.userRoleId === Constants.role.PreveaCommercial &&
-            this.simulationStateId === Constants.simulationState.Modificated) {
-            $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
-            $("#" + this.btnSendToCompaniesId).prop("disabled", false);
-        } else {
-            $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
-            $("#" + this.btnSendToCompaniesId).prop("disabled", true);
-        }
-
-        if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {
-            $("#" + this.btnSendToSEDEId).show();
-        } else {
-            $("#" + this.btnSendToSEDEId).hide();
-        }
- 
-        $("#" + this.btnSendToSEDEId).removeAttr("disabled");
-        $("#" + this.btnSendToSEDEId).prop("disabled", true);
-
-        //if (this.simulationStateId === Constants.simulationState.Validated ||
-        //    this.simulationStateId === Constants.simulationState.SendToCompany) {
-        //    $("#" + this.btnSendToSEDEId).removeAttr("disabled");
-        //    $("#" + this.btnSendToSEDEId).prop("disabled", true);
-        //} else {
-        //    $("#" + this.btnSendToSEDEId).removeAttr("disabled");
-        //    $("#" + this.btnSendToSEDEId).prop("disabled", false);
-        //}
+        this.updateButtons();
     },
 
     createIconSimulationState: function () {
@@ -134,6 +109,72 @@
                 GeneralData.showNotification(Constants.ko, "", "error");
             }
         });
-    }
+    },
 
+    updateButtons: function () {
+        if (GeneralData.userRoleId === Constants.role.Super || GeneralData.userRoleId === Constants.role.PreveaPersonal) {
+            $("#" + this.btnSendToSEDEId).removeAttr("disabled");
+            $("#" + this.btnSendToSEDEId).prop("disabled", true);
+            $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
+            $("#" + this.btnSendToCompaniesId).prop("disabled", true);
+
+            return;
+        }
+
+        if (this.simulationStateId === Constants.simulationState.SendToCompany) {            
+            $("#" + this.btnSendToSEDEId).removeAttr("disabled");
+            $("#" + this.btnSendToSEDEId).prop("disabled", false);
+            $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
+            $("#" + this.btnSendToCompaniesId).prop("disabled", false);
+
+            return;
+        }
+
+        if (this.simulationStateId === Constants.simulationState.Validated) {
+            $("#" + this.btnSendToSEDEId).removeAttr("disabled");
+            $("#" + this.btnSendToSEDEId).prop("disabled", true);
+            $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
+            $("#" + this.btnSendToCompaniesId).prop("disabled", false);
+
+            return;
+        }
+    },
+
+    updateButtonsFromSimulationServices: function (pushButtonValidated) {
+        if (pushButtonValidated === false) {
+            if (DetailSimulation.simulationStateId === Constants.simulationState.Modificated ||
+                DetailSimulation.simulationStateId === Constants.simulationState.Validated) {
+                $("#" + this.btnSendToSEDEId).removeAttr("disabled");
+                $("#" + this.btnSendToSEDEId).prop("disabled", true);
+                $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
+                $("#" + this.btnSendToCompaniesId).prop("disabled", false);
+            } else {
+                if (GeneralData.userRoleId !== Constants.role.Super ||
+                    GeneralData.userRoleId !== Constants.role.PreveaPersonal) {
+                    $("#" + this.btnSendToSEDEId).removeAttr("disabled");
+                    $("#" + this.btnSendToSEDEId).prop("disabled", true);
+                    $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
+                    $("#" + this.btnSendToCompaniesId).prop("disabled", true);                
+                } else {
+                    $("#" + this.btnSendToSEDEId).removeAttr("disabled");
+                    $("#" + this.btnSendToSEDEId).prop("disabled", false);
+                    $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
+                    $("#" + this.btnSendToCompaniesId).prop("disabled", true);                                    
+                }
+            }
+        } else {
+            if (GeneralData.userRoleId !== Constants.role.Super ||
+                GeneralData.userRoleId !== Constants.role.PreveaPersonal) {
+                $("#" + this.btnSendToSEDEId).removeAttr("disabled");
+                $("#" + this.btnSendToSEDEId).prop("disabled", true);
+                $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
+                $("#" + this.btnSendToCompaniesId).prop("disabled", true);
+            } else {
+                $("#" + this.btnSendToSEDEId).removeAttr("disabled");
+                $("#" + this.btnSendToSEDEId).prop("disabled", false);
+                $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
+                $("#" + this.btnSendToCompaniesId).prop("disabled", true);
+            }
+        }
+    }
 });
