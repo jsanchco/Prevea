@@ -3,7 +3,7 @@
     spanNotificationId: "spanNotification",
     iconSimulationStateId: "iconSimulationState",
     btnSendToCompaniesId: "btnSendToCompanies",
-    btnValidatedBySEDEId: "btnValidatedBySEDE",
+    btnSendToSEDEId: "btnSendToSEDE",
     
     // Fields
     simulationId: null,
@@ -28,19 +28,22 @@
         }
 
         if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {
-            $("#" + this.btnValidatedBySEDEId).show();
+            $("#" + this.btnSendToSEDEId).show();
         } else {
-            $("#" + this.btnValidatedBySEDEId).hide();
+            $("#" + this.btnSendToSEDEId).hide();
         }
+ 
+        $("#" + this.btnSendToSEDEId).removeAttr("disabled");
+        $("#" + this.btnSendToSEDEId).prop("disabled", true);
 
-        if (this.simulationStateId === Constants.simulationState.Validated ||
-            this.simulationStateId === Constants.simulationState.SedToCompany) {
-            $("#" + this.btnValidatedBySEDEId).removeAttr("disabled");
-            $("#" + this.btnValidatedBySEDEId).prop("disabled", true);
-        } else {
-            $("#" + this.btnValidatedBySEDEId).removeAttr("disabled");
-            $("#" + this.btnValidatedBySEDEId).prop("disabled", false);
-        }
+        //if (this.simulationStateId === Constants.simulationState.Validated ||
+        //    this.simulationStateId === Constants.simulationState.SendToCompany) {
+        //    $("#" + this.btnSendToSEDEId).removeAttr("disabled");
+        //    $("#" + this.btnSendToSEDEId).prop("disabled", true);
+        //} else {
+        //    $("#" + this.btnSendToSEDEId).removeAttr("disabled");
+        //    $("#" + this.btnSendToSEDEId).prop("disabled", false);
+        //}
     },
 
     createIconSimulationState: function () {
@@ -54,7 +57,7 @@
         if (this.simulationStateId === Constants.simulationState.Validated) {
             html = "<div id='circleSuccess' class='pull-right'></div>";
         }
-        if (this.simulationStateId === Constants.simulationState.SedToCompany) {
+        if (this.simulationStateId === Constants.simulationState.SendToCompany) {
             html = "<div id='circleSuccess' class='pull-right'></div>";
         }
 
@@ -119,6 +122,9 @@
             success: function (data) {
                 if (data.result.Status === Constants.resultStatus.Ok) {
                     GeneralData.showNotification("Enviada Notificación a SEDE", "", "success");
+
+                    $("#" + DetailSimulation.btnSendToSEDEId).removeAttr("disabled");
+                    $("#" + DetailSimulation.btnSendToSEDEId).prop("disabled", true);
                 }
                 if (data.result.Status === Constants.resultStatus.Error) {
                     GeneralData.showNotification(Constants.ko, "", "error");

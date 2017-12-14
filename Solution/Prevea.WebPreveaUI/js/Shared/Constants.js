@@ -30,7 +30,7 @@
         ValidationPending: 1,
         Modificated: 2,
         Validated: 3,
-        SedToCompany: 4
+        SendToCompany: 4
     }
 
 });

@@ -14,6 +14,8 @@
     lblTotalId: "lblTotal",
     btnValidateId: "btnValidateForeignPreventionService",
 
+    btnSendToSEDEId: "btnSendToSEDE",
+
     errorFromFrontId: "errorFromFront",
 
     simulationId: null,
@@ -79,20 +81,6 @@
         $("#" + this.btnCancelId).click(function () {
             ForeignPreventionService.goToSimulators();
         });
-
-        $("#" + this.textBoxNameId).change(function () {
-            $("#" + ForeignPreventionService.btnValidateId).removeAttr("disabled");
-            $("#" + ForeignPreventionService.btnValidateId).prop("disabled", false);
-            $("#" + ForeignPreventionService.btnSendToCompaniesId).removeAttr("disabled");
-            $("#" + ForeignPreventionService.btnSendToCompaniesId).prop("disabled", true);
-        });
-
-        $("#" + this.textBoxNIFId).change(function () {
-            $("#" + ForeignPreventionService.btnValidateId).removeAttr("disabled");
-            $("#" + ForeignPreventionService.btnValidateId).prop("disabled", false);
-            $("#" + ForeignPreventionService.btnSendToCompaniesId).removeAttr("disabled");
-            $("#" + ForeignPreventionService.btnSendToCompaniesId).prop("disabled", true);
-        });
     },
 
     getStretchCalculateByNumberEmployees: function () {
@@ -108,19 +96,10 @@
                     ForeignPreventionService.stretchCalculate = response.stretchCalculate;
                     ForeignPreventionService.updateView();
 
-                    if (!ForeignPreventionService.firstTime) {
-                        $("#" + ForeignPreventionService.btnValidateId).removeAttr("disabled");
-                        $("#" + ForeignPreventionService.btnValidateId).prop("disabled", false);
-                        $("#" + ForeignPreventionService.btnSendToCompaniesId).removeAttr("disabled");
-                        $("#" + ForeignPreventionService.btnSendToCompaniesId).prop("disabled", true);
-                    } else {
-                        $("#" + ForeignPreventionService.btnValidateId).removeAttr("disabled");
-                        $("#" + ForeignPreventionService.btnValidateId).prop("disabled", true);
-                        $("#" + ForeignPreventionService.btnSendToCompaniesId).removeAttr("disabled");
-                        $("#" + ForeignPreventionService.btnSendToCompaniesId).prop("disabled", false);                        
-                    }
-
-                    ForeignPreventionService.firstTime = false;
+                    $("#" + ForeignPreventionService.btnValidateId).removeAttr("disabled");
+                    $("#" + ForeignPreventionService.btnValidateId).prop("disabled", true);
+                    $("#" + ForeignPreventionService.btnSendToCompaniesId).removeAttr("disabled");
+                    $("#" + ForeignPreventionService.btnSendToCompaniesId).prop("disabled", false);
                 }
             }
         });
@@ -134,6 +113,8 @@
 
         $("#" + ForeignPreventionService.btnValidateId).removeAttr("disabled");
         $("#" + ForeignPreventionService.btnValidateId).prop("disabled", false);
+        $("#" + ForeignPreventionService.btnSendToCompaniesId).removeAttr("disabled");
+        $("#" + ForeignPreventionService.btnSendToCompaniesId).prop("disabled", true);
 
         var widget = $("#" + ForeignPreventionService.textAmountTecniquesId).kendoNumericTextBox().data("kendoNumericTextBox");
         if (value === 0) {
@@ -181,7 +162,6 @@
         $("#" + ForeignPreventionService.btnValidateId).prop("disabled", false);
         $("#" + ForeignPreventionService.btnSendToCompaniesId).removeAttr("disabled");
         $("#" + ForeignPreventionService.btnSendToCompaniesId).prop("disabled", true);
-
 
         var widget = $("#" + ForeignPreventionService.textAmountHealthVigilanceId).kendoNumericTextBox().data("kendoNumericTextBox");
         if (value === 0) {
@@ -314,6 +294,9 @@
         }
 
         ForeignPreventionService.goToForeignPreventionService();
+
+        $("#" + ForeignPreventionService.btnSendToSEDEId).removeAttr("disabled");
+        $("#" + ForeignPreventionService.btnSendToSEDEId).prop("disabled", false);
     },
 
     sendToCompanies: function () {

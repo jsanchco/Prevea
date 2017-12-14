@@ -23,5 +23,5 @@
         public virtual ICollection<Simulation> Simulators { get; set; }
     }
 
-    public enum EnSimulationState { NotMapped, ValidationPending, Modificated, Validated, SedToCompany }
+    public enum EnSimulationState { NotMapped, ValidationPending, Modificated, Validated, SendToCompany }
 }

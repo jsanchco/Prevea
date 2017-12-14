@@ -233,7 +233,7 @@ var Simulations = kendo.observable({
 
     getColumnTemplateCommands: function (data) {
         var html = "<div align='center'>";
-        if (data.SimulationStateId === Constants.simulationState.SedToCompany) {
+        if (data.SimulationStateId === Constants.simulationState.SendToCompany) {
             html += kendo.format("<a toggle='tooltip' title='Ir a Empresa' onclick='Simulations.goToCompanyFromSimulation(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
         } else {
             if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {
