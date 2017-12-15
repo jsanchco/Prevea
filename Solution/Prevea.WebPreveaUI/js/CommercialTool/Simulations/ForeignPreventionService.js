@@ -22,12 +22,10 @@
 
     percentege: 80,
     total: 0,
-    firstTime: true,
+    changesInNumericTextBox: 0,
 
     init: function (id, numberEmployees) {
         kendo.culture("es-ES");
-
-        this.firstTime = true;
 
         this.simulationId = id;
         this.numberEmployees = numberEmployees;
@@ -38,7 +36,9 @@
 
         this.blockFields();
 
-        DetailSimulation.updateButtonsFromSimulationServices(false);
+        this.updateTextButtonSave();
+
+        DetailSimulation.updateButtonsFromSimulationServices();
     },
 
     updateView: function() {
@@ -288,8 +288,6 @@
         }
 
         ForeignPreventionService.goToForeignPreventionService();
-
-        DetailSimulation.updateButtonsFromSimulationServices(true);
     },
 
     sendToCompanies: function () {
@@ -357,5 +355,32 @@
             $("#" + ForeignPreventionService.btnValidateId).removeAttr("disabled");
             $("#" + ForeignPreventionService.btnValidateId).prop("disabled", true);
         }
+    },
+
+    updateTextButtonSave: function() {
+        if (GeneralData.userRoleId !== Constants.role.Super ||
+            GeneralData.userRoleId !== Constants.role.PreveaPersonal) {
+            switch (DetailSimulation.simulationStateId) {
+            case Constants.simulationState.ValidationPending:
+                $("#" + this.btnValidateId).val("Validar Smulación");
+                break;
+            case Constants.simulationState.Modificated:
+            case Constants.simulationState.Validated:
+                $("#" + this.btnValidateId).val("Guardar");
+                break;
+            case Constants.simulationState.SendToCompany:
+                $("#" + this.btnValidateId).hide();
+                break;
+            }
+        } else {
+            switch (DetailSimulation.simulationState) {
+            case Constants.simulationState.ValidationPending:
+            case Constants.simulationState.Modificated:
+            case Constants.simulationState.Validated:
+            case Constants.simulationState.SendToCompany:
+                break;
+            }
+        }
     }
+
 });
