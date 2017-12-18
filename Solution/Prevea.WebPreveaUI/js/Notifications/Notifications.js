@@ -23,7 +23,8 @@
                         ToUserInitials: { type: "string" },
                         Observations: { type: "string" },
                         DateCreation: { type: "date" },
-                        DateModification: { type: "date" }
+                        DateModification: { type: "date" },
+                        SimulationAssignedTo: { type: "number" }
                     }
                 }
             },
@@ -183,12 +184,17 @@
     },
 
     getColumnTemplateCommands: function (data) {
-        var html = "<div align='center'>";
+        if (data.SimulationAssignedTo === GeneralData.userId) {
+            var html = "<div align='center'>";
 
-        html += kendo.format("<a toggle='tooltip' title='Ir a Simulación' onclick='Notifications.goToSimulationFromNotification(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.SimulationId);
-        html += kendo.format("</div>");
+            html += kendo.format("<a toggle='tooltip' title='Ir a Simulación' onclick='Notifications.goToSimulationFromNotification(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.SimulationId);
+            html += kendo.format("</div>");
 
-        return html;
+            return html;
+
+        } else {
+            return "";
+        }           
     },
 
     goToNotifications: function () {

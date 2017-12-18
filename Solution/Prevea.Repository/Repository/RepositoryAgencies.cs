@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Prevea.Repository.Repository
+﻿namespace Prevea.Repository.Repository
 {
     #region
 
@@ -8,10 +6,11 @@ namespace Prevea.Repository.Repository
     using Model.Model;
     using System.Linq;
     using System.Data.Entity;
+    using System;
 
     #endregion
 
-    partial class Repository
+    public partial class Repository
     {
         public List<Agency> GetAgencies()
         {

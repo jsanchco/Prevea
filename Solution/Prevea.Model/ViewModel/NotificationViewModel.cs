@@ -24,5 +24,6 @@
         public DateTime? DateModification { get; set; }
         public string ToUserInitials { get; set; }
         public string ToRolName { get; set; }
+        public int? SimulationAssignedTo { get; set; }
     }
 }

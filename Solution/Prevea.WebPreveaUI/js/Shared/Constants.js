@@ -7,6 +7,11 @@
     colorWarning: "#F89406",
     colorSuccess: "#00A651",
 
+    typeChange: {
+        add: 1,
+        remove: 2
+    },
+
     resultStatus: {
         Ok: 0,
         Error: 1

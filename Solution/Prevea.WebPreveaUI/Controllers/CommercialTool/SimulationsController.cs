@@ -60,13 +60,14 @@
                 if (result.Status == Status.Error)
                     return this.Jsonp(new {Errors = errorSimulation});
 
+                simulation.Id = data.Id;
                 var notification = new Model.Model.Notification
                 {
                     DateCreation = DateTime.Now,
                     NotificationTypeId = (int)EnNotificationType.FromSimulation,
                     NotificationStateId = (int)EnNotificationState.Assigned,
                     SimulationId = simulation.Id,
-                    ToUserId = simulation.UserId,
+                    ToRoleId = (int)EnRole.PreveaPersonal,
                     Observations =
                         $"{Service.GetUser(User.Id).Initials} - Creación de la Simulación [{simulation.CompanyName}]"
                 };
@@ -74,7 +75,6 @@
                 if (resultNotification.Status == Status.Error)
                     return this.Jsonp(new { Errors = resultNotification });
 
-                simulation.Id = data.Id;
                 return this.Jsonp(simulation);
             }
             catch (Exception e)
@@ -209,21 +209,21 @@
         {
             try
             {
-                var simulator = this.DeserializeObject<Simulation>("simulator");
-                if (simulator == null)
+                var simulation = this.DeserializeObject<Simulation>("simulation");
+                if (simulation == null)
                 {
                     return this.Jsonp(new {Errors = "Se ha producido un error en el Borrado de la Simulación"});
                 }
 
-                var result = Service.DeleteSimulation(simulator.Id);
+                var result = Service.DeleteSimulation(simulation.Id);
 
                 if (result.Status != Status.Error)
                 {
-                    return this.Jsonp(simulator);
+                    return this.Jsonp(simulation);
                 }
 
                 return result.Status != Status.Error
-                    ? this.Jsonp(simulator)
+                    ? this.Jsonp(simulation)
                     : this.Jsonp(new {Errors = "Se ha producido un error en el Borrado de la Simulación"});
             }
             catch (Exception e)
@@ -303,6 +303,9 @@
             var simulation = Service.GetSimulation(simulationId);
 
             Result resultSimulation;
+            Result resultNotification;
+            Model.Model.Notification notification;
+            
             switch (user.UserRoles.First().RoleId)
             {
                 case (int) EnRole.Super:
@@ -313,7 +316,7 @@
                     if (resultSimulation.Status == Status.Error)
                         return Status.Error;
 
-                    var notification = new Model.Model.Notification
+                    notification = new Model.Model.Notification
                     {
                         DateCreation = DateTime.Now,
                         NotificationTypeId = (int) EnNotificationType.FromSede,
@@ -323,7 +326,7 @@
                         Observations =
                             $"{Service.GetUser(User.Id).Initials} - Modificada la Simulación [{simulation.CompanyName}]"
                     };
-                    var resultNotification = Service.SaveNotification(notification);
+                    resultNotification = Service.SaveNotification(notification);
 
                     if (resultNotification.Status == Status.Error)
                         return Status.Error;
@@ -333,6 +336,29 @@
                 case (int)EnRole.PreveaCommercial:
                     simulation.SimulationStateId = (int)EnSimulationState.ValidationPending;
                     resultSimulation = Service.UpdateSimulation(simulation.Id, simulation);
+
+                    notification = new Model.Model.Notification
+                    {
+                        DateCreation = DateTime.Now,
+                        NotificationTypeId = (int)EnNotificationType.FromUser,
+                        NotificationStateId = (int)EnNotificationState.Issued,
+                        SimulationId = simulationId,
+                        Observations =
+                            $"{Service.GetUser(User.Id).Initials} - Modificada la Simulación (SPA) [{simulation.CompanyName}]"
+                    };
+                    if (simulation.UserAssignedId != null)
+                    {
+                        notification.ToUserId = simulation.UserAssignedId;
+                    }
+                    else
+                    {
+                        notification.ToRoleId = (int) EnRole.PreveaPersonal;
+                    }
+
+                    resultNotification = Service.SaveNotification(notification);
+
+                    if (resultNotification.Status == Status.Error)
+                        return Status.Error;
 
                     if (resultSimulation.Status == Status.Error)
                         return Status.Error;
@@ -364,5 +390,32 @@
 
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult SendNotificationValidateToUser(int simulationId)
+        {
+            var simulation = Service.GetSimulation(simulationId);
+            simulation.SimulationStateId = (int) EnSimulationState.Validated;
+
+            var resultSimulation = Service.UpdateSimulation(simulationId, simulation);
+            if (resultSimulation.Status == Status.Error)
+                return Json(new { result = resultSimulation }, JsonRequestBehavior.AllowGet);
+
+            var notification = new Model.Model.Notification
+            {
+                DateCreation = DateTime.Now,
+                NotificationTypeId = (int)EnNotificationType.FromSede,
+                NotificationStateId = (int)EnNotificationState.Validated,
+                SimulationId = simulationId,
+                ToUserId = simulation.UserId,
+                Observations =
+                    $"{Service.GetUser(User.Id).Initials} - Validada la Simulación [{simulation.CompanyName}]"
+            };
+            var result = Service.SaveNotification(notification);
+
+            result.Object = AutoMapper.Mapper.Map<NotificationViewModel>(result.Object);
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }        
     }
 }
