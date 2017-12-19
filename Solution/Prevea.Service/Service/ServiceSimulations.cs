@@ -11,9 +11,9 @@
 
     public partial class Service
     {
-        public Simulation GetSimulation(int simulatorId)
+        public Simulation GetSimulation(int simulationId)
         {
-            return Repository.GetSimulation(simulatorId);
+            return Repository.GetSimulation(simulationId);
         }
 
         public List<Simulation> GetSimulations()
@@ -21,13 +21,13 @@
             return Repository.GetSimulations();
         }
 
-        public Result SaveSimulation(Simulation simulator)
+        public Result SaveSimulation(Simulation simulation)
         {
             try
             {
-                simulator = Repository.SaveSimulation(simulator);                
+                simulation = Repository.SaveSimulation(simulation);                
 
-                if (simulator == null)
+                if (simulation == null)
                 {
                     return new Result
                     {
@@ -37,43 +37,9 @@
                     };
                 }
 
-                var simulatorCompany = Repository.SaveSimulationCompany(simulator.Id);
+                var simulationCompany = Repository.SaveSimulationCompany(simulation.Id);
 
-                if (simulatorCompany == null)
-                {
-                    return new Result
-                    {
-                        Message = "Se ha producido un error en la Grabación de la Simulación",
-                        Object = null,
-                        Status = Status.Error
-                    };
-                }
-
-                return new Result
-                {
-                    Message = "La Grabación de la Simulación se ha producido con éxito",
-                    Object = simulator,
-                    Status = Status.Ok
-                };
-            }
-            catch (Exception)
-            {
-                return new Result
-                {
-                    Message = "Se ha producido un error en la Grabación de la Simulación",
-                    Object = simulator,
-                    Status = Status.Error
-                };
-            }
-        }
-
-        public Result UpdateSimulation(int simulatorId, Simulation simulator)
-        {
-            try
-            {
-                simulator = Repository.UpdateSimulation(simulatorId, simulator);
-
-                if (simulator == null)
+                if (simulationCompany == null)
                 {
                     return new Result
                     {
@@ -86,7 +52,7 @@
                 return new Result
                 {
                     Message = "La Grabación de la Simulación se ha producido con éxito",
-                    Object = simulator,
+                    Object = simulation,
                     Status = Status.Ok
                 };
             }
@@ -95,17 +61,51 @@
                 return new Result
                 {
                     Message = "Se ha producido un error en la Grabación de la Simulación",
-                    Object = simulator,
+                    Object = simulation,
                     Status = Status.Error
                 };
             }
         }
 
-        public Result DeleteSimulation(int simulatorId)
+        public Result UpdateSimulation(int simulationId, Simulation simulation)
         {
             try
             {
-                var result = Repository.DeleteSimulation(simulatorId);
+                simulation = Repository.UpdateSimulation(simulationId, simulation);
+
+                if (simulation == null)
+                {
+                    return new Result
+                    {
+                        Message = "Se ha producido un error en la Grabación de la Simulación",
+                        Object = null,
+                        Status = Status.Error
+                    };
+                }
+
+                return new Result
+                {
+                    Message = "La Grabación de la Simulación se ha producido con éxito",
+                    Object = simulation,
+                    Status = Status.Ok
+                };
+            }
+            catch (Exception)
+            {
+                return new Result
+                {
+                    Message = "Se ha producido un error en la Grabación de la Simulación",
+                    Object = simulation,
+                    Status = Status.Error
+                };
+            }
+        }
+
+        public Result DeleteSimulation(int simulationId)
+        {
+            try
+            {
+                var result = Repository.DeleteSimulation(simulationId);
 
                 if (result == false)
                 {
@@ -140,11 +140,11 @@
             return Repository.GetSimulationByUser(userId);
         }
 
-        public Result SendToCompanies(int simulatorId)
+        public Result SendToCompanies(int simulationId)
         {
             try
             {
-                var simulator = Repository.GetSimulation(simulatorId);
+                var simulator = Repository.GetSimulation(simulationId);
                 if (simulator == null)
                 {
                     return new Result
@@ -155,7 +155,7 @@
                     };
                 }
 
-                simulator = Repository.UpdateSimulation(simulatorId, simulator);
+                simulator = Repository.UpdateSimulation(simulationId, simulator);
                 if (simulator == null)
                 {
                     return new Result
@@ -224,7 +224,7 @@
                         Status = Status.Error
                     };
                 }
-                var simulatorCompany = Repository.UpdateSimulationCompany(simulatorId, company.Id);
+                var simulatorCompany = Repository.UpdateSimulationCompany(simulationId, company.Id);
                 if (simulatorCompany == null)
                 {
                     return new Result
@@ -251,7 +251,6 @@
                     Status = Status.Error
                 };
             }
-
         }
     }
 }

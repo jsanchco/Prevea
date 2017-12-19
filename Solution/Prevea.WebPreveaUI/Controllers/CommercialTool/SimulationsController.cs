@@ -69,7 +69,7 @@
                     SimulationId = simulation.Id,
                     ToRoleId = (int)EnRole.PreveaPersonal,
                     Observations =
-                        $"{Service.GetUser(User.Id).Initials} - Creación de la Simulación [{simulation.CompanyName}]"
+                        $"{Service.GetUser(User.Id).Initials} - Alta de la Simulación [{simulation.CompanyName}]"
                 };
                 var resultNotification = Service.SaveNotification(notification);
                 if (resultNotification.Status == Status.Error)
@@ -324,7 +324,7 @@
                         SimulationId = simulationId,
                         ToUserId = simulation.UserId,
                         Observations =
-                            $"{Service.GetUser(User.Id).Initials} - Modificada la Simulación [{simulation.CompanyName}]"
+                            $"{Service.GetUser(User.Id).Initials} - Modificada la Simulación [{simulation.CompanyName}] -> TEC: {simulation.ForeignPreventionService.AmountTecniques}€ VS: {simulation.ForeignPreventionService.AmountHealthVigilance}€ RM: {simulation.ForeignPreventionService.AmountMedicalExamination}€"
                     };
                     resultNotification = Service.SaveNotification(notification);
 

@@ -33,18 +33,18 @@
                 .ToList();
         }
 
-        public Simulation SaveSimulation(Simulation simulator)
+        public Simulation SaveSimulation(Simulation simulation)
         {
             using (var dbContextTransaction = Context.Database.BeginTransaction())
             {
                 try
                 {
-                    Context.Simulations.Add(simulator);
+                    Context.Simulations.Add(simulation);
                     Context.SaveChanges();
 
                     dbContextTransaction.Commit();
 
-                    return simulator;
+                    return simulation;
 
                 }
                 catch (Exception ex)
@@ -63,11 +63,11 @@
             {
                 try
                 {
-                    var simulatorFind = Context.Simulations.Find(id);
-                    if (simulatorFind == null)
+                    var simulationFind = Context.Simulations.Find(id);
+                    if (simulationFind == null)
                         return null;
 
-                    Context.Entry(simulatorFind).CurrentValues.SetValues(simulator);
+                    Context.Entry(simulationFind).CurrentValues.SetValues(simulator);
                     Context.SaveChanges();
 
                     dbContextTransaction.Commit();
@@ -90,8 +90,11 @@
             {
                 try
                 {
-                    var simulator = GetSimulation(id);
-                    Context.Simulations.Remove(simulator);
+                    var simulationFind = Context.Simulations.Find(id);
+                    if (simulationFind == null)
+                        return false;
+
+                    Context.Simulations.Remove(simulationFind);
 
                     Context.SaveChanges();
 

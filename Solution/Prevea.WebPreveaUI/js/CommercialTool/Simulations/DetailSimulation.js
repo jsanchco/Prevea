@@ -46,7 +46,7 @@
     createTabStripSimulation: function () {
         var tabStrip = $("#" + this.tabStripDetailSimulationId).kendoTabStrip().data("kendoTabStrip");
         tabStrip.append({
-            text: "SERVICIO de PREVENCIÓN AGENA",
+            text: "SERVICIO de PREVENCIÓN AJENO",
             contentUrl: kendo.format("/CommercialTool/Simulations/ForeignPreventionService?simulationId={0}", this.simulationId)
         });
         tabStrip.append({

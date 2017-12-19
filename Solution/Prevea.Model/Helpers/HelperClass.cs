@@ -76,7 +76,7 @@
                 case "FromSimulation":
                     return "Desde la Simulación";
                 case "FromForeignPrevention":
-                    return "Desde el Servicio de Prevención Agena";
+                    return "Desde el Servicio de Prevención Ajeno";
                 case "FromAgency":
                     return "Desde Gestoría";
                 case "FromTraining":
@@ -99,6 +99,10 @@
                     return "Pendiente de Validación";
                 case "Modificated":
                     return "Modificada";
+                case "SendToCompany":
+                    return "Enviada a Empresa";                    
+                case "Deleted":
+                    return "Borrado";
                 default:
                     return name;
             }
