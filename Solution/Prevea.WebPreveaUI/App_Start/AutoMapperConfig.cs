@@ -73,6 +73,7 @@
                 .ForMember(x => x.NotificationStateDescription, x => x.MapFrom(y => y.NotificationState.Description))
                 .ForMember(x => x.ToRolName, x => x.MapFrom(y => y.ToRole.Description))
                 .ForMember(x => x.SimulationAssignedTo, x => x.MapFrom(y => y.Simulation.UserAssignedId))
+                .ForMember(x => x.SimulationName, x => x.MapFrom(y => y.Simulation.CompanyName))
                 .ForMember(x => x.ToUserInitials, x => x.MapFrom(y => y.ToUser.Initials));
             AutoMapper.Mapper.CreateMap<NotificationViewModel, Notification>();
         }

@@ -13,7 +13,8 @@
             {
                 HttpMethod = "POST",
                 UpdateTargetId = "framePpal",
-                OnSuccess = "ForeignPreventionService.onSuccessUpdate"
+                OnSuccess = "ForeignPreventionService.onSuccessUpdate",
+                OnFailure = "ForeignPreventionService.onFailureUpdate"
             }, new {id = "formForeignPreventionService" }))
             {
                 @Html.AntiForgeryToken()

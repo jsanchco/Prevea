@@ -29,7 +29,7 @@
                 .Include(x => x.UserAssigned)
                 .Include(x => x.SimulationState)
                 .Include(x => x.SimulationCompanies)
-                .OrderBy(x => x.Date)
+                .OrderByDescending(x => x.Date)
                 .ToList();
         }
 
@@ -127,7 +127,7 @@
                         .Include(x => x.UserAssigned)
                         .Include(x => x.SimulationState)
                         .Include(x => x.SimulationCompanies)
-                        .OrderBy(x => x.Date)
+                        .OrderByDescending(x => x.Date)
                         .ToList();
 
                 case (int)EnRole.PreveaPersonal:
@@ -136,7 +136,7 @@
                     .Include(x => x.UserAssigned)
                     .Include(x => x.SimulationState)
                     .Include(x => x.SimulationCompanies)
-                    .OrderBy(x => x.Date)
+                    .OrderByDescending(x => x.Date)
                     .Where(x => x.SimulationStateId != (int)EnSimulationState.Validated || x.UserAssignedId == userId)
                     .ToList();
 
@@ -146,7 +146,7 @@
                         .Include(x => x.UserAssigned)
                         .Include(x => x.SimulationState)
                         .Include(x => x.SimulationCompanies)
-                        .OrderBy(x => x.Date)
+                        .OrderByDescending(x => x.Date)
                         .Where(x => x.UserId == userId)
                         .ToList();
             }

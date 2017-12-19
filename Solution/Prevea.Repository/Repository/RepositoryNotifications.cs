@@ -19,7 +19,7 @@
                 .Include(x => x.NotificationType)
                 .Include(x => x.ToUser)
                 .Include(x => x.ToRole)
-                .OrderBy(x => x.DateCreation)
+                .OrderByDescending(x => x.DateCreation)
                 .ToList();
         }
 
@@ -100,14 +100,14 @@
                         .Include(x => x.NotificationType)
                         .Include(x => x.ToUser)
                         .Include(x => x.ToRole)
-                        .OrderBy(x => x.DateCreation)
+                        .OrderByDescending(x => x.DateCreation)
                         .ToList();
                 case (int) EnRole.PreveaPersonal:
                     return Context.Notifications
                         .Include(x => x.NotificationType)
                         .Include(x => x.ToUser)
                         .Include(x => x.ToRole)
-                        .OrderBy(x => x.DateCreation)
+                        .OrderByDescending(x => x.DateCreation)
                         .Where(x => x.ToRoleId == (int) EnRole.PreveaPersonal || x.ToUserId == userId)
                         .ToList();
                 case (int) EnRole.PreveaCommercial:
@@ -115,7 +115,7 @@
                         .Include(x => x.NotificationType)
                         .Include(x => x.ToUser)
                         .Include(x => x.ToRole)
-                        .OrderBy(x => x.DateCreation)
+                        .OrderByDescending(x => x.DateCreation)
                         .Where(x => x.ToUserId == userId)
                         .ToList();
                 default:
@@ -123,7 +123,7 @@
                         .Include(x => x.NotificationType)
                         .Include(x => x.ToUser)
                         .Include(x => x.ToRole)
-                        .OrderBy(x => x.DateCreation)
+                        .OrderByDescending(x => x.DateCreation)
                         .ToList();
             }
         }
@@ -133,7 +133,7 @@
                 .Include(x => x.NotificationType)
                 .Include(x => x.ToUser)
                 .Include(x => x.ToRole)
-                .OrderBy(x => x.DateCreation)
+                .OrderByDescending(x => x.DateCreation)
                 .Where(x => x.ToRoleId == roleId)
                 .ToList();
         }

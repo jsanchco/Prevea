@@ -137,6 +137,8 @@
             try
             {
                 var resultService = Service.SaveForeignPreventionService(foreignPreventionService);
+                if (resultService.Status == Status.Error)
+                    return Json(resultService);
 
                 if (UpdateSimulation(foreignPreventionService.Id) == Status.Error)
                 {
@@ -149,7 +151,7 @@
                     return Json(resultUpdateSimulation);
                 }
 
-                return Json(resultService);
+                return Json(new Result { Status = Status.Ok });
             }
             catch (Exception e)
             {
@@ -344,7 +346,7 @@
                         NotificationStateId = (int)EnNotificationState.Issued,
                         SimulationId = simulationId,
                         Observations =
-                            $"{Service.GetUser(User.Id).Initials} - Modificada la Simulación (SPA) [{simulation.CompanyName}]"
+                            $"{Service.GetUser(User.Id).Initials} - Modificada la Simulación (SPA) [{simulation.CompanyName}] -> TEC: {simulation.ForeignPreventionService.AmountTecniques}€ VS: {simulation.ForeignPreventionService.AmountHealthVigilance}€ RM: {simulation.ForeignPreventionService.AmountMedicalExamination}€"
                     };
                     if (simulation.UserAssignedId != null)
                     {
@@ -411,11 +413,13 @@
                 Observations =
                     $"{Service.GetUser(User.Id).Initials} - Validada la Simulación [{simulation.CompanyName}]"
             };
-            var result = Service.SaveNotification(notification);
+            var resultNotification = Service.SaveNotification(notification);
+            if (resultNotification.Status == Status.Error)
+                return Json(new { result = resultNotification }, JsonRequestBehavior.AllowGet);
 
-            result.Object = AutoMapper.Mapper.Map<NotificationViewModel>(result.Object);
+            resultSimulation.Object = AutoMapper.Mapper.Map<SimulationViewModel>(resultSimulation.Object);
 
-            return Json(new { result }, JsonRequestBehavior.AllowGet);
+            return Json(new { result = resultSimulation }, JsonRequestBehavior.AllowGet);
         }        
     }
 }

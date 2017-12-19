@@ -1,16 +1,15 @@
 ﻿var Notifications = kendo.observable({
-
     gridNotificationsId: "gridNotifications",
     confirmId: "confirm",
 
     notificationsDataSource: null,
 
-    init: function () {
+    init: function() {
         this.createNotificationsDataSource();
         this.createGridNotifications();
     },
 
-    createNotificationsDataSource: function () {
+    createNotificationsDataSource: function() {
         this.notificationsDataSource = new kendo.data.DataSource({
             schema: {
                 model: {
@@ -24,7 +23,8 @@
                         Observations: { type: "string" },
                         DateCreation: { type: "date" },
                         DateModification: { type: "date" },
-                        SimulationAssignedTo: { type: "number" }
+                        SimulationAssignedTo: { type: "number" },
+                        SimulationName: { type: "string" }
                     }
                 }
             },
@@ -33,25 +33,35 @@
                     url: "/Notifications/Notifications_Read",
                     dataType: "jsonp"
                 },
-                parameterMap: function (options, operation) {
+                parameterMap: function(options, operation) {
                     if (operation !== "read" && options) {
                         return { notification: kendo.stringify(options) };
                     }
 
                     return null;
                 }
-            },
-            pageSize: 10
+            }
         });
     },
 
-    createGridNotifications: function () {
+    createGridNotifications: function() {
         $("#" + this.gridNotificationsId).kendoGrid({
             columns: [
                 {
                     field: "NotificationTypeDescription",
                     title: "Tipo de Notificación",
-                    width: 200
+                    width: 180
+                },
+                {
+                    field: "DateCreation",
+                    title: "Fecha de Creación",
+                    width: 200,
+                    template: "#= Templates.getColumnTemplateDateWithHour(data.DateCreation) #"
+                },
+                {
+                    field: "SimulationName",
+                    title: "Simulación",
+                    width: 150
                 },
                 //{
                 //    field: "NotificationStateDescription",
@@ -67,11 +77,6 @@
                     field: "Observations",
                     title: "Observaciones",
                     groupable: "false"
-                }, {
-                    field: "DateCreation",
-                    title: "Fecha de Creación",
-                    width: 200,
-                    template: "#= Templates.getColumnTemplateDateWithHour(data.DateCreation) #"
                 },
                 //{
                 //    field: "DateModification",
@@ -90,13 +95,10 @@
             ],
             pageable: {
                 buttonCount: 2,
-                pageSizes: [10, 20, "all"],
+                //pageSizes: [10, 20, "all"],
                 refresh: true,
                 messages: {
-                    display: "Elementos mostrados {0} - {1} de {2}",
-                    itemsPerPage: "Elementos por página",
-                    allPages: "Todos",
-                    empty: "No existen registros para mostrar"
+                    display: "Elementos mostrados {2}"
                 }
             },
             filterable: {
@@ -159,11 +161,12 @@
         }
     },
 
-    getTemplateToolBar: function () {
+    getTemplateToolBar: function() {
         var html = "<div class='toolbar'>";
 
         html += "<span style='float: right;'>";
-        html += "<a id='showAll' class='btn btn-prevea' role='button' onclick='Notifications.applyFilter()'> Ver todos</a>";
+        html +=
+            "<a id='showAll' class='btn btn-prevea' role='button' onclick='Notifications.applyFilter()'> Ver todos</a>";
         html += "</span>";
 
         html += "</div>";
@@ -171,33 +174,35 @@
         return html;
     },
 
-    getColumnTemplateDateModication: function (data) {
+    getColumnTemplateDateModication: function(data) {
         var html = "<div align='center'>";
         if (data === null) {
             html += kendo.format("<div align='center'>{0}</div>", "");
         } else {
-           html += kendo.format("<div align='center'>{0}</div>", kendo.toString(data, "dd/MM/yy HH:mm"));
+            html += kendo.format("<div align='center'>{0}</div>", kendo.toString(data, "dd/MM/yy HH:mm"));
         }
         html += kendo.format("</div>");
 
         return html;
     },
 
-    getColumnTemplateCommands: function (data) {
+    getColumnTemplateCommands: function(data) {
         if (data.SimulationAssignedTo === GeneralData.userId) {
             var html = "<div align='center'>";
 
-            html += kendo.format("<a toggle='tooltip' title='Ir a Simulación' onclick='Notifications.goToSimulationFromNotification(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.SimulationId);
+            html += kendo.format(
+                "<a toggle='tooltip' title='Ir a Simulación' onclick='Notifications.goToSimulationFromNotification(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                data.SimulationId);
             html += kendo.format("</div>");
 
             return html;
 
         } else {
             return "";
-        }           
+        }
     },
 
-    goToNotifications: function () {
+    goToNotifications: function() {
         var params = {
             url: "/Notifications/Notifications",
             data: {}
@@ -205,7 +210,7 @@
         GeneralData.goToActionController(params);
     },
 
-    goToAssignNotification: function (notificationId) {
+    goToAssignNotification: function(notificationId) {
         $.ajax({
             url: "/Notifications/AssignNotification",
             data: {
@@ -213,7 +218,7 @@
             },
             type: "post",
             dataType: "json",
-            success: function (data) {
+            success: function(data) {
                 if (data.result.Status === 0) {
                     Notifications.notificationsDataSource.read();
                     GeneralData.showNotification(Constants.ok, "", "success");
@@ -222,7 +227,7 @@
                     GeneralData.showNotification(Constants.ko, "", "error");
                 }
             },
-            error: function () {
+            error: function() {
                 GeneralData.showNotification(Constants.ko, "", "error");
             }
         });
@@ -237,6 +242,18 @@
             }
         };
         GeneralData.goToActionController(params);
+    },
+
+    resizeGrid: function () {
+        var gridElement = $("#gridNotifications"),
+            dataArea = gridElement.find(".k-grid-content"),
+            gridHeight = gridElement.innerHeight(),
+            otherElements = gridElement.children().not(".k-grid-content"),
+            otherElementsHeight = 0;
+        otherElements.each(function () {
+            otherElementsHeight += $(this).outerHeight();
+        });
+        dataArea.height(gridHeight - otherElementsHeight);
     }
 
 });

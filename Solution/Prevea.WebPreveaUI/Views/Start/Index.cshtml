@@ -35,3 +35,27 @@
         </div>
     </div>
 </div>
+
+<br />
+<br />
+<br />
+
+<div class="row">
+    <div class="col-sm-12" id="pendingsNotifications">
+        @{
+            var numberNotifications = Convert.ToInt32(ViewBag.Notifications);
+        }
+        @if (numberNotifications > 0)
+        {
+            <a onclick="Start.goToNotifications()" style="cursor: pointer; font-size: 16px; margin-left: 20px; color: #373e4a">
+                <span class="title">Tienes notificaciones pendientes de revisar!!!</span>
+            </a>
+        }
+
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+

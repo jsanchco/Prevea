@@ -23,16 +23,13 @@
 
     percentege: 80,
     total: 0,
-    changesInNumericTextBox: 0,
 
     init: function (id, numberEmployees) {
         kendo.culture("es-ES");
 
         this.simulationId = id;
         this.numberEmployees = numberEmployees;
-
-        $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
-        $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", true);
+        this.changesInNumericTextBox = 0;
 
         this.setKendoUIWidgets();
 
@@ -45,35 +42,18 @@
         DetailSimulation.updateButtonsFromSimulationServices();
     },
 
-    setChangesInNumericTextBox: function(typeChange) {
-        if (typeChange === Constants.typeChange.add) {
-            this.changesInNumericTextBox ++;
-        }
-
-        if (typeChange === Constants.typeChange.remove) {
-            this.changesInNumericTextBox --;
-        }
-
-        if (this.changesInNumericTextBox > 3) {
-            $("#" + DetailSimulation.btnSendToSEDEId).removeAttr("disabled");
-            $("#" + DetailSimulation.btnSendToSEDEId).prop("disabled", true);            
-            $("#" + DetailSimulation.btnSendToCompaniesId).removeAttr("disabled");
-            $("#" + DetailSimulation.btnSendToCompaniesId).prop("disabled", true);
-        }
-    },
-
     updateView: function() {
         var strValue = kendo.format("{0} €", ForeignPreventionService.stretchCalculate.AmountByEmployeeInTecniques);
         $("#" + this.lblAmountByEmployeeInTecniquesId).text(strValue);
-        this.onChangeTextAmountTecniques();
+        this.onChangeTextAmountTecniques(true);
 
         strValue = kendo.format("{0} €", ForeignPreventionService.stretchCalculate.AmountByEmployeeInHealthVigilance);
         $("#" + this.lblAmountByEmployeeInHealthVigilanceId).text(strValue);
-        this.onChangeTextAmountHealthVigilance();
+        this.onChangeTextAmountHealthVigilance(true);
 
         strValue = kendo.format("{0} €", ForeignPreventionService.stretchCalculate.AmountByEmployeeInMedicalExamination);
         $("#" + this.lblAmountByEmployeeInMedicalExaminationId).text(strValue);
-        this.onChangeTextAmountMedicalExamination();
+        this.onChangeTextAmountMedicalExamination(true);
     },
 
     setKendoUIWidgets: function() {
@@ -100,10 +80,6 @@
         $("#" + this.btnSendToCompaniesId).click(function () {
             ForeignPreventionService.sendToCompanies();
         });
-
-        $("#" + this.btnCancelId).click(function () {
-            ForeignPreventionService.goToSimulators();
-        });
     },
 
     getStretchCalculateByNumberEmployees: function () {
@@ -123,16 +99,25 @@
         });
     },
 
-    onChangeTextAmountTecniques: function () {
+    onChangeTextAmountTecniques: function (fromStretchCalculateByNumberEmployees) {
         var value = parseFloat($("#" + ForeignPreventionService.textAmountTecniquesId).val());
         if (isNaN(value)) {
             return;
         }
 
-        $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
-        $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", false);
+        if ($.type(fromStretchCalculateByNumberEmployees) !== "boolean" &&
+            fromStretchCalculateByNumberEmployees !== true) {
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", false);
+        } else {
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", true);
 
-        ForeignPreventionService.setChangesInNumericTextBox(Constants.typeChange.add);
+            $("#" + DetailSimulation.btnSendToSEDEId).removeAttr("disabled");
+            $("#" + DetailSimulation.btnSendToSEDEId).prop("disabled", true);
+            $("#" + DetailSimulation.btnSendToCompaniesId).removeAttr("disabled");
+            $("#" + DetailSimulation.btnSendToCompaniesId).prop("disabled", true);
+        }
 
         var widget = $("#" + ForeignPreventionService.textAmountTecniquesId).kendoNumericTextBox().data("kendoNumericTextBox");
         if (value === 0) {
@@ -170,16 +155,25 @@
         ForeignPreventionService.calculateTotal();
     },
 
-    onChangeTextAmountHealthVigilance: function () {
+    onChangeTextAmountHealthVigilance: function (fromStretchCalculateByNumberEmployees) {
         var value = parseFloat($("#" + ForeignPreventionService.textAmountHealthVigilanceId).val());
         if (isNaN(value)) {
             return;
         }
 
-        $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
-        $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", false);
+        if ($.type(fromStretchCalculateByNumberEmployees) !== "boolean" &&
+            fromStretchCalculateByNumberEmployees !== true) {
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", false);
+        } else {
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", true);
 
-        ForeignPreventionService.setChangesInNumericTextBox(Constants.typeChange.add);
+            $("#" + DetailSimulation.btnSendToSEDEId).removeAttr("disabled");
+            $("#" + DetailSimulation.btnSendToSEDEId).prop("disabled", true);
+            $("#" + DetailSimulation.btnSendToCompaniesId).removeAttr("disabled");
+            $("#" + DetailSimulation.btnSendToCompaniesId).prop("disabled", true);
+        }
 
         var widget = $("#" + ForeignPreventionService.textAmountHealthVigilanceId).kendoNumericTextBox().data("kendoNumericTextBox");
         if (value === 0) {
@@ -217,16 +211,25 @@
         ForeignPreventionService.calculateTotal();
     },
 
-    onChangeTextAmountMedicalExamination: function () {
+    onChangeTextAmountMedicalExamination: function (fromStretchCalculateByNumberEmployees) {
         var value = parseFloat($("#" + ForeignPreventionService.textAmountMedicalExaminationId).val());
         if (isNaN(value)) {
             return;
         }
 
-        $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
-        $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", false);
+        if ($.type(fromStretchCalculateByNumberEmployees) !== "boolean" &&
+            fromStretchCalculateByNumberEmployees !== true) {
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", false);
+        } else {
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", true);
 
-        ForeignPreventionService.setChangesInNumericTextBox(Constants.typeChange.add);
+            $("#" + DetailSimulation.btnSendToSEDEId).removeAttr("disabled");
+            $("#" + DetailSimulation.btnSendToSEDEId).prop("disabled", true);
+            $("#" + DetailSimulation.btnSendToCompaniesId).removeAttr("disabled");
+            $("#" + DetailSimulation.btnSendToCompaniesId).prop("disabled", true);
+        }
 
         var widget = $("#" + ForeignPreventionService.textAmountMedicalExaminationId).kendoNumericTextBox().data("kendoNumericTextBox");
         if (value === 0) {
@@ -312,11 +315,13 @@
             type: "post",
             dataType: "json",
             success: function (data) {
-                if (data.result.Status === 0) {
+                if (data.result.Status === Constants.resultStatus.Ok) {
                     GeneralData.showNotification(Constants.ok, "", "success");
+
+                    DetailSimulation.simulationStateId = data.result.Object.SimulationStateId;
                     DetailSimulation.createIconSimulationState();
                 }
-                if (data.result.Status === 1) {
+                if (data.result.Status === Constants.resultStatus.Error) {
                     GeneralData.showNotification(Constants.ko, "", "error");
                 }
             },
@@ -327,13 +332,18 @@
     },
 
     onSuccessUpdate: function (data) {
-        if (data.Status === 0) {
+        if (data.Status === Constants.resultStatus.Ok) {
             GeneralData.showNotification(Constants.ok, "", "success");
         }
-        if (data.Status === 1) {
+        if (data.Status === Constants.resultStatus.Error) {
             GeneralData.showNotification(Constants.ko, "", "error");
         }
 
+        ForeignPreventionService.goToForeignPreventionService();
+    },
+
+    onFailureUpdate: function () {
+        GeneralData.showNotification(Constants.ko, "", "error");
         ForeignPreventionService.goToForeignPreventionService();
     },
 
@@ -411,5 +421,4 @@
             }
         }
     }
-
 });
