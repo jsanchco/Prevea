@@ -166,6 +166,8 @@
     <Compile Include="Controllers\CommercialTool\SimulationsController.cs" />
     <Compile Include="Controllers\CompanyAdministrationController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\Courses\ManagementCoursesController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -654,6 +656,7 @@
     <Content Include="js\CommercialTool\ManagementCompanies\ContactPersonsCompany.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\EmployeesCompany.js" />
     <Content Include="js\CommercialTool\Simulations\TrainingService.js" />
+    <Content Include="js\Courses\ManagementCourses\ManagementCourses.js" />
     <Content Include="js\Notifications\Notifications.js" />
     <Content Include="js\Shared\Constants.js" />
     <Content Include="js\Document\AddDocument.js" />
@@ -1098,6 +1101,7 @@
     <Content Include="Views\CommercialTool\Simulations\TrainingService.cshtml" />
     <Content Include="Views\Shared\MenuPreveaPersonal.cshtml" />
     <Content Include="Views\Shared\MenuPreveaCommercial.cshtml" />
+    <Content Include="Views\Courses\ManagementCourses\ManagementCourses.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

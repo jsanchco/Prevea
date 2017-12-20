@@ -69,6 +69,10 @@
                 url = "/Notifications/Notifications";
                 break;
 
+            case "courses|management":
+                url = "/Courses/ManagementCourses";
+                break;
+
             default:
                 break;
         };
