@@ -155,6 +155,7 @@
         Result SaveSimulation(Simulation simulation);
         Result UpdateSimulation(int simulationId, Simulation simulation);
         Result DeleteSimulation(int simulationId);
+        Result SubscribeSimulation(int simulationId, bool subscribe);
         #endregion
 
         List<Simulation> GetSimulationsByUser(int userId);

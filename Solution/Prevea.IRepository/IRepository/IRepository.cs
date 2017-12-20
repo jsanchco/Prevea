@@ -183,6 +183,7 @@
         Simulation SaveSimulation(Simulation simulation);
         Simulation UpdateSimulation(int id, Simulation simulation);
         bool DeleteSimulation(int id);
+        bool SubscribeSimulation(int id, bool subscribe);
         #endregion
 
         List<Simulation> GetSimulationByUser(int userId);

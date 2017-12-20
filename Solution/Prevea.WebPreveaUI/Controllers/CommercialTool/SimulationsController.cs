@@ -217,16 +217,29 @@
                     return this.Jsonp(new {Errors = "Se ha producido un error en el Borrado de la Simulación"});
                 }
 
-                var result = Service.DeleteSimulation(simulation.Id);
+                var resultSimulation = Service.SubscribeSimulation(simulation.Id, false);
+                if (resultSimulation.Status == Status.Error)
+                    return Json(new { result = resultSimulation }, JsonRequestBehavior.AllowGet);
 
-                if (result.Status != Status.Error)
+                var notification = new Model.Model.Notification
                 {
-                    return this.Jsonp(simulation);
-                }
+                    DateCreation = DateTime.Now,
+                    NotificationTypeId = (int)EnNotificationType.FromSimulation,
+                    NotificationStateId = (int)EnNotificationState.Issued,
+                    SimulationId = simulation.Id,
+                    ToUserId = simulation.UserAssignedId,
+                    ToRoleId = (int)EnRole.PreveaPersonal,
+                    Observations =
+                        $"{Service.GetUser(User.Id).Initials} - Borrada la Simulación [{simulation.CompanyName}]"
+                };
+                var resultNotification = Service.SaveNotification(notification);
 
-                return result.Status != Status.Error
-                    ? this.Jsonp(simulation)
-                    : this.Jsonp(new {Errors = "Se ha producido un error en el Borrado de la Simulación"});
+                if (resultNotification.Status == Status.Error)
+                    return Json(new { result = resultSimulation }, JsonRequestBehavior.AllowGet);
+
+                resultSimulation.Object = AutoMapper.Mapper.Map<SimulationViewModel>(resultSimulation.Object);
+
+                return Json(new { result = resultSimulation }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
@@ -242,21 +255,6 @@
             var stretchCalculate = Service.GetStretchCalculateByNumberEmployees(numberEmployees);
 
             return Json(new {stretchCalculate}, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
-        public JsonResult SendNotificationFromSimulation(int simulationId)
-        {
-            var notification = new Model.Model.Notification
-            {
-                DateCreation = DateTime.Now,
-                NotificationTypeId = (int) EnNotificationType.FromSimulation,
-                NotificationStateId = (int) EnNotificationState.Issued,
-                Observations = $"Notificación {Service.GetNotifications().Count + 1}"
-            };
-            var result = Service.SaveNotification(notification);
-
-            return Json(new {result}, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -284,7 +282,7 @@
                 NotificationTypeId = (int) EnNotificationType.FromSimulation,
                 NotificationStateId = (int) EnNotificationState.Issued,
                 SimulationId = simulationId,
-                ToUserId = User.Id,
+                ToUserId = simulation.UserId,
                 ToRoleId = (int) EnRole.PreveaPersonal,
                 Observations =
                     $"{Service.GetUser(User.Id).Initials} - Asignada la Simulación [{simulation.CompanyName}]"

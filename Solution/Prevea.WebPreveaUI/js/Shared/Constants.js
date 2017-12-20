@@ -35,7 +35,8 @@
         ValidationPending: 1,
         Modificated: 2,
         Validated: 3,
-        SendToCompany: 4
+        SendToCompany: 4,
+        Deleted: 5
     }
 
 });

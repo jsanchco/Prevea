@@ -57,7 +57,7 @@
             }
         }
 
-        public Simulation UpdateSimulation(int id, Simulation simulator)
+        public Simulation UpdateSimulation(int id, Simulation simulation)
         {
             using (var dbContextTransaction = Context.Database.BeginTransaction())
             {
@@ -67,12 +67,12 @@
                     if (simulationFind == null)
                         return null;
 
-                    Context.Entry(simulationFind).CurrentValues.SetValues(simulator);
+                    Context.Entry(simulationFind).CurrentValues.SetValues(simulation);
                     Context.SaveChanges();
 
                     dbContextTransaction.Commit();
 
-                    return simulator;
+                    return simulation;
                 }
                 catch (Exception ex)
                 {
@@ -107,7 +107,37 @@
                     dbContextTransaction.Rollback();
 
                     System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return false;
+                }
+            }
+        }
+
+        public bool SubscribeSimulation(int id, bool subscribe)
+        {
+            using (var dbContextTransaction = Context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var simulationFind = Context.Simulations.Find(id);
+                    if (simulationFind == null)
+                        return false;
+
+                    simulationFind.SimulationStateId = subscribe
+                        ? (int) EnSimulationState.ValidationPending
+                        : (int) EnSimulationState.Deleted;
+
+                    Context.SaveChanges();
+
+                    dbContextTransaction.Commit();
+
                     return true;
+                }
+                catch (Exception ex)
+                {
+                    dbContextTransaction.Rollback();
+
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return false;
                 }
             }
         }
@@ -137,7 +167,7 @@
                     .Include(x => x.SimulationState)
                     .Include(x => x.SimulationCompanies)
                     .OrderByDescending(x => x.Date)
-                    .Where(x => x.SimulationStateId != (int)EnSimulationState.Validated || x.UserAssignedId == userId)
+                    .Where(x => (x.SimulationStateId != (int)EnSimulationState.Validated || x.UserAssignedId == userId) && x.SimulationStateId != (int)EnSimulationState.Deleted)
                     .ToList();
 
                 default:
@@ -147,7 +177,7 @@
                         .Include(x => x.SimulationState)
                         .Include(x => x.SimulationCompanies)
                         .OrderByDescending(x => x.Date)
-                        .Where(x => x.UserId == userId)
+                        .Where(x => x.UserId == userId && x.SimulationStateId != (int)EnSimulationState.Deleted)
                         .ToList();
             }
         }

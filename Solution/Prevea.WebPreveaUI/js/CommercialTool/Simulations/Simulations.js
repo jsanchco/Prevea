@@ -218,14 +218,20 @@ var Simulations = kendo.observable({
     getTemplateSimulationState: function (data) {
         var html = kendo.format("<div style='float: left; text-align: left; display: inline;'>{0}</div>", data.SimulationStateDescription);
 
-        if (data.SimulationStateId === 1) {
+        if (data.SimulationStateId === Constants.simulationState.ValidationPending) {
             html += kendo.format("<div id='circleError' style='float: right; text-align: right;'></div></div>");
         }
-        if (data.SimulationStateId === 2) {
+        if (data.SimulationStateId === Constants.simulationState.Modificated) {
             html += kendo.format("<div id='circleWarning' style='float: right; text-align: right;'></div></div>");
         }
-        if (data.SimulationStateId === 3) {
+        if (data.SimulationStateId === Constants.simulationState.Validated) {
             html += kendo.format("<div id='circleSuccess' style='float: right; text-align: right;'></div></div>");
+        }
+        if (data.SimulationStateId === Constants.simulationState.SendToCompany) {
+            html += kendo.format("<div id='circleSuccess' style='float: right; text-align: right;'></div></div>");
+        }
+        if (data.SimulationStateId === Constants.simulationState.Deleted) {
+            html += kendo.format("<div id='circleDeleted' style='float: right; text-align: right;'></div></div>");
         }
 
         return html;
@@ -241,11 +247,13 @@ var Simulations = kendo.observable({
                 html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
             }
             if (GeneralData.userRoleId === Constants.role.Super) {
-                if (GeneralData.userId !== data.UserAssignedId) {
+                if (GeneralData.userId !== data.UserAssignedId && data.SimulationStateId !== Constants.simulationState.Deleted) {
                     html += kendo.format("<a toggle='tooltip' title='Asignar' onclick='Simulations.goToAssignSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-hand-o-left' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
                 }                
                 html += kendo.format("<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
-                html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+                if (data.SimulationStateId !== Constants.simulationState.Deleted) {
+                    html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+                }                
             }
             if (GeneralData.userRoleId === Constants.role.PreveaPersonal) {                
                 if (GeneralData.userId === data.UserAssignedId) {

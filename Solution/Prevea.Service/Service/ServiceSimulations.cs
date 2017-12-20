@@ -135,6 +135,40 @@
             }
         }
 
+        public Result SubscribeSimulation(int simulationId, bool subscribe)
+        {
+            try
+            {
+                var result = Repository.SubscribeSimulation(simulationId, subscribe);
+
+                if (result == false)
+                {
+                    return new Result
+                    {
+                        Message = "Se ha producido un error al dar de Baja la Simulación",
+                        Object = null,
+                        Status = Status.Error
+                    };
+                }
+
+                return new Result
+                {
+                    Message = "Dar de Baja a la Simulación se ha producido con éxito",
+                    Object = null,
+                    Status = Status.Ok
+                };
+            }
+            catch (Exception)
+            {
+                return new Result
+                {
+                    Message = "Se ha producido un error al dar de Baja la Simulación",
+                    Object = null,
+                    Status = Status.Error
+                };
+            }
+        }
+
         public List<Simulation> GetSimulationsByUser(int userId)
         {
             return Repository.GetSimulationByUser(userId);

@@ -35,6 +35,9 @@
         if (this.simulationStateId === Constants.simulationState.SendToCompany) {
             html = "<div id='circleSuccess' class='pull-right'></div>";
         }
+        if (this.simulationStateId === Constants.simulationState.Deleted) {
+            html = "<div id='circleDeleted' class='pull-right'></div>";
+        }
 
         $("#" + this.iconSimulationStateId).html(html);
     },
