@@ -1,36 +1,30 @@
 ﻿<script>
-    Notifications.init();   
+    Notifications.init();
 </script>
-
-<style>
-    #gridNotifications {
-        height: 100%;
-    }
-</style>
 
 <div class="row" id="pageNotifications" style="margin: 8px">
 
-    <div class="row"><H1>Notificaciones</H1></div><br />
-
-    <div class="row">
-        <div class="col-sm-12">
-
-            <!-- Breadcrumb 2 -->
-            <ol class="breadcrumb bc-2">
-                <li class="active">
-                    <a id="br-simulators" onclick="Notifications.goToNotifications()" style="cursor: pointer;">
-                        <i class="icon-attention"></i>
-                        <strong>Notificaciones</strong>
-                    </a>
-                </li>
-            </ol>
-
+    <div id="headerPartialView">
+        <div class="row"><H1>Notificaciones</H1></div><br />
+        <div class="row">
+            <div class="col-sm-12">
+                <ol class="breadcrumb bc-2">
+                    <li class="active">
+                        <a id="br-notifications" onclick="Notifications.goToNotifications()" style="cursor: pointer;">
+                            <i class="icon-attention"></i>
+                            <strong>Notificaciones</strong>
+                        </a>
+                    </li>
+                </ol>
+            </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <div id="gridNotifications"></div>
+    <div id="contentPartialView">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="gridNotifications" style="height: 77vh;"></div>
+            </div>
         </div>
     </div>
 

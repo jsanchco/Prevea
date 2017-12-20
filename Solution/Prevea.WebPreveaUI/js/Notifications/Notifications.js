@@ -40,7 +40,8 @@
 
                     return null;
                 }
-            }
+            },
+            pageSize: 20
         });
     },
 
@@ -63,11 +64,6 @@
                     title: "Simulación",
                     width: 150
                 },
-                //{
-                //    field: "NotificationStateDescription",
-                //    title: "Estado",
-                //    width: 180
-                //},
                 {
                     field: "ToUserInitials",
                     title: "Asignado a",
@@ -78,12 +74,6 @@
                     title: "Observaciones",
                     groupable: "false"
                 },
-                //{
-                //    field: "DateModification",
-                //    title: "Fecha de Modificación",
-                //    width: 200,
-                //    template: "#= Notifications.getColumnTemplateDateModication(data.DateModification) #"
-                //},
                 {
                     title: "Comandos",
                     field: "Commands",
@@ -95,10 +85,13 @@
             ],
             pageable: {
                 buttonCount: 2,
-                //pageSizes: [10, 20, "all"],
+                pageSizes: [20, 40, "all"],
                 refresh: true,
                 messages: {
-                    display: "Elementos mostrados {2}"
+                    display: "Elementos mostrados {0} - {1} de {2}",
+                    itemsPerPage: "Elementos por página",
+                    allPages: "Todos",
+                    empty: "No existen registros para mostrar"
                 }
             },
             filterable: {

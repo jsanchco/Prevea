@@ -1,7 +1,6 @@
 ﻿var ManagementCourses = kendo.observable({
 
     init: function() {
-        alert("In ManagementCourses!!!!");
     },
 
     goToManagementCourses: function() {

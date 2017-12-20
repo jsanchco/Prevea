@@ -146,6 +146,9 @@
             if (userRole == null)
                 return 0;
 
+            if (userRole.RoleId == (int)EnRole.Super)
+                return Context.Notifications.Count();
+
             return Context.Notifications.Count(x => x.ToUserId == userId || x.ToRoleId == userRole.RoleId);
         }
     }

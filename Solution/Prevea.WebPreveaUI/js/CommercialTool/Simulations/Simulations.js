@@ -12,12 +12,6 @@ var Simulations = kendo.observable({
     init: function () {
         this.createSimulationsDataSource();
         this.createGridSimulations();
-
-        //if (GeneralData.userRoleId === Constants.role.PreveaCommercial || GeneralData.userRoleId === Constants.role.Super) {
-        //    $("#" + Simulations.breadcrumbSimulationsId).show();
-        //} else {
-        //    $("#" + Simulations.breadcrumbSimulationsId).hide();
-        //}
     },
 
     createSimulationsDataSource: function () {
