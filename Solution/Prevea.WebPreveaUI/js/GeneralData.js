@@ -244,6 +244,18 @@
 
 
         //$("#" + this.notificationId).kendoNotification().data("kendoNotification").show("El Trabajador se ha guardado correctamente");
+    },
+
+    resizeWindow: function() {
+        var elements = $("[id*='grid']");
+        if (elements !== null && elements.length > 0) {
+            for (var index = 0; index < elements.length; index ++) {
+                var grid = $("#" + elements[index].id);
+                if (grid !== null) {
+                    grid.data("kendoGrid").resize();    
+                }                
+            }
+        }
     }
 
 });
