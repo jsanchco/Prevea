@@ -42,30 +42,30 @@
 </style>
 
 <div class="row" id="pageSimulations" style="margin: 8px">
-
-    <div class="row"><H1>Herramienta Comercial</H1></div><br />
-
-    <div class="row">
-        <div class="col-sm-12">
-
-            <!-- Breadcrumb 2 -->
-            <ol class="breadcrumb bc-2" id="breadcrumbSimulations">
-                <li class="active">
-                    <a id="br-simulations" onclick="Simulations.goToSimulations()" style="cursor: pointer;">
-                        <i class="fa fa-magic"></i>
-                        <strong>Simulaciones</strong>
-                    </a>
-                </li>
-            </ol>
-
+    
+    <div id="headerPartialView">
+        <div class="row"><H1>Herramienta Comercial</H1></div><br />
+        <div class="row">
+            <div class="col-sm-12">
+                <ol class="breadcrumb bc-2" id="breadcrumbSimulations">
+                    <li class="active">
+                        <a id="br-simulations" onclick="Simulations.goToSimulations()" style="cursor: pointer;">
+                            <i class="fa fa-magic"></i>
+                            <strong>Simulaciones</strong>
+                        </a>
+                    </li>
+                </ol>
+            </div>
         </div>
     </div>
-
+    
     <div id="confirm"></div>
-
-    <div class="row">
-        <div class="col-sm-12">
-            <div id="gridSimulations"></div>
+    
+    <div id="contentPartialView">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="gridSimulations" style="height: 77vh;"></div>
+            </div>
         </div>
     </div>
 

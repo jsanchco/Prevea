@@ -3,10 +3,15 @@
     confirmId: "confirm",
 
     notificationsDataSource: null,
+    showAll: false,
 
     init: function() {
         this.createNotificationsDataSource();
         this.createGridNotifications();
+
+        var dateBegin = new Date();
+        dateBegin.setDate(dateBegin.getDate() - 1);
+        this.notificationsDataSource.filter(this.getFilter());
     },
 
     createNotificationsDataSource: function() {
@@ -237,16 +242,30 @@
         GeneralData.goToActionController(params);
     },
 
-    resizeGrid: function () {
-        var gridElement = $("#gridNotifications"),
-            dataArea = gridElement.find(".k-grid-content"),
-            gridHeight = gridElement.innerHeight(),
-            otherElements = gridElement.children().not(".k-grid-content"),
-            otherElementsHeight = 0;
-        otherElements.each(function () {
-            otherElementsHeight += $(this).outerHeight();
-        });
-        dataArea.height(gridHeight - otherElementsHeight);
-    }
+    applyFilter: function () {
+        if (this.showAll) {
+            var dateBegin = new Date();
+            dateBegin.setDate(dateBegin.getDate() - 7);
+            this.notificationsDataSource.filter(this.getFilter());
 
+            $("a#showAll").text(" Ver todos");
+            this.showAll = false;
+        } else {
+            this.notificationsDataSource.filter({});
+            $("a#showAll").text(" Ver última semana");
+            this.showAll = true;
+        }
+    },
+
+    getFilter: function() {
+        var dateBegin = new Date();
+        dateBegin.setDate(dateBegin.getDate() - 7);
+        var filter = {
+            field: "DateCreation",
+            operator: "gte",
+            value: dateBegin
+        };
+
+        return filter;
+    }
 });

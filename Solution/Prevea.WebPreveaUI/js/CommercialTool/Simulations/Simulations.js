@@ -67,7 +67,7 @@ var Simulations = kendo.observable({
                     }
                 }
             },
-            pageSize: 10
+            pageSize: 20
         });
     },
 
@@ -117,7 +117,7 @@ var Simulations = kendo.observable({
                 }],
             pageable: {
                 buttonCount: 2,
-                pageSizes: [10, 20, "all"],
+                pageSizes: [20, 40, "all"],
                 refresh: true,
                 messages: {
                     display: "Elementos mostrados {0} - {1} de {2}",
