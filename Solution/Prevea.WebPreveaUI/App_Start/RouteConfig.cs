@@ -20,6 +20,12 @@
             );
 
             routes.MapRoute(
+                name: "Companies",
+                url: "CommercialTool/{controller}/{action}/{id}",
+                defaults: new { controller = "Companies", action = "Companies", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "ManagementCourses",
                 url: "Courses/{controller}/{action}/{id}",
                 defaults: new { controller = "ManagementCourses", action = "ManagementCourses", id = UrlParameter.Optional }

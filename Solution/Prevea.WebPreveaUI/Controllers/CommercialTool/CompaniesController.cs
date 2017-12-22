@@ -1,30 +1,36 @@
-﻿namespace Prevea.WebPreveaUI.Controllers
+﻿namespace Prevea.WebPreveaUI.Controllers.CommercialTool
 {
     #region Using
 
-    using IService.IService;
+    using System.Web.Mvc;
+    using HelpersClass;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
-    using System.Web.Mvc;
     using Kendo.Mvc.UI;
+    using IService.IService;
     using Model.Model;
     using Model.ViewModel;
     using Common;
-    using HelpersClass;
 
     #endregion
 
-    public partial class CompanyController
+    public class CompaniesController : BaseController
     {
+        #region Constructor
+        public CompaniesController(IService service) : base(service)
+        {
+        }
+        #endregion
+
         #region Companies
 
         [HttpGet]
-        [AppAuthorize(Roles = "Super,Admin")]
+        [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial")]
         public ActionResult Companies()
         {
-            return PartialView();
+            return PartialView("~/Views/CommercialTool/Companies/Companies.cshtml");
         }
 
         [HttpGet]
@@ -38,10 +44,10 @@
         }
 
         [HttpGet]
-        [AppAuthorize(Roles = "Super,Admin")]
+        [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial")]
         public JsonResult Companies_Read([DataSourceRequest] DataSourceRequest request)
         {
-            var data = AutoMapper.Mapper.Map<List<CompanyViewModel>>(Service.GetCompanies());
+            var data = AutoMapper.Mapper.Map<List<CompanyViewModel>>(Service.GetCompaniesByUser(User.Id));
 
             return this.Jsonp(data);
         }
@@ -647,7 +653,7 @@
                 }
 
                 var result = Service.SaveContractualDocument(AutoMapper.Mapper.Map<ContractualDocumentCompany>(contractualDocument));
-    
+
                 return result.Status != Status.Error ? this.Jsonp(AutoMapper.Mapper.Map<ContractualDocumentCompanyViewModel>(result.Object)) : this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
             }
             catch (Exception e)
@@ -671,7 +677,7 @@
                 if (Service.DeleteContractualDocument(contractualDocument.Id))
                     return this.Jsonp(contractualDocument);
 
-                return this.Jsonp(new {Errors = "Se ha producido un error en el Borrado del Documento"});
+                return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del Documento" });
             }
             catch (Exception e)
             {
@@ -682,5 +688,6 @@
         }
 
         #endregion
+
     }
 }

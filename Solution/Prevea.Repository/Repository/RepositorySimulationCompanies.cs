@@ -11,28 +11,28 @@
 
     public partial class Repository
     {
-        public SimulationCompany GetSimulatìonCompany(int simulatorId, int? companyId = null)
+        public SimulationCompany GetSimulationCompany(int simulationId, int? companyId = null)
         {
 
             return Context.SimulationCompanies
-                .Include(x => x.Simulator)
+                .Include(x => x.Simulation)
                 .Include(x => x.Company)
-                .FirstOrDefault(x => x.SimulatorId == simulatorId && x.CompanyId == companyId);
+                .FirstOrDefault(x => x.SimulationId == simulationId && x.CompanyId == companyId);
         }
 
-        public SimulationCompany SaveSimulationCompany(int simulatorId, int? companyId = null)
+        public SimulationCompany SaveSimulationCompany(int simulationId, int? companyId = null)
         {
             using (var dbContextTransaction = Context.Database.BeginTransaction())
             {
                 try
                 {
-                    var simulatorCompany = new SimulationCompany {SimulatorId = simulatorId, CompanyId = companyId};
-                    Context.SimulationCompanies.Add(simulatorCompany);
+                    var simulationCompany = new SimulationCompany {SimulationId = simulationId, CompanyId = companyId};
+                    Context.SimulationCompanies.Add(simulationCompany);
                     Context.SaveChanges();
 
                     dbContextTransaction.Commit();
 
-                    return simulatorCompany;
+                    return simulationCompany;
 
                 }
                 catch (Exception ex)
@@ -45,26 +45,26 @@
             }
         }
 
-        public SimulationCompany UpdateSimulationCompany(int simulatorId, int companyId)
+        public SimulationCompany UpdateSimulationCompany(int simulationId, int companyId)
         {
             using (var dbContextTransaction = Context.Database.BeginTransaction())
             {
                 try
                 {
-                    var simulatorCompany = Context.SimulationCompanies.FirstOrDefault(x => x.SimulatorId == simulatorId);
-                    if (simulatorCompany == null)
+                    var simulationCompany = Context.SimulationCompanies.FirstOrDefault(x => x.SimulationId == simulationId);
+                    if (simulationCompany == null)
                         return null;
 
-                    var simulatorCompanyFind = Context.SimulationCompanies.Find(simulatorCompany.Id);
-                    if (simulatorCompanyFind == null)
+                    var simulationCompanyFind = Context.SimulationCompanies.Find(simulationCompany.Id);
+                    if (simulationCompanyFind == null)
                         return null;
 
-                    simulatorCompanyFind.CompanyId = companyId;
+                    simulationCompanyFind.CompanyId = companyId;
                     Context.SaveChanges();
 
                     dbContextTransaction.Commit();
 
-                    return simulatorCompanyFind;
+                    return simulationCompanyFind;
                 }
                 catch (Exception ex)
                 {
@@ -76,21 +76,21 @@
             }
         }
 
-        public bool DeleteSimulationCompany(int simulatorId, int companyId)
+        public bool DeleteSimulationCompany(int simulationId, int companyId)
         {
             using (var dbContextTransaction = Context.Database.BeginTransaction())
             {
                 try
                 {
-                    var simulatorCompany = Context.SimulationCompanies.FirstOrDefault(x => x.SimulatorId == simulatorId);
-                    if (simulatorCompany == null)
+                    var simulationCompany = Context.SimulationCompanies.FirstOrDefault(x => x.SimulationId == simulationId);
+                    if (simulationCompany == null)
                         return false;
 
-                    var simulatorCompanyFind = Context.SimulationCompanies.Find(simulatorCompany.Id);
-                    if (simulatorCompanyFind == null)
+                    var simulationCompanyFind = Context.SimulationCompanies.Find(simulationCompany.Id);
+                    if (simulationCompanyFind == null)
                         return false;
 
-                    Context.SimulationCompanies.Remove(simulatorCompanyFind);
+                    Context.SimulationCompanies.Remove(simulationCompanyFind);
 
                     dbContextTransaction.Commit();
 

@@ -78,6 +78,7 @@
         #endregion
 
         Result SubscribeCompany(int companyId, bool subscribe);
+        List<Company> GetCompaniesByUser(int userId);
 
         #endregion
 

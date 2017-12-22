@@ -279,7 +279,7 @@
             var notification = new Model.Model.Notification
             {
                 DateCreation = DateTime.Now,
-                NotificationTypeId = (int) EnNotificationType.FromSimulation,
+                NotificationTypeId = (int) EnNotificationType.FromSede,
                 NotificationStateId = (int) EnNotificationState.Issued,
                 SimulationId = simulationId,
                 ToUserId = simulation.UserId,

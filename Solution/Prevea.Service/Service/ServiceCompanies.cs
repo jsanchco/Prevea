@@ -178,5 +178,10 @@
                 };
             }
         }
+
+        public List<Company> GetCompaniesByUser(int userId)
+        {
+            return Repository.GetCompaniesByUser(userId);
+        }
     }
 }

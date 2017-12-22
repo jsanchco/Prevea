@@ -11,7 +11,7 @@
         this.createCompaniesDataSource();
         this.createGridCompanies();
 
-        this.companiesDataSource.filter({ field: "CompanyStateId", operator: "eq", value: 1 });
+        this.companiesDataSource.filter(this.getFilter());
     },
 
     createCompaniesDataSource: function () {
@@ -34,16 +34,16 @@
             },
             transport: {
                 read: {
-                    url: "/Company/Companies_Read",
+                    url: "/Companies/Companies_Read",
                     dataType: "jsonp",
                     data: { companyId: this.companyId }
                 },
                 destroy: {
-                    url: "/Company/Companies_Destroy",
+                    url: "/Companies/Companies_Destroy",
                     dataType: "jsonp"
                 },
                 create: {
-                    url: "/Company/Companies_Create",
+                    url: "/Companies/Companies_Create",
                     dataType: "jsonp"
                 },
                 parameterMap: function (options, operation) {
@@ -193,9 +193,9 @@
 
     getTemplateToolBar: function () {
         var html = "<div class='toolbar'>";
-        html += "<span name='create' class='k-grid-add' id='createCompany'>";
-        html += "<a class='btn btn-prevea k-grid-add' role='button'> Agregar nuevo</a>";
-        html += "</span>";
+        //html += "<span name='create' class='k-grid-add' id='createCompany'>";
+        //html += "<a class='btn btn-prevea k-grid-add' role='button'> Agregar nuevo</a>";
+        //html += "</span>";
 
         html += "<span style='float: right;'>";
         html += "<a id='showAll' class='btn btn-prevea' role='button' onclick='Companies.applyFilter()'> Ver todos</a>";
@@ -236,7 +236,7 @@
 
     goToCompanies: function () {
         var params = {
-            url: "/Company/Companies",
+            url: "/Companies/Companies",
             data: {}
         };
         GeneralData.goToActionController(params);
@@ -244,7 +244,7 @@
 
     goToDetailCompany: function (id) {
         var params = {
-            url: "/Company/DetailCompany",
+            url: "/Companies/DetailCompany",
             data: {
                 id: id,
                 selectTabId: 0
@@ -325,7 +325,7 @@
 
     applyFilter: function () {
         if (this.showAll) {
-            this.companiesDataSource.filter({ field: "CompanyStateId", operator: "eq", value: 1 });
+            this.companiesDataSource.filter(this.getFilter());
             $("a#showAll").text("Ver todos");
             this.showAll = false;
         } else {
@@ -333,5 +333,15 @@
             $("a#showAll").text("Ver altas");
             this.showAll = true;
         }           
+    },
+
+    getFilter: function() {
+        var filter = {
+            field: "CompanyStateId",
+            operator: "eq",
+            value: 1
+        };
+
+        return filter;
     }
 });

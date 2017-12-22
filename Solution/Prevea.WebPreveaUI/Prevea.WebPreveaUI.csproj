@@ -163,6 +163,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\JsonpResult.cs" />
+    <Compile Include="Controllers\CommercialTool\CompaniesController.cs" />
     <Compile Include="Controllers\CommercialTool\SimulationsController.cs" />
     <Compile Include="Controllers\CompanyAdministrationController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
@@ -1102,6 +1103,14 @@
     <Content Include="Views\Shared\MenuPreveaPersonal.cshtml" />
     <Content Include="Views\Shared\MenuPreveaCommercial.cshtml" />
     <Content Include="Views\Courses\ManagementCourses\ManagementCourses.cshtml" />
+    <Content Include="Views\CommercialTool\Companies\Companies.cshtml" />
+    <Content Include="Views\CommercialTool\Companies\DetailCompany.cshtml" />
+    <Content Include="Views\CommercialTool\Companies\GeneralDataCompany.cshtml" />
+    <Content Include="Views\CommercialTool\Companies\EmployeesCompany.cshtml" />
+    <Content Include="Views\CommercialTool\Companies\EconomicDataCompany.cshtml" />
+    <Content Include="Views\CommercialTool\Companies\ContractualsDocumentsCompany.cshtml" />
+    <Content Include="Views\CommercialTool\Companies\ContactPersonsCompany.cshtml" />
+    <Content Include="Views\CommercialTool\Companies\PaymentMethodCompany.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

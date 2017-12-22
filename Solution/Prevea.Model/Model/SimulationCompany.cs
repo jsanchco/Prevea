@@ -11,8 +11,8 @@
         [Key, Required]
         public int Id { get; set; }
 
-        public int SimulatorId { get; set; }
-        public virtual Simulation Simulator { get; set; }
+        public int SimulationId { get; set; }
+        public virtual Simulation Simulation { get; set; }
 
         public int? CompanyId { get; set; }
         public virtual Company Company { get; set; }

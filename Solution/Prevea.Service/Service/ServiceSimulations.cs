@@ -178,23 +178,23 @@
         {
             try
             {
-                var simulator = Repository.GetSimulation(simulationId);
-                if (simulator == null)
+                var simulation = Repository.GetSimulation(simulationId);
+                if (simulation == null)
                 {
                     return new Result
                     {
-                        Message = "Se ha producido un error al Borrar la Simulación",
+                        Message = "Se ha producido un error al recuperar la Simulación",
                         Object = null,
                         Status = Status.Error
                     };
                 }
-
-                simulator = Repository.UpdateSimulation(simulationId, simulator);
-                if (simulator == null)
+                simulation.SimulationStateId = (int) EnSimulationState.SendToCompany;
+                simulation = Repository.UpdateSimulation(simulationId, simulation);
+                if (simulation == null)
                 {
                     return new Result
                     {
-                        Message = "Se ha producido un error al Borrar la Simulación",
+                        Message = "Se ha producido un error al actualizar la Simulación",
                         Object = null,
                         Status = Status.Error
                     };
@@ -202,68 +202,61 @@
 
                 var company = new Company
                 {
-                    Name = simulator.CompanyName,
-                    NIF = simulator.NIF,
-                    FromSimulator = true,
-                    GestorId = simulator.UserId
+                    Name = simulation.CompanyName,
+                    NIF = simulation.NIF,
+                    FromSimulation = true,
+                    GestorId = simulation.UserId
                 };
                 company = Repository.SaveCompany(company);
                 if (company == null)
                 {
                     return new Result
                     {
-                        Message = "Se ha producido un error al Borrar la Simulación",
+                        Message = "Se ha producido un error al crear la Empresa",
                         Object = null,
                         Status = Status.Error
                     };
                 }
                 var random = new Random();
                 var randomNumber = random.Next(0, 10000000);
-                for (var i = 0; i < simulator.NumberEmployees; i++)
+                for (var i = 0; i < simulation.NumberEmployees; i++)
                 {
                     var dni = $"{randomNumber}{RandomString(1)}";
 
                     var user = new User
                     {
                         FirstName = $"Trabajador {randomNumber++}",
-                        DNI = dni,
-                        Email = $"Trabajador{randomNumber}_{dni}@{company.Name.Replace(" ", string.Empty)}.com"
+                        DNI = dni
                     };
                     var resultEmployee = SaveEmployeeCompany((int) EnRole.Employee, company.Id, user);
                     if (resultEmployee.Status == Status.Error)
                     {
                         return new Result
                         {
-                            Message = "Se ha producido un error al Borrar la Simulación",
+                            Message = "Se ha producido un error al crear el Trabajador",
                             Object = null,
                             Status = Status.Error
                         };
                     }
                 }
 
-                var economicData = new EconomicData
-                {
-                    Id = company.Id,
-                    //AmountTecniques = simulator.AmountTecniques,
-                    //AmountHealthVigilance = simulator.AmountHealthVigilance,
-                    //AmountMedicalExamination = simulator.AmountMedicalExamination,
-                };
-                var resultEconomicData = SaveEconomicData(economicData);
-                if (resultEconomicData.Status == Status.Error)
+                var simulationCompany = Repository.GetSimulationCompany(simulationId);
+                if (simulationCompany == null)
                 {
                     return new Result
                     {
-                        Message = "Se ha producido un error al Borrar la Simulación",
+                        Message = "Se ha producido un error al recuperar la Simulación-Empresa",
                         Object = null,
                         Status = Status.Error
                     };
                 }
-                var simulatorCompany = Repository.UpdateSimulationCompany(simulationId, company.Id);
-                if (simulatorCompany == null)
+                simulationCompany.CompanyId = company.Id;
+                simulationCompany = Repository.UpdateSimulationCompany(simulationId, company.Id);
+                if (simulationCompany == null)
                 {
                     return new Result
                     {
-                        Message = "Se ha producido un error al Borrar la Simulación",
+                        Message = "Se ha producido un error al actualizar la Simulación-Empresa",
                         Object = null,
                         Status = Status.Error
                     };
@@ -280,7 +273,7 @@
             {
                 return new Result
                 {
-                    Message = "Se ha producido un error al Borrar la Simulación",
+                    Message = "Se ha producido un error al crear la Empresa",
                     Object = null,
                     Status = Status.Error
                 };

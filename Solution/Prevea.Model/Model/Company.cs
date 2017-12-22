@@ -44,7 +44,7 @@
         public string Address { get; set; }
         public string Province { get; set; }
         public DateTime Date { get; set; }
-        public bool FromSimulator { get; set; }
+        public bool FromSimulation { get; set; }
 
         public int? CnaeId { get; set; }
         public virtual Cnae Cnae { get; set; }
@@ -62,7 +62,7 @@
         public virtual ICollection<ContactPerson> ContactPersons { get; set; }
         public virtual ICollection<Employee> Employees{ get; set; }
 
-        public virtual ICollection<SimulationCompany> SimulatorCompanies { get; set; }
+        public virtual ICollection<SimulationCompany> SimulationCompanies { get; set; }
 
         public virtual ICollection<ContractualDocumentCompany> ContractualsDocumentsCompany { get; set; }
 

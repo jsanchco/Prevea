@@ -97,6 +97,7 @@
         #endregion
 
         List<Company> GetCompaniesByAgency(int companyId);
+        List<Company> GetCompaniesByUser(int userId);
 
         #endregion
 
@@ -212,7 +213,7 @@
         #endregion
 
         #region Simulation Company
-        SimulationCompany GetSimulatìonCompany(int simulationId, int? companyId = null);
+        SimulationCompany GetSimulationCompany(int simulationId, int? companyId = null);
         SimulationCompany SaveSimulationCompany(int simulationId, int? companyId = null);
         SimulationCompany UpdateSimulationCompany(int simulationId, int companyId);
         bool DeleteSimulationCompany(int simulationId, int companyId);

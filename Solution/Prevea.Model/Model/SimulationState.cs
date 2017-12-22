@@ -20,7 +20,7 @@
         [NotMapped]
         public string Description => Helpers.HelperClass.GetDescription(Enum.GetName(typeof(EnSimulationState), Id));
 
-        public virtual ICollection<Simulation> Simulators { get; set; }
+        public virtual ICollection<Simulation> Simulations { get; set; }
     }
 
     public enum EnSimulationState { NotMapped, ValidationPending, Modificated, Validated, SendToCompany, Deleted }

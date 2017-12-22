@@ -47,18 +47,12 @@
                 url = "/Document/HistoricDownloadDocuments";
                 break;
 
-            case "company|administration":
-            case "br-companies":
-                url = "/Company/Companies";
-                break;
-
-            //case "company|simulator":
-            //case "br-simulators":
-            //    url = "/Company/Simulators";
-            //    break;
-
             case "commercialTool|simulations":
                 url = "/Simulations/Simulations";
+                break;
+
+            case "commercialTool|companies":
+                url = "/Companies/Companies";
                 break;
 
             case "br-document-addDocument":

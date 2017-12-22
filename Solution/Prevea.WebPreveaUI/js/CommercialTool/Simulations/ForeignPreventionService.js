@@ -72,14 +72,6 @@
             decimals: 1,
             change: ForeignPreventionService.onChangeTextAmountMedicalExamination
         });
-
-        $("#" + this.btnSendNotificationId).click(function () {
-            ForeignPreventionService.sendNotificationFromSimulator();
-        });
-
-        $("#" + this.btnSendToCompaniesId).click(function () {
-            ForeignPreventionService.sendToCompanies();
-        });
     },
 
     getStretchCalculateByNumberEmployees: function () {
@@ -347,37 +339,6 @@
     onFailureUpdate: function () {
         GeneralData.showNotification(Constants.ko, "", "error");
         ForeignPreventionService.goToForeignPreventionService();
-    },
-
-    sendToCompanies: function () {
-        $.ajax({
-            url: "/Company/SendToCompanies",
-            data: {
-                simulationId: this.simulationId
-            },
-            type: "post",
-            dataType: "json",
-            success: function (data) {
-                if (data.result.Status === 0) {
-                    GeneralData.showNotification(Constants.ok, "", "success");
-
-                    var params = {
-                        url: "/Company/DetailCompany",
-                        data: {
-                            id: data.result.Object,
-                            selectTabId: 0
-                        }
-                    };
-                    GeneralData.goToActionController(params);
-                }
-                if (data.result.Status === 1) {
-                    GeneralData.showNotification(Constants.ko, "", "error");
-                }
-            },
-            error: function() {
-                GeneralData.showNotification(Constants.ko, "", "error");
-            }
-        });
     },
 
     blockFields: function () {

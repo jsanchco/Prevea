@@ -20,7 +20,7 @@
                 .Include(x => x.Cnae)
                 .Include(x => x.Agency)
                 .Include(x => x.ContactPersons)
-                .Include(x => x.SimulatorCompanies)
+                .Include(x => x.SimulationCompanies)
                 .FirstOrDefault(x => x.Id == id);
         }
 
@@ -117,5 +117,47 @@
         }
 
         #endregion
+
+        public List<Company> GetCompaniesByUser(int userId)
+        {
+            var user = Context.Users.FirstOrDefault(x => x.Id == userId);
+
+            var userRole = user?.UserRoles.FirstOrDefault();
+            if (userRole == null)
+                return null;
+            switch (userRole.RoleId)
+            {
+                case (int)EnRole.Super:
+                    return Context.Companies
+                        .Include(x => x.Cnae)
+                        .Include(x => x.Agency)
+                        .Include(x => x.ContactPersons)
+                        .Include(x => x.SimulationCompanies)
+                        .OrderByDescending(x => x.SimulationCompanies.FirstOrDefault().Simulation.Date)
+                        .ToList();
+
+                case (int)EnRole.PreveaPersonal:
+                    return Context.Companies
+                        .Include(x => x.Cnae)
+                        .Include(x => x.Agency)
+                        .Include(x => x.ContactPersons)
+                        .Include(x => x.SimulationCompanies)
+                        .Where(x => x.SimulationCompanies.FirstOrDefault().Simulation.UserAssignedId == userId)
+                        .OrderByDescending(x => x.SimulationCompanies.FirstOrDefault().Simulation.Date)
+                        .ToList();
+
+                case (int)EnRole.PreveaCommercial:
+                    return Context.Companies
+                        .Include(x => x.Cnae)
+                        .Include(x => x.Agency)
+                        .Include(x => x.ContactPersons)
+                        .Include(x => x.SimulationCompanies)
+                        .Where(x => x.SimulationCompanies.FirstOrDefault().Simulation.UserId == userId)
+                        .OrderByDescending(x => x.SimulationCompanies.FirstOrDefault().Simulation.Date)
+                        .ToList();
+                default:
+                    return null;
+            }
+        }
     }
 }

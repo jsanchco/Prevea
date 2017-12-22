@@ -231,8 +231,8 @@ namespace Prevea.ConsoleTestModel.Migrations
             }
             context.SaveChanges();
 
-            var simulatorStates = (EnSimulationState[])Enum.GetValues(typeof(EnSimulationState));
-            foreach (var dState in simulatorStates)
+            var simulationStates = (EnSimulationState[])Enum.GetValues(typeof(EnSimulationState));
+            foreach (var dState in simulationStates)
             {
                 if (dState == EnSimulationState.NotMapped)
                     continue;
