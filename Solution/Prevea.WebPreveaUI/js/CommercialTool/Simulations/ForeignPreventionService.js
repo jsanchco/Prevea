@@ -109,14 +109,16 @@
             fromStretchCalculateByNumberEmployees !== true) {
             $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
             $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", false);
+            $("#" + ForeignPreventionService.btnValidateForeignPreventionServiceId).removeAttr("disabled");
+            $("#" + ForeignPreventionService.btnValidateForeignPreventionServiceId).prop("disabled", true);
         } else {
             $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
             $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", true);
 
-            $("#" + DetailSimulation.btnSendToSEDEId).removeAttr("disabled");
-            $("#" + DetailSimulation.btnSendToSEDEId).prop("disabled", true);
-            $("#" + DetailSimulation.btnSendToCompaniesId).removeAttr("disabled");
-            $("#" + DetailSimulation.btnSendToCompaniesId).prop("disabled", true);
+            //$("#" + DetailSimulation.btnSendToSEDEId).removeAttr("disabled");
+            //$("#" + DetailSimulation.btnSendToSEDEId).prop("disabled", true);
+            //$("#" + DetailSimulation.btnSendToCompaniesId).removeAttr("disabled");
+            //$("#" + DetailSimulation.btnSendToCompaniesId).prop("disabled", true);
         }
 
         var widget = $("#" + ForeignPreventionService.textAmountTecniquesId).kendoNumericTextBox().data("kendoNumericTextBox");
@@ -169,10 +171,10 @@
             $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
             $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", true);
 
-            $("#" + DetailSimulation.btnSendToSEDEId).removeAttr("disabled");
-            $("#" + DetailSimulation.btnSendToSEDEId).prop("disabled", true);
-            $("#" + DetailSimulation.btnSendToCompaniesId).removeAttr("disabled");
-            $("#" + DetailSimulation.btnSendToCompaniesId).prop("disabled", true);
+            //$("#" + DetailSimulation.btnSendToSEDEId).removeAttr("disabled");
+            //$("#" + DetailSimulation.btnSendToSEDEId).prop("disabled", true);
+            //$("#" + DetailSimulation.btnSendToCompaniesId).removeAttr("disabled");
+            //$("#" + DetailSimulation.btnSendToCompaniesId).prop("disabled", true);
         }
 
         var widget = $("#" + ForeignPreventionService.textAmountHealthVigilanceId).kendoNumericTextBox().data("kendoNumericTextBox");
@@ -225,10 +227,10 @@
             $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
             $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", true);
 
-            $("#" + DetailSimulation.btnSendToSEDEId).removeAttr("disabled");
-            $("#" + DetailSimulation.btnSendToSEDEId).prop("disabled", true);
-            $("#" + DetailSimulation.btnSendToCompaniesId).removeAttr("disabled");
-            $("#" + DetailSimulation.btnSendToCompaniesId).prop("disabled", true);
+            //$("#" + DetailSimulation.btnSendToSEDEId).removeAttr("disabled");
+            //$("#" + DetailSimulation.btnSendToSEDEId).prop("disabled", true);
+            //$("#" + DetailSimulation.btnSendToCompaniesId).removeAttr("disabled");
+            //$("#" + DetailSimulation.btnSendToCompaniesId).prop("disabled", true);
         }
 
         var widget = $("#" + ForeignPreventionService.textAmountMedicalExaminationId).kendoNumericTextBox().data("kendoNumericTextBox");
@@ -395,10 +397,11 @@
     updateButtons: function() {
         if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {
             $("#" + this.btnValidateForeignPreventionServiceId).hide();
-            switch (DetailSimulation.simulationState) {
+            switch (DetailSimulation.simulationStateId) {
             case Constants.simulationState.ValidationPending:
             case Constants.simulationState.Modificated:
             case Constants.simulationState.Validated:
+                break;
             case Constants.simulationState.SendToCompany:
                 break;
             }

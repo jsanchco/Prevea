@@ -323,6 +323,7 @@
                         NotificationStateId = (int) EnNotificationState.Issued,
                         SimulationId = simulationId,
                         ToUserId = simulation.UserId,
+                        ToRoleId = (int)EnRole.PreveaPersonal,
                         Observations =
                             $"{Service.GetUser(User.Id).Initials} - Modificada la Simulación [{simulation.CompanyName}] -> TEC: {simulation.ForeignPreventionService.AmountTecniques}€ VS: {simulation.ForeignPreventionService.AmountHealthVigilance}€ RM: {simulation.ForeignPreventionService.AmountMedicalExamination}€"
                     };

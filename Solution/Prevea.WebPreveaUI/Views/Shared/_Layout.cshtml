@@ -118,7 +118,7 @@
     @RenderSection("script", required: false)
 
 </head>
-<body class="page-body skin-red loaded page-fade">
+<body class="page-body skin-red loaded page-fade" onresize="GeneralData.resizeWindow()">
 <div class="page-container" id="pageContainer">
     <!-- sidebar-menu -->
     <div class="sidebar-menu" id="menuPpal">
@@ -221,9 +221,7 @@
     
 <script type="text/javascript">
 
-    $(window).resize(GeneralData.resizeWindow());
-
-    $(document).ready(function () {        
+    $(document).ready(function () {
     });
 
 </script>
