@@ -51,12 +51,24 @@
                 var data = AutoMapper.Mapper.Map<User>(user);
                 var result = Service.SaveUser(user.RoleId, data);
 
-                if (result.Status != Status.Error)
+                if (result.Status == Status.Error)
+                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Usuario" });
+
+                var notification = new Model.Model.Notification
                 {
-                    user = AutoMapper.Mapper.Map<UserViewModel>(result.Object);
-                    return this.Jsonp(user);
-                }
-                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Usuario" });
+                    DateCreation = DateTime.Now,
+                    NotificationTypeId = (int)EnNotificationType.FromUser,
+                    NotificationStateId = (int)EnNotificationState.Issued,
+                    ToRoleId = (int)EnRole.Super,
+                    Observations =
+                        $"{Service.GetUser(User.Id).Initials} - Modificado usuario [{((User)result.Object).Initials}]"
+                };
+                var resultNotification = Service.SaveNotification(notification);
+                if (resultNotification.Status == Status.Error)
+                    return this.Jsonp(new { Errors = resultNotification });
+
+                user = AutoMapper.Mapper.Map<UserViewModel>(result.Object);
+                return this.Jsonp(user);
             }
             catch (Exception e)
             {
@@ -78,12 +90,23 @@
 
                 var result = Service.DeleteUser((int)user.Id);
 
-                if (result.Status != Status.Error)
-                {
-                    return this.Jsonp(user);
-                }
+                if (result.Status == Status.Error)
+                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Usuario" });
 
-                return result.Status != Status.Error ? this.Jsonp(user) : this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del Usuario" });
+                var notification = new Model.Model.Notification
+                {
+                    DateCreation = DateTime.Now,
+                    NotificationTypeId = (int)EnNotificationType.FromUser,
+                    NotificationStateId = (int)EnNotificationState.Issued,
+                    ToRoleId = (int)EnRole.Super,
+                    Observations =
+                        $"{Service.GetUser(User.Id).Initials} - Borrado usuario [{user.Initials}]"
+                };
+                var resultNotification = Service.SaveNotification(notification);
+                if (resultNotification.Status == Status.Error)
+                    return this.Jsonp(new { Errors = resultNotification });
+
+                return this.Jsonp(user);
             }
             catch (Exception e)
             {
@@ -105,13 +128,24 @@
 
                 var result = Service.SaveUser(user.RoleId, AutoMapper.Mapper.Map<User>(user));
 
-                if (result.Status != Status.Error)
-                {
-                    user = AutoMapper.Mapper.Map<UserViewModel>(result.Object);
-                    return this.Jsonp(user);
-                }
+                if (result.Status == Status.Error)
+                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Usuario" });
 
-                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Usuario" });
+                var notification = new Model.Model.Notification
+                {
+                    DateCreation = DateTime.Now,
+                    NotificationTypeId = (int)EnNotificationType.FromUser,
+                    NotificationStateId = (int)EnNotificationState.Issued,
+                    ToRoleId = (int)EnRole.Super,
+                    Observations =
+                        $"{Service.GetUser(User.Id).Initials} - Creado un nuevo usuario [{((User)result.Object).Initials}]"
+                };
+                var resultNotification = Service.SaveNotification(notification);
+                if (resultNotification.Status == Status.Error)
+                    return this.Jsonp(new { Errors = resultNotification });
+
+                user = AutoMapper.Mapper.Map<UserViewModel>(result.Object);
+                return this.Jsonp(user);
             }
             catch (Exception e)
             {
@@ -127,6 +161,22 @@
             try
             {
                 var result = Service.SubscribeUser(userId, subscribe);
+                if (result.Status == Status.Error)
+                    return Json(subscribe ? new { Errors = "Se ha producido un error al Dar de Alta del Usuario" } : new { Errors = "Se ha producido un error al Dar de Baja del Usuario" });
+
+                var notification = new Model.Model.Notification
+                {
+                    DateCreation = DateTime.Now,
+                    NotificationTypeId = (int)EnNotificationType.FromUser,
+                    NotificationStateId = (int)EnNotificationState.Issued,
+                    ToRoleId = (int)EnRole.Super,
+                    Observations = subscribe ?
+                        $"{Service.GetUser(User.Id).Initials} - Alta usuario [{((User)result.Object).Initials}]" :
+                        $"{Service.GetUser(User.Id).Initials} - Baja usuario [{((User)result.Object).Initials}]"
+                };
+                var resultNotification = Service.SaveNotification(notification);
+                if (resultNotification.Status == Status.Error)
+                    return this.Jsonp(new { Errors = resultNotification });
 
                 return Json(result);
             }

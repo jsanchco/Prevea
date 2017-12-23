@@ -160,35 +160,27 @@
         var tabStrip = $("#" + this.tabStripDetailCompanyId).kendoTabStrip().data("kendoTabStrip");
         tabStrip.append({
             text: "DATOS GENERALES",
-            contentUrl: kendo.format("/Company/GeneralDataCompany?companyId={0}", this.id)
+            contentUrl: kendo.format("/Companies/GeneralDataCompany?companyId={0}", this.id)
         });
-        //tabStrip.append({
-        //    text: "PERSONAS de CONTACTO",
-        //    contentUrl: kendo.format("/Company/ContactPersonsCompany?companyId={0}", this.id)
-        //});
         tabStrip.append({
             text: "PERSONAS de CONTACTO",
-            contentUrl: kendo.format("/Company/_ContactPersonsCompany?companyId={0}", this.id)
+            contentUrl: kendo.format("/Companies/ContactPersonsCompany?companyId={0}", this.id)
         });
         tabStrip.append({
             text: "GESTORÍA",
-            contentUrl: kendo.format("/Company/AgencyCompany?companyId={0}", this.id)
+            contentUrl: kendo.format("/Companies/AgencyCompany?companyId={0}", this.id)
         });
-        //tabStrip.append({
-        //    text: "TRABAJADORES",
-        //    contentUrl: kendo.format("/Company/EmployeesCompany?companyId={0}", this.id)
-        //});
         tabStrip.append({
             text: "TRABAJADORES",
-            contentUrl: kendo.format("/Company/_EmployeesCompany?companyId={0}", this.id)
+            contentUrl: kendo.format("/Companies/EmployeesCompany?companyId={0}", this.id)
         });
         tabStrip.append({
             text: "DATOS ECONÓMICOS",
-            contentUrl: kendo.format("/Company/EconomicDataCompany?companyId={0}", this.id)
+            contentUrl: kendo.format("/Companies/EconomicDataCompany?companyId={0}", this.id)
         });
         tabStrip.append({
             text: "FORMA de PAGO",
-            contentUrl: kendo.format("/Company/PaymentMethodCompany?companyId={0}", this.id)
+            contentUrl: kendo.format("/Companies/PaymentMethodCompany?companyId={0}", this.id)
         });
         tabStrip.append({
             text: "DOCUMENTOS",
@@ -209,7 +201,7 @@
 
     goToDetailCompany: function () {
         var params = {
-            url: "/Company/DetailCompany",
+            url: "/Companies/DetailCompany",
             data: {
                 id: this.id,
                 selectTabId: 0
@@ -221,7 +213,7 @@
     updateStretchCalculate: function () {
         var that = this;
         $.ajax({
-            url: "/Company/GetStretchCalculate",
+            url: "/Companies/GetStretchCalculate",
             data: {
                 companyId: this.id
             },

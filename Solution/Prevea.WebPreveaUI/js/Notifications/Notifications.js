@@ -155,6 +155,7 @@
 
         if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {
             var grid = $("#" + this.gridNotificationsId).data("kendoGrid");
+            grid.hideColumn("NotificationTypeDescription");
             grid.hideColumn("ToUserInitials");
         }
     },

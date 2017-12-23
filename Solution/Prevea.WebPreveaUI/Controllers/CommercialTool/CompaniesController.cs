@@ -40,7 +40,7 @@
 
             ViewBag.SelectTabId = selectTabId;
 
-            return PartialView(company);
+            return PartialView("~/Views/CommercialTool/Companies/DetailCompany.cshtml", company);
         }
 
         [HttpGet]
@@ -91,7 +91,7 @@
         [HttpGet]
         public ActionResult GeneralDataCompany(int companyId)
         {
-            return PartialView(Service.GetCompany(companyId));
+            return PartialView("~/Views/CommercialTool/Companies/GeneralDataCompany.cshtml", Service.GetCompany(companyId));
         }
 
         [HttpPost]
@@ -107,18 +107,18 @@
                 {
                     ViewBag.Notification = "La Empresa se ha actualizado correctamente";
 
-                    return PartialView("DetailCompany", result.Object as Company);
+                    return PartialView("~/Views/CommercialTool/Companies/DetailCompany.cshtml", result.Object as Company);
                 }
 
                 ViewBag.Error = new List<string> { result.Message };
 
-                return PartialView("DetailCompany", company);
+                return PartialView("~/Views/CommercialTool/Companies/DetailCompany.cshtml", company);
             }
             catch (Exception e)
             {
                 ViewBag.Error = new List<string> { e.Message };
 
-                return PartialView("DetailCompany", company);
+                return PartialView("~/Views/CommercialTool/Companies/DetailCompany.cshtml", company);
             }
         }
 
@@ -147,7 +147,7 @@
 
             var agency = company.Agency == null ? new AgencyViewModel { CompanyId = companyId } : AutoMapper.Mapper.Map<AgencyViewModel>(company.Agency);
 
-            return PartialView(agency);
+            return PartialView("~/Views/CommercialTool/Companies/AgencyCompany.cshtml", agency);
         }
 
         [HttpPost]
@@ -167,12 +167,12 @@
                 {
                     ViewBag.Notification = result.Message;
 
-                    return PartialView("DetailCompany", company);
+                    return PartialView("~/Views/CommercialTool/Companies/DetailCompany.cshtml", company);
                 }
 
                 ViewBag.Error = new List<string> { result.Message };
 
-                return PartialView("DetailCompany", company);
+                return PartialView("~/Views/CommercialTool/Companies/DetailCompany.cshtml", company);
             }
             catch (Exception e)
             {
@@ -182,7 +182,7 @@
 
                 ViewBag.Error = new List<string> { e.Message };
 
-                return PartialView("DetailCompany", company);
+                return PartialView("~/Views/CommercialTool/Companies/DetailCompany.cshtml", company);
             }
         }
 
@@ -199,7 +199,7 @@
 
             if (company.EconomicData == null)
             {
-                return PartialView(new EconomicDataViewModel
+                return PartialView("~/Views/CommercialTool/Companies/EconomicDataCompany.cshtml", new EconomicDataViewModel
                 {
                     Id = companyId,
                     SubscribeNumberEmployees = subscribeNumberEmployees,
@@ -211,7 +211,7 @@
             data.SubscribeNumberEmployees = subscribeNumberEmployees;
             data.StretchCalculate = Service.GetStretchCalculateByNumberEmployees(subscribeNumberEmployees);
 
-            return PartialView(data);
+            return PartialView("~/Views/CommercialTool/Companies/EconomicDataCompany.cshtml", data);
         }
 
         [HttpPost]
@@ -237,12 +237,12 @@
                 {
                     ViewBag.Notification = result.Message;
 
-                    return PartialView("DetailCompany", company);
+                    return PartialView("~/Views/CommercialTool/Companies/DetailCompany.cshtml", company);
                 }
 
                 ViewBag.Error = new List<string> { result.Message };
 
-                return PartialView("DetailCompany", company);
+                return PartialView("~/Views/CommercialTool/Companies/DetailCompany.cshtml", company);
             }
             catch (Exception e)
             {
@@ -252,7 +252,7 @@
 
                 ViewBag.Error = new List<string> { e.Message };
 
-                return PartialView("DetailCompany", company);
+                return PartialView("~/Views/CommercialTool/Companies/DetailCompany.cshtml", company);
             }
         }
 
@@ -278,14 +278,14 @@
 
             if (company.PaymentMethod == null)
             {
-                return PartialView(new PaymentMethodViewModel
+                return PartialView("~/Views/CommercialTool/Companies/PaymentMethodCompany.cshtml", new PaymentMethodViewModel
                 {
                     Id = companyId
                 });
             }
 
             var data = AutoMapper.Mapper.Map<PaymentMethodViewModel>(company.PaymentMethod);
-            return PartialView(data);
+            return PartialView("~/Views/CommercialTool/Companies/PaymentMethodCompany.cshtml", data);
         }
 
         [HttpPost]
@@ -304,12 +304,12 @@
                 {
                     ViewBag.Notification = result.Message;
 
-                    return PartialView("DetailCompany", company);
+                    return PartialView("~/Views/CommercialTool/Companies/DetailCompany.cshtml", company);
                 }
 
                 ViewBag.Error = new List<string> { result.Message };
 
-                return PartialView("DetailCompany", company);
+                return PartialView("~/Views/CommercialTool/Companies/DetailCompany.cshtml", company);
             }
             catch (Exception e)
             {
@@ -319,7 +319,7 @@
 
                 ViewBag.Error = new List<string> { e.Message };
 
-                return PartialView("DetailCompany", company);
+                return PartialView("~/Views/CommercialTool/Companies/DetailCompany.cshtml", company);
             }
         }
 
@@ -380,7 +380,7 @@
         [HttpGet]
         public ActionResult EmployeesCompany(int companyId)
         {
-            return PartialView(Service.GetCompany(companyId));
+            return PartialView("~/Views/CommercialTool/Companies/EmployeesCompany.cshtml", Service.GetCompany(companyId));
         }
 
         [HttpGet]
@@ -509,7 +509,7 @@
         [HttpGet]
         public ActionResult ContactPersonsCompany(int companyId)
         {
-            return PartialView(Service.GetCompany(companyId));
+            return PartialView("~/Views/CommercialTool/Companies/ContactPersonsCompany.cshtml", Service.GetCompany(companyId));
         }
 
         [HttpGet]
@@ -630,7 +630,7 @@
         [HttpGet]
         public ActionResult ContractualsDocumentsCompany(int companyId)
         {
-            return PartialView(Service.GetCompany(companyId));
+            return PartialView("~/Views/CommercialTool/Companies/ContractualsDocumentsCompany.cshtml", Service.GetCompany(companyId));
         }
 
         [HttpGet]

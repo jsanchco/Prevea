@@ -335,13 +335,14 @@
         }           
     },
 
-    getFilter: function() {
-        var filter = {
-            field: "CompanyStateId",
-            operator: "eq",
-            value: 1
-        };
-
-        return filter;
+    getFilter: function () {
+        if (this.showAll) {
+            return {
+                field: "CompanyStateId",
+                operator: "eq",
+                value: 1
+            };
+        }
+        return null;
     }
 });

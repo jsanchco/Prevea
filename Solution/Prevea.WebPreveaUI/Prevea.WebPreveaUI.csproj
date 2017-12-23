@@ -1111,6 +1111,7 @@
     <Content Include="Views\CommercialTool\Companies\ContractualsDocumentsCompany.cshtml" />
     <Content Include="Views\CommercialTool\Companies\ContactPersonsCompany.cshtml" />
     <Content Include="Views\CommercialTool\Companies\PaymentMethodCompany.cshtml" />
+    <Content Include="Views\CommercialTool\Companies\AgencyCompany.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
