@@ -37,16 +37,16 @@
             },
             transport: {
                 read: {
-                    url: "/Company/ContractualsDocumentsCompany_Read",
+                    url: "/Companies/ContractualsDocumentsCompany_Read",
                     dataType: "jsonp",
                     data: { companyId: this.companyId }
                 },
                 destroy: {
-                    url: "/Company/ContractualsDocumentsCompany_Destroy",
+                    url: "/Companies/ContractualsDocumentsCompany_Destroy",
                     dataType: "jsonp"
                 },
                 create: {
-                    url: "/Company/ContractualsDocumentsCompany_Create",
+                    url: "/Companies/ContractualsDocumentsCompany_Create",
                     dataType: "jsonp"
                 },
                 parameterMap: function (options, operation) {

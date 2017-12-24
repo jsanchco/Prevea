@@ -40,6 +40,7 @@
             AutoMapper.Mapper.CreateMap<User, UserViewModel>()
                 .ForMember(x => x.RoleId, x => x.MapFrom(y => y.UserRoles.FirstOrDefault().Role.Id))
                 .ForMember(x => x.RoleName, x => x.MapFrom(y => y.UserRoles.FirstOrDefault().Role.Name))
+                .ForMember(x => x.RoleDescription, x => x.MapFrom(y => y.UserRoles.FirstOrDefault().Role.Description))
                 .ForMember(x => x.UserStateName, x => x.MapFrom(y => y.UserState.Name))
                 .ForMember(x => x.UserParentInitials, x => x.MapFrom(y => y.UserParent.Initials));
             AutoMapper.Mapper.CreateMap<UserViewModel, User>();

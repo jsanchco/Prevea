@@ -184,7 +184,7 @@
         });
         tabStrip.append({
             text: "DOCUMENTOS",
-            contentUrl: kendo.format("/Company/ContractualsDocumentsCompany?companyId={0}", this.id)
+            contentUrl: kendo.format("/Companies/ContractualsDocumentsCompany?companyId={0}", this.id)
         });
 
         tabStrip = $("#" + this.tabStripDetailCompanyId).data("kendoTabStrip");

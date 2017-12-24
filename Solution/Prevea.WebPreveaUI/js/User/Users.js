@@ -74,6 +74,7 @@
                     }
                 }
             },
+            filter: Users.getFilter(),
             pageSize: 20
         });
     },
@@ -92,7 +93,7 @@
             },
             transport: {
                 read: {
-                    url: "/User/GetRoles",
+                    url: "/User/GetCustomRoles",
                     dataType: "jsonp"
                 }
             }
@@ -125,8 +126,8 @@
                 title: "Rol",
                 width: "90px",
                 editor: Users.rolesDropDownEditor,
-                template: "#=RoleName#",
-                groupHeaderTemplate: "Agrupado : #= Users.getRoleName(value) #"
+                template: "#=RoleDescription#",
+                groupHeaderTemplate: "Agrupado : #= Users.getRoleDescription(value) #"
             }, {
                 field: "UserParentInitials",
                 title: "Creado por",
@@ -247,20 +248,20 @@
         $("<input required name='" + options.field + "'/>")
             .appendTo(container)
             .kendoDropDownList({
-                dataTextField: "RoleName",
+                dataTextField: "RoleDescription",
                 optionLabel: "Selecciona ...",
                 dataValueField: "RoleId",
                 dataSource: Users.rolesDataSource
             });
     },
 
-    getRoleName: function (roleId) {
+    getRoleDescription: function (roleId) {
         if (Users.rolesDataSource.data().length === 0) {
             Users.rolesDataSource.read();
         }
         for (var index = 0; index < Users.rolesDataSource.data().length; index++) {
             if (Users.rolesDataSource.data()[index].RoleId === roleId) {
-                return Users.rolesDataSource.data()[index].RoleName;
+                return Users.rolesDataSource.data()[index].RoleDescription;
             }
         }
         return null;
@@ -386,7 +387,7 @@
 
     applyFilter: function () {
         if (this.showAll) {
-            this.usersDataSource.filter({ field: "UserStateId", operator: "eq", value: 1 });
+            this.usersDataSource.filter(this.getFilter());
             $("a#showAll").text("Ver todos");
             this.showAll = false;
         } else {
@@ -394,6 +395,16 @@
             $("a#showAll").text("Ver altas");
             this.showAll = true;
         }
+    },
+
+    getFilter: function () {
+        var filter = {
+            field: "UserStateId",
+            operator: "eq",
+            value: 1
+        };
+
+        return filter;
     }
 
 });

@@ -8,10 +8,6 @@
     init: function() {
         this.createNotificationsDataSource();
         this.createGridNotifications();
-
-        var dateBegin = new Date();
-        dateBegin.setDate(dateBegin.getDate() - 1);
-        this.notificationsDataSource.filter(this.getFilter());
     },
 
     createNotificationsDataSource: function() {
@@ -46,6 +42,7 @@
                     return null;
                 }
             },
+            filter: Notifications.getFilter(),
             pageSize: 20
         });
     },
@@ -185,9 +182,10 @@
         return html;
     },
 
-    getColumnTemplateCommands: function(data) {
+    getColumnTemplateCommands: function (data) {
+        var html = "";
         if (data.SimulationAssignedTo === GeneralData.userId) {
-            var html = "<div align='center'>";
+            html = "<div align='center'>";
 
             html += kendo.format(
                 "<a toggle='tooltip' title='Ir a Simulación' onclick='Notifications.goToSimulationFromNotification(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
@@ -197,7 +195,18 @@
             return html;
 
         } else {
-            return "";
+            if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {
+                html = "<div align='center'>";
+
+                html += kendo.format(
+                    "<a toggle='tooltip' title='Ir a Simulación' onclick='Notifications.goToSimulationFromNotification(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                    data.SimulationId);
+                html += kendo.format("</div>");
+
+                return html;
+            } else {
+                return html;
+            }
         }
     },
 

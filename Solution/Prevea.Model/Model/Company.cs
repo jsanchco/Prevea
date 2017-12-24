@@ -1,4 +1,7 @@
-﻿namespace Prevea.Model.Model
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+
+namespace Prevea.Model.Model
 {
     #region Using
 
@@ -63,6 +66,9 @@
         public virtual ICollection<Employee> Employees{ get; set; }
 
         public virtual ICollection<SimulationCompany> SimulationCompanies { get; set; }
+
+        [NotMapped]
+        public SimulationCompany SimulationCompany => SimulationCompanies?.FirstOrDefault();
 
         public virtual ICollection<ContractualDocumentCompany> ContractualsDocumentsCompany { get; set; }
 

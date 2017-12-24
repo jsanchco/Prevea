@@ -1,4 +1,6 @@
-﻿namespace Prevea.Repository.Repository
+﻿using Prevea.Model.CustomModel;
+
+namespace Prevea.Repository.Repository
 {
     #region Using
 
@@ -287,6 +289,19 @@
                 default:
                     return Context.Users.Where(x => x.UserParentId == id).ToList();
             }
+        }
+
+        public List<CustomRole> GetCustomRoles(List<int> listRoles)
+        {
+            var roles = Context.Roles
+                .Where(x => listRoles.Contains(x.Id))
+                .Select(x => new CustomRole
+                {
+                    RoleId = x.Id,
+                    RoleName = x.Name
+                }).ToList();
+
+            return roles;
         }
 
         public List<User> GetUsersInRoles(List<string> roles)

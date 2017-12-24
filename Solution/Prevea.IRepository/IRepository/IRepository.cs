@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Model.Model;
+    using Model.CustomModel;
 
     #endregion
 
@@ -31,6 +32,7 @@
         List<User> GetContatcPersonsByCompany(int companyId);
         List<User> GetEmployeesByCompany(int companyId);
         List<User> GetUsersByUser(int id);
+        List<CustomRole> GetCustomRoles(List<int> listRoles);
 
         #endregion
 

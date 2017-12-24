@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using Model.Model;
     using System.Web;
+    using Model.CustomModel;
 
     #endregion
 
@@ -52,6 +53,7 @@
         Result SubscribeEmployeeCompany(int companyId, int userId, bool subscribe);
         Result DeleteUser(int userId);
         Result SubscribeUser(int userId, bool subscribe);
+        List<CustomRole> GetCustomRoles(List<int> listRoles);
 
         #endregion
 

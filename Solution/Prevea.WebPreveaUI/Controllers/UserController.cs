@@ -12,6 +12,7 @@
     using Model.ViewModel;
     using Common;
     using System.Linq;
+    using Model.CustomModel;
 
     #endregion
 
@@ -188,50 +189,7 @@
             }
         }
 
-        private List<string> GetRolesFiltered()
-        {
-            var user = Service.GetUser(User.Id);
-
-            var userRole = user?.UserRoles.FirstOrDefault();
-            if (userRole == null)
-                return null;
-
-            switch (userRole.RoleId)
-            {
-                case (int)EnRole.Super:
-                    return new List<string>
-                    {
-                        Enum.GetName(typeof(EnRole), (int)EnRole.Super),
-                        Enum.GetName(typeof(EnRole), (int)EnRole.Library),
-                        Enum.GetName(typeof(EnRole), (int)EnRole.PreveaPersonal),
-                        Enum.GetName(typeof(EnRole), (int)EnRole.PreveaCommercial),
-                        Enum.GetName(typeof(EnRole), (int)EnRole.ExternalPersonal)
-                    };
-                case (int)EnRole.PreveaPersonal:
-                    return new List<string>
-                    {
-                        Enum.GetName(typeof(EnRole), (int)EnRole.Library),
-                        Enum.GetName(typeof(EnRole), (int)EnRole.PreveaPersonal),
-                        Enum.GetName(typeof(EnRole), (int)EnRole.PreveaCommercial),
-                        Enum.GetName(typeof(EnRole), (int)EnRole.ExternalPersonal)
-                    };
-                case (int)EnRole.Library:
-                    return new List<string>
-                    {
-                        Enum.GetName(typeof(EnRole), (int)EnRole.Library)
-                    };
-                case (int)EnRole.PreveaCommercial:
-                    return new List<string>
-                    {
-                        Enum.GetName(typeof(EnRole), (int)EnRole.ExternalPersonal)
-                    };
-
-                default:
-                    return null;
-            }
-        }
-
-        public JsonResult GetRoles([DataSourceRequest] DataSourceRequest request)
+        public JsonResult GetCustomRoles([DataSourceRequest] DataSourceRequest request)
         {
             var user = Service.GetUser(User.Id);
 
@@ -243,74 +201,36 @@
             switch (userRole.RoleId)
             {
                 case (int)EnRole.Super:
-                    roles.Add(new CustomRole
+                    roles = Service.GetCustomRoles(new List<int>
                     {
-                        RoleId = (int) EnRole.Super,
-                        RoleName = Enum.GetName(typeof(EnRole), (int) EnRole.Super),
-                        RoleDescription = "Super"
-                    });
-                    roles.Add(new CustomRole
-                    {
-                        RoleId = (int) EnRole.Library,
-                        RoleName = Enum.GetName(typeof(EnRole), (int) EnRole.Library),
-                        RoleDescription = "Biblioteca"
-                    });
-                    roles.Add(new CustomRole
-                    {
-                        RoleId = (int) EnRole.PreveaPersonal,
-                        RoleName = Enum.GetName(typeof(EnRole), (int) EnRole.PreveaPersonal),
-                        RoleDescription = "Personal de Prevea"
-                    });
-                    roles.Add(new CustomRole
-                    {
-                        RoleId = (int) EnRole.PreveaCommercial,
-                        RoleName = Enum.GetName(typeof(EnRole), (int) EnRole.PreveaCommercial),
-                        RoleDescription = "Comercial de Prevea"
-                    });
-                    roles.Add(new CustomRole
-                    {
-                        RoleId = (int) EnRole.ExternalPersonal,
-                        RoleName = Enum.GetName(typeof(EnRole), (int) EnRole.ExternalPersonal),
-                        RoleDescription = "Personal Externo"
+                        (int)EnRole.Super,
+                        (int)EnRole.Library,
+                        (int)EnRole.PreveaPersonal,
+                        (int)EnRole.PreveaCommercial,
+                        (int)EnRole.ExternalPersonal
                     });
 
                     break;
-                case (int)EnRole.PreveaPersonal:   
-                    roles.Add(new CustomRole
+                case (int)EnRole.PreveaPersonal:
+                    roles = Service.GetCustomRoles(new List<int>
                     {
-                        RoleId = (int)EnRole.Library,
-                        RoleName = Enum.GetName(typeof(EnRole), (int)EnRole.Library),
-                        RoleDescription = "Biblioteca"
-                    });
-                    roles.Add(new CustomRole
-                    {
-                        RoleId = (int)EnRole.PreveaCommercial,
-                        RoleName = Enum.GetName(typeof(EnRole), (int)EnRole.PreveaCommercial),
-                        RoleDescription = "Comercial de Prevea"
-                    });
-                    roles.Add(new CustomRole
-                    {
-                        RoleId = (int)EnRole.ExternalPersonal,
-                        RoleName = Enum.GetName(typeof(EnRole), (int)EnRole.ExternalPersonal),
-                        RoleDescription = "Personal Externo"
+                        (int)EnRole.Library,
+                        (int)EnRole.PreveaCommercial,
+                        (int)EnRole.ExternalPersonal
                     });
 
                     break;
                 case (int)EnRole.Library:
-                    roles.Add(new CustomRole
+                    roles = Service.GetCustomRoles(new List<int>
                     {
-                        RoleId = (int)EnRole.Library,
-                        RoleName = Enum.GetName(typeof(EnRole), (int)EnRole.Library),
-                        RoleDescription = "Biblioteca"
+                        (int)EnRole.Library
                     });
 
                     break;
                 case (int)EnRole.PreveaCommercial:
-                    roles.Add(new CustomRole
+                    roles = Service.GetCustomRoles(new List<int>
                     {
-                        RoleId = (int)EnRole.ExternalPersonal,
-                        RoleName = Enum.GetName(typeof(EnRole), (int)EnRole.ExternalPersonal),
-                        RoleDescription = "Personal Externo"
+                        (int)EnRole.ExternalPersonal
                     });
 
                     break;
@@ -318,12 +238,5 @@
 
             return this.Jsonp(roles);
         }
-    }
-
-    public class CustomRole
-    {
-        public int RoleId { get; set; }
-        public string RoleName { get; set; }
-        public string RoleDescription { get; set; }
     }
 }

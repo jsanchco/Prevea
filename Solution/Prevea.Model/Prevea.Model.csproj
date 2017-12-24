@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomModel\CustomRole.cs" />
     <Compile Include="Helpers\HelperClass.cs" />
     <Compile Include="Model\Agency.cs" />
     <Compile Include="Model\AgencyService.cs" />

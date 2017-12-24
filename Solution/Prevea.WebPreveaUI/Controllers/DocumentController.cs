@@ -27,7 +27,7 @@
 
         #endregion
 
-        [AppAuthorize(Roles = "Super,Admin,Library,Basic")]
+        [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial")]
         public ActionResult Documents()
         {
             ViewBag.IsRoleLibrary = User.IsInRole("Super") || User.IsInRole("Library");
@@ -35,7 +35,7 @@
             return PartialView();
         }
 
-        [AppAuthorize(Roles = "Super,Library")]
+        [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial")]
         public ActionResult HistoricDownloadDocuments()
         {
             return PartialView();

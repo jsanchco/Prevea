@@ -1,4 +1,6 @@
-﻿namespace Prevea.Service.Service
+﻿using Prevea.Model.CustomModel;
+
+namespace Prevea.Service.Service
 {
     #region Using
 
@@ -424,6 +426,11 @@
                     Status = Status.Error
                 };
             }
+        }
+
+        public List<CustomRole> GetCustomRoles(List<int> listRoles)
+        {
+            return Repository.GetCustomRoles(listRoles);
         }
 
         public List<User> GetUsersInRoles(List<string> roles)

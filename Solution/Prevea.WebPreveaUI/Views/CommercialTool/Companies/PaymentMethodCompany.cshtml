@@ -8,7 +8,7 @@
 
     <div class="col-sm-12">
 
-        @using (Ajax.BeginForm("UpdatePaymentMethodCompany", "Company", null, new AjaxOptions
+        @using (Ajax.BeginForm("UpdatePaymentMethodCompany", "Companies", null, new AjaxOptions
         {
             HttpMethod = "POST",
             UpdateTargetId = "framePpal"
@@ -41,7 +41,7 @@
                           {
                               source.Read(read =>
                               {
-                                  read.Action("GetSplitPayment", "Company");
+                                  read.Action("GetSplitPayment", "Companies");
                               }).ServerFiltering(false);
                           })
                           .HtmlAttributes(new { style = "width: 100%; border: 1px solid #ebebeb; border-radius: 3px;" }))
@@ -57,7 +57,7 @@
                           {
                               source.Read(read =>
                               {
-                                  read.Action("GetModesPayment", "Company");
+                                  read.Action("GetModesPayment", "Companies");
                               }).ServerFiltering(false);
                           })
                           .HtmlAttributes(new { style = "width: 100%;" }))                    
@@ -73,7 +73,7 @@
                           {
                               source.Read(read =>
                               {
-                                  read.Action("GetModesPaymentMedicalExamination", "Company");
+                                  read.Action("GetModesPaymentMedicalExamination", "Companies");
                               }).ServerFiltering(false);
                           })
                           .HtmlAttributes(new { style = "width: 100%;" }))                    

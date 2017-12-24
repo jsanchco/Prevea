@@ -19,8 +19,7 @@
 
         #endregion
 
-        [HttpGet]
-        [AppAuthorize(Roles = "Super,Admin,Library,Basic")]
+        [HttpGet]        
         public ActionResult Index()
         {
             return PartialView();

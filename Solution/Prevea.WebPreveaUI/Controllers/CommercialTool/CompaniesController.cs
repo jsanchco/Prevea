@@ -384,7 +384,7 @@
         }
 
         [HttpGet]
-        [AppAuthorize(Roles = "Super,Admin")]
+        [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial")]
         public JsonResult EmployeesCompany_Read([DataSourceRequest] DataSourceRequest request, int companyId)
         {
             var data = AutoMapper.Mapper.Map<List<UserViewModel>>(Service.GetEmployeesByCompany(companyId));
@@ -513,7 +513,7 @@
         }
 
         [HttpGet]
-        [AppAuthorize(Roles = "Super,Admin")]
+        [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial")]
         public JsonResult ContactPersonsCompany_Read([DataSourceRequest] DataSourceRequest request, int companyId)
         {
             var data = AutoMapper.Mapper.Map<List<UserViewModel>>(Service.GetContactPersonsByCompany(companyId));
@@ -634,7 +634,7 @@
         }
 
         [HttpGet]
-        [AppAuthorize(Roles = "Super,Admin")]
+        [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial")]
         public JsonResult ContractualsDocumentsCompany_Read([DataSourceRequest] DataSourceRequest request, int companyId)
         {
             var data = AutoMapper.Mapper.Map<List<ContractualDocumentCompanyViewModel>>(Service.GetContractualsDocuments(companyId));

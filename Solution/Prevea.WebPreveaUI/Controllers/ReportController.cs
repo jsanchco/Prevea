@@ -3,19 +3,19 @@
     #region Using
 
     using HelpersClass;
-    using IService.IService;
 
     #endregion
 
-    public partial class CompanyController : BaseController
+    public class ReportController : BaseController
     {
         #region Constructor
 
-        public CompanyController(IService service) : base(service)
+        public ReportController(IService.IService.IService service) : base(service)
         {
-
         }
 
         #endregion
+
+
     }
 }

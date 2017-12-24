@@ -25,7 +25,7 @@
                         FirstName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         LastName: { type: "string" },
                         PhoneNumber: { type: "string" },
-                        Email: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
+                        Email: { type: "string" },
                         DNI: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         WorkStation: { type: "string" },
                         UserStateId: { type: "number", defaultValue: 1 },
@@ -35,20 +35,20 @@
             },
             transport: {
                 read: {
-                    url: "/Company/ContactPersonsCompany_Read",
+                    url: "/Companies/ContactPersonsCompany_Read",
                     dataType: "jsonp",
                     data: { companyId: this.companyId }
                 },
                 update: {
-                    url: "/Company/ContactPersonsCompany_Update",
+                    url: "/Companies/ContactPersonsCompany_Update",
                     dataType: "jsonp"
                 },
                 destroy: {
-                    url: "/Company/ContactPersonsCompany_Destroy",
+                    url: "/Companies/ContactPersonsCompany_Destroy",
                     dataType: "jsonp"
                 },
                 create: {
-                    url: "/Company/ContactPersonsCompany_Create",
+                    url: "/Companies/ContactPersonsCompany_Create",
                     dataType: "jsonp"
                 },
                 parameterMap: function (options, operation) {
@@ -264,7 +264,7 @@
         var that = this;
 
         $.ajax({
-            url: "/Company/ContactPersonsCompany_Subscribe",
+            url: "/Companies/ContactPersonsCompany_Subscribe",
             type: "post",
             cache: false,
             datatype: "json",

@@ -56,7 +56,7 @@
             switch (name)
             {
                 case "Super":
-                    return "Super Administrador";
+                    return "Super";
                 case "Admin":
                     return "Administrador";
                 case "ContactPerson":
