@@ -31,6 +31,7 @@
                         ContractualDocumentTypeName: { type: "string", editable: false },
                         BeginDate: { type: "date", defaultValue: beginDate},
                         EndDate: { type: "date", defaultValue: endDate },
+                        UrlRelative: { type: "string" },
                         Observations: { type: "string" }
                     }
                 }
@@ -61,13 +62,14 @@
                 }
             },
             requestEnd: function (e) {
-                if ((e.type === "update" || e.type === "destroy" || e.type === "create") &&
-                    e.response !== null) {
+                if ((e.type === "update" || e.type === "destroy" || e.type === "create") && e.response !== null) {
                     if (typeof e.response.Errors !== "undefined") {
                         GeneralData.showNotification(Constants.ko, "", "error");
                         this.cancelChanges();
                     } else {
-                        GeneralData.showNotification(Constants.ok, "", "success");                        
+                        if (e.type === "create") {
+                            GeneralData.showNotification(Constants.ok, "", "success");
+                        }                                                
                     }
                 }
             },
@@ -99,7 +101,7 @@
                 }, {
                     title: "Comandos",
                     field: "Commands",
-                    width: 130,
+                    width: 160,
                     groupable: "false",
                     filterable: false,
                     template: "#= ContractualsDocumentsCompany.getColumnTemplateCommands(data) #"
@@ -190,6 +192,7 @@
     getColumnTemplateCommands: function (data) {
         var html = "<div align='center'>";
 
+        html += kendo.format("<a toggle='tooltip' title='Abrir Documento' onclick='GeneralData.goToOpenFile(\"{0}\")' target='_blank' style='cursor: pointer;'><img src='../../Images/pdf_opt.png'></a></div></a>&nbsp;&nbsp;", data.UrlRelative);
         html += kendo.format("<a toggle='tooltip' title='Editar' onclick='ContractualsDocumentsCompany.goToEditContractualsDocumentsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
         html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='ContractualsDocumentsCompany.goToDeleteContractualsDocumentsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>", data.Id);
         html += kendo.format("</div>");
@@ -201,6 +204,48 @@
         var html = kendo.format("<div style='text-align: center; font-size: 16px; font-weight: bold;'>{0}</div>", data.Enrollment);
         
         return html;
+    },
+
+    goToViewDocument: function (contractualDocumentId) {
+        $.ajax({
+            url: "/Reports/OfferAsPdf",
+            dataType: "html",
+            type: "GET",
+            data: {
+                companyId: this.companyId,
+                contractualDocumentId: contractualDocumentId
+            },
+            success: function (result) {
+                var w = window.open();
+                $(w.document.body).html(result);
+            }
+        });
+    },
+
+    createReport: function (contractualDocumentId) {
+
+        //var that = this;
+
+        //$.ajax({
+        //    url: "/Reports/OfferAsPdf",
+        //    type: "post",
+        //    cache: false,
+        //    datatype: "json",
+        //    data: {
+        //        companyId: that.companyId,
+        //        contractualDocumentId: contractualDocumentId
+        //    },
+        //    success: function (result) {
+        //        GeneralData.showNotification(Constants.ok, "", "success");
+
+        //        console.log(result.Message);
+        //    },
+        //    error: function (result) {
+        //        GeneralData.showNotification(Constants.ko, "", "error");
+
+        //        console.log(result);
+        //    }
+        //});
     },
 
     goToDeleteContractualsDocumentsCompany: function (contractualDocumentId) {
@@ -243,10 +288,10 @@
         var hasContract = false;
         for (var i = 0; i < grid.dataSource.data().length; i++) {
             var row = grid.dataSource.data()[i];
-            if (row["ContractualDocumentTypeId"] === 1) {
+            if (row["ContractualDocumentTypeId"] === Constants.contractualDocumentType.Offer) {
                 hasOffer = true;
             }
-            if (row["ContractualDocumentTypeId"] === 2) {
+            if (row["ContractualDocumentTypeId"] === Constants.contractualDocumentType.Contract) {
                 hasContract = true;
             }
         }

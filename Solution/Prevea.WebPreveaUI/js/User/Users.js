@@ -375,12 +375,12 @@
 
                 GeneralData.showNotification(Constants.ok, "", "success");
 
-                Debug.writeln(result.Message);
+                console.log(result.Message);
             },
             error: function (result) {
                 GeneralData.showNotification(Constants.ko, "", "error");
 
-                Debug.writeln(result);
+                console.log(result);
             }
         });
     },

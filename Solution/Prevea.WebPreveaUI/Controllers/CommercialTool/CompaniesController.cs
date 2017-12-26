@@ -13,6 +13,9 @@
     using Model.Model;
     using Model.ViewModel;
     using Common;
+    using System.Diagnostics;
+    using System.IO;
+    using Rotativa.MVC;
 
     #endregion
 
@@ -70,7 +73,7 @@
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.Message);
 
                 return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación de la Empresa" });
             }
@@ -421,7 +424,7 @@
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.Message);
 
                 return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Trabajador" });
             }
@@ -448,7 +451,7 @@
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.Message);
 
                 return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del Trabajador" });
             }
@@ -479,7 +482,7 @@
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.Message);
 
                 return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Trabajador" });
             }
@@ -496,7 +499,7 @@
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.Message);
 
                 return Json(subscribe ? new { Errors = "Se ha producido un error al Dar de Alta del Trabajador" } : new { Errors = "Se ha producido un error al Dar de Baja del Trabajador" });
             }
@@ -542,7 +545,7 @@
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.Message);
 
                 return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación de la Persona de Contacto" });
             }
@@ -569,7 +572,7 @@
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.Message);
 
                 return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado de la Persona de Contacto" });
             }
@@ -600,7 +603,7 @@
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.Message);
 
                 return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación de la Persona de Contacto" });
             }
@@ -617,7 +620,7 @@
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.Message);
 
                 return Json(subscribe ? new { Errors = "Se ha producido un error al Dar de Alta a la Persona de Contacto" } : new { Errors = "Se ha producido un error al Dar de Baja a la Persona de Contacto" });
             }
@@ -648,17 +651,20 @@
             {
                 var contractualDocument = this.DeserializeObject<ContractualDocumentCompanyViewModel>("contractualDocument");
                 if (contractualDocument == null)
-                {
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
-                }
 
                 var result = Service.SaveContractualDocument(AutoMapper.Mapper.Map<ContractualDocumentCompany>(contractualDocument));
+                if (result.Status == Status.Error)
+                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
 
-                return result.Status != Status.Error ? this.Jsonp(AutoMapper.Mapper.Map<ContractualDocumentCompanyViewModel>(result.Object)) : this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
+                if (!CreatePdf(result.Object as ContractualDocumentCompany))  
+                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
+
+                return this.Jsonp(AutoMapper.Mapper.Map<ContractualDocumentCompanyViewModel>(result.Object));
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.Message);
 
                 return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
             }
@@ -681,10 +687,39 @@
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.Message);
 
                 return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del Documento" });
             }
+        }
+
+        [HttpGet]
+        public ActionResult OfferReport(int companyId)
+        {
+            var company = Service.GetCompany(companyId);
+
+            return View("~/Views/CommercialTool/Companies/Reports/OfferReport.cshtml", company);
+        }
+
+        private bool CreatePdf(ContractualDocumentCompany contractualDocument)
+        {
+            try
+            {
+                var filePath = Server.MapPath($"{contractualDocument.UrlRelative}.pdf");
+                var actionPdf = new ActionAsPdf("OfferReport", new {companyId = contractualDocument.CompanyId});
+                var applicationPdfData = actionPdf.BuildPdf(ControllerContext);
+                var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+                fileStream.Write(applicationPdfData, 0, applicationPdfData.Length);
+                fileStream.Close();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+
+                return false;
+            }      
         }
 
         #endregion

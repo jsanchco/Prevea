@@ -59,6 +59,8 @@
                     return "Super";
                 case "Admin":
                     return "Administrador";
+                case "Library":
+                    return "Bibliotecario";
                 case "ContactPerson":
                     return "Persona de Contacto";
                 case "Employee":
@@ -103,6 +105,13 @@
                     return "Enviada a Empresa";                    
                 case "Deleted":
                     return "Borrado";
+                case "Offer":
+                    return "Oferta";
+                case "Contract":
+                    return "Contrato";
+                case "Annex":
+                    return "Anexo";
+
                 default:
                     return name;
             }

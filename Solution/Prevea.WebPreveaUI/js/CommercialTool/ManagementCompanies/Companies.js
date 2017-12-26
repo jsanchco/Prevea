@@ -318,7 +318,7 @@
             error: function (result) {
                 GeneralData.showNotification(Constants.ko, "", "error");
 
-                Debug.writeln(result);
+                console.log(result);
             }
         });
     },

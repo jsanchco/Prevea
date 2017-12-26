@@ -81,7 +81,7 @@
             file.SaveAs(url);
         }
 
-        private void CreateDirectory(string directory = null)
+        public void CreateDirectory(string directory = null)
         {
             var physicalPath = directory == null
                 ? HttpContext.Current.Server.MapPath(TmpUpload)

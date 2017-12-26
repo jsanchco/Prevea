@@ -70,6 +70,14 @@
       <HintPath>..\packages\Ninject.MVC5.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Rotativa.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.Core.2.0.0\lib\net45\Rotativa.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Rotativa.MVC, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.MVC.2.0.3\lib\net45\Rotativa.MVC.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -172,7 +180,6 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
-    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\StartController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -645,6 +652,7 @@
     <Content Include="js\CommercialTool\ManagementCompanies\DetailCompany.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\ContractualsDocumentsCompany.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\EconomicDataCompany.js" />
+    <Content Include="js\CommercialTool\ManagementCompanies\OfferReport.js" />
     <Content Include="js\CommercialTool\Simulations\AgencyService.js" />
     <Content Include="js\CommercialTool\Simulations\DetailSimulation.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\GeneralDataCompany.js" />
@@ -670,6 +678,7 @@
     <Content Include="js\Shared\Templates.js" />
     <Content Include="js\Start\Start.js" />
     <Content Include="js\User\Users.js" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\bootstrap-colorpicker.min.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-switch.min.js" />
@@ -863,6 +872,7 @@
     <Content Include="Content\font-icons\font-awesome\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\font-icons\font-awesome\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\font-icons\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="App_Browsers\qt.browser" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1099,10 +1109,11 @@
     <Content Include="Views\CommercialTool\Companies\ContactPersonsCompany.cshtml" />
     <Content Include="Views\CommercialTool\Companies\PaymentMethodCompany.cshtml" />
     <Content Include="Views\CommercialTool\Companies\AgencyCompany.cshtml" />
+    <Content Include="Views\Shared\_LayoutReport.cshtml" />
+    <Content Include="Views\CommercialTool\Companies\Reports\OfferReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Report\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

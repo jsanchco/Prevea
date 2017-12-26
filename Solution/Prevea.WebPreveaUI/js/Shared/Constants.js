@@ -37,6 +37,12 @@
         Validated: 3,
         SendToCompany: 4,
         Deleted: 5
+    },
+
+    contractualDocumentType: {
+        Offer: 1,
+        Contract: 2,
+        Annex: 3
     }
 
 });

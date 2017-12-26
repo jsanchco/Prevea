@@ -146,6 +146,7 @@
         ContractualDocumentCompany GetContractualDocument(int contractualDocumentId);
         List<ContractualDocumentCompany> GetContractualsDocuments(int? companyId = null);
         Result SaveContractualDocument(ContractualDocumentCompany contractualDocument);
+        Result UpdateContractualDocument(int contractualDocumentId, ContractualDocumentCompany contractualDocument);
         bool DeleteContractualDocument(int contractualDocumentId);
 
         #endregion

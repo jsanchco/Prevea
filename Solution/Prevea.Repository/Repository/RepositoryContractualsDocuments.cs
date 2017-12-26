@@ -57,6 +57,33 @@ namespace Prevea.Repository.Repository
             }
         }
 
+        public ContractualDocumentCompany UpdateContractualDocument(int contractualDocumentId, ContractualDocumentCompany contractualDocument)
+        {
+            using (var dbContextTransaction = Context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var contractualDocumentFind = Context.ContractualsDocumentsCompany.Find(contractualDocumentId);
+                    if (contractualDocumentFind == null)
+                        return null;
+
+                    Context.Entry(contractualDocumentFind).CurrentValues.SetValues(contractualDocument);
+                    Context.SaveChanges();
+
+                    dbContextTransaction.Commit();
+
+                    return contractualDocument;
+                }
+                catch (Exception ex)
+                {
+                    dbContextTransaction.Rollback();
+
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return null;
+                }
+            }
+        }
+
         public bool DeleteContractualDocument(int contractualDocumentId)
         {
             using (var dbContextTransaction = Context.Database.BeginTransaction())

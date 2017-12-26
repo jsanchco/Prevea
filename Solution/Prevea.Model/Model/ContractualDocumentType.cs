@@ -4,6 +4,8 @@
 
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     #endregion
 
@@ -15,8 +17,11 @@
         [Required]
         public string Name { get; set; }
 
+        [NotMapped]
+        public string Description => Helpers.HelperClass.GetDescription(Enum.GetName(typeof(EnNotificationState), Id));
+
         public virtual ICollection<ContractualDocumentCompany> ContractualsDocumentsCompany { get; set; }
     }
 
-    public enum EnContractualDocumentType { NotMapped, Oferta, Contrato, Anexo }
+    public enum EnContractualDocumentType { NotMapped, Offer, Contract, Annex }
 }

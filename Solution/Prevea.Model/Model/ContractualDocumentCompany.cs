@@ -20,6 +20,8 @@
 
         public string Observations { get; set; }
 
+        public string UrlRelative { get; set; }
+
         public int ContractualDocumentTypeId { get; set; }
         public virtual ContractualDocumentType ContractualDocumentType { get; set; }
 
