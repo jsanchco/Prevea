@@ -705,7 +705,7 @@
         {
             try
             {
-                var filePath = Server.MapPath($"{contractualDocument.UrlRelative}.pdf");
+                var filePath = Server.MapPath(contractualDocument.UrlRelative);
                 var actionPdf = new ActionAsPdf("OfferReport", new {companyId = contractualDocument.CompanyId});
                 var applicationPdfData = actionPdf.BuildPdf(ControllerContext);
                 var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);

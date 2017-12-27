@@ -4,27 +4,31 @@
 
 <div class="row" id="pageHistoricDownloadDocuments" style="margin: 8px">
     
-    <div class="row"><H1>Biblioteca</H1></div><br />
+    <div id="headerPartialView">
+        <div class="row"><H1>Biblioteca</H1></div><br/>
 
-    <div class="row">
-        <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-12">
 
-            <!-- Breadcrumb 2 -->
-            <ol class="breadcrumb bc-2">
-                <li class="active">
-                    <a id="br-historicDownloadDocuments" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
-                        <i class="icon-hourglass"></i>
-                        <strong>Histórico de Descargas</strong>
-                    </a>
-                </li>
-            </ol>
+                <!-- Breadcrumb 2 -->
+                <ol class="breadcrumb bc-2">
+                    <li class="active">
+                        <a id="br-historicDownloadDocuments" onclick="HistoricDownloadDocuments.goToHistoricDownloadDocuments()" style="cursor: pointer;">
+                            <i class="icon-hourglass"></i>
+                            <strong>Histórico de Descargas</strong>
+                        </a>
+                    </li>
+                </ol>
 
+            </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-sm-12">
-            <div id="gridHistoricDownloadDocuments"></div>
+    
+    <div id="contentPartialView">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="gridHistoricDownloadDocuments" style="height: 77vh;"></div>
+            </div>
         </div>
     </div>
 

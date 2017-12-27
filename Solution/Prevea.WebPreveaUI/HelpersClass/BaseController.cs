@@ -68,5 +68,26 @@
 
             return File(filedata, contentType);
         }
+
+        public ActionResult DownloadContractualDocument(int id)
+        {
+            var document = Service.GetContractualDocument(id);
+            var url = Server.MapPath(document.UrlRelative);
+            if (!System.IO.File.Exists(url))
+                return null;
+
+            var filedata = System.IO.File.ReadAllBytes(url);
+            var contentType = MimeMapping.GetMimeMapping(url);
+
+            var cd = new System.Net.Mime.ContentDisposition
+            {
+                FileName = Path.GetFileName(document.UrlRelative),
+                Inline = true,
+            };
+
+            Response.AppendHeader("Content-Disposition", cd.ToString());
+
+            return File(filedata, contentType);
+        }
     }
 }

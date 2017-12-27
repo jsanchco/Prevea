@@ -4,63 +4,65 @@
 
 <div class="row" id="pageDocuments" style="margin: 8px">
     
-    <div class="row"><H1>Biblioteca</H1></div><br />
-    
-    <div class="row">
-        <div class="col-sm-12">
+    <div id="headerPartialView">
+        <div class="row"><H1>Biblioteca</H1></div><br/>
 
-            <!-- Breadcrumb 2 -->
-            <ol class="breadcrumb bc-2">
-                <li class="active">
-                    <a id="br-documents" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
-                        <i class="icon-book"></i>
-                        <strong>Documentos</strong>
-                    </a>
-                </li>
-            </ol>
-
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-6">
-            <p class="bs-example">
-                <button id="btnAddDocument" type="button" class="btn btn-prevea" onclick="Documents.goToAddDocument()">
-                    Agregar Documento                    
-                </button>
-            </p>
-        </div>
-
-        <div class="col-sm-6 text-right">
-            <p class="bs-example">
-                <button id="btnShowAllDocuments" type="button" class="btn btn-prevea" onclick="Documents.showAllDocuments()">
-                    Mostrar Todos
-                </button>
-            </p>
-        </div>
-    </div>
-
-    @if (ViewBag.Error != null)
-    {
-        <div id="errorFromBack" class="alert alert-danger alert-dismissable" style="">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <ul>
-                @foreach (var error in ViewBag.Error)
-                {
-                    <li>
-                        @error
+        <div class="row">
+            <div class="col-sm-12">
+                <ol class="breadcrumb bc-2">
+                    <li class="active">
+                        <a id="br-documents" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                            <i class="icon-book"></i>
+                            <strong>Documentos</strong>
+                        </a>
                     </li>
-                }
-            </ul>
+                </ol>
+            </div>
         </div>
-    }
+    </div>
+    
+    <div id="contentPartialView">
+        <div class="row">
+            <div class="col-sm-6">
+                <p class="bs-example">
+                    <button id="btnAddDocument" type="button" class="btn btn-prevea" onclick="Documents.goToAddDocument()">
+                        Agregar Documento
+                    </button>
+                </p>
+            </div>
 
-    <div id="confirm"></div>
-
-    <div class="row">
-        <div class="col-sm-12">
-            <div id="gridDocuments"></div>
+            <div class="col-sm-6 text-right">
+                <p class="bs-example">
+                    <button id="btnShowAllDocuments" type="button" class="btn btn-prevea" onclick="Documents.showAllDocuments()">
+                        Mostrar Todos
+                    </button>
+                </p>
+            </div>
         </div>
+        
+        @if (ViewBag.Error != null)
+        {
+            <div id="errorFromBack" class="alert alert-danger alert-dismissable" style="">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <ul>
+                    @foreach (var error in ViewBag.Error)
+                    {
+                        <li>
+                            @error
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+        
+        <div id="confirm"></div>
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="gridDocuments" style="height: 72vh;"></div>
+            </div>
+        </div>
+
     </div>
 
 </div>

@@ -132,6 +132,14 @@
         html += kendo.format("<img src='../../Images/{0}'></a></div>", data.Icon);
 
         return html;
+    },
+
+    goToHistoricDownloadDocuments: function () {
+        var params = {
+            url: "/Document/HistoricDownloadDocuments",
+            data: {}
+        };
+        GeneralData.goToActionController(params);
     }
 
 });

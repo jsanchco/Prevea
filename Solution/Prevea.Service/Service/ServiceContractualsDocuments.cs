@@ -16,7 +16,7 @@ namespace Prevea.Service.Service
     public partial class Service
     {
         private const string COMPANIES = "~/App_Data/Companies";
-        private const string CONTRACTUAL_DOCUMENTS_PATH = "ContractualDocments";
+        private const string CONTRACTUAL_DOCUMENTS_PATH = "ContractualDocuments";
 
         public ContractualDocumentCompany GetContractualDocument(int contractualDocumentId)
         {
@@ -126,6 +126,11 @@ namespace Prevea.Service.Service
 
         public bool DeleteContractualDocument(int contractualDocumentId)
         {
+            var contractualDocument = Repository.GetContractualDocument(contractualDocumentId);
+            var physicalPath = HttpContext.Current.Server.MapPath(contractualDocument.UrlRelative);
+            if (!RemoveFile(physicalPath))
+                return false;
+
             return Repository.DeleteContractualDocument(contractualDocumentId);
         }
 
@@ -148,7 +153,7 @@ namespace Prevea.Service.Service
 
         private void CreateDirectoryIfNotExists(string directory)
         {
-            var physicalPath = System.Web.HttpContext.Current.Server.MapPath(directory);
+            var physicalPath = HttpContext.Current.Server.MapPath(directory);
 
             var exits = Directory.Exists(physicalPath);
 
