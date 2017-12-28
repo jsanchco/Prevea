@@ -26,6 +26,7 @@ var Simulations = kendo.observable({
                         UserAssignedId: { type: "number", defaultValue: null },
                         UserAssignedInitials: { type: "string", editable: false },
                         CompanyName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
+                        CompanyId: { type: "number", editable: false },
                         NIF: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         NumberEmployees: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         Date: { type: "date", editable: false },
@@ -234,7 +235,7 @@ var Simulations = kendo.observable({
     getColumnTemplateCommands: function (data) {
         var html = "<div align='center'>";
         if (data.SimulationStateId === Constants.simulationState.SendToCompany) {
-            html += kendo.format("<a toggle='tooltip' title='Ir a Empresa' onclick='Simulations.goToCompanyFromSimulation(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+            html += kendo.format("<a toggle='tooltip' title='Ir a Empresa' onclick='Simulations.goToCompanyFromSimulation(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.CompanyId);
             html += kendo.format("<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
         } else {
             if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {

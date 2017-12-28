@@ -1,16 +1,18 @@
 ﻿var OfferReport = kendo.observable({
-  
-    companyId: null,
 
-    init: function (companyId) {
+    companyId: null,
+    contractualDocumentId: null,
+
+    init: function (companyId, contractualDocumentId) {
         this.companyId = companyId;
+        this.contractualDocumentId = contractualDocumentId;
     },
 
     goToOfferView: function () {
         var params = {
             url: "/Companies/OfferView",
             data: {
-                companyId: OfferReport.companyId
+                contractualDocumentId: this.contractualDocumentId
             }
         };
         GeneralData.goToActionController(params);

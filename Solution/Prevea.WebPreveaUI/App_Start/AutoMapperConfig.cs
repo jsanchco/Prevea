@@ -57,6 +57,7 @@
                 .ForMember(x => x.SimulationStateName, x => x.MapFrom(y => y.SimulationState.Name))
                 .ForMember(x => x.SimulationStateName, x => x.MapFrom(y => y.SimulationState.Description))
                 .ForMember(x => x.UserInitials, x => x.MapFrom(y => y.User.Initials))
+                .ForMember(x => x.CompanyId, x => x.MapFrom(y => y.SimulationCompany.CompanyId))
                 .ForMember(x => x.UserAssignedInitials, x => x.MapFrom(y => y.UserAssigned.Initials));
             AutoMapper.Mapper.CreateMap<SimulationViewModel, Simulation>();
 
