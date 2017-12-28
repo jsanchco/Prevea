@@ -4,6 +4,8 @@
 
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     #endregion
 
@@ -14,7 +16,10 @@
 
         [Required]
         public string Name { get; set; }
-        public string Description { get; set; }
+
+        [NotMapped]
+        public string Description => Helpers.HelperClass.GetDescription(Enum.GetName(typeof(EnModePaymentMedicalExamination), Id));
+
 
         public virtual ICollection<EconomicData> EconomicsDatasCompany { get; set; }
     }

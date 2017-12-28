@@ -192,7 +192,8 @@
     getColumnTemplateCommands: function (data) {
         var html = "<div style='display: inline-block; margin-left: 37px;'>";
 
-        html += kendo.format("<a toggle='tooltip' title='Abrir Documento' onclick='GeneralData.goToOpenContractualDocument(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>&nbsp;&nbsp;", data.id);
+        html += kendo.format("<a toggle='tooltip' title='Abrir Documento' onclick='GeneralData.goToOpenContractualDocument(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>&nbsp;&nbsp;", data.Id);
+        //html += kendo.format("<a toggle='tooltip' title='Ver Documento' onclick='ContractualsDocumentsCompany.goToOfferView(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>&nbsp;&nbsp;", data.Id);
         html += kendo.format("<a toggle='tooltip' title='Editar' onclick='ContractualsDocumentsCompany.goToEditContractualsDocumentsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
         html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='ContractualsDocumentsCompany.goToDeleteContractualsDocumentsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>", data.Id);
         html += kendo.format("</div>");
@@ -204,6 +205,16 @@
         var html = kendo.format("<div style='text-align: center; font-size: 16px; font-weight: bold;'>{0}</div>", data.Enrollment);
         
         return html;
+    },
+
+    goToOfferView: function (id) {
+        var params = {
+            url: "/Companies/OfferView",
+            data: {
+                contractualDocumentId: id
+            }
+        };
+        GeneralData.goToActionController(params);
     },
 
     goToViewDocument: function (contractualDocumentId) {
@@ -220,32 +231,6 @@
                 $(w.document.body).html(result);
             }
         });
-    },
-
-    createReport: function (contractualDocumentId) {
-
-        //var that = this;
-
-        //$.ajax({
-        //    url: "/Reports/OfferAsPdf",
-        //    type: "post",
-        //    cache: false,
-        //    datatype: "json",
-        //    data: {
-        //        companyId: that.companyId,
-        //        contractualDocumentId: contractualDocumentId
-        //    },
-        //    success: function (result) {
-        //        GeneralData.showNotification(Constants.ok, "", "success");
-
-        //        console.log(result.Message);
-        //    },
-        //    error: function (result) {
-        //        GeneralData.showNotification(Constants.ko, "", "error");
-
-        //        console.log(result);
-        //    }
-        //});
     },
 
     goToDeleteContractualsDocumentsCompany: function (contractualDocumentId) {

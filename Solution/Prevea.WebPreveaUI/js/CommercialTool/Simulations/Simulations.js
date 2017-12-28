@@ -310,9 +310,10 @@ var Simulations = kendo.observable({
 
     goToCompanyFromSimulation: function (id) {
         var params = {
-            url: "/CommercialTool/Simulations/CompanyFromSimulation",
+            url: "/Companies/DetailCompany",
             data: {
-                simulatorId: id
+                id: id,
+                selectTabId: 0
             }
         };
         GeneralData.goToActionController(params);

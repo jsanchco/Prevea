@@ -355,7 +355,7 @@
             var items = new List<SelectListItem>();
             items.AddRange(modesPayment.Select(modePayment => new SelectListItem
             {
-                Text = modePayment.Name,
+                Text = modePayment.Description,
                 Value = modePayment.Id.ToString(CultureInfo.InvariantCulture)
             }));
 
@@ -369,7 +369,7 @@
             var items = new List<SelectListItem>();
             items.AddRange(modesPaymentMedicalExamination.Select(modePaymentMedicalExamination => new SelectListItem
             {
-                Text = modePaymentMedicalExamination.Name,
+                Text = modePaymentMedicalExamination.Description,
                 Value = modePaymentMedicalExamination.Id.ToString(CultureInfo.InvariantCulture)
             }));
 
@@ -694,11 +694,19 @@
         }
 
         [HttpGet]
-        public ActionResult OfferReport(int companyId)
+        public ActionResult OfferView(int contractualDocumentId)
         {
-            var company = Service.GetCompany(companyId);
+            var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
 
-            return View("~/Views/CommercialTool/Companies/Reports/OfferReport.cshtml", company);
+            return PartialView("~/Views/CommercialTool/Companies/Reports/OfferReport.cshtml", contractualDocument.Company);
+        }
+
+        [HttpGet]
+        public ActionResult OfferReport(int contractualDocumentId)
+        {
+            var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
+
+            return View("~/Views/CommercialTool/Companies/Reports/OfferReport.cshtml", contractualDocument.Company);
         }
 
         private bool CreatePdf(ContractualDocumentCompany contractualDocument)
@@ -706,7 +714,7 @@
             try
             {
                 var filePath = Server.MapPath(contractualDocument.UrlRelative);
-                var actionPdf = new ActionAsPdf("OfferReport", new {companyId = contractualDocument.CompanyId});
+                var actionPdf = new ActionAsPdf("OfferReport", new { contractualDocumentId = contractualDocument.Id });
                 var applicationPdfData = actionPdf.BuildPdf(ControllerContext);
                 var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
                 fileStream.Write(applicationPdfData, 0, applicationPdfData.Length);

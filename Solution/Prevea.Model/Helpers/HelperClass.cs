@@ -111,6 +111,12 @@
                     return "Contrato";
                 case "Annex":
                     return "Anexo";
+                case "ALaFirmaDelContrato":
+                    return "A la Firma del Contrato";
+                case "ALaRealizacion":
+                    return "A la Realización";
+                case "Otros":
+                    return "Otros";
 
                 default:
                     return name;

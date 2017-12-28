@@ -20,7 +20,7 @@
                 if (SplitPayment == null || SplitPayment.Length == 0)
                     return true;
 
-                return true;
+                return false;
             }
             
         }

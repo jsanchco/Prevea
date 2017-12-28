@@ -1,11 +1,274 @@
 ﻿@model Company
 
 @{
-    Layout = "~/Views/Shared/_LayoutReport.cshtml";
+    var withButtonUpdate = true;
+    var controller =  HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+    var actionName = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
+    if (controller == "Companies" && actionName == "OfferReport")
+    {
+        Layout = "~/Views/Shared/_LayoutReport.cshtml";
+        withButtonUpdate = false;
+    }
 }
 
 <script>
-    OfferReport.init();
+    OfferReport.init(@Model.Id);
 </script>
 
-<h2>Oferta!!!!</h2>
+@if (withButtonUpdate)
+{
+    <div class="row">
+        <div class="col-sm-offset-11 col-sm-1">
+            <a id="notifications" onclick="OfferReport.goToOfferView()" style="cursor: pointer;">
+                <i class="fa fa-rotate-left"></i>
+            </a>            
+        </div>
+    </div>
+}
+
+<style>
+    div
+    {
+        color: black;
+    }
+</style>
+
+<div class="logo">
+    <a href="#">
+        <img width="120" alt="" src="~/Images/Logo.png">
+    </a>
+</div>
+
+<br />
+<br />
+
+<div class="row" style="text-align: center;">
+    <div class="col-xs-offset-4 col-xs-3">
+        <span style="font-size: large; font-weight: bold">DATOS CLIENTE</span>
+    </div>
+</div>
+
+<br />
+
+<div class="row">
+    <div class="col-xs-2">
+        <span style="font-weight: bold">Nº de OFERTA</span>
+    </div>
+    <div class="col-xs-2">
+        <span style="">
+            @Model.ContractualsDocumentsCompany.FirstOrDefault(x => x.ContractualDocumentTypeId == (int)EnContractualDocumentType.Offer).Enrollment
+        </span>        
+    </div>
+    <div class="col-xs-3">
+        <span style="font-weight: bold; color: red;">RAZÓN SOCIAL/AUTÓNOMO</span>
+    </div>
+    <div class="col-xs-5">
+        <span style="">
+            @Model.Name
+        </span>        
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-2">
+        <span style="font-weight: bold">COD. CLIENTE</span>
+    </div>
+    <div class="col-xs-2">
+        <span style="">
+            @Model.Enrollment
+        </span>
+    </div>
+    <div class="col-xs-3">
+        <span style="font-weight: bold; color: red;">CIF/NIF</span>
+    </div>
+    <div class="col-xs-5">
+        <span style="">
+            @Model.NIF
+        </span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-2">
+        <span style="font-weight: bold">RESPONSABLE</span>
+    </div>
+    <div class="col-xs-2">
+        <span style="">
+            @Model.SimulationCompany.Simulation.UserAssigned.Initials</span>
+    </div>
+    <div class="col-xs-3">
+        <span style="font-weight: bold; color: red;">DOMICILIO SOCIAL</span>
+    </div>
+    <div class="col-xs-5">
+        <span style="">
+            @Model.Address
+        </span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-offset-4 col-xs-3">
+        <span style="font-weight: bold; color: red;">ACTIVIDAD</span>
+    </div>
+    <div class="col-xs-5">
+        <span style="">
+            @Model.Cnae.Name
+        </span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-offset-4 col-xs-3">
+        <span style="font-weight: bold; color: red;">PERSONA de CONTACTO</span>
+    </div>
+    <div class="col-xs-5">
+        <span style="">
+            @{
+                var contactPerson = Model.ContactPersons.FirstOrDefault();
+                var name = string.Empty;
+                if (contactPerson != null)
+                {
+                    name = string.Format("{0}  {1}", contactPerson.User.FirstName, contactPerson.User.LastName);
+                }
+            }
+            @if (contactPerson != null)
+            {
+                @name
+            }            
+        </span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-offset-4 col-xs-3">
+        <span style="font-weight: bold; color: red;">CARGO</span>
+    </div>
+    <div class="col-xs-5">
+        <span style="">
+            @if (contactPerson != null)
+            {
+                @contactPerson.User.WorkStation
+            }     
+        </span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-offset-4 col-xs-3">
+        <span style="font-weight: bold; color: red;">TELÉFONO</span>
+    </div>
+    <div class="col-xs-5">
+        <span style="">
+            @if (contactPerson != null)
+            {
+                @contactPerson.User.PhoneNumber
+            }
+        </span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-offset-4 col-xs-3">
+        <span style="font-weight: bold; color: red;">E-MAIL</span>
+    </div>
+    <div class="col-xs-5">
+        <span style="">
+            @if (contactPerson != null)
+            {
+                @contactPerson.User.Email
+            }
+        </span>
+    </div>
+</div>
+
+<br />
+<br />
+
+<div class="row" style="text-align: center;">
+    <div class="col-xs-12">
+        <span style="font-size: large; font-weight: bold">TRABAJADORES</span>
+    </div>
+</div>
+
+<br />
+
+<div class="row">
+    <div class="col-xs-2">
+        <span style="font-weight: bold; color: red;">CONTRATADOS</span>
+    </div>
+    <div class="col-xs-2">
+        <span style="">
+            @Model.Employees.Count
+        </span>
+    </div>
+    <div class="col-xs-2">
+        <span style="font-weight: bold; color: red;">REALES</span>
+    </div>
+    <div class="col-xs-2">
+        <span style="">
+            @Model.Employees.Count
+        </span>
+    </div>
+    <div class="col-xs-2">
+        <span style="font-weight: bold; color: red;">Nº de CENTROS</span>
+    </div>
+    <div class="col-xs-2">
+        <span style="">
+            1
+        </span>
+    </div>
+</div>
+
+<br />
+<br />
+
+<div class="row" style="text-align: center;">
+    <div class="col-xs-12">
+        <span style="font-size: large; font-weight: bold">FORMA de PAGO</span>
+    </div>
+</div>
+
+<br />
+
+<div class="row">
+    <div class="col-xs-2">
+        <span style="font-weight: bold; color: red;">FORMA de COBRO</span>
+    </div>
+    <div class="col-xs-2">
+        <span style="">
+            @{
+                var paymentMethod = string.Empty;
+                if (Model.PaymentMethod.SinglePayment)
+                {
+                    paymentMethod = "Pago único";
+                }
+                else
+                {
+                    var months = new[] {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+                    foreach (var month in Model.PaymentMethod.SplitPayment)
+                    {
+                        paymentMethod += string.Format("{0}, ", months[month - 1]);
+                    }
+                    paymentMethod = paymentMethod.Substring(0, paymentMethod.Length - 2);
+                }
+            }
+            @paymentMethod
+        </span>
+    </div>
+    <div class="col-xs-2">
+        <span style="font-weight: bold; color: red;">MODALIDAD de PAGO</span>
+    </div>
+    <div class="col-xs-2">
+        <span style="">
+            @Model.PaymentMethod.ModePayment.Description
+        </span>
+    </div>
+    <div class="col-xs-2">
+        <span style="font-weight: bold; color: red;">COBRO de R. MÉDICOS</span>
+    </div>
+    <div class="col-xs-2">
+        <span style="">
+            @Model.PaymentMethod.ModePaymentMedicalExamination.Description
+        </span>
+    </div>
+</div>
