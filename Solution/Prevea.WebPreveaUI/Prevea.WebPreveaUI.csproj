@@ -173,7 +173,6 @@
     <Compile Include="Common\JsonpResult.cs" />
     <Compile Include="Controllers\CommercialTool\CompaniesController.cs" />
     <Compile Include="Controllers\CommercialTool\SimulationsController.cs" />
-    <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\Courses\ManagementCoursesController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
