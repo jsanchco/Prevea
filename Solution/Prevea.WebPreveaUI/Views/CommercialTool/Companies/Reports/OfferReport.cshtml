@@ -12,7 +12,7 @@
 }
 
 <script>
-    OfferReport.init(@Model.Id);
+    OfferReport.init(@Model.Id, @ViewBag.ContractualDocumentId);
 </script>
 
 @if (withButtonUpdate)
@@ -43,7 +43,8 @@
 <br />
 
 <div class="row" style="text-align: center;">
-    <div class="col-xs-offset-4 col-xs-3">
+    <div class="col-xs-4">&nbsp;</div>
+    <div class="col-xs-8" style="border-style: solid; border-width: thin; background: darkgray;">
         <span style="font-size: large; font-weight: bold">DATOS CLIENTE</span>
     </div>
 </div>
@@ -55,7 +56,7 @@
         <span style="font-weight: bold">Nº de OFERTA</span>
     </div>
     <div class="col-xs-2">
-        <span style="">
+        <span style="margin-left: -50px;">
             @Model.ContractualsDocumentsCompany.FirstOrDefault(x => x.ContractualDocumentTypeId == (int)EnContractualDocumentType.Offer).Enrollment
         </span>        
     </div>
@@ -74,7 +75,7 @@
         <span style="font-weight: bold">COD. CLIENTE</span>
     </div>
     <div class="col-xs-2">
-        <span style="">
+        <span style="margin-left: -50px;">
             @Model.Enrollment
         </span>
     </div>
@@ -93,7 +94,7 @@
         <span style="font-weight: bold">RESPONSABLE</span>
     </div>
     <div class="col-xs-2">
-        <span style="">
+        <span style="margin-left: -50px;">
             @Model.SimulationCompany.Simulation.UserAssigned.Initials</span>
     </div>
     <div class="col-xs-3">
@@ -184,7 +185,7 @@
 <br />
 <br />
 
-<div class="row" style="text-align: center;">
+<div class="row" style="text-align: center; border-style: solid; border-width: thin; background: darkgray;">
     <div class="col-xs-12">
         <span style="font-size: large; font-weight: bold">TRABAJADORES</span>
     </div>
@@ -225,7 +226,7 @@
 <br />
 <br />
 
-<div class="row" style="text-align: center;">
+<div class="row" style="text-align: center; border-style: solid; border-width: thin; background: darkgray;">
     <div class="col-xs-12">
         <span style="font-size: large; font-weight: bold">FORMA de PAGO</span>
     </div>

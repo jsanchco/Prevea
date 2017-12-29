@@ -697,6 +697,7 @@
         public ActionResult OfferView(int contractualDocumentId)
         {
             var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
+            ViewBag.ContractualDocumentId = contractualDocumentId;
 
             return PartialView("~/Views/CommercialTool/Companies/Reports/OfferReport.cshtml", contractualDocument.Company);
         }
@@ -705,6 +706,7 @@
         public ActionResult OfferReport(int contractualDocumentId)
         {
             var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
+            ViewBag.ContractualDocumentId = contractualDocumentId;
 
             return View("~/Views/CommercialTool/Companies/Reports/OfferReport.cshtml", contractualDocument.Company);
         }
