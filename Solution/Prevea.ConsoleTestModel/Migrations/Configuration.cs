@@ -104,41 +104,41 @@ namespace Prevea.ConsoleTestModel.Migrations
             }
             context.SaveChanges();
 
-            var documents = new List<Document>
-            {
-                new Document {
-                    Description = "Primer Documento de ADMinistración",
-                    Observations = "*** Documento Original ***",
-                    DocumentNumber = 1,
-                    Date = DateTime.Now,
-                    DateModification = DateTime.Now,
-                    AreaId = 1,
-                    Edition = 1,
-                    DocumentStateId = 1,
-                    UrlRelative = "~/App_Data/Library/ADM/ADM_001_1.docx"},
+            //var documents = new List<Document>
+            //{
+            //    new Document {
+            //        Description = "Primer Documento de ADMinistración",
+            //        Observations = "*** Documento Original ***",
+            //        DocumentNumber = 1,
+            //        Date = DateTime.Now,
+            //        DateModification = DateTime.Now,
+            //        AreaId = 1,
+            //        Edition = 1,
+            //        DocumentStateId = 1,
+            //        UrlRelative = "~/App_Data/Library/ADM/ADM_001_1.docx"},
 
-                new Document {
-                    Description = "Segundo Documento de ADMinistración",
-                    Observations = "*** Documento Original ***",
-                    DocumentNumber = 2,
-                    Date = DateTime.Now,
-                    DateModification = DateTime.Now,
-                    AreaId = 1,
-                    Edition = 1,
-                    DocumentStateId = 1,
-                    UrlRelative = "~/App_Data/Library/ADM/ADM_002_1.docx"},
+            //    new Document {
+            //        Description = "Segundo Documento de ADMinistración",
+            //        Observations = "*** Documento Original ***",
+            //        DocumentNumber = 2,
+            //        Date = DateTime.Now,
+            //        DateModification = DateTime.Now,
+            //        AreaId = 1,
+            //        Edition = 1,
+            //        DocumentStateId = 1,
+            //        UrlRelative = "~/App_Data/Library/ADM/ADM_002_1.docx"},
 
-                new Document {
-                    Description = "Tercer Documento de ADMinistración",
-                    Observations = "*** Documento Original ***",
-                    DocumentNumber = 3,
-                    Date = DateTime.Now,
-                    DateModification = DateTime.Now,
-                    AreaId = 1,
-                    Edition = 1,
-                    DocumentStateId = 1,
-                    UrlRelative = "~/App_Data/Library/ADM/ADM_003_1.docx"}
-            };
+            //    new Document {
+            //        Description = "Tercer Documento de ADMinistración",
+            //        Observations = "*** Documento Original ***",
+            //        DocumentNumber = 3,
+            //        Date = DateTime.Now,
+            //        DateModification = DateTime.Now,
+            //        AreaId = 1,
+            //        Edition = 1,
+            //        DocumentStateId = 1,
+            //        UrlRelative = "~/App_Data/Library/ADM/ADM_003_1.docx"}
+            //};
             //documents.ForEach(p => context.Documents.AddOrUpdate(s => s.Id, p));
             //context.SaveChanges();
 
@@ -239,6 +239,22 @@ namespace Prevea.ConsoleTestModel.Migrations
 
                 context.SimulationStates.AddOrUpdate(new SimulationState { Name = dState.ToString() });
             }
+            context.SaveChanges();
+
+            var trainingCourseModalities = (EnTrainingCourseModality[])Enum.GetValues(typeof(EnTrainingCourseModality));
+            foreach (var dState in trainingCourseModalities)
+            {
+                if (dState == EnTrainingCourseModality.NotMapped)
+                    continue;
+
+                context.TrainingCourseModalities.AddOrUpdate(new TrainingCourseModality { Name = dState.ToString() });
+            }
+            context.SaveChanges();
+
+            context.TrainingCourses.Add(new TrainingCourse
+            {
+                IsRoot = true
+            });
             context.SaveChanges();
         }
     }

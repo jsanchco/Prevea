@@ -3,6 +3,7 @@
     #region Using
 
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Collections.Generic;
 
     #endregion
 
@@ -16,5 +17,7 @@
         public decimal Total { get; set; }
 
         public virtual Simulation Simulation { get; set; }
+
+        public virtual ICollection<TrainingCourseTrainingService> TrainingCoursesTrainingServices { get; set; }
     }
 }

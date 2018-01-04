@@ -80,10 +80,11 @@
     <Compile Include="Model\SimulationCompany.cs" />
     <Compile Include="Model\SimulationState.cs" />
     <Compile Include="Model\StretcheEmployee.cs" />
+    <Compile Include="Model\TrainingCourseTrainingService.cs" />
     <Compile Include="Model\TrainingService.cs" />
     <Compile Include="Model\TrainingCourse.cs" />
-    <Compile Include="Model\TrainingCourseFamilyType.cs" />
     <Compile Include="Model\UserState.cs" />
+    <Compile Include="Model\TrainingCourseModality.cs" />
     <Compile Include="ViewModel\AgencyViewModel.cs" />
     <Compile Include="ViewModel\CompanyViewModel.cs" />
     <Compile Include="ViewModel\ContractualDocumentCompanyViewModel.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="ViewModel\PaymentMethodViewModel.cs" />
     <Compile Include="ViewModel\PaymentModeViewModel.cs" />
     <Compile Include="ViewModel\SimulationViewModel.cs" />
+    <Compile Include="ViewModel\TrainingCourseViewModel.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -148,6 +148,8 @@
         Result SaveContractualDocument(ContractualDocumentCompany contractualDocument);
         Result UpdateContractualDocument(int contractualDocumentId, ContractualDocumentCompany contractualDocument);
         bool DeleteContractualDocument(int contractualDocumentId);
+        EnContractualDocumentType GetNewContractualDocumentType(int companyId);
+        string VerifyNewContractualDocument(int companyId);
 
         #endregion
 
@@ -207,6 +209,17 @@
         List<NotificationType> GetNotificationTypes();
         NotificationType GetNotificationType(int notificationTypeId);
 
+        #endregion
+
+        #region TrainingCourse
+
+        List<TrainingCourse> GetAllTrainingCourses();
+        TrainingCourse GetTrainingCourse(int id);
+        Result SaveTrainingCourse(TrainingCourse trainingCourse);
+        Result UpdateTrainingCourse(int id, TrainingCourse trainingCourse);
+        Result DeleteTrainingCourse(int id);
+
+        List<TrainingCourse> GetTrainingCourses(int? trainingCourse);
         #endregion
     }
 }

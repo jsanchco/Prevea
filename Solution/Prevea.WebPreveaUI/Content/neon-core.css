@@ -9833,6 +9833,10 @@ table {
   font-size: 38px;
   font-weight: bold;
 }
+.tile-stats .num-medium {
+    font-size: 20px;
+    font-weight: bold;
+}
 .tile-stats h3 {
   font-size: 18px;
   margin-top: 5px;

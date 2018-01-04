@@ -419,6 +419,6 @@
             resultSimulation.Object = AutoMapper.Mapper.Map<SimulationViewModel>(resultSimulation.Object);
 
             return Json(new { result = resultSimulation }, JsonRequestBehavior.AllowGet);
-        }        
+        }
     }
 }

@@ -115,6 +115,8 @@
                     return "A la Firma del Contrato";
                 case "ALaRealizacion":
                     return "A la Realización";
+                case "OnLine":
+                    return "On Line";
                 case "Otros":
                     return "Otros";
 

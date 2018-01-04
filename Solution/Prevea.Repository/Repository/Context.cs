@@ -44,6 +44,9 @@
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<NotificationType> NotificationTypes { get; set; }
         public DbSet<NotificationState> NotificationStates { get; set; }
+        public DbSet<TrainingCourseModality> TrainingCourseModalities { get; set; }
+        public DbSet<TrainingCourse> TrainingCourses { get; set; }
+        public DbSet<TrainingCourseTrainingService> TrainingCoursesTrainingServices { get; set; }
 
         #endregion
 

@@ -78,6 +78,10 @@
                 .ForMember(x => x.SimulationName, x => x.MapFrom(y => y.Simulation.CompanyName))
                 .ForMember(x => x.ToUserInitials, x => x.MapFrom(y => y.ToUser.Initials));
             AutoMapper.Mapper.CreateMap<NotificationViewModel, Notification>();
+
+            AutoMapper.Mapper.CreateMap<TrainingCourse, TrainingCourseViewModel>()
+                .ForMember(x => x.TrainingCourseModalityName, x => x.MapFrom(y => y.TrainingCourseModality.Name));
+            AutoMapper.Mapper.CreateMap<TrainingCourseViewModel, TrainingCourse>();
         }
     }
 }

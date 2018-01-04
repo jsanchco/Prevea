@@ -249,10 +249,10 @@ namespace Prevea.Repository.Repository
         {
             var usersRoles = from ur in Context.UserRoles
                 join r in Context.Roles on ur.RoleId equals r.Id
-                where (ur.UserId == id)
+                where ur.UserId == id
                 select r.Name;
 
-            return (usersRoles.ToList());
+            return usersRoles.ToList();
         }
 
         public User ValidateUser(string user, string password)

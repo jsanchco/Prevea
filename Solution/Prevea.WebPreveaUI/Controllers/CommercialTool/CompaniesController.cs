@@ -711,6 +711,16 @@
             return View("~/Views/CommercialTool/Companies/Reports/OfferReport.cshtml", contractualDocument.Company);
         }
 
+        [HttpPost]
+        public JsonResult CanAddContractualDocument(int companyId)
+        {
+            var message = Service.VerifyNewContractualDocument(companyId);
+            if (string.IsNullOrEmpty(message))
+                return Json(new { result = Status.Ok }, JsonRequestBehavior.AllowGet);
+
+            return Json(new { result = Status.Error, message }, JsonRequestBehavior.AllowGet);
+        }
+
         private bool CreatePdf(ContractualDocumentCompany contractualDocument)
         {
             try

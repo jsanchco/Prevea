@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace Prevea.Service.Service
+﻿namespace Prevea.Service.Service
 {
     #region Using
 
@@ -10,6 +8,7 @@ namespace Prevea.Service.Service
     using System;
     using System.Linq;
     using System.Web;
+    using System.IO;
 
     #endregion
 
@@ -134,6 +133,107 @@ namespace Prevea.Service.Service
             return Repository.DeleteContractualDocument(contractualDocumentId);
         }
 
+        public EnContractualDocumentType GetNewContractualDocumentType(int companyId)
+        {
+            var contractualsDocuments = Repository.GetContractualsDocuments(companyId);
+            var hasOferta = contractualsDocuments.FirstOrDefault(x => x.ContractualDocumentTypeId ==
+                                                                      (int)EnContractualDocumentType.Offer);
+            if (hasOferta == null)
+            {
+                return EnContractualDocumentType.Offer;
+            }
+
+            var hasContrato = contractualsDocuments.FirstOrDefault(x => x.ContractualDocumentTypeId ==
+                                                                        (int)EnContractualDocumentType.Contract);
+
+            return hasContrato == null ? EnContractualDocumentType.Contract : EnContractualDocumentType.Annex;
+        }
+
+        public string VerifyNewContractualDocument(int companyId)
+        {
+            var error = string.Empty;
+            string errorGeneralData;
+            string errorModePayment;
+            var company = Repository.GetCompany(companyId);
+            var contractualDocumentType = GetNewContractualDocumentType(companyId);
+            switch (contractualDocumentType)
+            {
+                case EnContractualDocumentType.Offer:
+                    errorGeneralData = GetErrorInGeneralData(company);
+                    if (!string.IsNullOrEmpty(errorGeneralData))
+                    {
+                        error += $"<H2 style='color: white;'>Error</H2><br />DATOS GENERALES<ul>{errorGeneralData}</ul>";
+                    }
+                    if (company.ContactPersons == null || company.ContactPersons.Count == 0)
+                    {
+                        if (string.IsNullOrEmpty(error))
+                            error += "<H2>Error</H2><br />";
+
+                        error += "PERSONAS de CONTACTO<ul><li>Agregar persona de contacto</li></ul>";
+                    }
+                    errorModePayment = GetErrorInPaymentMethod(company); 
+                    if (!string.IsNullOrEmpty(errorModePayment))
+                    {
+                        if (string.IsNullOrEmpty(error))
+                            error += "<H2>Error</H2><br />";
+
+                        error += $"FORMA de PAGO<ul>{errorModePayment}</ul>";
+                    }
+
+                    break;
+
+                case EnContractualDocumentType.Contract:
+                    errorGeneralData = GetErrorInGeneralData(company);
+                    if (!string.IsNullOrEmpty(errorGeneralData))
+                    {
+                        error += $"<H2>Error</H2><br />DATOS GENERALES<ul>{errorGeneralData}</ul>";
+                    }
+                    if (company.ContactPersons == null || company.ContactPersons.Count == 0)
+                    {
+                        if (string.IsNullOrEmpty(error))
+                            error += "<H2>Error</H2><br />";
+
+                        error += "PERSONAS de CONTACTO<ul><li>Agregar persona de contacto</li></ul>";
+                    }
+                    errorModePayment = GetErrorInPaymentMethod(company);
+                    if (!string.IsNullOrEmpty(errorModePayment))
+                    {
+                        if (string.IsNullOrEmpty(error))
+                            error += "<H2>Error</H2><br />";
+
+                        error += $"FORMA de PAGO<ul>{errorModePayment}</ul>";
+                    }
+
+                    break;
+
+                case EnContractualDocumentType.Annex:
+                    errorGeneralData = GetErrorInGeneralData(company);
+                    if (!string.IsNullOrEmpty(errorGeneralData))
+                    {
+                        error += $"<H2>Error</H2><br />DATOS GENERALES<ul>{errorGeneralData}</ul>";
+                    }
+                    if (company.ContactPersons == null || company.ContactPersons.Count == 0)
+                    {
+                        if (string.IsNullOrEmpty(error))
+                            error += "<H2>Error</H2><br />";
+
+                        error += "PERSONAS de CONTACTO<ul><li>Agregar persona de contacto</li></ul>";
+                    }
+                    errorModePayment = GetErrorInPaymentMethod(company);
+                    if (!string.IsNullOrEmpty(errorModePayment))
+                    {
+                        if (string.IsNullOrEmpty(error))
+                            error += "<H2>Error</H2><br />";
+
+                        error += $"FORMA de PAGO<ul>{errorModePayment}</ul>";
+                    }
+
+                    break;
+            }
+
+            return error;
+        }
+
         private string GetUrlRelativeContractualDocument(ContractualDocumentCompany contractualDocument)
         {
             var pathContractualDocument = COMPANIES;
@@ -147,7 +247,6 @@ namespace Prevea.Service.Service
             CreateDirectoryIfNotExists(pathContractualDocument);
 
             pathContractualDocument += $"/{contractualDocument.Enrollment.Substring(0, contractualDocument.Enrollment.Length - 5)}";
-            //return HttpContext.Current.Server.MapPath($"{pathContractualDocument}.pdf");
             return $"{pathContractualDocument}.pdf";
         }
 
@@ -159,6 +258,35 @@ namespace Prevea.Service.Service
 
             if (!exits && physicalPath != null)
                 Directory.CreateDirectory(physicalPath);
+        }
+
+        private string GetErrorInGeneralData(Company company)
+        {
+            var error = string.Empty;
+
+            if (string.IsNullOrEmpty(company.Address))
+                error += "<li>Seleccionar Dirección</li>";
+            if (string.IsNullOrEmpty(company.Province))
+                error += "<li>Seleccionar Provincia</li>";
+            if (company.Cnae == null)
+                error += "<li>Seleccionar Actividad</li>";
+
+            return error;
+        }
+
+        private string GetErrorInPaymentMethod(Company company)
+        {
+            var error = string.Empty;
+
+            if (company.PaymentMethod == null)
+                return "Faltan datos por rellenar";
+
+            if (company.PaymentMethod.ModePayment == null)
+                error += "<li>Seleccionar Modalidad de Pago</li>";
+            if (string.IsNullOrEmpty(company.PaymentMethod.AccountNumber))
+                error += "<li>Seleccionar Nº de Cuenta</li>";
+
+            return error;
         }
     }
 }

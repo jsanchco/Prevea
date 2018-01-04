@@ -3,8 +3,8 @@
 </script>
 
 <div class="row" id="pageManagementCourses" style="margin: 8px">
-    
-    <div id="headerPartialView">    
+
+    <div id="headerPartialView">
         <div class="row"><H1>Cursos</H1></div><br />
         <div class="row">
             <div class="col-sm-12">
@@ -20,33 +20,125 @@
         </div>
     </div>
     
+    <div id="confirm"></div>
+
     <br />
 
     <div id="contentPartialView">
         <div class="row">
             <div class="col-sm-6" style="">
                 <div class="col-sm-12 tile-stats tile-gray" style="height: 76vh; border-style: solid; border-width: thin;">
-                    <div class="num">Cursos</div>					
+                    <div class="num">Cursos</div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div style="height: 59vh; background: white; border-color: #EBEBEB; border-radius: 2px;">
+
+                                <br />
+
+                                <div id="trvCourse" style="margin-left: 20px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <br />
+
+                    <div class="row">
+                        <div class="col-sm-12" style="text-align: right;">
+                            <input type="button" id="btnDeleteNode" value="Borrar Elemento" onclick="ManagementCourses.deleteNode()" class="btn btn-prevea btn" style="margin-top: 10px;" />
+                        </div>
+                    </div>
+
                 </div>
             </div>
-            <div class="col-sm-6" style="">
+
+            <div class="col-sm-6">
                 <div class="col-sm-12 tile-stats tile-gray" style="height: 22vh; border-style: solid; border-width: thin;">
-                    <div class="num">Familia</div>
+                    <div class="num-medium">Familia</div>
+
+                    <br />
+                    <br />
+
+                    <div class="form-group">
+                        <label class="col-sm-12 control-label">Nueva Familia</label>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <input id="inpFamily" class="form-control" style="margin-top: 4px;" placeholder="Nombre de la Familia"/>
+                        </div>
+                        <div class="col-sm-12" style="text-align: right;">
+                            <input type="button" id="btnAddFamily" value="Agregar" onclick="ManagementCourses.goToAddFamily()" class="btn btn-prevea btn" style="margin-top: 10px;" />
+                        </div>
+                    </div>
                 </div>
 
                 <br />
 
                 <div class="col-sm-12 tile-stats tile-gray" style="height: 22vh; border-style: solid; border-width: thin;">
-                    <div class="num">Acción Formativa</div>
+                    <div class="num-medium">Título</div>
+
+                    <br />
+                    <br />
+
+                    <div class="form-group">
+                        <label class="col-sm-12 control-label">Nuevo Título</label>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <input id="inpTitle" class="form-control" style="margin-top: 4px;" placeholder="Nombre del Título"/>
+                        </div>
+                        <div class="col-sm-12" style="text-align: right;">
+                            <input type="button" id="btnAddTitle" value="Agregar" onclick="ManagementCourses.goToAddTitle()" class="btn btn-prevea btn" style="margin-top: 10px;" />
+                        </div>
+                    </div>
                 </div>
 
                 <br />
 
                 <div class="col-sm-12 tile-stats tile-gray" style="height: 29vh; border-style: solid; border-width: thin;">
-                    <div class="num">Descripción</div>
+                    <div class="num-medium">Descripción</div>
+
+                    <br />
+
+                    <div class="form-group">
+                        <label class="col-sm-12 control-label">Nuevo Curso</label>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <input id="inpCourseName" class="form-control" placeholder="Nombre del Curso" />
+                        </div>
+                    </div>
+
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Horas</label>
+                        <label class="col-sm-4 control-label">Precio</label>
+                        <label class="col-sm-4 control-label">Modalidad del Curso</label>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-4">
+                            <input id="inpHoursCourse" type="number" title="numeric" value="0" min="0" step="1" style="width: 100%; margin-top: 4px;" placeholder="Horas"/>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <input id="inpPriceCourse" type="number" title="numeric" value="0" min="0" step="1" style="width: 100%; margin-top: 4px;" placeholder="Precio" />
+                        </div>
+
+                        <div class="col-sm-4">
+                            <input id="inpModalityCourse" value="1" style="margin-top: 4px; width: 100%;" />
+                        </div>
+                    </div>
+                    <div class="col-sm-12" style="text-align: right;">
+                        <input type="button" id="btnAddCourse" value="Agregar" onclick="ManagementCourses.goToAddCourse()" class="btn btn-prevea btn" style="margin-top: 10px;" />
+                    </div>
                 </div>
             </div>
-        </div>        
+        </div>
     </div>
-   
+
 </div>

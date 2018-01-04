@@ -243,5 +243,25 @@
         NotificationType GetNotificationType(int id);
 
         #endregion
+
+        #region TrainingCourse
+
+        List<TrainingCourse> GetAllTrainingCourses();
+        TrainingCourse GetTrainingCourse(int id);
+        TrainingCourse SaveTrainingCourse(TrainingCourse trainingCourse);
+        TrainingCourse UpdateTrainingCourse(int id, TrainingCourse trainingCourse);
+        bool DeleteTrainingCourse(int id);
+
+        List<TrainingCourse> GetTrainingCourses(int? trainingCourse);
+        #endregion
+
+        #region TrainingCourseTrainingService
+
+        List<TrainingCourse> GetTrainingCoursesByTrainingService(int trainingServiceId);
+        List<TrainingService> GetTrainingServicesByTrainingCourse(int trainingCourseId);
+        TrainingCourseTrainingService SaveTrainingCourseTrainingService(TrainingCourseTrainingService trainingCourseTrainingService);
+        bool DeleteTrainingCourseTrainingService(int id);
+
+        #endregion
     }
 }

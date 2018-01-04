@@ -5,6 +5,7 @@
     textBoxActivityId: "textBoxActivity",
     textBoxAddressId: "textBoxAddress",
     textBoxProvinceId: "textBoxProvince",
+    cmbCnae: "CnaeId",
     btnValidateId: "btnValidate",
     errorFromFrontId: "errorFromFront",
 
@@ -39,6 +40,10 @@
 
         if (!$("#" + this.textBoxProvinceId).val()) {
             error.push("Debes añadir una Provincia");
+        }
+
+        if ($("#" + this.cmbCnae).data("kendoDropDownList").val() === 0) {
+            error.push("Debes añadir una Actividad");
         }
 
         return error;

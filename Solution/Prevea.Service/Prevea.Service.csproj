@@ -60,6 +60,7 @@
     <Compile Include="Service\ServicePaymentMethods.cs" />
     <Compile Include="Service\ServiceSimulations.cs" />
     <Compile Include="Service\ServiceStretchesEmployees.cs" />
+    <Compile Include="Service\ServiceTrainingCourses.cs" />
     <Compile Include="Service\ServiceTrainingServices.cs" />
     <Compile Include="Service\ServiceUsers.cs" />
   </ItemGroup>

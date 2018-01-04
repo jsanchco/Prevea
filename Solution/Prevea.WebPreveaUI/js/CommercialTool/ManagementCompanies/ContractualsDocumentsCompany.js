@@ -8,6 +8,8 @@
     contractualsDocumentsCompanyDataSource: null,
 
     init: function (companyId) {
+        kendo.culture("es-ES");
+
         this.companyId = companyId;
 
         this.createContractualsDocumentsCompanyDataSource();
@@ -17,7 +19,8 @@
     createContractualsDocumentsCompanyDataSource: function () {
         var beginDate = new Date();
         var endDate = new Date();
-        endDate.setFullYear(beginDate.getFullYear() + 1);
+        endDate.setFullYear(beginDate.getFullYear());
+        endDate.setDate(endDate.getDate() - 1);
 
         this.contractualsDocumentsCompanyDataSource = new kendo.data.DataSource({
             schema: {
@@ -29,8 +32,8 @@
                         Enrollment: { type: "string", editable: false },
                         ContractualDocumentTypeId: { type: "number", editable: false },
                         ContractualDocumentTypeName: { type: "string", editable: false },
-                        BeginDate: { type: "date", defaultValue: beginDate},
-                        EndDate: { type: "date", defaultValue: endDate },
+                        BeginDate: { type: "date", defaultValue: beginDate, format: "{0:dd/MM/yy}" },
+                        EndDate: { type: "date", defaultValue: endDate, format: "{0:dd/MM/yy}" },
                         UrlRelative: { type: "string" },
                         Observations: { type: "string" }
                     }
@@ -182,8 +185,8 @@
 
     getTemplateToolBar: function () {
         var html = "<div class='toolbar'>";
-        html += "<span name='create' class='k-grid-add' id='createContractualDocument'>";
-        html += "<a id='btnTypeContractualDocument' class='btn btn-prevea k-grid-add' role='button'> </a>";
+        html += "<span name='create' id='createContractualDocument'>";
+        html += "<a id='btnTypeContractualDocument' class='btn btn-prevea' role='button' onclick='ContractualsDocumentsCompany.addContractualDocument()'> </a>";
         html += "</span></div>";
 
         return html;
@@ -199,6 +202,29 @@
         html += kendo.format("</div>");
 
         return html;
+    },
+
+    addContractualDocument: function () {  
+        $.ajax({
+            url: "/Companies/CanAddContractualDocument",
+            data: {
+                companyId: ContractualsDocumentsCompany.companyId
+            },
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                if (data.result === Constants.resultStatus.Ok) {
+                    var grid = $("#" + ContractualsDocumentsCompany.gridContractualsDocumentsCompanyId).data("kendoGrid");
+                    grid.addRow();
+                }
+                if (data.result === Constants.resultStatus.Error) {
+                    GeneralData.showNotification(data.message, "", "error");
+                }
+            },
+            error: function () {
+                GeneralData.showNotification(Constants.ko, "", "error");
+            }
+        });
     },
 
     getColumnTemplateEnrollment: function (data) {
@@ -289,7 +315,6 @@
         if (hasOffer === true && hasContract === true) {
             $("a#btnTypeContractualDocument").text(" Agregar anexo");
         }
-
     }
 
 });
