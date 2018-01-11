@@ -257,10 +257,14 @@
 
         #region TrainingCourseTrainingService
 
+        TrainingCourseTrainingService GetTrainingCourseTrainingService(int trainingCourseTrainingService);
+        List<TrainingCourseTrainingService> GetTrainingCoursesTrainingServiceByTrainingService(int trainingServiceId);
+        List<TrainingCourseTrainingService> GetTrainingCourseTrainingServicesByTrainingCourse(int trainingCourseId);
         List<TrainingCourse> GetTrainingCoursesByTrainingService(int trainingServiceId);
         List<TrainingService> GetTrainingServicesByTrainingCourse(int trainingCourseId);
         TrainingCourseTrainingService SaveTrainingCourseTrainingService(TrainingCourseTrainingService trainingCourseTrainingService);
         bool DeleteTrainingCourseTrainingService(int id);
+        TrainingCourse FindTrainingCourse(string text);
 
         #endregion
     }

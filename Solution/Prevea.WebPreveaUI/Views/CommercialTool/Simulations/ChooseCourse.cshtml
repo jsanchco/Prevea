@@ -1,0 +1,22 @@
+﻿<style>
+    .k-window-titlebar {
+        height: 30px;
+    }
+
+    .k-window-content .k-content {
+        position: static;
+    }
+</style>
+
+<script>
+    ChooseCourse.init();
+</script>
+
+<div id="chooseCourseContainer">
+    <p style="display: inline-flex">
+        <input id="inpCourse" class="form-control" style="margin-top: 10px; width: 300px;" placeholder="Buscar Curso" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="button" id="btnSearchNode" value="Buscar" onclick="ChooseCourse.searchCourseInBack()" class="btn btn-prevea btn" style="margin-top: 10px;"/>
+    </p>
+    <p><div id="trvCourses" style="height: 35vh; padding: 10px; border-width: 1px; border-radius: 1px;"></div></p>
+    <p style="text-align: right;"><input type="button" id="btnSelectCourse" value="Seleccionar Curso" onclick="ChooseCourse.selectCourse()" class="btn btn-prevea btn" style="margin-top: 10px;"/></p>
+</div>

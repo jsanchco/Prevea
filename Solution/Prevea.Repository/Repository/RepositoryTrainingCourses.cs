@@ -86,8 +86,14 @@
 
         public List<TrainingCourse> GetTrainingCourses(int? trainingCourse)
         {
-            return Context.TrainingCourses.
-                Where(x => x.ReportsTo == trainingCourse).ToList();
+            return Context.TrainingCourses
+                .Where(x => x.ReportsTo == trainingCourse).ToList();
+        }
+
+        public TrainingCourse FindTrainingCourse(string text)
+        {
+            return Context.TrainingCourses
+                .FirstOrDefault(x => x.Name.Contains(text));
         }
     }
 }

@@ -63,6 +63,10 @@
                 url = "/Notifications/Notifications";
                 break;
 
+            case "profile":
+                url = "/Profile/ProfileUser";
+                break;
+
             case "courses|management":
                 url = "/Courses/ManagementCourses";
                 break;

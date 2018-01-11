@@ -12,6 +12,7 @@
     using Common;
     using HelpersClass;
     using Model.ViewModel;
+    using System.Diagnostics;
 
     #endregion
 
@@ -79,7 +80,7 @@
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.Message);
 
                 return this.Jsonp(new {Errors = errorSimulation});
             }
@@ -155,7 +156,7 @@
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.Message);
 
                 return Json(new Result
                 {
@@ -176,7 +177,7 @@
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.Message);
 
                 return Json(new Result
                 {
@@ -197,7 +198,7 @@
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.Message);
 
                 return Json(new Result
                 {
@@ -207,7 +208,7 @@
             }
         }
 
-        public ActionResult Simulations_Destroy()
+        public JsonResult Simulations_Destroy()
         {
             try
             {
@@ -239,11 +240,11 @@
 
                 resultSimulation.Object = AutoMapper.Mapper.Map<SimulationViewModel>(resultSimulation.Object);
 
-                return Json(new { result = resultSimulation }, JsonRequestBehavior.AllowGet);
+                return this.Jsonp(simulation);
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.Message);
 
                 return this.Jsonp(new {Errors = "Se ha producido un error en el Borrado de la Simulación"});
             }
@@ -419,6 +420,166 @@
             resultSimulation.Object = AutoMapper.Mapper.Map<SimulationViewModel>(resultSimulation.Object);
 
             return Json(new { result = resultSimulation }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial")]
+        public JsonResult Courses_Read([DataSourceRequest] DataSourceRequest request, int trainingServiceId)
+        {
+            var data = AutoMapper.Mapper.Map<List<TrainingCourseTrainingServiceViewModel>>(Service.GetTrainingCoursesTrainingServiceByTrainingService(trainingServiceId));
+
+            return this.Jsonp(data);
+        }
+
+        public JsonResult Courses_Update()
+        {
+            try
+            {
+                var trainingCourseTrainingService = this.DeserializeObject<TrainingCourseTrainingService>("course");
+                if (trainingCourseTrainingService == null)
+                {
+                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Curso" });
+                }  
+
+                var result = Service.SaveTrainingCourseTrainingService(trainingCourseTrainingService);
+                if (result.Status == Status.Error)
+                    return Json(new { result }, JsonRequestBehavior.AllowGet);
+
+                var trainingCourseTrainingServiceFind =
+                    Service.GetTrainingCourseTrainingService(trainingCourseTrainingService.Id);
+                var observations =
+                    $"{Service.GetUser(User.Id).Initials} - Actualizado el Curso {trainingCourseTrainingServiceFind.TrainingCourse.Name} en la Simulación [{trainingCourseTrainingServiceFind.TrainingService.Simulation.CompanyName}]";
+
+                var notification = new Model.Model.Notification
+                {
+                    DateCreation = DateTime.Now,
+                    NotificationTypeId = (int)EnNotificationType.FromUser,
+                    NotificationStateId = (int)EnNotificationState.Validated,
+                    SimulationId = trainingCourseTrainingServiceFind.TrainingServiceId,
+                    ToRoleId = (int)EnRole.PreveaPersonal,
+                    Observations = observations
+                };
+                var resultNotification = Service.SaveNotification(notification);
+                if (resultNotification.Status == Status.Error)
+                    return Json(new { result = resultNotification }, JsonRequestBehavior.AllowGet);
+
+                var data = AutoMapper.Mapper.Map<TrainingCourseTrainingServiceViewModel>(trainingCourseTrainingServiceFind);
+                return this.Jsonp(data);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Curso" });
+            }
+        }
+
+        public JsonResult Courses_Destroy()
+        {
+            try
+            {
+                var trainingCourseTrainingService = this.DeserializeObject<TrainingCourseTrainingService>("course");
+                if (trainingCourseTrainingService == null)
+                {
+                    return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del Curso" });
+                }
+
+                var trainingCourseTrainingServiceFind =
+                    Service.GetTrainingCourseTrainingService(trainingCourseTrainingService.Id);
+                var observations =
+                    $"{Service.GetUser(User.Id).Initials} - Borrado el Curso {trainingCourseTrainingServiceFind.TrainingCourse.Name} a la Simulación [{trainingCourseTrainingServiceFind.TrainingService.Simulation.CompanyName}]";
+
+                var result = Service.DeleteTrainingCourseTrainingService(trainingCourseTrainingService.Id);
+                if (result.Status == Status.Error)
+                    return Json(new { result }, JsonRequestBehavior.AllowGet);
+
+                var notification = new Model.Model.Notification
+                {
+                    DateCreation = DateTime.Now,
+                    NotificationTypeId = (int)EnNotificationType.FromUser,
+                    NotificationStateId = (int)EnNotificationState.Validated,
+                    SimulationId = trainingCourseTrainingServiceFind.TrainingServiceId,
+                    ToRoleId = (int)EnRole.PreveaPersonal,
+                    Observations = observations                       
+                };
+                var resultNotification = Service.SaveNotification(notification);
+                if (resultNotification.Status == Status.Error)
+                    return Json(new { result = resultNotification }, JsonRequestBehavior.AllowGet);
+                
+                return this.Jsonp(trainingCourseTrainingService);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del Curso" });
+            }
+        }
+
+        public JsonResult Courses_Create()
+        {
+            try
+            {
+                var trainingCourseTrainingService = this.DeserializeObject<TrainingCourseTrainingService>("course");
+                if (trainingCourseTrainingService == null)
+                {
+                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Curso" });
+                }
+
+                var result = Service.SaveTrainingCourseTrainingService(trainingCourseTrainingService);
+                if (result.Status == Status.Error)
+                    return Json(new { result }, JsonRequestBehavior.AllowGet);
+
+                var trainingCourseTrainingServiceFind =
+                    Service.GetTrainingCourseTrainingService(trainingCourseTrainingService.Id);
+                var notification = new Model.Model.Notification
+                {
+                    DateCreation = DateTime.Now,
+                    NotificationTypeId = (int)EnNotificationType.FromSede,
+                    NotificationStateId = (int)EnNotificationState.Validated,
+                    SimulationId = trainingCourseTrainingService.TrainingServiceId,
+                    ToRoleId = (int)EnRole.PreveaPersonal,
+                    Observations =
+                        $"{Service.GetUser(User.Id).Initials} - Agregado el Curso {trainingCourseTrainingServiceFind.TrainingCourse.Name } a la Simulación [{trainingCourseTrainingServiceFind.TrainingService.Simulation.CompanyName}]"
+                };
+                var resultNotification = Service.SaveNotification(notification);
+                if (resultNotification.Status == Status.Error)
+                    return Json(new { result = resultNotification }, JsonRequestBehavior.AllowGet);
+
+                var data = AutoMapper.Mapper.Map<TrainingCourseTrainingServiceViewModel>(trainingCourseTrainingService);
+                return this.Jsonp(data);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Curso" });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult FindNode(string text)
+        {
+            var resultSearch = new Result();
+
+            var trainingCourse = Service.FindTrainingCourse(text);
+            if (trainingCourse == null)
+            {
+                resultSearch.Status = Status.Error;
+                resultSearch.Object = null;
+                resultSearch.Message = "Texto no encontrado";
+                return Json(new { result = resultSearch }, JsonRequestBehavior.AllowGet);
+            }
+
+            resultSearch.Status = Status.Ok;
+            resultSearch.Object = AutoMapper.Mapper.Map<TrainingCourseViewModel>(trainingCourse);
+            resultSearch.Message = "Texto encontrado";
+            return Json(new { result = resultSearch }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ChooseCourse()
+        {
+            return PartialView("~/Views/CommercialTool/Simulations/ChooseCourse.cshtml");
         }
     }
 }

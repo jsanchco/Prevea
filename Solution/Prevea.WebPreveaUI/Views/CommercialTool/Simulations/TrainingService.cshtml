@@ -1,8 +1,20 @@
 ﻿@model TrainingService
+    
+<style>
+    .k-window-titlebar {
+        height: 30px;
+    }
+
+    .k-window-content .k-content {
+        position: static;
+    }
+</style>
 
 <script>
     TrainingService.init(@Model.Id, @Model.Simulation.NumberEmployees);
 </script>
+
+@*<div id="chooseCourse"></div>*@
 
 <div class="row" id="pageTrainingService" style="margin: 8px">
 
@@ -18,6 +30,19 @@
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
+
+                <div class="row form-group">
+                    <label class="col-sm-4 control-label">Cursos</label>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12" style="width: 100%">
+                        <div id="gridTrainingCourseTrainingService" style="height: 23vh;"></div>
+                    </div>
+                </div>
+
+                <br />
+                <br />
 
                 <div class="row form-group">
                     <label class="col-sm-4 control-label">Observaciones</label>
@@ -38,14 +63,12 @@
 
                     <input type="submit" id="btnValidateTrainingService" value="Guardar" class="btn btn-prevea btn" />
                 </div>
-
             }
 
         </div>
-    </div>
+    </div>   
 
 </div>
 
 <br />
-
 

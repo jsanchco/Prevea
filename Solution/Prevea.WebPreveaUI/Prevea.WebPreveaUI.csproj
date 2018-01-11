@@ -179,6 +179,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\StartController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -653,6 +654,7 @@
     <Content Include="js\CommercialTool\ManagementCompanies\EconomicDataCompany.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\OfferReport.js" />
     <Content Include="js\CommercialTool\Simulations\AgencyService.js" />
+    <Content Include="js\CommercialTool\Simulations\ChooseCourse.js" />
     <Content Include="js\CommercialTool\Simulations\DetailSimulation.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\GeneralDataCompany.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\PaymentMethodCompany.js" />
@@ -664,6 +666,7 @@
     <Content Include="js\CommercialTool\Simulations\TrainingService.js" />
     <Content Include="js\Courses\ManagementCourses\ManagementCourses.js" />
     <Content Include="js\Notifications\Notifications.js" />
+    <Content Include="js\Profile\Profile.js" />
     <Content Include="js\Shared\Constants.js" />
     <Content Include="js\Document\AddDocument.js" />
     <Content Include="js\Document\AddDocumentWithParent.js" />
@@ -1110,6 +1113,8 @@
     <Content Include="Views\CommercialTool\Companies\AgencyCompany.cshtml" />
     <Content Include="Views\Shared\_LayoutReport.cshtml" />
     <Content Include="Views\CommercialTool\Companies\Reports\OfferReport.cshtml" />
+    <Content Include="Views\CommercialTool\Simulations\ChooseCourse.cshtml" />
+    <Content Include="Views\Profile\ProfileUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

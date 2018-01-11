@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Prevea.Model.Model
+﻿namespace Prevea.Model.Model
 {
     #region Using
 

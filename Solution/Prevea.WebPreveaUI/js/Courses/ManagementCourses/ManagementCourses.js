@@ -8,11 +8,10 @@
     inpModalityCourseId: "inpModalityCourse",
     btnDeleteNodeId: "btnDeleteNode",
 
-    trvCourseId: "trvCourse",
+    trvCoursesId: "trvCourses",
     confirmId: "confirm",
     
     coursesDataSource: null,
-    coursesTestDataSource: null,
 
     init: function () {
         kendo.culture("es-ES");
@@ -63,7 +62,7 @@
             }
         });      
 
-        $("#" + this.trvCourseId).kendoTreeView({
+        $("#" + this.trvCoursesId).kendoTreeView({
             //checkboxes: {
             //    checkChildren: true,
             //    template: "#= ManagementCourses.getTemplateCheckNode(data) #"
@@ -74,7 +73,7 @@
             dataTextField: "Name",
             select: ManagementCourses.onSelectNode
         });
-        //var treeview = $("#" + this.trvCourseId).data("kendoTreeView");
+        //var treeview = $("#" + this.trvCoursesId).data("kendoTreeView");
         //treeview.bind("check", ManagementCourses.treeCheck);
     },
 
@@ -85,7 +84,7 @@
         } else {
             if (data.item.IsCourse === true) {
                 var modality;
-                if (data.item.TrainingCourseModalityId === 1) {
+                if (parseInt(data.item.TrainingCourseModalityId) === 1) {
                     modality = "Presencial";
                 } else {
                     modality = "On Line";
@@ -142,7 +141,7 @@
             GeneralData.showNotification("No se puede añadir esta Familia", "", "error");
             return;
         } else {
-            var treeview = $("#" + this.trvCourseId).data("kendoTreeView");
+            var treeview = $("#" + this.trvCoursesId).data("kendoTreeView");
             if (treeview == null) {
                 GeneralData.showNotification("No se puede añadir esta Familia", "", "error");
                 return;
@@ -166,7 +165,7 @@
             GeneralData.showNotification("No se puede añadir este Título", "", "error");
             return;
         } else {
-            var treeview = $("#" + this.trvCourseId).data("kendoTreeView");
+            var treeview = $("#" + this.trvCoursesId).data("kendoTreeView");
             if (treeview == null) {
                 GeneralData.showNotification("No se puede añadir este Título", "", "error");
                 return;
@@ -190,7 +189,7 @@
             GeneralData.showNotification("No se puede añadir este Curso", "", "error");
             return;
         } else {
-            var treeview = $("#" + this.trvCourseId).data("kendoTreeView");
+            var treeview = $("#" + this.trvCoursesId).data("kendoTreeView");
             if (treeview == null) {
                 GeneralData.showNotification("No se puede añadir este Curso", "", "error");
                 return;
@@ -208,8 +207,8 @@
     },
 
     clearCheckSelected: function() {
-        var treeview = $("#" + this.trvCourseId).data("kendoTreeView");
-        $("#" + this.trvCourseId).find('input:checkbox:checked').each(function () {
+        var treeview = $("#" + this.trvCoursesId).data("kendoTreeView");
+        $("#" + this.trvCoursesId).find('input:checkbox:checked').each(function () {
             var item = treeview.dataItem(this);
             item.set("checked", false);
         });
@@ -225,7 +224,7 @@
             dataType: "json",
             success: function (data) {
                 if (data.result.Status === Constants.resultStatus.Ok) {
-                    var treeview = $("#" + ManagementCourses.trvCourseId).data("kendoTreeView");
+                    var treeview = $("#" + ManagementCourses.trvCoursesId).data("kendoTreeView");
                     var rootDataItem = treeview.dataSource.get(1);
                     var rootElement = treeview.findByUid(rootDataItem.uid);
 
@@ -249,7 +248,7 @@
     },
 
     addTitle: function (name) {
-        var treeview = $("#" + ManagementCourses.trvCourseId).data("kendoTreeView");
+        var treeview = $("#" + ManagementCourses.trvCoursesId).data("kendoTreeView");
         var selectedNode = treeview.select();
         if (selectedNode.length === 0) {
             GeneralData.showNotification("Debes seleccionar una Familia", "", "error");
@@ -298,7 +297,7 @@
     },
 
     addCourse: function (name) {
-        var treeview = $("#" + ManagementCourses.trvCourseId).data("kendoTreeView");
+        var treeview = $("#" + ManagementCourses.trvCoursesId).data("kendoTreeView");
         var selectedNode = treeview.select();
         if (selectedNode.length === 0) {
             GeneralData.showNotification("Debes seleccionar un Título", "", "error");
@@ -313,6 +312,16 @@
 
         if (dataItem.IsTitle === false) {
             GeneralData.showNotification("Debes seleccionar un Título", "", "error");
+            return;
+        }
+
+        if (parseInt($("#" + ManagementCourses.inpHoursCourseId).val()) === 0) {
+            GeneralData.showNotification("Debes agregar horas al Curso", "", "error");
+            return;
+        }
+
+        if (parseFloat($("#" + ManagementCourses.inpPriceCourseId).val()) === 0) {
+            GeneralData.showNotification("Debes agregar precio al Curso", "", "error");
             return;
         }
 
@@ -338,7 +347,7 @@
                         IsCourse: true,
                         Hours: $("#" + ManagementCourses.inpHoursCourseId).val(),
                         Price: $("#" + ManagementCourses.inpPriceCourseId).val(),
-                        TrainingCourseModalityId: $("#" + ManagementCourses.inpPriceCourseId).val()
+                        TrainingCourseModalityId: $("#" + ManagementCourses.inpModalityCourseId).val()
                     }, selectedNode);
 
                     GeneralData.showNotification(Constants.ok, "", "success");
@@ -416,7 +425,7 @@
     },
 
     deleteNode: function () {
-        var treeview = $("#" + ManagementCourses.trvCourseId).data("kendoTreeView");
+        var treeview = $("#" + ManagementCourses.trvCoursesId).data("kendoTreeView");
         var selectedNode = treeview.select();
 
         if (selectedNode.length === 0) {

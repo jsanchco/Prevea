@@ -11,6 +11,12 @@
         [Key, Required]
         public int Id { get; set; }
 
+        public int AssistantsNumber { get; set; }
+
+        public decimal Price { get; set; }
+
+        public decimal Total { get; set; }
+
         [Required]
         public int TrainingCourseId { get; set; }
         public TrainingCourse TrainingCourse { get; set; }

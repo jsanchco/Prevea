@@ -72,6 +72,13 @@
         return html;
     },
 
+    getColumnTemplateCurrencyRight: function (data, format) {
+        var value = kendo.toString(data, format);
+        var html = kendo.format("<div align='right'>{0}</div>", value);
+      
+        return html;
+    },
+
     getColumnTemplateCenter: function (data) {
         var html = kendo.format("<div align='center'>{0}</div>", data);
 

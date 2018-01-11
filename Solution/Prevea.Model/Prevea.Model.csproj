@@ -101,6 +101,7 @@
     <Compile Include="ViewModel\PaymentMethodViewModel.cs" />
     <Compile Include="ViewModel\PaymentModeViewModel.cs" />
     <Compile Include="ViewModel\SimulationViewModel.cs" />
+    <Compile Include="ViewModel\TrainingCourseTrainingServiceViewModel.cs" />
     <Compile Include="ViewModel\TrainingCourseViewModel.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
   </ItemGroup>

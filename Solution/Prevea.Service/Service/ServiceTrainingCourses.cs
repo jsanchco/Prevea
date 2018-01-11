@@ -119,5 +119,10 @@
         {
             return Repository.GetTrainingCourses(trainingCourse);
         }
+
+        public TrainingCourse FindTrainingCourse(string text)
+        {
+            return Repository.FindTrainingCourse(text);
+        }
     }
 }

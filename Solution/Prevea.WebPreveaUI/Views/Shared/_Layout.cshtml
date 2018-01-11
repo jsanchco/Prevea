@@ -109,10 +109,12 @@
     <script src="~/js/CommercialTool/Simulations/ForeignPreventionService.js"></script>
     <script src="~/js/CommercialTool/Simulations/AgencyService.js"></script>
     <script src="~/js/CommercialTool/Simulations/TrainingService.js"></script>
+    <script src="~/js/CommercialTool/Simulations/ChooseCourse.js"></script>
     <script src="~/js/User/Users.js"></script>
     <script src="~/js/Notifications/Notifications.js"></script>
     <script src="~/js/Courses/ManagementCourses/ManagementCourses.js"></script>
     <script src="~/js/CommercialTool/ManagementCompanies/OfferReport.js"></script>
+    <script src="~/js/Profile/Profile.js"></script>
     <script src="~/js/Error/ErrorPage.js"></script>
     <script src="~/js/Shared/Templates.js"></script>
     <script src="~/js/Shared/Constants.js"></script>
@@ -163,7 +165,6 @@
                             }
                         }
                         <img width="55" class="img-circle" alt="" src="~/Images/@pathPhoto">
-                        @*<img width="55" class="img-circle" alt="" src="~/Images/image_not_found.png">*@
                         <span>Hola,</span>
                         <strong>@name</strong>
                     </a>
@@ -174,9 +175,9 @@
                         <span id="numberNotifications" style="font-size:xx-small; margin-left: -5px; margin-top: -5px; vertical-align: text-top;"></span>
                         Avisos 
                     </a>
-                    <a href="#">
-                        <i class="icon-doc-text"></i>
-                        Ajustes
+                    <a id="profile" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                        <i class="fa fa-user"></i>
+                        Perfil
                     </a>
                     <a id="logOff" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
                         <i class="icon-lock"></i>
@@ -218,6 +219,8 @@
         </div>
 
     </div>
+    
+    <div id="chooseCourse"></div>
 
 </div>
     

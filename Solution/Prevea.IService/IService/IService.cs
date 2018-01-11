@@ -221,5 +221,18 @@
 
         List<TrainingCourse> GetTrainingCourses(int? trainingCourse);
         #endregion
+
+        #region TrainingCourseTrainingService
+
+        TrainingCourseTrainingService GetTrainingCourseTrainingService(int trainingCourseTrainingService);
+        List<TrainingCourseTrainingService> GetTrainingCoursesTrainingServiceByTrainingService(int trainingServiceId);
+        List<TrainingCourseTrainingService> GetTrainingCourseTrainingServicesByTrainingCourse(int trainingCourseId);
+        List<TrainingCourse> GetTrainingCoursesByTrainingService(int trainingServiceId);
+        List<TrainingService> GetTrainingServicesByTrainingCourse(int trainingCourseId);
+        Result SaveTrainingCourseTrainingService(TrainingCourseTrainingService trainingCourseTrainingService);
+        Result DeleteTrainingCourseTrainingService(int id);
+        TrainingCourse FindTrainingCourse(string text);
+
+        #endregion
     }
 }
