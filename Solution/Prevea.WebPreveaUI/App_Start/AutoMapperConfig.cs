@@ -86,6 +86,14 @@
             AutoMapper.Mapper.CreateMap<TrainingCourseTrainingService, TrainingCourseTrainingServiceViewModel>()
                 .ForMember(x => x.TrainingCourseName, x => x.MapFrom(y => y.TrainingCourse.Name));
             AutoMapper.Mapper.CreateMap<TrainingCourseViewModel, TrainingCourse>();
+
+            AutoMapper.Mapper.CreateMap<WorkCenter, WorkCenterViewModel>()
+                .ForMember(x => x.EstablishmentTypeName, x => x.MapFrom(y => y.EstablishmentType.Name))
+                .ForMember(x => x.WorkCenterStateName, x => x.MapFrom(y => y.WorkCenterState.Name));
+            AutoMapper.Mapper.CreateMap<WorkCenterViewModel, WorkCenter>();
+
+            AutoMapper.Mapper.CreateMap<EstablishmentTypeViewModel, EstablishmentType>();
+            AutoMapper.Mapper.CreateMap<EstablishmentType, EstablishmentTypeViewModel>();
         }
     }
 }

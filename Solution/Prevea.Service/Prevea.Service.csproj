@@ -51,6 +51,7 @@
     <Compile Include="Service\ServiceContractualsDocuments.cs" />
     <Compile Include="Service\ServiceDocuments.cs" />
     <Compile Include="Service\ServiceEconomicsDatas.cs" />
+    <Compile Include="Service\ServiceEstablishmentTypes.cs" />
     <Compile Include="Service\ServiceForeignPreventionServices.cs" />
     <Compile Include="Service\ServiceHistoricDownloadDocuments.cs" />
     <Compile Include="Service\ServiceModesPayment.cs" />
@@ -64,6 +65,8 @@
     <Compile Include="Service\ServiceTrainingCoursesTrainingServices.cs" />
     <Compile Include="Service\ServiceTrainingServices.cs" />
     <Compile Include="Service\ServiceUsers.cs" />
+    <Compile Include="Service\ServiceWorkCenters.cs" />
+    <Compile Include="Service\ServiceWorkCentersCompany.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Prevea.IRepository\Prevea.IRepository.csproj">

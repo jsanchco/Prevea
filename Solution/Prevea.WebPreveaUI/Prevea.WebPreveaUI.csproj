@@ -653,6 +653,7 @@
     <Content Include="js\CommercialTool\ManagementCompanies\ContractualsDocumentsCompany.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\EconomicDataCompany.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\OfferReport.js" />
+    <Content Include="js\CommercialTool\ManagementCompanies\WorkCentersCompany.js" />
     <Content Include="js\CommercialTool\Simulations\AgencyService.js" />
     <Content Include="js\CommercialTool\Simulations\ChooseCourse.js" />
     <Content Include="js\CommercialTool\Simulations\DetailSimulation.js" />
@@ -1115,6 +1116,7 @@
     <Content Include="Views\CommercialTool\Companies\Reports\OfferReport.cshtml" />
     <Content Include="Views\CommercialTool\Simulations\ChooseCourse.cshtml" />
     <Content Include="Views\Profile\ProfileUser.cshtml" />
+    <Content Include="Views\CommercialTool\Companies\WorkCentersCompany.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

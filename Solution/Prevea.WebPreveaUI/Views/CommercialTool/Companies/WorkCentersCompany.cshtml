@@ -1,0 +1,23 @@
+﻿@model Company
+
+<style>
+    .k-window-titlebar {
+        height: 30px;
+    }
+</style>
+
+<script>
+    WorkCentersCompany.init("@Model.Id");
+</script>
+
+<div class="row" id="pageWorkCentersCompany" style="margin: 8px">
+    
+    <div id="confirm"></div>
+
+    <div class="row">
+        <div class="col-sm-12" style="width: 100%">
+            <div id="gridWorkCentersCompany" style="height: 52vh;"></div>
+        </div>
+    </div>
+
+</div>

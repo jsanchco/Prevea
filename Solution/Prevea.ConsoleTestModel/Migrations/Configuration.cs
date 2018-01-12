@@ -255,6 +255,26 @@ namespace Prevea.ConsoleTestModel.Migrations
             }
             context.SaveChanges();
 
+            var establishmentTypes = (EnEstablishmentType[])Enum.GetValues(typeof(EnEstablishmentType));
+            foreach (var dState in establishmentTypes)
+            {
+                if (dState == EnEstablishmentType.NotMapped)
+                    continue;
+
+                context.EstablishmentTypes.AddOrUpdate(new EstablishmentType { Name = dState.ToString() });
+            }
+            context.SaveChanges();
+
+            var worksCenterStates = (EnWorkCenterState[])Enum.GetValues(typeof(EnWorkCenterState));
+            foreach (var dState in worksCenterStates)
+            {
+                if (dState == EnWorkCenterState.NotMapped)
+                    continue;
+
+                context.WorkCenterStates.AddOrUpdate(new WorkCenterState { Name = dState.ToString() });
+            }
+            context.SaveChanges();
+
             context.TrainingCourses.Add(new TrainingCourse
             {
                 IsRoot = true

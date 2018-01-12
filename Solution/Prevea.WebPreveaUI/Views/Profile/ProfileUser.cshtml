@@ -1,4 +1,4 @@
-﻿@model User
+﻿@model UserViewModel
 
 <script>
     Profile.init(@Model.Id);
@@ -21,12 +21,55 @@
             </div>
         </div>
     </div>
+    
+    @{
+        var pathPhoto = "image_not_found.png";
+        var name = "";
+        if (Model != null)
+        {
+            if (File.Exists(string.Format("{0}/user_{1}.png", Server.MapPath("~/Images"), Model.Id)))
+            {
+                pathPhoto = string.Format("user_{0}.png", Model.Id);
+            }
+            name = string.Format("{0} {1}", Model.FirstName, Model.LastName);
+        }
+    }
 
     <div id="contentPartialView">
-        <div class="row">
-            <div class="col-sm-12">
+        
+        <div class="profile-env">
+            
+            <header class="row">
                 
-            </div>
+                <div class="col-sm-2">
+                    <a href="#" class="profile-picture">
+                        <img src="~/Images/@pathPhoto" class="img-responsive img-circle"/>
+                    </a>
+                </div>
+
+                <div class="col-sm-7">
+                    <ul class="profile-info-sections">
+                        <li>
+                            <div class="profile-name">
+                                <strong>
+                                    <a href="#">@name</a>                                    
+                                </strong>
+                                <span><a href="#">@Model.RoleName</a></span>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="profile-stat">
+                                <h3>@ViewBag.SimulationsAssigned</h3>
+                                <span><a href="#">Simulaciones asignadas</a></span>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </header>
         </div>
     </div>
 

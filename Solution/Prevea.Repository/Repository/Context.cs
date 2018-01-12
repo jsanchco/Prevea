@@ -47,6 +47,10 @@
         public DbSet<TrainingCourseModality> TrainingCourseModalities { get; set; }
         public DbSet<TrainingCourse> TrainingCourses { get; set; }
         public DbSet<TrainingCourseTrainingService> TrainingCoursesTrainingServices { get; set; }
+        public DbSet<EstablishmentType> EstablishmentTypes { get; set; }
+        public DbSet<WorkCenter> WorkCenters { get; set; }
+        public DbSet<WorkCenterState> WorkCenterStates { get; set; }
+        public DbSet<WorkCenterCompany> WorkCentersCompany { get; set; }
 
         #endregion
 

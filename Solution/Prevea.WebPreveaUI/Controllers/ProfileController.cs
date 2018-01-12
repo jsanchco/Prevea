@@ -4,6 +4,8 @@
 
     using System.Web.Mvc;
     using HelpersClass;
+    using System.Linq;
+    using Model.ViewModel;
 
     #endregion
 
@@ -20,7 +22,9 @@
         // GET: Profile
         public ActionResult ProfileUser()
         {
-            var user = Service.GetUser(User.Id);
+            var user = AutoMapper.Mapper.Map<UserViewModel>(Service.GetUser(User.Id));
+
+            ViewBag.SimulationsAssigned = Service.GetSimulations().Count(x => x.UserAssignedId == User.Id);
 
             return PartialView(user);
         }  

@@ -63,6 +63,7 @@
     <Compile Include="Repository\RepositoryEconomicsDatas.cs" />
     <Compile Include="Repository\RepositoryEmployees.cs" />
     <Compile Include="Repository\RepositoryEntities.cs" />
+    <Compile Include="Repository\RepositoryEstablishmentTypes.cs" />
     <Compile Include="Repository\RepositoryForeignPreventionServices.cs" />
     <Compile Include="Repository\RepositoryHistoricDownloadDocuments.cs" />
     <Compile Include="Repository\RepositoryModesPayment.cs" />
@@ -77,6 +78,8 @@
     <Compile Include="Repository\RepositoryTrainingCoursesTrainingServices.cs" />
     <Compile Include="Repository\RepositoryTrainingServices.cs" />
     <Compile Include="Repository\RepositoryUsers.cs" />
+    <Compile Include="Repository\RepositoryWorkCenters.cs" />
+    <Compile Include="Repository\RepositoryWorkCentersCompany.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

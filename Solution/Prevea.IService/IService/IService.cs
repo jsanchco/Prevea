@@ -234,5 +234,29 @@
         TrainingCourse FindTrainingCourse(string text);
 
         #endregion
+
+        #region WorkCenter
+
+        List<WorkCenter> GetWorkCenters();
+        WorkCenter GetWorkCenter(int id);
+        Result SaveWorkCenter(WorkCenter workCenter);
+        Result DeleteWorkCenter(int id);
+        Result SubscribeWorkCenter(int id, bool subscribe);
+
+        #endregion
+
+        #region WorkCenterCompany
+
+        List<WorkCenter> GetWorkCentersByCompany(int companyId);
+        Result SaveWorkCenterCompany(int companyId, WorkCenter workCenter);
+        Result DeleteWorkCenterCompany(int workCenterId);
+
+        #endregion
+
+        #region EstablishmentType
+
+        List<EstablishmentType> GetEstablishmentTypes();        
+
+        #endregion
     }
 }

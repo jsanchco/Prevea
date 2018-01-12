@@ -1,54 +1,54 @@
-﻿var ContactPersonsCompany = kendo.observable({
+﻿var WorkCentersCompany = kendo.observable({
 
-    gridContactPersonsCompanyId: "gridContactPersonsCompany",
+    gridWorkCentersCompanyId: "gridWorkCentersCompany",
     confirmId: "confirm",
 
     companyId: null,
 
-    contactPersonsCompanyDataSource: null,
+    workCentersCompanyDataSource: null,
+    establishmentTypeDataSorce: null,
 
     init: function (companyId) {
         this.companyId = companyId;
 
-        this.createContactPersonsCompanyDataSource();
-        this.createContactPersonsCompanyGrid();
+        this.createWorkCentersCompanyDataSource();
+        this.createEstablishmentTypeDataSource();
+        this.createWorkCentersCompanyGrid();
     },
 
-    createContactPersonsCompanyDataSource: function () {
-        var that = this;
-        this.contactPersonsCompanyDataSource = new kendo.data.DataSource({
+    createWorkCentersCompanyDataSource: function () {
+        this.workCentersCompanyDataSource = new kendo.data.DataSource({
             schema: {
                 model: {
                     id: "Id",
                     fields: {
                         Id: { type: "number", defaultValue: 0 },
-                        FirstName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
-                        LastName: { type: "string" },
-                        PhoneNumber: { type: "string" },
-                        Email: { type: "string" },
-                        DNI: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
-                        WorkStation: { type: "string" },
-                        UserStateId: { type: "number", defaultValue: 1 },
-                        CompanyId: { type: "number", defaultValue: that.companyId }
+                        Address: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
+                        Description: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
+                        CompanyId: { type: "number", defaultValue: WorkCentersCompany.companyId },
+                        EstablishmentTypeId: { type: "number", defaultValue: 1 },
+                        EstablishmentTypeName: { type: "string" },
+                        WorkCenterStateId: { type: "number", defaultValue: 1 },
+                        WorkCenterStateName: { type: "string" }
                     }
                 }
             },
             transport: {
                 read: {
-                    url: "/Companies/ContactPersonsCompany_Read",
+                    url: "/Companies/WorkCentersCompany_Read",
                     dataType: "jsonp",
                     data: { companyId: this.companyId }
                 },
                 update: {
-                    url: "/Companies/ContactPersonsCompany_Update",
+                    url: "/Companies/WorkCentersCompany_Update",
                     dataType: "jsonp"
                 },
                 destroy: {
-                    url: "/Companies/ContactPersonsCompany_Destroy",
+                    url: "/Companies/WorkCentersCompany_Destroy",
                     dataType: "jsonp"
                 },
                 create: {
-                    url: "/Companies/ContactPersonsCompany_Create",
+                    url: "/Companies/WorkCentersCompany_Create",
                     dataType: "jsonp"
                 },
                 parameterMap: function (options, operation) {
@@ -56,7 +56,7 @@
                         return { companyId: options.companyId };
                     }
                     if (operation !== "read" && options) {
-                        return { contactPerson: kendo.stringify(options) };
+                        return { workCenter: kendo.stringify(options) };
                     }
 
                     return null;
@@ -77,44 +77,55 @@
         });
     },
 
-    createContactPersonsCompanyGrid: function () {
+    createEstablishmentTypeDataSource: function () {
+        WorkCentersCompany.establishmentTypeDataSorce = new kendo.data.DataSource({
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: { type: "number" },
+                        Name: { type: "string" },
+                        Description: { type: "string" }
+                    }
+                }
+            },
+            transport: {
+                read: {
+                    url: "/Companies/GetEstablishmentTypes",
+                    dataType: "jsonp"
+                }
+            }
+        });
+
+        WorkCentersCompany.establishmentTypeDataSorce.read();
+    },
+
+    createWorkCentersCompanyGrid: function () {
         var that = this;
-        $("#" + this.gridContactPersonsCompanyId).kendoGrid({
+        $("#" + this.gridWorkCentersCompanyId).kendoGrid({
             columns: [{
-                field: "FirstName",
-                title: "Nombre",
-                width: 80
+                field: "Address",
+                title: "Dirección",
+                width: 200
             }, {
-                field: "LastName",
-                title: "Apellidos",
-                width: 130,
+                field: "Description",
+                title: "Descripción",
+                width: 200,
                 groupable: "false"
             }, {
-                field: "PhoneNumber",
-                title: "Teléfono",
-                width: 80,
-                groupable: "false"
-            }, {
-                field: "Email",
-                title: "Email",
-                width: 100,
-                groupable: "false"
-            }, {
-                field: "DNI",
-                title: "DNI",
-                width: 100,
-                groupable: "false"
-            }, {
-                field: "WorkStation",
-                title: "Puesto de Trabajo",
-                width: 160
+                field: "EstablishmentTypeId",
+                title: "Establecimiento",
+                width: "90px",
+                editor: WorkCentersCompany.establishmentTypesDropDownEditor,
+                template: "#= WorkCentersCompany.getEstablishmentTypeDescription(data.EstablishmentTypeId) #",
+                groupHeaderTemplate: "Agrupado : #= WorkCentersCompany.getEstablishmentTypeDescription(value) #"
             }, {
                 title: "Comandos",
                 field: "Commands",
                 width: 120,
                 groupable: "false",
                 filterable: false,                
-                template: "#= ContactPersonsCompany.getColumnTemplateCommands(data) #"
+                template: "#= WorkCentersCompany.getColumnTemplateCommands(data) #"
             }],
             pageable: {
                 buttonCount: 2,
@@ -159,7 +170,7 @@
                     }
                 }
             },
-            dataSource: this.contactPersonsCompanyDataSource,
+            dataSource: this.workCentersCompanyDataSource,
             toolbar: this.getTemplateToolBar(),
             editable: {
                 mode: "inline",
@@ -172,13 +183,17 @@
                 mode: "single",
                 allowUnsort: false
             },
-            groupable: false,
+            groupable: {
+                messages: {
+                    empty: "Arrastre un encabezado de columna y póngalo aquí para agrupar por ella"
+                }
+            },
             dataBound: function (e) {
-                var grid = $("#" + that.gridContactPersonsCompanyId).data("kendoGrid");
+                var grid = $("#" + that.gridWorkCentersCompanyId).data("kendoGrid");
                 var items = e.sender.items();
                 items.each(function () {
                     var dataItem = grid.dataItem(this);
-                    if (dataItem.UserStateId === 2 || dataItem.UserStateId === 3) {
+                    if (dataItem.WorkCenterStateId === Constants.workCenterState.Baja) {
                         this.className = "unSubscribe";
                     }
                 });
@@ -193,12 +208,35 @@
                 commandCell.html(html);
             }
         });
-        kendo.bind($("#" + this.gridContactPersonsCompanyId), this);
+        kendo.bind($("#" + this.gridWorkCentersCompanyId), this);
+    },
+
+    establishmentTypesDropDownEditor: function (container, options) {
+        $("<input required name='" + options.field + "'/>")
+            .appendTo(container)
+            .kendoDropDownList({
+                dataTextField: "Description",
+                optionLabel: "Selecciona ...",
+                dataValueField: "Id",
+                dataSource: WorkCentersCompany.establishmentTypeDataSorce
+            });
+    },
+
+    getEstablishmentTypeDescription: function (establishmentTypeId) {
+        if (WorkCentersCompany.establishmentTypeDataSorce.data().length === 0) {
+            WorkCentersCompany.establishmentTypeDataSorce.read();
+        }
+        for (var index = 0; index < WorkCentersCompany.establishmentTypeDataSorce.data().length; index++) {
+            if (WorkCentersCompany.establishmentTypeDataSorce.data()[index].Id === establishmentTypeId) {
+                return WorkCentersCompany.establishmentTypeDataSorce.data()[index].Description;
+            }
+        }
+        return null;
     },
 
     getTemplateToolBar: function () {
         var html = "<div class='toolbar'>";
-        html += "<span name='create' class='k-grid-add' id='createUser'>";
+        html += "<span name='create' class='k-grid-add' id='createWorkCenter'>";
         html += "<a class='btn btn-prevea k-grid-add' role='button'> Agregar nuevo</a>";
         html += "</span></div>";
 
@@ -207,26 +245,26 @@
 
     getColumnTemplateCommands: function (data) {
         var html = "<div align='center'>";        
-        if (data.UserStateId === 2 || data.UserStateId === 3) {
-            html += kendo.format("<a toggle='tooltip' title='Dar de Alta' onclick='ContactPersonsCompany.goToSubscribeContactPersonsCompany(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-thumbs-up' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+        if (data.WorkCenterStateId === Constants.workCenterState.Baja) {
+            html += kendo.format("<a toggle='tooltip' title='Dar de Alta' onclick='WorkCentersCompany.goToSubscribeWorkCentersCompany(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-thumbs-up' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
         } else {
-            html += kendo.format("<a toggle='tooltip' title='Editar' onclick='ContactPersonsCompany.goToEditContactPersonsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
-            html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='ContactPersonsCompany.goToDeleteContactPersonsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+            html += kendo.format("<a toggle='tooltip' title='Editar' onclick='WorkCentersCompany.goToEditWorkCentersCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+            html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='WorkCentersCompany.goToDeleteWorkCentersCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
         }        
         html += kendo.format("</div>");
 
         return html;
     },
 
-    goToEditContactPersonsCompany: function (userId) {
-        var grid = $("#" + ContactPersonsCompany.gridContactPersonsCompanyId).data("kendoGrid");
+    goToEditWorkCentersCompany: function (userId) {
+        var grid = $("#" + WorkCentersCompany.gridWorkCentersCompanyId).data("kendoGrid");
         var item = grid.dataSource.get(userId);
         var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
 
         grid.editRow(tr);
     },
 
-    goToDeleteContactPersonsCompany: function (userId) {
+    goToDeleteWorkCentersCompany: function (userId) {
         var that = this;
 
         var dialog = $("#" + this.confirmId);
@@ -235,20 +273,20 @@
             title: "<strong>Empresas</strong>",
             closable: false,
             modal: true,
-            content: "¿Quieres <strong>Dar de Baja/Borrar</strong> a la Persona de Contacto?",
+            content: "¿Quieres <strong>Dar de Baja/Borrar</strong> al Centro de Trabajo?",
             actions: [
                 {
                     text: "Cancelar", primary: true
                 },
                 {
                     text: "Dar de Baja", action: function () {
-                        that.goToSubscribeContactPersonsCompany(userId, false);
+                        that.goToSubscribeWorkCentersCompany(userId, false);
                     }
                 },
                 {
                     text: "Borrar", action: function ()
                     {
-                        var grid = $("#" + ContactPersonsCompany.gridContactPersonsCompanyId).data("kendoGrid");
+                        var grid = $("#" + that.gridWorkCentersCompanyId).data("kendoGrid");
                         var item = grid.dataSource.get(userId);
                         var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
 
@@ -260,28 +298,32 @@
         dialog.data("kendoDialog").open();
     },
 
-    goToSubscribeContactPersonsCompany: function (userId, subscribe) {
+    goToSubscribeWorkCentersCompany: function (workCentersId, subscribe) {
         var that = this;
 
         $.ajax({
-            url: "/Companies/ContactPersonsCompany_Subscribe",
+            url: "/Companies/WorkCentersCompany_Subscribe",
             type: "post",
             cache: false,
             datatype: "json",
             data: {
-                companyId: that.companyId,
-                userId: userId,
+                workCenterId: workCentersId,
                 subscribe: subscribe
             },
             success: function (result) {
-                var grid = $("#" + ContactPersonsCompany.gridContactPersonsCompanyId).data("kendoGrid");
-                var item = grid.dataSource.get(userId);
+                if (result.Status === Constants.resultStatus.Error) {
+                    GeneralData.showNotification(Constants.ko, "", "error");
+                    return;
+                }
+
+                var grid = $("#" + that.gridWorkCentersCompanyId).data("kendoGrid");
+                var item = grid.dataSource.get(workCentersId);
                 var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
 
                 if (subscribe) {
-                    item.set("UserStateId", 1);
+                    item.set("WorkCenterStateId", Constants.workCenterState.Alta);
                 } else {
-                    item.set("UserStateId", 2);
+                    item.set("WorkCenterStateId", Constants.workCenterState.Baja);
                 }
                 
                 var cellName = "Commands";

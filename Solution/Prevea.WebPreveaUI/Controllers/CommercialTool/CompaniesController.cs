@@ -628,7 +628,7 @@
 
         #endregion
 
-        #region Documentos
+        #region Documents
 
         [HttpGet]
         public ActionResult ContractualsDocumentsCompany(int companyId)
@@ -706,7 +706,9 @@
         public ActionResult OfferReport(int contractualDocumentId)
         {
             var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
+
             ViewBag.ContractualDocumentId = contractualDocumentId;
+            ViewBag.NumberWorkCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId).Count;
 
             return View("~/Views/CommercialTool/Companies/Reports/OfferReport.cshtml", contractualDocument.Company);
         }
@@ -742,6 +744,128 @@
             }      
         }
 
+        #endregion
+
+        #region WorksCenter
+
+        [HttpGet]
+        public ActionResult WorkCentersCompany(int companyId)
+        {
+            return PartialView("~/Views/CommercialTool/Companies/WorkCentersCompany.cshtml", Service.GetCompany(companyId));
+        }
+
+        [HttpGet]
+        [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial")]
+        public JsonResult WorkCentersCompany_Read([DataSourceRequest] DataSourceRequest request, int companyId)
+        {
+            var data = AutoMapper.Mapper.Map<List<WorkCenterViewModel>>(Service.GetWorkCentersByCompany(companyId));
+
+            return this.Jsonp(data);
+        }
+
+        public JsonResult WorkCentersCompany_Update()
+        {
+            try
+            {
+                var workCenter = this.DeserializeObject<WorkCenter>("workCenter");
+                if (workCenter == null)
+                {
+                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Centro de Trabajo" });
+                }
+
+                var result = Service.SaveWorkCenter(workCenter);
+
+                return result.Status != Status.Error ? this.Jsonp(workCenter) : this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Centro de Trabajo" });
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Centro de Trabajo" });
+            }
+        }
+
+        public ActionResult WorkCentersCompany_Destroy()
+        {
+            try
+            {
+                var workCenter = this.DeserializeObject<WorkCenter>("workCenter");
+                if (workCenter == null)
+                {
+                    return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del Centro de Trabajo" });
+                }
+
+                var result = Service.DeleteWorkCenterCompany(workCenter.Id);
+
+                if (result.Status == Status.Error)
+                {
+                    return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del Centro de Trabajo" });
+                }
+
+                return this.Jsonp(AutoMapper.Mapper.Map<WorkCenterViewModel>(workCenter));
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado de la Persona de Contacto" });
+            }
+        }
+
+        public ActionResult WorkCentersCompany_Create()
+        {
+            try
+            {
+                var workCenter = this.DeserializeObject<WorkCenterViewModel>("workCenter");
+                if (workCenter == null)
+                {
+                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Centro de Trabajo" });
+                }
+
+                var result = Service.SaveWorkCenterCompany(workCenter.CompanyId, AutoMapper.Mapper.Map<WorkCenter>(workCenter));
+
+                if (result.Status != Status.Error)
+                {
+                    var workCenterCompany = result.Object as WorkCenterCompany;
+                    if (workCenterCompany != null)
+                        workCenter.Id = workCenterCompany.WorkCenterId;
+
+                    return this.Jsonp(workCenter);
+                }
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Centro de Trabajo" });
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Centro de Trabajo" });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult WorkCentersCompany_Subscribe(int workCenterId, bool subscribe)
+        {
+            try
+            {
+                var result = Service.SubscribeWorkCenter(workCenterId, subscribe);
+
+                return Json(result);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+                return Json(subscribe ? new { Errors = "Se ha producido un error al Dar de Alta al Centro de Trabajo" } : new { Errors = "Se ha producido un error al Dar de Baja al Centro de Trabajo" });
+            }
+        }
+
+        public JsonResult GetEstablishmentTypes([DataSourceRequest] DataSourceRequest request)
+        {
+            var data = AutoMapper.Mapper.Map<List<EstablishmentTypeViewModel>>(Service.GetEstablishmentTypes());
+
+            return this.Jsonp(data);
+        }
         #endregion
     }
 }

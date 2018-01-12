@@ -42,7 +42,7 @@
             error.push("Debes añadir una Provincia");
         }
 
-        if ($("#" + this.cmbCnae).data("kendoDropDownList").val() === 0) {
+        if (parseInt($("#" + this.cmbCnae).data("kendoDropDownList").value()) === 0) {
             error.push("Debes añadir una Actividad");
         }
 

@@ -104,6 +104,7 @@
     <script src="~/js/CommercialTool/ManagementCompanies/EconomicDataCompany.js"></script>
     <script src="~/js/CommercialTool/ManagementCompanies/ContractualsDocumentsCompany.js"></script>
     <script src="~/js/CommercialTool/ManagementCompanies/PaymentMethodCompany.js"></script>
+    <script src="~/js/CommercialTool/ManagementCompanies/WorkCentersCompany.js"></script>
     <script src="~/js/CommercialTool/Simulations/Simulations.js"></script>
     <script src="~/js/CommercialTool/Simulations/DetailSimulation.js"></script>
     <script src="~/js/CommercialTool/Simulations/ForeignPreventionService.js"></script>
@@ -157,11 +158,11 @@
                             var name = "";
                             if (Model != null)
                             {
-                                if (File.Exists(String.Format("{0}/user_{1}.png", Server.MapPath("~/Images"), Model.Id)))
+                                if (File.Exists(string.Format("{0}/user_{1}.png", Server.MapPath("~/Images"), Model.Id)))
                                 {
-                                    pathPhoto = String.Format("user_{0}.png", Model.Id);
+                                    pathPhoto = string.Format("user_{0}.png", Model.Id);
                                 }
-                                name = String.Format("{0} {1}", Model.FirstName, Model.LastName);
+                                name = string.Format("{0} {1}", Model.FirstName, Model.LastName);
                             }
                         }
                         <img width="55" class="img-circle" alt="" src="~/Images/@pathPhoto">

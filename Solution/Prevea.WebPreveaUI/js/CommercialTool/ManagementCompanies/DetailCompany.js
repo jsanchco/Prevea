@@ -167,9 +167,13 @@
             contentUrl: kendo.format("/Companies/ContactPersonsCompany?companyId={0}", this.id)
         });
         tabStrip.append({
-            text: "GESTORÍA",
-            contentUrl: kendo.format("/Companies/AgencyCompany?companyId={0}", this.id)
+            text: "CENTROS de TRABAJO",
+            contentUrl: kendo.format("/Companies/WorkCentersCompany?companyId={0}", this.id)
         });
+        //tabStrip.append({
+        //    text: "GESTORÍA",
+        //    contentUrl: kendo.format("/Companies/AgencyCompany?companyId={0}", this.id)
+        //});
         tabStrip.append({
             text: "TRABAJADORES",
             contentUrl: kendo.format("/Companies/EmployeesCompany?companyId={0}", this.id)

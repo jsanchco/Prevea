@@ -119,6 +119,8 @@
                     return "On Line";
                 case "Otros":
                     return "Otros";
+                case "Permanent":
+                    return "Permanente";
 
                 default:
                     return name;

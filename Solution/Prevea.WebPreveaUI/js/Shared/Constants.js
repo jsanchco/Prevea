@@ -43,6 +43,11 @@
         Offer: 1,
         Contract: 2,
         Annex: 3
+    },
+
+    workCenterState: {
+        Alta: 1,
+        Baja: 2
     }
 
 });

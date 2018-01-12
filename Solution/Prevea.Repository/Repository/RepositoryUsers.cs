@@ -1,6 +1,4 @@
-﻿using Prevea.Model.CustomModel;
-
-namespace Prevea.Repository.Repository
+﻿namespace Prevea.Repository.Repository
 {
     #region Using
 
@@ -10,6 +8,7 @@ namespace Prevea.Repository.Repository
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Model.Model;
+    using Model.CustomModel;
 
     #endregion
 
