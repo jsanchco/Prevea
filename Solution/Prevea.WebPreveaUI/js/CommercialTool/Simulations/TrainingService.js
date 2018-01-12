@@ -19,12 +19,12 @@
     init: function (id, numberEmployees) {
         this.simulationId = id;
         this.numberEmployees = numberEmployees;
-        this.selectedCourse = null;
-
-        this.setUpWidgets();
+        this.selectedCourse = null;        
 
         this.createTrainingCourseTrainingServiceDataSource();
         this.createTrainingCourseTrainingServiceGrid();
+
+        this.setUpWidgets();
     },
 
     createTrainingCourseTrainingServiceDataSource: function () {
@@ -90,12 +90,20 @@
                 }
             },
             change: function (e) {
-                if (e.action != null && e.action === "itemchange") {                    
+                if (e.action != null && e.action === "itemchange") {
+                    var dataItem;
+                    var value;
                     if (e.field === "AssistantsNumber") {
-                        var dataItem = e.items[0];
-                        var value = dataItem.AssistantsNumber * dataItem.Price;
+                        dataItem = e.items[0];
+                        value = dataItem.AssistantsNumber * dataItem.Price;
                         dataItem.set("Total", value);
                     }
+                    if (e.field === "Total") {
+                        dataItem = e.items[0];
+                        value = dataItem.Total / dataItem.AssistantsNumber;
+                        dataItem.set("Price", value);
+                    }
+
                 }
             },
             aggregate: [ { field: "Total", aggregate: "sum" }],

@@ -171,5 +171,9 @@
 
         var chooseCourseWindow = $("#" + this.chooseCourseId);
         chooseCourseWindow.data("kendoWindow").close();
+    },
+
+    goToUpdateCourses: function() {
+        this.trainingCoursesDataSource.read();
     }
 });

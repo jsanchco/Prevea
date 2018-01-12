@@ -17,6 +17,11 @@
         <input id="inpCourse" class="form-control" style="margin-top: 10px; width: 300px;" placeholder="Buscar Curso" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <input type="button" id="btnSearchNode" value="Buscar" onclick="ChooseCourse.searchCourseInBack()" class="btn btn-prevea btn" style="margin-top: 10px;"/>
     </p>
+    <p style="text-align: right;">
+        <a id="updateCourses" toggle="tooltip" title="Actualizar Cursos" onclick="ChooseCourse.goToUpdateCourses();" style="cursor: pointer;">
+            <i class="fa fa-rotate-left"></i>
+        </a>
+    </p>
     <p><div id="trvCourses" style="height: 35vh; padding: 10px; border-width: 1px; border-radius: 1px;"></div></p>
     <p style="text-align: right;"><input type="button" id="btnSelectCourse" value="Seleccionar Curso" onclick="ChooseCourse.selectCourse()" class="btn btn-prevea btn" style="margin-top: 10px;"/></p>
 </div>

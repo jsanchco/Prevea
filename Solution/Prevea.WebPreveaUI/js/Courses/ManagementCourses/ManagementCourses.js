@@ -372,7 +372,7 @@
         }
 
         if (dataItem.IsFamily) {
-            if (dataItem.HasChildren === true) {
+            if (dataItem.hasChildren === true) {
                 $("#" + ManagementCourses.btnDeleteNodeId).removeAttr("disabled");
                 $("#" + ManagementCourses.btnDeleteNodeId).prop("disabled", true);
             } else {
@@ -384,7 +384,7 @@
         }
 
         if (dataItem.IsTitle) {
-            if (dataItem.HasChildren === true) {
+            if (dataItem.hasChildren === true) {
                 $("#" + ManagementCourses.btnDeleteNodeId).removeAttr("disabled");
                 $("#" + ManagementCourses.btnDeleteNodeId).prop("disabled", true);
             } else {
