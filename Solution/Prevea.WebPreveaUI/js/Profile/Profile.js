@@ -1,12 +1,23 @@
 ﻿var Profile = kendo.observable({
 
     choosePhotoId: "choosePhoto",
+    tabStripDetailProfileId: "tabStripDetailProfile",
+
     choosePhotoWindow: null,
 
     userId: null,
+    selectTabId: null,
+    notification: null,
 
-    init: function (userId) {
+    init: function (userId, selectTabId, notification) {
         this.userId = userId;
+        this.selectTabId = selectTabId;
+
+        if (notification) {
+            this.notification = notification;
+        } else {
+            this.notification = null;
+        }
 
         this.setUpWidgets();
     },
@@ -33,6 +44,41 @@
             close: ChoosePhoto.onCloseChoosePhotoWindow,
             open: ChoosePhoto.onOpenChoosePhotoWindow
         });
+
+        this.createTabStripProfile();
+
+        if (this.notification) {
+            GeneralData.showNotification(Constants.ok, "", "success");
+        } else {
+            $("#" + this.spanNotificationId).hide();
+        }
+    },
+
+    createTabStripProfile: function () {
+        var tabStrip = $("#" + this.tabStripDetailProfileId).kendoTabStrip().data("kendoTabStrip");
+        tabStrip.append({
+            text: "DATOS PERSONALES",
+            contentUrl: "/Profile/PersonalDataProfile"
+        });
+        tabStrip.append({
+            text: "SEGUIMIENTO ECONÓMICO",
+            contentUrl: "/Profile/EconomicTrackingProfile"
+        });
+        tabStrip.append({
+            text: "DOCUMENTOS",
+            contentUrl: "/Profile/DocumentsProfile"
+        });
+
+        tabStrip = $("#" + this.tabStripDetailProfileId).data("kendoTabStrip");
+
+        tabStrip.bind("activate",
+            function () {
+                if (tabStrip.select().index() === 0) {
+                    PersonalDataProfile.setInitials();
+                }
+            });
+
+        tabStrip.select(this.selectTabId);
     },
 
     goToChoosePhoto: function() {

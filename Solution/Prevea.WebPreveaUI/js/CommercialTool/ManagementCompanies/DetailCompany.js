@@ -31,7 +31,6 @@
     createKendoWidgets: function () {
         if (this.notification) {
             GeneralData.showNotification(Constants.ok, "", "success");
-            //$("#" + this.spanNotificationId).kendoNotification().data("kendoNotification").show(this.notification);
         } else {
             $("#" + this.spanNotificationId).hide();
         }

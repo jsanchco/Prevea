@@ -668,6 +668,9 @@
     <Content Include="js\Courses\ManagementCourses\ManagementCourses.js" />
     <Content Include="js\Notifications\Notifications.js" />
     <Content Include="js\Profile\ChoosePhoto.js" />
+    <Content Include="js\Profile\DocumentsProfile.js" />
+    <Content Include="js\Profile\EconomicTrackingProfile.js" />
+    <Content Include="js\Profile\PersonalDataProfile.js" />
     <Content Include="js\Profile\Profile.js" />
     <Content Include="js\Shared\Constants.js" />
     <Content Include="js\Document\AddDocument.js" />
@@ -1119,6 +1122,9 @@
     <Content Include="Views\Profile\ProfileUser.cshtml" />
     <Content Include="Views\CommercialTool\Companies\WorkCentersCompany.cshtml" />
     <Content Include="Views\Profile\ChoosePhoto.cshtml" />
+    <Content Include="Views\Profile\PersonalDataProfile.cshtml" />
+    <Content Include="Views\Profile\EconomicTrackingProfile.cshtml" />
+    <Content Include="Views\Profile\DocumentsProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

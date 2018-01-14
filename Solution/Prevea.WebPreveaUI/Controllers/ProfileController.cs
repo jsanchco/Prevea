@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace Prevea.WebPreveaUI.Controllers
+﻿namespace Prevea.WebPreveaUI.Controllers
 {
     #region Using
 
@@ -13,6 +11,7 @@ namespace Prevea.WebPreveaUI.Controllers
     using System.Collections.Generic;
     using System.Web;
     using IService.IService;
+    using System.IO;
 
     #endregion
 
@@ -37,48 +36,17 @@ namespace Prevea.WebPreveaUI.Controllers
         {
             var user = Service.GetUser(User.Id);
 
-            var userRole = user?.UserRoles.FirstOrDefault();
-
             var simulationsAssigned = 0;
+            var companiesAssigned = 0;
             var usersAssigned = 0;
-            if (userRole != null)
-            {
-                switch (userRole.RoleId)
-                {
-                    case (int)EnRole.Super:
-                        simulationsAssigned = Service.GetSimulations().Count(x => x.UserAssignedId == User.Id);
-                        usersAssigned = Service.GetUsers().Count(x => 
-                            x.UserRoles.FirstOrDefault().RoleId == (int)EnRole.PreveaPersonal ||
-                            x.UserRoles.FirstOrDefault().RoleId == (int)EnRole.PreveaCommercial);
-                        break;
-                    case (int)EnRole.PreveaPersonal:
-                        simulationsAssigned = Service.GetSimulations().Count(x => x.UserAssignedId == User.Id);
-                        usersAssigned = Service.GetUsers().Count(x => x.UserParentId == user.Id);
-                        break;
 
-                    case (int)EnRole.PreveaCommercial:
-                        simulationsAssigned = Service.GetSimulations().Count(x => x.UserId == User.Id);
-                        usersAssigned = Service.GetUsers().Count(x => x.UserParentId == user.Id);
-                        break;
-
-                    case (int)EnRole.ContactPerson:
-                        var companies = Service.GetCompanies();
-                        foreach (var company in companies)
-                        {
-                            var contactPerson = company.ContactPersons.FirstOrDefault(x => x.UserId == user.Id);
-                            if (contactPerson != null)
-                            {
-                                usersAssigned = company.Employees.Count;
-                                break;
-                            }
-                        }                         
-                        break;
-                }
-            }
+            GetDataHeader(ref simulationsAssigned, ref companiesAssigned, ref usersAssigned);
 
             ViewBag.SimulationsAssigned = simulationsAssigned;
-            ViewBag.CompaniesAssigned = user.Companies.Count(x => x.CompanyStateId == (int) EnCompanyState.Alta);
+            ViewBag.CompaniesAssigned = companiesAssigned;
             ViewBag.UsersAssigned = usersAssigned;
+
+            ViewBag.SelectTabId = 0;
 
             return PartialView(AutoMapper.Mapper.Map<UserViewModel>(user));
         }
@@ -109,6 +77,127 @@ namespace Prevea.WebPreveaUI.Controllers
 
                 return Json(new Result { Status = Status.Error }, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        #region Personal Data
+
+        [HttpGet]
+        public ActionResult PersonalDataProfile()
+        {
+            var user = AutoMapper.Mapper.Map<UserViewModel>(Service.GetUser(User.Id));
+
+            return PartialView("~/Views/Profile/PersonalDataProfile.cshtml", user);
+        }
+
+        [HttpPost]
+        public ActionResult UpdatePersonalDataProfile(UserViewModel user)
+        {
+            try
+            {
+                var simulationsAssigned = 0;
+                var companiesAssigned = 0;
+                var usersAssigned = 0;
+
+                GetDataHeader(ref simulationsAssigned, ref companiesAssigned, ref usersAssigned);
+
+                ViewBag.SimulationsAssigned = simulationsAssigned;
+                ViewBag.CompaniesAssigned = companiesAssigned;
+                ViewBag.UsersAssigned = usersAssigned;
+
+                var result = Service.SaveUser(user.RoleId, AutoMapper.Mapper.Map<User>(user));
+
+                ViewBag.SelectTabId = 0;
+
+                if (result.Status != Status.Error)
+                {
+                    ViewBag.Notification = "Tu Perfil se ha actualizado correctamente";
+
+                    return PartialView("~/Views/Profile/ProfileUser.cshtml", user);
+                }
+
+                ViewBag.Error = new List<string> { result.Message };
+
+                return PartialView("~/Views/Profile/ProfileUser.cshtml", user);
+            }
+            catch (Exception e)
+            {
+                ViewBag.SelectTabId = 0;
+
+                ViewBag.Error = new List<string> { e.Message };
+
+                return PartialView("~/Views/Profile/ProfileUser.cshtml", user);
+            }
+        }
+        #endregion
+
+        #region Economic Tracking
+
+        [HttpGet]
+        public ActionResult EconomicTrackingProfile()
+        {
+            var user = AutoMapper.Mapper.Map<UserViewModel>(Service.GetUser(User.Id));
+
+            return PartialView("~/Views/Profile/EconomicTrackingProfile.cshtml", user);
+        }
+
+        #endregion
+
+        #region Documents
+
+        [HttpGet]
+        public ActionResult DocumentsProfile()
+        {
+            var user = AutoMapper.Mapper.Map<UserViewModel>(Service.GetUser(User.Id));
+
+            return PartialView("~/Views/Profile/DocumentsProfile.cshtml", user);
+        }
+
+        #endregion
+
+        private void GetDataHeader(ref int simulationsAssigned, ref int companiesAssigned, ref int usersAssigned)
+        {
+            var user = Service.GetUser(User.Id);
+
+            var userRole = user?.UserRoles.FirstOrDefault();
+
+            simulationsAssigned = 0;
+            usersAssigned = 0;
+            if (userRole != null)
+            {
+                switch (userRole.RoleId)
+                {
+                    case (int)EnRole.Super:
+                        simulationsAssigned = Service.GetSimulations().Count(x => x.UserAssignedId == User.Id);
+                        usersAssigned = Service.GetUsers().Count(x =>
+                            x.UserRoles.FirstOrDefault().RoleId == (int)EnRole.PreveaPersonal ||
+                            x.UserRoles.FirstOrDefault().RoleId == (int)EnRole.PreveaCommercial);
+                        break;
+                    case (int)EnRole.PreveaPersonal:
+                        simulationsAssigned = Service.GetSimulations().Count(x => x.UserAssignedId == User.Id);
+                        usersAssigned = Service.GetUsers().Count(x => x.UserParentId == user.Id);
+                        break;
+
+                    case (int)EnRole.PreveaCommercial:
+                        simulationsAssigned = Service.GetSimulations().Count(x => x.UserId == User.Id);
+                        usersAssigned = Service.GetUsers().Count(x => x.UserParentId == user.Id);
+                        break;
+
+                    case (int)EnRole.ContactPerson:
+                        var companies = Service.GetCompanies();
+                        foreach (var company in companies)
+                        {
+                            var contactPerson = company.ContactPersons.FirstOrDefault(x => x.UserId == user.Id);
+                            if (contactPerson != null)
+                            {
+                                usersAssigned = company.Employees.Count;
+                                break;
+                            }
+                        }
+                        break;
+                }
+            }
+
+            companiesAssigned = user.Companies.Count(x => x.CompanyStateId == (int)EnCompanyState.Alta);
         }
     }
 }

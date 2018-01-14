@@ -1,0 +1,116 @@
+﻿@model UserViewModel
+    
+<script>
+    PersonalDataProfile.init(@Model.Id);
+</script>
+
+<div id="errorFromFront" class="alert alert-danger alert-dismissable" style="display: none"></div>
+
+<br />
+
+<div class="row" id="pagePersonalDataProfile" style="width: 95%">
+
+    <div class="col-sm-12">        
+
+        @using (Ajax.BeginForm("UpdatePersonalDataProfile", "Profile", null, new AjaxOptions
+        {
+            HttpMethod = "POST",
+            UpdateTargetId = "framePpal"
+        }, new { id = "formPersonalDataProfile" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Nombre</label>
+                    <label class="col-sm-4 control-label">Apellidos</label>
+                    <label class="col-sm-4 control-label">DNI/NIF</label>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.FirstName, new { @id = "textBoxName", @class = "form-control", style = "width:100%", placeholder = "Nombre" })
+                    </div>
+
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.LastName, new { @id = "textBoxLastName", @class = "form-control", style = "width:100%", placeholder = "Apellidos" })
+                    </div>
+
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.DNI, new { @id = "textBoxDNI", @class = "form-control", style = "width:100%", placeholder = "DNI/NIF" })
+                    </div>
+
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Fecha de Nacimiento</label>
+                    <label class="col-sm-4 control-label">Teléfono</label>
+                    <label class="col-sm-4 control-label">Email</label>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        @(Html.Kendo().DatePicker()
+                              .Name("BirthDate")
+                              .Value(@Model.BirthDate)
+                              .HtmlAttributes(new { @id = "dtpBirthDate", style = "width: 100%", title = "datepicker" })
+                              )
+                    </div>
+
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.PhoneNumber, new { @id = "textBoxPhoneNumber", @class = "form-control", style = "width:100%", placeholder = "Teléfono/s" })
+                    </div>
+                    
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.Email, new { @id = "textBoxEmail", @class = "form-control", style = "width:100%", placeholder = "Email", type = "email" })
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Nick</label>
+                    <label class="col-sm-4 control-label">Puesto de Trabajo</label>
+                    <label class="col-sm-4 control-label">Categoría Profesional</label>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.Nick, new { @id = "textBoxNick", @class = "form-control", style = "width:100%", placeholder = "Nick para acceso a la plataforma" })
+                    </div>
+
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.WorkStation, new { @id = "textBoxWorkStation", @class = "form-control", style = "width:100%", placeholder = "Puesto de Trabajo" })
+                    </div>
+
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.ProfessionalCategory, new { @id = "textBoxProfessionalCategory", @class = "form-control", style = "width:100%", placeholder = "Categoría Profesional" })
+                    </div>
+
+                </div>
+            </div>
+
+            <br />
+            <br />
+            <br />
+
+            <div class="form-actions" style="text-align: right;">
+
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.RoleId)
+
+                <input type="submit" id="btnValidate" value="Guardar" class="btn btn-prevea btn" />
+
+            </div>
+        }           
+
+    </div>
+</div>

@@ -4,21 +4,6 @@
     GeneralDataCompany.init();
 </script>
 
-@if (ViewBag.Error != null)
-{
-    <div id="errorFromBack" class="alert alert-danger alert-dismissable" style="">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <ul>
-            @foreach (var error in ViewBag.Error)
-            {
-                <li>
-                    @error
-                </li>
-            }
-        </ul>
-    </div>
-}
-
 <div id="errorFromFront" class="alert alert-danger alert-dismissable" style="display: none">
 </div>
 

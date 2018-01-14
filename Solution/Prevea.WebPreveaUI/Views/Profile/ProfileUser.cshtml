@@ -1,8 +1,50 @@
 ﻿@model UserViewModel
 
 <script>
-    Profile.init(@Model.Id);
+    Profile.init(@Model.Id, @ViewBag.SelectTabId, "@ViewBag.Notification");
 </script>
+
+<style>
+    .k-dropdown .k-input, .k-dropdown .k-state-focused .k-input, .k-menu .k-popup {
+        color: #999999;
+        height: 31px;
+        padding: 6px;
+    }
+
+    .k-autocomplete.k-state-default, .k-dropdown-wrap.k-state-default, .k-numeric-wrap.k-state-default, .k-picker-wrap.k-state-default {
+        border: 1px solid #ebebeb;
+        border-radius: 3px;
+    }
+
+    #tabStripDetailProfile {
+        border-width: 0;
+    }
+
+        #tabStripDetailProfile .k-panelbar > li.k-state-default > .k-link, .k-tabstrip-items .k-state-default .k-link {
+            font-weight: bold;
+            font-size: 15px;
+            padding: 0.8em;
+        }
+
+        #tabStripDetailProfile .k-panelbar .k-tabstrip-top .k-tabstrip-items .k-state-active, .k-tabstrip-top .k-tabstrip-items .k-state-active {
+            border-bottom-width: 6px;
+            border-top-width: 0;
+            border-left-width: 0;
+            border-right-width: 0;
+        }
+
+        #tabStripDetailProfile .k-animation-container, .k-animation-container *, .k-animation-container ::after, .k-block .k-header, .k-list-container, .k-widget, .k-widget *, .k-widget ::before {
+            box-sizing: border-box;
+        }
+
+    .k-multiselect-wrap {
+        height: 31px;
+    }
+
+    .k-dropdown .k-input, .k-dropdown .k-state-focused .k-input, .k-menu .k-popup {
+        color: #555555;
+    }
+</style>
 
 <div class="row" id="pageProfile" style="margin: 8px">
 
@@ -34,13 +76,19 @@
             name = string.Format("{0} {1}", Model.FirstName, Model.LastName);
         }
     }
+    
+    <div class="row">
+        <div class="col-sm-12" style="text-align: right">
+            <span id="spInitials" style="font-size: x-large; font-weight: bold; margin-right: 30px;">@Model.Initials</span>
+        </div>
+    </div>
 
     <div id="contentPartialView">
         
         <div class="profile-env">
-            
+
             <header class="row">
-                
+
                 <div class="col-sm-1">
                     <a id="updatePhoto" toggle="tooltip" title="Actualizar Foto" onclick="Profile.goToChoosePhoto();" style="cursor: pointer;">
                         <i class="fa fa-rotate-left"></i>
@@ -91,6 +139,34 @@
 
             </header>
         </div>
+        
+        <br />
+        <br />
+        <br />
+        
+    @if (ViewBag.Error != null)
+    {
+        <div id="errorFromBack" class="alert alert-danger alert-dismissable" style="">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <ul>
+                @foreach (var error in ViewBag.Error)
+                {
+                    <li>
+                        @error
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+        
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div id="tabStripDetailProfile"></div>
+
+            </div>
+        </div>
+
     </div>
 
 </div>
