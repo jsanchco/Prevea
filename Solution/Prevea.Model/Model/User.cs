@@ -18,6 +18,7 @@
             Guid = Guid.NewGuid();
             Password = "123456";
             UserStateId = (int)EnUserState.Alta;
+            BirthDate = DateTime.Now;
         }
 
         #endregion
@@ -58,6 +59,7 @@
 
         public string Email { get; set; }
         public string Nick { get; set; }
+        public DateTime BirthDate { get; set; }
  
         [Required]
         public string Password { get; set; }
@@ -75,5 +77,6 @@
         public virtual ICollection<Simulation> SimulationsAssigned { get; set; }
         public virtual ICollection<Simulation> Simulations { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
+        public virtual ICollection<DoctorWorkSheet> DoctorWorkSheets { get; set; }
     }
 }

@@ -19,10 +19,10 @@
 
         [Required]
         public int TrainingCourseId { get; set; }
-        public TrainingCourse TrainingCourse { get; set; }
+        public virtual TrainingCourse TrainingCourse { get; set; }
 
         [Required]
         public int TrainingServiceId { get; set; }
-        public TrainingService TrainingService { get; set; }
+        public virtual TrainingService TrainingService { get; set; }
     }
 }

@@ -31,6 +31,7 @@
         public string ProfessionalCategory { get; set; }
         public string Email { get; set; }
         public string Nick { get; set; }
+        public DateTime BirthDate { get; set; }
         public string Password { get; set; }
         public int? UserParentId { get; set; }
         public string UserParentInitials { get; set; }

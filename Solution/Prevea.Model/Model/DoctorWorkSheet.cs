@@ -3,22 +3,20 @@
     #region Using
 
     using System.ComponentModel.DataAnnotations;
+    using System;
     using System.Collections.Generic;
 
     #endregion
 
-    public class Employee
+    public class DoctorWorkSheet
     {
         [Key, Required]
         public int Id { get; set; }
 
-        [Required]
-        public int CompanyId { get; set; }
-        public virtual Company Company { get; set; }
+        public DateTime Date { get; set; }
 
-        [Required]
-        public int UserId { get; set; }
-        public virtual User User { get; set; }
+        public int DoctorId { get; set; }
+        public virtual User Doctor { get; set; }
 
         public virtual ICollection<EmployeeDoctorWorkSheet> EmployeesDoctorWorkSheets { get; set; }
     }

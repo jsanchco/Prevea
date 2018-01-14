@@ -1,0 +1,36 @@
+﻿@model User
+
+<style>
+    .k-window-titlebar {
+        height: 30px;
+    }
+
+    .k-window-content .k-content {
+        position: static;
+    }
+</style>
+
+<script>
+    ChoosePhoto.init(@Model.Id);
+</script>
+
+@{
+    var pathPhoto = "image_not_found.png";
+    if (Model != null)
+    {
+        if (File.Exists(string.Format("{0}/user_{1}.png", Server.MapPath("~/Images"), Model.Id)))
+        {
+            pathPhoto = string.Format("user_{0}.png", Model.Id);
+        }
+    }
+}
+
+<div id="choosePhotoContainer">
+    <p style="color: #BBBBBB; font-size: x-small">
+        Las dimensiones recomendadas para la Foto de Perfil son 115x115
+    </p>
+
+    <p style="">
+        <input type="file" id="filePhoto" name="filePhoto" accept=".png">
+    </p>
+</div>

@@ -342,20 +342,6 @@
     addCourseFromWindow: function () {
         this.selectedCourse = null;
         this.chooseCourseWindow.data("kendoWindow").center().open();
-
-        //var chooseCourseWindow = $("#" + this.chooseCourseId);
-        //chooseCourseWindow.kendoWindow({
-        //    width: "600px",
-        //    title: "Elegir Curso",
-        //    visible: false,
-        //    modal: true,
-        //    actions: [
-        //        "Close"
-        //    ],
-        //    content: "/Simulations/ChooseCourse",
-        //    close: ChooseCourse.onCloseChooseCourseWindow,
-        //    open: ChooseCourse.onOpenChooseCourse
-        //}).data("kendoWindow").center().open();
     },
 
     selectCourse: function(nodeSelected) {
@@ -371,5 +357,4 @@
             $("#" + TrainingService.btnCreateCourseId).prop("disabled", false);
         }
     }
-
 });

@@ -51,6 +51,8 @@
         public DbSet<WorkCenter> WorkCenters { get; set; }
         public DbSet<WorkCenterState> WorkCenterStates { get; set; }
         public DbSet<WorkCenterCompany> WorkCentersCompany { get; set; }
+        public DbSet<DoctorWorkSheet> DoctorWorkSheets { get; set; }
+        public DbSet<EmployeeDoctorWorkSheet> EmployeesDoctorWorkSheets { get; set; }
 
         #endregion
 
@@ -72,9 +74,11 @@
         {
             modelBuilder.Entity<HistoricDownloadDocument>().HasRequired(x => x.User).WithMany(y => y.HistoricDownloadDocuments).WillCascadeOnDelete(false);
             modelBuilder.Entity<ContactPerson>().HasRequired(x => x.Company).WithMany(y => y.ContactPersons).WillCascadeOnDelete(false);
-            modelBuilder.Entity<Employee>().HasRequired(x => x.Company).WithMany(y => y.Employees).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Employee>().HasRequired(x => x.Company).WithMany(y => y.Employees).WillCascadeOnDelete(false);            
 
-            modelBuilder.Entity<Simulation>().HasOptional(s => s.UserAssigned).WithMany(s => s.SimulationsAssigned);
+            modelBuilder.Entity<Simulation>().HasOptional(x => x.UserAssigned).WithMany(y => y.SimulationsAssigned);
+
+            modelBuilder.Entity<Employee>().HasRequired(x => x.User).WithMany().WillCascadeOnDelete(false);
         }
     }
 }

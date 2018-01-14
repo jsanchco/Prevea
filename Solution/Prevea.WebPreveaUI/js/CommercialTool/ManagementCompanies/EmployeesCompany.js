@@ -8,6 +8,8 @@
     employeesCompanyDataSource: null,
 
     init: function (companyId) {
+        kendo.culture("es-ES");
+
         this.companyId = companyId;
 
         this.createEmployeesCompanyDataSource();
@@ -32,6 +34,12 @@
                 width: 80,
                 groupable: "false"
             }, {
+                field: "BirthDate",
+                title: "Fecha de Nacimiento",
+                width: 130,
+                groupable: "false",
+                template: "#= Templates.getColumnTemplateDate(data.BirthDate) #"
+            }, {
                 field: "Email",
                 title: "Email",
                 width: 100,
@@ -39,7 +47,7 @@
             }, {
                 field: "DNI",
                 title: "DNI",
-                width: 100,
+                width: 70,
                 groupable: "false"
             }, {
                 field: "WorkStation",
@@ -113,7 +121,11 @@
                 mode: "single",
                 allowUnsort: false
             },
-            groupable: false,
+            groupable: {
+                messages: {
+                    empty: "Arrastre un encabezado de columna y póngalo aquí para agrupar por ella"
+                }
+            },
             dataBound: function (e) {
                 var grid = $("#" + that.gridEmployeesCompanyId).data("kendoGrid");
                 var items = e.sender.items();
@@ -148,6 +160,7 @@
                         FirstName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         LastName: { type: "string" },
                         PhoneNumber: { type: "string" },
+                        BirthDate: { type: "date", format: "{0:dd/MM/yy}" },
                         Email: { type: "string" },
                         DNI: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         WorkStation: { type: "string" },

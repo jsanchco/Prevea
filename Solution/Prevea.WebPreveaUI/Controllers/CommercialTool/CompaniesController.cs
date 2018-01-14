@@ -708,7 +708,7 @@
             var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
 
             ViewBag.ContractualDocumentId = contractualDocumentId;
-            ViewBag.NumberWorkCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId).Count;
+            ViewBag.NumberWorkCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId).Count(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta);
 
             return View("~/Views/CommercialTool/Companies/Reports/OfferReport.cshtml", contractualDocument.Company);
         }

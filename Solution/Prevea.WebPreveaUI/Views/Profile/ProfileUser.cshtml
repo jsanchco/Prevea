@@ -41,9 +41,15 @@
             
             <header class="row">
                 
+                <div class="col-sm-1">
+                    <a id="updatePhoto" toggle="tooltip" title="Actualizar Foto" onclick="Profile.goToChoosePhoto();" style="cursor: pointer;">
+                        <i class="fa fa-rotate-left"></i>
+                    </a>
+                </div>
+
                 <div class="col-sm-2">
                     <a href="#" class="profile-picture">
-                        <img src="~/Images/@pathPhoto" class="img-responsive img-circle"/>
+                        <img id="photoProfile" src="~/Images/@pathPhoto" class="img-responsive img-circle"/>
                     </a>
                 </div>
 
@@ -52,16 +58,30 @@
                         <li>
                             <div class="profile-name">
                                 <strong>
-                                    <a href="#">@name</a>                                    
+                                    <a href="#">@name</a>
                                 </strong>
-                                <span><a href="#">@Model.RoleName</a></span>
+                                <span style="text-align: center"><a href="#">@Model.RoleDescription</a></span>
                             </div>
                         </li>
 
                         <li>
                             <div class="profile-stat">
-                                <h3>@ViewBag.SimulationsAssigned</h3>
+                                <h3 style="text-align: center">@ViewBag.SimulationsAssigned</h3>
                                 <span><a href="#">Simulaciones asignadas</a></span>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="profile-stat">
+                                <h3 style="text-align: center">@ViewBag.CompaniesAssigned</h3>
+                                <span><a href="#">Empresas asignadas</a></span>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="profile-stat">
+                                <h3 style="text-align: center">@ViewBag.UsersAssigned</h3>
+                                <span><a href="#">Personal a su cargo</a></span>
                             </div>
                         </li>
 
@@ -74,4 +94,5 @@
     </div>
 
 </div>
+
 

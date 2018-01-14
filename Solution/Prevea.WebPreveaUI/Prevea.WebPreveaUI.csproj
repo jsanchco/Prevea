@@ -667,6 +667,7 @@
     <Content Include="js\CommercialTool\Simulations\TrainingService.js" />
     <Content Include="js\Courses\ManagementCourses\ManagementCourses.js" />
     <Content Include="js\Notifications\Notifications.js" />
+    <Content Include="js\Profile\ChoosePhoto.js" />
     <Content Include="js\Profile\Profile.js" />
     <Content Include="js\Shared\Constants.js" />
     <Content Include="js\Document\AddDocument.js" />
@@ -1117,6 +1118,7 @@
     <Content Include="Views\CommercialTool\Simulations\ChooseCourse.cshtml" />
     <Content Include="Views\Profile\ProfileUser.cshtml" />
     <Content Include="Views\CommercialTool\Companies\WorkCentersCompany.cshtml" />
+    <Content Include="Views\Profile\ChoosePhoto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

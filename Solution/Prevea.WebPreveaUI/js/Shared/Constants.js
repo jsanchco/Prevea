@@ -3,6 +3,9 @@
     ok: "Operación realizada correctamente",
     ko: "Error en la operación",
 
+    widthProfilePhoto: 115,
+    heigthProfilePhoto: 115,
+
     colorError: "#CC2424",
     colorWarning: "#F89406",
     colorSuccess: "#00A651",

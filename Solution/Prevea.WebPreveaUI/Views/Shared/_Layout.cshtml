@@ -116,6 +116,7 @@
     <script src="~/js/Courses/ManagementCourses/ManagementCourses.js"></script>
     <script src="~/js/CommercialTool/ManagementCompanies/OfferReport.js"></script>
     <script src="~/js/Profile/Profile.js"></script>
+    <script src="~/js/Profile/ChoosePhoto.js"></script>
     <script src="~/js/Error/ErrorPage.js"></script>
     <script src="~/js/Shared/Templates.js"></script>
     <script src="~/js/Shared/Constants.js"></script>
@@ -165,7 +166,7 @@
                                 name = string.Format("{0} {1}", Model.FirstName, Model.LastName);
                             }
                         }
-                        <img width="55" class="img-circle" alt="" src="~/Images/@pathPhoto">
+                        <img id="photoProfileSideBar" width="55" class="img-circle" alt="" src="~/Images/@pathPhoto">
                         <span>Hola,</span>
                         <strong>@name</strong>
                     </a>
@@ -222,6 +223,7 @@
     </div>
     
     <div id="chooseCourse"></div>
+    <div id="choosePhoto"></div>
 
 </div>
     
