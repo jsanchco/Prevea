@@ -2,6 +2,7 @@
     textAmountTecniquesId: "textAmountTecniques",
     textAmountHealthVigilanceId: "textAmountHealthVigilance",
     textAmountMedicalExaminationId: "textAmountMedicalExamination",
+    textTotalId: "textTotal",
     lblAmountByEmployeeInTecniquesId: "lblAmountByEmployeeInTecniques",
     lblAmountByEmployeeInHealthVigilanceId: "lblAmountByEmployeeInHealthVigilance",
     lblAmountByEmployeeInMedicalExaminationId: "lblAmountByEmployeeInMedicalExamination",
@@ -12,6 +13,7 @@
     lblTotalByEmployeeInHealthVigilanceId: "lblTotalByEmployeeInHealthVigilance",
     lblTotalByEmployeeInMedicalExaminationId: "lblTotalByEmployeeInMedicalExamination",
     lblTotalId: "lblTotal",
+    lblPercentegeTotalId: "lblPercentegeTotal",
     btnSaveForeignPreventionServiceId: "btnSaveForeignPreventionService",
     btnValidateForeignPreventionServiceId: "btnValidateForeignPreventionService",
 
@@ -54,6 +56,8 @@
         strValue = kendo.format("{0} €", ForeignPreventionService.stretchCalculate.AmountByEmployeeInMedicalExamination);
         $("#" + this.lblAmountByEmployeeInMedicalExaminationId).text(strValue);
         this.onChangeTextAmountMedicalExamination(true);
+
+        this.onChangeTextTotal(true);
     },
 
     setKendoUIWidgets: function() {
@@ -71,6 +75,11 @@
             format: "c",
             decimals: 1,
             change: ForeignPreventionService.onChangeTextAmountMedicalExamination
+        });
+        $("#" + this.textTotalId).kendoNumericTextBox({
+            format: "c",
+            decimals: 1,
+            change: ForeignPreventionService.onChangeTextTotal
         });
     },
 
@@ -95,23 +104,7 @@
         var value = parseFloat($("#" + ForeignPreventionService.textAmountTecniquesId).val());
         if (isNaN(value)) {
             return;
-        }
-
-        if ($.type(fromStretchCalculateByNumberEmployees) !== "boolean" &&
-            fromStretchCalculateByNumberEmployees !== true) {
-            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
-            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", false);
-            $("#" + ForeignPreventionService.btnValidateForeignPreventionServiceId).removeAttr("disabled");
-            $("#" + ForeignPreventionService.btnValidateForeignPreventionServiceId).prop("disabled", true);
-        } else {
-            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
-            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", true);
-
-            //$("#" + DetailSimulation.btnSendToSEDEId).removeAttr("disabled");
-            //$("#" + DetailSimulation.btnSendToSEDEId).prop("disabled", true);
-            //$("#" + DetailSimulation.btnSendToCompaniesId).removeAttr("disabled");
-            //$("#" + DetailSimulation.btnSendToCompaniesId).prop("disabled", true);
-        }
+        } 
 
         var widget = $("#" + ForeignPreventionService.textAmountTecniquesId).kendoNumericTextBox().data("kendoNumericTextBox");
         if (value === 0) {
@@ -121,7 +114,7 @@
             $("#" + ForeignPreventionService.lblPercentegeByEmployeeInTecniquesId).text("%");
             $("#" + ForeignPreventionService.lblTotalByEmployeeInTecniquesId).text("€");
 
-            ForeignPreventionService.calculateTotal();
+            ForeignPreventionService.calculateTotal(fromStretchCalculateByNumberEmployees);
 
             return;
         }
@@ -146,27 +139,26 @@
         $("#" + ForeignPreventionService.lblPercentegeByEmployeeInTecniquesId).text((percentegeCalculate - 100).toFixed(2) + "%");
         $("#" + ForeignPreventionService.lblTotalByEmployeeInTecniquesId).text((value * ForeignPreventionService.numberEmployees).toFixed(2) + " €");
 
-        ForeignPreventionService.calculateTotal();
+        if ($.type(fromStretchCalculateByNumberEmployees) !== "boolean" &&
+            fromStretchCalculateByNumberEmployees !== true) {
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", false);
+            $("#" + ForeignPreventionService.btnValidateForeignPreventionServiceId).removeAttr("disabled");
+            $("#" + ForeignPreventionService.btnValidateForeignPreventionServiceId).prop("disabled", true);
+
+            ForeignPreventionService.updateButtonsOnChange();
+        } else {
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", true);
+        }
+
+        ForeignPreventionService.calculateTotal(fromStretchCalculateByNumberEmployees);
     },
 
     onChangeTextAmountHealthVigilance: function (fromStretchCalculateByNumberEmployees) {
         var value = parseFloat($("#" + ForeignPreventionService.textAmountHealthVigilanceId).val());
         if (isNaN(value)) {
             return;
-        }
-
-        if ($.type(fromStretchCalculateByNumberEmployees) !== "boolean" &&
-            fromStretchCalculateByNumberEmployees !== true) {
-            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
-            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", false);
-        } else {
-            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
-            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", true);
-
-            //$("#" + DetailSimulation.btnSendToSEDEId).removeAttr("disabled");
-            //$("#" + DetailSimulation.btnSendToSEDEId).prop("disabled", true);
-            //$("#" + DetailSimulation.btnSendToCompaniesId).removeAttr("disabled");
-            //$("#" + DetailSimulation.btnSendToCompaniesId).prop("disabled", true);
         }
 
         var widget = $("#" + ForeignPreventionService.textAmountHealthVigilanceId).kendoNumericTextBox().data("kendoNumericTextBox");
@@ -177,7 +169,7 @@
             $("#" + ForeignPreventionService.lblPercentegeByEmployeeInHealthVigilanceId).text("%");
             $("#" + ForeignPreventionService.lblTotalByEmployeeInHealthVigilanceId).text("€");
 
-            ForeignPreventionService.calculateTotal();
+            ForeignPreventionService.calculateTotal(fromStretchCalculateByNumberEmployees);
 
             return;
         }
@@ -202,27 +194,24 @@
         $("#" + ForeignPreventionService.lblPercentegeByEmployeeInHealthVigilanceId).text((percentegeCalculate - 100).toFixed(2) + "%");
         $("#" + ForeignPreventionService.lblTotalByEmployeeInHealthVigilanceId).text((value * ForeignPreventionService.numberEmployees).toFixed(2) + " €");
 
-        ForeignPreventionService.calculateTotal();
+        if ($.type(fromStretchCalculateByNumberEmployees) !== "boolean" &&
+            fromStretchCalculateByNumberEmployees !== true) {
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", false);
+
+            ForeignPreventionService.updateButtonsOnChange();
+        } else {
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", true);
+        }
+
+        ForeignPreventionService.calculateTotal(fromStretchCalculateByNumberEmployees);
     },
 
     onChangeTextAmountMedicalExamination: function (fromStretchCalculateByNumberEmployees) {
         var value = parseFloat($("#" + ForeignPreventionService.textAmountMedicalExaminationId).val());
         if (isNaN(value)) {
             return;
-        }
-
-        if ($.type(fromStretchCalculateByNumberEmployees) !== "boolean" &&
-            fromStretchCalculateByNumberEmployees !== true) {
-            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
-            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", false);
-        } else {
-            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
-            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", true);
-
-            //$("#" + DetailSimulation.btnSendToSEDEId).removeAttr("disabled");
-            //$("#" + DetailSimulation.btnSendToSEDEId).prop("disabled", true);
-            //$("#" + DetailSimulation.btnSendToCompaniesId).removeAttr("disabled");
-            //$("#" + DetailSimulation.btnSendToCompaniesId).prop("disabled", true);
         }
 
         var widget = $("#" + ForeignPreventionService.textAmountMedicalExaminationId).kendoNumericTextBox().data("kendoNumericTextBox");
@@ -233,7 +222,7 @@
             $("#" + ForeignPreventionService.lblPercentegeByEmployeeInMedicalExaminationId).text("%");
             $("#" + ForeignPreventionService.lblTotalByEmployeeInMedicalExaminationId).text("€");
 
-            ForeignPreventionService.calculateTotal();
+            ForeignPreventionService.calculateTotal(fromStretchCalculateByNumberEmployees);
 
             return;
         }
@@ -258,10 +247,85 @@
         $("#" + ForeignPreventionService.lblPercentegeByEmployeeInMedicalExaminationId).text((percentegeCalculate - 100).toFixed(2) + "%");
         $("#" + ForeignPreventionService.lblTotalByEmployeeInMedicalExaminationId).text((value * ForeignPreventionService.numberEmployees).toFixed(2) + " €");
 
-        ForeignPreventionService.calculateTotal();
+        if ($.type(fromStretchCalculateByNumberEmployees) !== "boolean" &&
+            fromStretchCalculateByNumberEmployees !== true) {
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", false);
+
+            ForeignPreventionService.updateButtonsOnChange();
+        } else {
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", true);
+        }
+
+        ForeignPreventionService.calculateTotal(fromStretchCalculateByNumberEmployees);
     },
 
-    calculateTotal: function () {
+    onChangeTextTotal: function (fromStretchCalculateByNumberEmployees) {
+        var strValue = $("#" + ForeignPreventionService.lblTotalByEmployeeInTecniquesId).text();
+        strValue = strValue.substring(0, strValue.length - 1);
+        var valueAmountTecniques = 0;
+        if (strValue !== "") {
+            valueAmountTecniques = parseFloat(strValue);
+        }
+
+        strValue = $("#" + ForeignPreventionService.lblTotalByEmployeeInHealthVigilanceId).text();
+        strValue = strValue.substring(0, strValue.length - 1);
+        var valueAmountHealthVigilance = 0;
+        if (strValue !== "") {
+            valueAmountHealthVigilance = parseFloat(strValue);
+        }
+
+        strValue = $("#" + ForeignPreventionService.lblTotalByEmployeeInMedicalExaminationId).text();
+        strValue = strValue.substring(0, strValue.length - 1);
+        var valueAmountMedicalExamination = 0;
+        if (strValue !== "") {
+            valueAmountMedicalExamination = parseFloat(strValue);
+        }
+
+        var valueTotal = $("#" + ForeignPreventionService.textTotalId)
+            .kendoNumericTextBox().data("kendoNumericTextBox").value();
+
+        var widget = $("#" + ForeignPreventionService.textTotalId).kendoNumericTextBox().data("kendoNumericTextBox");
+
+        var sum = valueAmountTecniques + valueAmountHealthVigilance + valueAmountMedicalExamination;
+        var percentegeCalculate = (valueTotal * 100) / sum;
+        if (percentegeCalculate > 100) {
+            widget.wrapper.find("input").css("background-color", "#008d4c");
+            widget.wrapper.find("input").css("color", "black");
+        } else {
+            if (percentegeCalculate < ForeignPreventionService.percentege) {
+                widget.wrapper.find("input").css("background-color", "#f56954");
+                widget.wrapper.find("input").css("color", "black");
+            } else {
+                widget.wrapper.find("input").css("background-color", "white");
+                widget.wrapper.find("input").css("color", "#4b4b4b");
+            }
+        }
+        widget.wrapper.width("100%");
+
+        widget = $("#" + ForeignPreventionService.textAmountTecniquesId).kendoNumericTextBox().data("kendoNumericTextBox");
+        widget.wrapper.width("100%");
+        widget = $("#" + ForeignPreventionService.textAmountHealthVigilanceId).kendoNumericTextBox().data("kendoNumericTextBox");
+        widget.wrapper.width("100%");
+        widget = $("#" + ForeignPreventionService.textAmountMedicalExaminationId).kendoNumericTextBox().data("kendoNumericTextBox");
+        widget.wrapper.width("100%");
+
+        $("#" + ForeignPreventionService.lblPercentegeTotalId).text((percentegeCalculate - 100).toFixed(2) + "%");
+
+        if ($.type(fromStretchCalculateByNumberEmployees) !== "boolean" &&
+            fromStretchCalculateByNumberEmployees !== true) {
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", false);
+
+            ForeignPreventionService.updateButtonsOnChange();
+        } else {
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).removeAttr("disabled");
+            $("#" + ForeignPreventionService.btnSaveForeignPreventionServiceId).prop("disabled", true);
+        }
+    },
+
+    calculateTotal: function (fromStretchCalculateByNumberEmployees) {
         var strValue = $("#" + ForeignPreventionService.lblTotalByEmployeeInTecniquesId).text();
         strValue = strValue.substring(0, strValue.length - 1);
         var totalByEmployeeInTecniques = 0;
@@ -287,6 +351,15 @@
             (totalByEmployeeInTecniques +
                 totalByEmployeeInHealthVigilance +
                 totalByEmployeeInMedicalExamination).toFixed(2) + " €");
+
+        if ($.type(fromStretchCalculateByNumberEmployees) !== "boolean" &&
+            fromStretchCalculateByNumberEmployees !== true) {
+            var value = totalByEmployeeInTecniques +
+                totalByEmployeeInHealthVigilance +
+                totalByEmployeeInMedicalExamination;
+            var numerictextbox = $("#" + ForeignPreventionService.textTotalId).data("kendoNumericTextBox");
+            numerictextbox.value(value);
+        }
     },
 
     goToForeignPreventionService: function () {
@@ -383,6 +456,17 @@
                 $("#" + this.btnSaveForeignPreventionServiceId).hide();
                 break;
             }
-        }
+        } 
+    },
+
+    updateButtonsOnChange: function () {
+        $("#" + ForeignPreventionService.btnValidateId).removeAttr("disabled");
+        $("#" + ForeignPreventionService.btnValidateId).prop("disabled", false);
+
+        $("#" + DetailSimulation.btnSendToCompaniesId).removeAttr("disabled");
+        $("#" + DetailSimulation.btnSendToCompaniesId).prop("disabled", true);
+
+        DetailSimulation.simulationStateId = Constants.simulationState.ValidationPending;
+        DetailSimulation.createIconSimulationState();
     }
 });

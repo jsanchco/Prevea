@@ -1,5 +1,6 @@
 ﻿var AgencyService = kendo.observable({
 
+    textTotalId: "textTotalAgencyService",
     textAreaObservationsId: "textAreaObservationsAgencyService",
     btnValidateId: "btnValidateAgencyService",
 
@@ -17,9 +18,14 @@
         $("#" + this.btnValidateId).removeAttr("disabled");
         $("#" + this.btnValidateId).prop("disabled", true);
 
+        $("#" + this.textTotalId).kendoNumericTextBox({
+            format: "c",
+            decimals: 1,
+            change: AgencyService.onChangeTextTotal
+        });
+
         $("#" + this.textAreaObservationsId).change(function () {
-            $("#" + AgencyService.btnValidateId).removeAttr("disabled");
-            $("#" + AgencyService.btnValidateId).prop("disabled", false);
+            AgencyService.updateButtons();
         });
     },
 
@@ -32,6 +38,21 @@
             }
         };
         GeneralData.goToActionController(params);
+    },
+
+    onChangeTextTotal: function() {
+        AgencyService.updateButtons();
+    },
+
+    updateButtons: function() {
+        $("#" + AgencyService.btnValidateId).removeAttr("disabled");
+        $("#" + AgencyService.btnValidateId).prop("disabled", false);
+
+        $("#" + DetailSimulation.btnSendToCompaniesId).removeAttr("disabled");
+        $("#" + DetailSimulation.btnSendToCompaniesId).prop("disabled", true);
+
+        DetailSimulation.simulationStateId = Constants.simulationState.ValidationPending;
+        DetailSimulation.createIconSimulationState();
     },
 
     onSuccessUpdate: function (data) {

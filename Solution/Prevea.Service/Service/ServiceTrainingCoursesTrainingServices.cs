@@ -73,7 +73,6 @@ namespace Prevea.Service.Service
                     };
                 }
 
-
                 var courses = Repository.GetTrainingCoursesTrainingServiceByTrainingService(trainingService.Id);
                 var total = courses.Sum(course => course.Total);
                 trainingService = Repository.GetTrainingService(trainingService.Id);
@@ -89,6 +88,28 @@ namespace Prevea.Service.Service
                 trainingService.Total = total;
                 trainingService = Repository.SaveTrainingService(trainingService);
                 if (trainingService == null)
+                {
+                    return new Result
+                    {
+                        Message = "Se ha producido un error en la Grabación de Curso-Servicio",
+                        Object = null,
+                        Status = Status.Error
+                    };
+                }
+
+                var simulation = Repository.GetSimulation(trainingService.Simulation.Id);
+                if (simulation == null)
+                {
+                    return new Result
+                    {
+                        Message = "Se ha producido un error en la Grabación de Curso-Servicio",
+                        Object = null,
+                        Status = Status.Error
+                    };
+                }
+                simulation.SimulationStateId = (int) EnSimulationState.ValidationPending;
+                simulation = Repository.UpdateSimulation(simulation.Id, simulation);
+                if (simulation == null)
                 {
                     return new Result
                     {

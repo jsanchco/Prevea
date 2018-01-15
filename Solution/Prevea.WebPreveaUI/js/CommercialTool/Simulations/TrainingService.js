@@ -83,6 +83,8 @@
                         $("#" + TrainingService.btnValidateId).removeAttr("disabled");
                         $("#" + TrainingService.btnValidateId).prop("disabled", false);
                         GeneralData.showNotification(Constants.ok, "", "success");
+
+                        TrainingService.updateButtons();
                     }
 
                     $("#" + TrainingService.btnCreateCourseId).removeAttr("disabled");
@@ -255,12 +257,8 @@
     },
 
     setUpWidgets: function() {
-        $("#" + this.btnValidateId).removeAttr("disabled");
-        $("#" + this.btnValidateId).prop("disabled", true);
-
         $("#" + this.textAreaObservationsId).change(function () {
-            $("#" + TrainingService.btnValidateId).removeAttr("disabled");
-            $("#" + TrainingService.btnValidateId).prop("disabled", false);
+            TrainingService.updateButtons();
         });
 
         this.chooseCourseWindow = $("#" + this.chooseCourseId);
@@ -356,5 +354,13 @@
             $("#" + TrainingService.btnCreateCourseId).removeAttr("disabled");
             $("#" + TrainingService.btnCreateCourseId).prop("disabled", false);
         }
-    }
+    },
+
+    updateButtons: function() {
+        $("#" + DetailSimulation.btnSendToCompaniesId).removeAttr("disabled");
+        $("#" + DetailSimulation.btnSendToCompaniesId).prop("disabled", true);
+
+        DetailSimulation.simulationStateId = Constants.simulationState.ValidationPending;
+        DetailSimulation.createIconSimulationState();
+    },
 });

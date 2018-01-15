@@ -310,7 +310,7 @@
             return;
         }
 
-        if (dataItem.IsTitle === false) {
+        if (dataItem.IsTitle === "undefined" || dataItem.IsTitle === false) {
             GeneralData.showNotification("Debes seleccionar un Título", "", "error");
             return;
         }

@@ -15,6 +15,8 @@
 </script>
 
 <div class="row" id="pageTrainingService" style="margin: 8px">
+    
+    <div id="confirm"></div>
 
     <div class="row">
         <div class="col-sm-12">
@@ -24,7 +26,7 @@
                 HttpMethod = "POST",
                 UpdateTargetId = "framePpal",
                 OnSuccess = "TrainingService.onSuccessUpdate"
-            }, new { id = "formTrainingService" }))
+            }, new {id = "formTrainingService"}))
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
@@ -39,8 +41,8 @@
                     </div>
                 </div>
 
-                <br />
-                <br />
+                <br/>
+                <br/>
 
                 <div class="row form-group">
                     <label class="col-sm-4 control-label">Observaciones</label>
@@ -50,21 +52,21 @@
 
                 <div class="row form-group">
                     <div class="col-sm-12">
-                        @Html.TextAreaFor(model => model.Observations, new { @id = "textAreaObservationsTrainingService", @class = "form-control autogrow", style = "width:100%", placeholder = "Observaciones" })
+                        @Html.TextAreaFor(model => model.Observations, new {@id = "textAreaObservationsTrainingService", @class = "form-control autogrow", style = "width:100%", placeholder = "Observaciones"})
                     </div>
                 </div>
 
-                <br />
+                <br/>
 
                 <div>
                     @Html.HiddenFor(x => x.Id)
 
-                    <input type="submit" id="btnValidateTrainingService" value="Guardar" class="btn btn-prevea btn" />
+                    <input type="submit" id="btnValidateTrainingService" value="Guardar" class="btn btn-prevea btn"/>
                 </div>
             }
 
         </div>
-    </div>   
+    </div>
 
 </div>
 

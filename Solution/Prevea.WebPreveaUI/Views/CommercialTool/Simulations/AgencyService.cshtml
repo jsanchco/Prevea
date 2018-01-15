@@ -20,9 +20,28 @@
                 @Html.ValidationSummary(true)
 
                 <div class="row form-group">
+                    <label class="col-sm-4 control-label">Total</label>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.Total, new
+                        {
+                            id = "textTotalAgencyService",
+                            type = "nummeric",
+                            title = "Total final",
+                            min = "0",
+                            value = "0",
+                            style = "width:100%; height: 31px",
+                            placeholder = "Total final"
+                        })
+                    </div>
+                </div>
+
+                <br />
+
+                <div class="row form-group">
                     <label class="col-sm-4 control-label">Observaciones</label>
-                    <label class="col-sm-4 control-label"></label>
-                    <label class="col-sm-4 control-label"></label>
                 </div>
 
                 <div class="row form-group">
