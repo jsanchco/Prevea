@@ -58,6 +58,10 @@
                 .ForMember(x => x.SimulationStateName, x => x.MapFrom(y => y.SimulationState.Description))
                 .ForMember(x => x.UserInitials, x => x.MapFrom(y => y.User.Initials))
                 .ForMember(x => x.CompanyId, x => x.MapFrom(y => y.SimulationCompany.CompanyId))
+                .ForMember(x => x.CompanyEnrollment, x => x.MapFrom(y => y.SimulationCompany.Company.Enrollment))
+                .ForMember(x => x.TotalForeignPreventionService, x => x.MapFrom(y => y.SimulationCompany.Simulation.ForeignPreventionService.Total))
+                .ForMember(x => x.TotalAgencyService, x => x.MapFrom(y => y.SimulationCompany.Simulation.AgencyService.Total))
+                .ForMember(x => x.TotalTrainingService, x => x.MapFrom(y => y.SimulationCompany.Simulation.TrainingService.Total))
                 .ForMember(x => x.UserAssignedInitials, x => x.MapFrom(y => y.UserAssigned.Initials));
             AutoMapper.Mapper.CreateMap<SimulationViewModel, Simulation>();
 

@@ -12,6 +12,8 @@
     using System.Web;
     using IService.IService;
     using System.IO;
+    using Kendo.Mvc.UI;
+    using Common;
 
     #endregion
 
@@ -138,6 +140,16 @@
             var user = AutoMapper.Mapper.Map<UserViewModel>(Service.GetUser(User.Id));
 
             return PartialView("~/Views/Profile/EconomicTrackingProfile.cshtml", user);
+        }
+
+        [HttpGet]
+        public JsonResult Simulations_Read([DataSourceRequest] DataSourceRequest request, int userId)
+        {
+            var simulationsByUser = Service.GetSimulationsByUser(userId).Where(x => x.SimulationStateId == (int)EnSimulationState.SendToCompany);
+
+            var data = AutoMapper.Mapper.Map<List<SimulationViewModel>>(simulationsByUser);
+
+            return this.Jsonp(data);
         }
 
         #endregion

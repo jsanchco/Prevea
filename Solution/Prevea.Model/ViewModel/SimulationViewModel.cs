@@ -15,11 +15,15 @@
         public string UserAssignedInitials { get; set; }
         public int CompanyId { get; set; }
         public string CompanyName { get; set; }
+        public string CompanyEnrollment { get; set; }
         public string NIF { get; set; }
         public int NumberEmployees { get; set; }
         public int SimulationStateId { get; set; }
         public string SimulationStateName { get; set; }
         public string SimulationStateDescription { get; set; }
+        public decimal TotalForeignPreventionService { get; set; }
+        public decimal TotalAgencyService { get; set; }
+        public decimal TotalTrainingService { get; set; }
         public DateTime Date { get; set; }
         public decimal Total { get; set; }
     }
