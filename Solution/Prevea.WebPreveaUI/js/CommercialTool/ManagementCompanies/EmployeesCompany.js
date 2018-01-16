@@ -160,7 +160,7 @@
                         FirstName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         LastName: { type: "string" },
                         PhoneNumber: { type: "string" },
-                        BirthDate: { type: "date", format: "{0:dd/MM/yy}" },
+                        BirthDate: { type: "date", format: "{0:dd/MM/yy}", defaultValue:  new Date() },
                         Email: { type: "string" },
                         DNI: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         WorkStation: { type: "string" },

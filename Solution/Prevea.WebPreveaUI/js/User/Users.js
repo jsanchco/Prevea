@@ -34,7 +34,8 @@
                         DNI: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         UserStateId: { type: "number", defaultValue: 1 },
                         UserParentId: { type: "number", defaultValue: GeneralData.userId },
-                        UserParentInitials: { type: "string", editable: false, defaultValue: GeneralData.userInitials }
+                        UserParentInitials: { type: "string", editable: false, defaultValue: GeneralData.userInitials },
+                        BirthDate: { type: "date", defaultValue:  new Date() }
                     }
                 }
             },
