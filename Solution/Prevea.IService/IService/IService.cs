@@ -166,6 +166,7 @@
 
         List<Simulation> GetSimulationsByUser(int userId);
         Result SendToCompanies(int simulationId);
+        decimal GetTotalSimulation(int simulationId);
 
         #endregion
 

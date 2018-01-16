@@ -12,6 +12,8 @@
         this.numberEmployees = numberEmployees;
 
         this.setUpWidgets();
+
+        this.blockFields();
     },
 
     setUpWidgets: function() {
@@ -64,6 +66,18 @@
         }
 
         AgencyService.goToAgencyService();
-    }
+    },
 
+    blockFields: function () {
+        if (DetailSimulation.simulationStateId === Constants.simulationState.SendToCompany) {
+            var numerictextbox = $("#" + AgencyService.textTotalId).data("kendoNumericTextBox");
+            numerictextbox.enable(false);
+
+            $("#" + AgencyService.textAreaObservationsId).removeAttr("disabled");
+            $("#" + AgencyService.textAreaObservationsId).prop("disabled", true);
+
+            $("#" + AgencyService.btnValidateId).removeAttr("disabled");
+            $("#" + AgencyService.btnValidateId).prop("disabled", true);
+        }
+    }
 });

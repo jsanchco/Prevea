@@ -279,5 +279,23 @@
                 };
             }
         }
+
+        public decimal GetTotalSimulation(int simulationId)
+        {
+            var simulation = Repository.GetSimulation(simulationId);
+
+            var total = 0.0m;
+
+            if (simulation.ForeignPreventionService != null)
+                total = simulation.ForeignPreventionService.Total;
+
+            if (simulation.AgencyService != null)
+                total += simulation.AgencyService.Total;
+
+            if (simulation.TrainingService != null)
+                total += simulation.TrainingService.Total;
+
+            return total;
+        }
     }
 }

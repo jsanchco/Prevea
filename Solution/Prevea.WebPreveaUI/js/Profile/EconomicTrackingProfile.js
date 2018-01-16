@@ -27,7 +27,8 @@
                         CompanyName: { type: "string" },
                         TotalForeignPreventionService: { type: "number" },
                         TotalAgencyService: { type: "number" },
-                        TotalTrainingService: { type: "number" }
+                        TotalTrainingService: { type: "number" },
+                        Total: { type: "number" }
                     }
                 }
             },
@@ -48,7 +49,8 @@
             aggregate: [
                 { field: "TotalForeignPreventionService", aggregate: "sum" },
                 { field: "TotalAgencyService", aggregate: "sum" },
-                { field: "TotalTrainingService", aggregate: "sum" }],
+                { field: "TotalTrainingService", aggregate: "sum" },
+                { field: "Total", aggregate: "sum" }],
             pageSize: 10
         });
     },
@@ -92,6 +94,15 @@
                     groupable: "false",
                     format: "{0:c}",
                     template: "#= Templates.getColumnTemplateCurrencyRight(data.TotalTrainingService, 'c0') #",
+                    aggregates: ["sum"],
+                    footerTemplate: "Suma: #= kendo.toString(sum, 'c0') #"
+                }, {
+                    field: "Total",
+                    title: "Total",
+                    width: 50,
+                    groupable: "false",
+                    format: "{0:c}",
+                    template: "#= Templates.getColumnTemplateCurrencyRight(data.Total, 'c0') #",
                     aggregates: ["sum"],
                     footerTemplate: "Suma: #= kendo.toString(sum, 'c0') #"
                 }],

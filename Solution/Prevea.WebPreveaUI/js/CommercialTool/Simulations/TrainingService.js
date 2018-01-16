@@ -25,6 +25,8 @@
         this.createTrainingCourseTrainingServiceGrid();
 
         this.setUpWidgets();
+
+        this.blockFields();
     },
 
     createTrainingCourseTrainingServiceDataSource: function () {
@@ -274,11 +276,6 @@
             close: ChooseCourse.onCloseChooseCourseWindow,
             open: ChooseCourse.onOpenChooseCourse
         });
-
-        if (DetailSimulation.simulationStateId === Constants.simulationState.SendToCompany) {
-            $("#" + TrainingService.btnCreateCourseId).removeAttr("disabled");
-            $("#" + TrainingService.btnCreateCourseId).prop("disabled", true);
-        }
     },
 
     goToTrainingService: function () {
@@ -363,4 +360,20 @@
         DetailSimulation.simulationStateId = Constants.simulationState.ValidationPending;
         DetailSimulation.createIconSimulationState();
     },
+
+    blockFields: function () {
+        if (DetailSimulation.simulationStateId === Constants.simulationState.SendToCompany) {
+            var grid = $("#" + this.gridTrainingCourseTrainingServiceId).data("kendoGrid");
+            grid.hideColumn("Commands");
+
+            $("#" + TrainingService.btnCreateCourseId).removeAttr("disabled");
+            $("#" + TrainingService.btnCreateCourseId).prop("disabled", true);
+
+            $("#" + TrainingService.textAreaObservationsId).removeAttr("disabled");
+            $("#" + TrainingService.textAreaObservationsId).prop("disabled", true);
+
+            $("#" + TrainingService.btnValidateId).removeAttr("disabled");
+            $("#" + TrainingService.btnValidateId).prop("disabled", true);
+        }
+    }
 });

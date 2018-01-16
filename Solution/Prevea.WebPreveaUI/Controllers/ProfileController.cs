@@ -146,6 +146,10 @@
         public JsonResult Simulations_Read([DataSourceRequest] DataSourceRequest request, int userId)
         {
             var simulationsByUser = Service.GetSimulationsByUser(userId).Where(x => x.SimulationStateId == (int)EnSimulationState.SendToCompany);
+            foreach (var simulation in simulationsByUser)
+            {
+                simulation.Total = Service.GetTotalSimulation(simulation.Id);
+            }
 
             var data = AutoMapper.Mapper.Map<List<SimulationViewModel>>(simulationsByUser);
 

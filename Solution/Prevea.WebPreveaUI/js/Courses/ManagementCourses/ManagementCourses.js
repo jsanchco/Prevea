@@ -71,10 +71,11 @@
             template: "#= ManagementCourses.getTemplateNode(data) #",
             dataSource: this.coursesDataSource,
             dataTextField: "Name",
+            dataBound: function () {
+                this.expand(".k-item");
+            },
             select: ManagementCourses.onSelectNode
         });
-        //var treeview = $("#" + this.trvCoursesId).data("kendoTreeView");
-        //treeview.bind("check", ManagementCourses.treeCheck);
     },
 
     getTemplateNode: function (data) {
@@ -261,7 +262,7 @@
             return;
         }
 
-        if (dataItem.IsFamily === false) {
+        if (typeof dataItem.IsFamily === "undefined" || dataItem.IsFamily === false) {
             GeneralData.showNotification("Debes seleccionar una Familia", "", "error");
             return;
         }
@@ -310,7 +311,7 @@
             return;
         }
 
-        if (dataItem.IsTitle === "undefined" || dataItem.IsTitle === false) {
+        if (typeof dataItem.IsTitle === "undefined" || dataItem.IsTitle === false) {
             GeneralData.showNotification("Debes seleccionar un Título", "", "error");
             return;
         }
