@@ -82,11 +82,9 @@
                         GeneralData.showNotification(Constants.ko, "", "error");
                         this.cancelChanges();
                     } else {
-                        $("#" + TrainingService.btnValidateId).removeAttr("disabled");
-                        $("#" + TrainingService.btnValidateId).prop("disabled", false);
                         GeneralData.showNotification(Constants.ok, "", "success");
 
-                        TrainingService.updateButtons();
+                        DetailSimulation.updateButtonsFromSimulationServices(true);
                     }
 
                     $("#" + TrainingService.btnCreateCourseId).removeAttr("disabled");
@@ -258,9 +256,12 @@
         return html;
     },
 
-    setUpWidgets: function() {
+    setUpWidgets: function () {
+        $("#" + this.btnValidateId).removeAttr("disabled");
+        $("#" + this.btnValidateId).prop("disabled", true);
+
         $("#" + this.textAreaObservationsId).change(function () {
-            TrainingService.updateButtons();
+            TrainingService.updateButtonsOnChange();
         });
 
         this.chooseCourseWindow = $("#" + this.chooseCourseId);
@@ -279,14 +280,7 @@
     },
 
     goToTrainingService: function () {
-        var params = {
-            url: "/CommercialTool/Simulations/DetailSimulation",
-            data: {
-                simulationId: this.simulationId,
-                selectTabId: 2
-            }
-        };
-        GeneralData.goToActionController(params);
+        DetailSimulation.goToDetailSimulation(2);
     },
 
     goToEditCourse: function (courseId) {
@@ -353,12 +347,11 @@
         }
     },
 
-    updateButtons: function() {
-        $("#" + DetailSimulation.btnSendToCompaniesId).removeAttr("disabled");
-        $("#" + DetailSimulation.btnSendToCompaniesId).prop("disabled", true);
+    updateButtonsOnChange: function () {
+        $("#" + TrainingService.btnValidateId).removeAttr("disabled");
+        $("#" + TrainingService.btnValidateId).prop("disabled", false);
 
-        DetailSimulation.simulationStateId = Constants.simulationState.ValidationPending;
-        DetailSimulation.createIconSimulationState();
+        DetailSimulation.updateButtonsFromSimulationServices(true);
     },
 
     blockFields: function () {

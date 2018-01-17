@@ -38,10 +38,6 @@
         this.getStretchCalculateByNumberEmployees();
 
         this.blockFields();
-
-        this.updateButtons();
-
-        DetailSimulation.updateButtonsFromSimulationServices();
     },
 
     updateView: function() {
@@ -289,6 +285,10 @@
         var widget = $("#" + ForeignPreventionService.textTotalId).kendoNumericTextBox().data("kendoNumericTextBox");
 
         var sum = valueAmountTecniques + valueAmountHealthVigilance + valueAmountMedicalExamination;
+        if (sum === 0) {
+            return;
+        }
+
         var percentegeCalculate = (valueTotal * 100) / sum;
         if (percentegeCalculate > 100) {
             widget.wrapper.find("input").css("background-color", "#008d4c");
@@ -363,14 +363,7 @@
     },
 
     goToForeignPreventionService: function () {
-        var params = {
-            url: "/CommercialTool/Simulations/DetailSimulation",
-            data: {
-                simulationId: this.simulationId,
-                selectTabId: 0
-            }
-        };
-        GeneralData.goToActionController(params);
+        DetailSimulation.goToDetailSimulation(0);
     },
 
     goToValidateForeignPreventionService: function () {
@@ -428,45 +421,10 @@
         }
     },
 
-    updateButtons: function() {
-        if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {
-            $("#" + this.btnValidateForeignPreventionServiceId).hide();
-            switch (DetailSimulation.simulationStateId) {
-            case Constants.simulationState.ValidationPending:
-            case Constants.simulationState.Modificated:
-            case Constants.simulationState.Validated:
-                break;
-            case Constants.simulationState.SendToCompany:
-                break;
-            }
-        } else {
-            $("#" + this.btnValidateForeignPreventionServiceId).show();
-            switch (DetailSimulation.simulationStateId) {
-            case Constants.simulationState.ValidationPending:
-                $("#" + this.btnValidateForeignPreventionServiceId).removeAttr("disabled");
-                $("#" + this.btnValidateForeignPreventionServiceId).prop("disabled", false);
-                break;
-            case Constants.simulationState.Modificated:
-            case Constants.simulationState.Validated:
-                $("#" + this.btnValidateForeignPreventionServiceId).removeAttr("disabled");
-                $("#" + this.btnValidateForeignPreventionServiceId).prop("disabled", true);
-                break;
-            case Constants.simulationState.SendToCompany:
-                $("#" + this.btnValidateForeignPreventionServiceId).hide();
-                $("#" + this.btnSaveForeignPreventionServiceId).hide();
-                break;
-            }
-        } 
-    },
-
     updateButtonsOnChange: function () {
         $("#" + ForeignPreventionService.btnValidateId).removeAttr("disabled");
         $("#" + ForeignPreventionService.btnValidateId).prop("disabled", false);
 
-        $("#" + DetailSimulation.btnSendToCompaniesId).removeAttr("disabled");
-        $("#" + DetailSimulation.btnSendToCompaniesId).prop("disabled", true);
-
-        DetailSimulation.simulationStateId = Constants.simulationState.ValidationPending;
-        DetailSimulation.createIconSimulationState();
+        DetailSimulation.updateButtonsFromSimulationServices(true);
     }
 });

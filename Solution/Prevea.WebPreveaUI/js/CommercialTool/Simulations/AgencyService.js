@@ -23,38 +23,25 @@
         $("#" + this.textTotalId).kendoNumericTextBox({
             format: "c",
             decimals: 1,
-            change: AgencyService.onChangeTextTotal
+            change: function() {
+                AgencyService.updateButtonsOnChange();
+            }
         });
 
         $("#" + this.textAreaObservationsId).change(function () {
-            AgencyService.updateButtons();
+            AgencyService.updateButtonsOnChange();
         });
     },
 
     goToAgencyService: function () {
-        var params = {
-            url: "/CommercialTool/Simulations/DetailSimulation",
-            data: {
-                simulationId: this.simulationId,
-                selectTabId: 1
-            }
-        };
-        GeneralData.goToActionController(params);
+        DetailSimulation.goToDetailSimulation(1);
     },
 
-    onChangeTextTotal: function() {
-        AgencyService.updateButtons();
-    },
-
-    updateButtons: function() {
+    updateButtonsOnChange: function () {
         $("#" + AgencyService.btnValidateId).removeAttr("disabled");
         $("#" + AgencyService.btnValidateId).prop("disabled", false);
 
-        $("#" + DetailSimulation.btnSendToCompaniesId).removeAttr("disabled");
-        $("#" + DetailSimulation.btnSendToCompaniesId).prop("disabled", true);
-
-        DetailSimulation.simulationStateId = Constants.simulationState.ValidationPending;
-        DetailSimulation.createIconSimulationState();
+        DetailSimulation.updateButtonsFromSimulationServices(true);
     },
 
     onSuccessUpdate: function (data) {

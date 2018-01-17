@@ -161,13 +161,15 @@
                         .ToList();
 
                 case (int)EnRole.PreveaPersonal:
+                    var usersChildren = Context.Users.Where(x => x.UserParentId == userId).Select(x => x.Id);
+
                     return Context.Simulations
                     .Include(x => x.User)
                     .Include(x => x.UserAssigned)
                     .Include(x => x.SimulationState)
                     .Include(x => x.SimulationCompanies)
                     .OrderByDescending(x => x.Date)
-                    .Where(x => (x.SimulationStateId != (int)EnSimulationState.Validated || x.UserAssignedId == userId) && x.SimulationStateId != (int)EnSimulationState.Deleted)
+                    .Where(x => x.SimulationStateId != (int)EnSimulationState.Deleted && usersChildren.Contains(x.UserId))
                     .ToList();
 
                 default:

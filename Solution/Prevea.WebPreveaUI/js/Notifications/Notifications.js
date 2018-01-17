@@ -68,7 +68,7 @@
                 },
                 {
                     field: "ToUserInitials",
-                    title: "Asignado a",
+                    title: "Notificado a",
                     width: 150,
                     template: "#= Templates.getColumnTemplateIncrease(data.ToUserInitials) #"
                 }, {

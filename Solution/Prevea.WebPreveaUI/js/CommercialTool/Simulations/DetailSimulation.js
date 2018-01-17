@@ -3,7 +3,7 @@
     spanNotificationId: "spanNotification",
     iconSimulationStateId: "iconSimulationState",
     btnSendToCompaniesId: "btnSendToCompanies",
-    btnSendToSEDEId: "btnSendToSEDE",
+    btnValidateId: "btnValidate",
     
     // Fields
     simulationId: null,
@@ -15,10 +15,9 @@
         this.simulationStateId = simulationStateId;
         this.selectTabId = selectTabId;
 
-        this.createIconSimulationState();
         this.createKendoWidgets();
 
-        this.updateButtons();
+        this.updateButtonsFromSimulationServices(false);
     },
 
     createIconSimulationState: function () {
@@ -44,6 +43,19 @@
 
     createKendoWidgets: function () {
         this.createTabStripSimulation();
+
+        if (GeneralData.userRoleId === Constants.role.Super ||
+            GeneralData.userRoleId === Constants.role.PreveaPersonal) {
+            $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
+            $("#" + this.btnSendToCompaniesId).prop("disabled", true);
+
+            $("#" + this.btnValidateId).show();
+        } else {
+            $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
+            $("#" + this.btnSendToCompaniesId).prop("disabled", false);
+
+            $("#" + this.btnValidateId).hide();
+        }
     },
 
     createTabStripSimulation: function () {
@@ -78,12 +90,12 @@
         GeneralData.goToActionController(params);
     },
 
-    goToDetailSimulation: function () {
+    goToDetailSimulation: function (selectTabId) {
         var params = {
             url: "/CommercialTool/Simulations/DetailSimulation",
             data: {
                 simulationId: this.simulationId,
-                selectTabId: 0
+                selectTabId: selectTabId
             }
         };
         GeneralData.goToActionController(params);
@@ -100,15 +112,6 @@
             success: function (data) {
                 if (data.result.Status === 0) {
                     GeneralData.showNotification(Constants.ok, "", "success");
-
-                    var params = {
-                        url: "/Company/DetailCompany",
-                        data: {
-                            id: data.result.Object,
-                            selectTabId: 0
-                        }
-                    };
-                    //GeneralData.goToActionController(params);
                 }
                 if (data.result.Status === 1) {
                     GeneralData.showNotification(Constants.ko, "", "error");
@@ -131,9 +134,6 @@
             success: function (data) {
                 if (data.result.Status === Constants.resultStatus.Ok) {
                     GeneralData.showNotification("Enviada Notificación a SEDE", "", "success");
-
-                    $("#" + DetailSimulation.btnSendToSEDEId).removeAttr("disabled");
-                    $("#" + DetailSimulation.btnSendToSEDEId).prop("disabled", true);
                 }
                 if (data.result.Status === Constants.resultStatus.Error) {
                     GeneralData.showNotification(Constants.ko, "", "error");
@@ -145,64 +145,80 @@
         });
     },
 
-    updateButtons: function () {
-        if (GeneralData.userRoleId === Constants.role.Super || GeneralData.userRoleId === Constants.role.PreveaPersonal) {
-            $("#" + this.btnSendToSEDEId).removeAttr("disabled");
-            $("#" + this.btnSendToSEDEId).prop("disabled", true);
-            $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
-            $("#" + this.btnSendToCompaniesId).prop("disabled", true);
+    goToValidate: function() {
+        $.ajax({
+            url: "/Simulations/SendNotificationValidateToUser",
+            data: {
+                simulationId: this.simulationId
+            },
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                if (data.result.Status === Constants.resultStatus.Ok) {
+                    GeneralData.showNotification(Constants.ok, "", "success");
 
-            return;
-        }
-
-        if (this.simulationStateId === Constants.simulationState.SendToCompany) {            
-            $("#" + this.btnSendToSEDEId).removeAttr("disabled");
-            $("#" + this.btnSendToSEDEId).prop("disabled", false);
-            $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
-            $("#" + this.btnSendToCompaniesId).prop("disabled", false);
-
-            return;
-        }
-
-        if (this.simulationStateId === Constants.simulationState.Validated) {
-            $("#" + this.btnSendToSEDEId).removeAttr("disabled");
-            $("#" + this.btnSendToSEDEId).prop("disabled", true);
-            $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
-            $("#" + this.btnSendToCompaniesId).prop("disabled", false);
-
-            return;
-        }
+                    DetailSimulation.simulationStateId = data.result.Object.SimulationStateId;
+                    DetailSimulation.createIconSimulationState();
+                }
+                if (data.result.Status === Constants.resultStatus.Error) {
+                    GeneralData.showNotification(Constants.ko, "", "error");
+                }
+            },
+            error: function () {
+                GeneralData.showNotification(Constants.ko, "", "error");
+            }
+        });
     },
 
-    updateButtonsFromSimulationServices: function () {
+    updateButtonsFromSimulationServices: function (fromServices) {
         if (GeneralData.userRoleId === Constants.role.Super ||
             GeneralData.userRoleId === Constants.role.PreveaPersonal) {
-            $("#" + this.btnSendToSEDEId).removeAttr("disabled");
-            $("#" + this.btnSendToSEDEId).prop("disabled", true);
+
+            if (fromServices === true) {
+                DetailSimulation.simulationStateId = Constants.simulationState.Modificated;
+            }
+           
             $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
             $("#" + this.btnSendToCompaniesId).prop("disabled", true);
-        } else {
+
             switch (DetailSimulation.simulationStateId) {
                 case Constants.simulationState.ValidationPending:
-                    $("#" + this.btnSendToSEDEId).removeAttr("disabled");
-                    $("#" + this.btnSendToSEDEId).prop("disabled", false);
+                case Constants.simulationState.Modificated:
+                    $("#" + this.btnValidateId).removeAttr("disabled");
+                    $("#" + this.btnValidateId).prop("disabled", false);
+                    break;                
+                case Constants.simulationState.Validated:
+                case Constants.simulationState.SendToCompany:
+                    $("#" + this.btnValidateId).removeAttr("disabled");
+                    $("#" + this.btnValidateId).prop("disabled", true);
+                    break;
+            }
+        } else {
+
+            if (fromServices === true) {
+                DetailSimulation.simulationStateId = Constants.simulationState.ValidationPending;
+            }
+            
+            $("#" + this.btnValidateId).removeAttr("disabled");
+            $("#" + this.btnValidateId).prop("disabled", true);
+
+            switch (DetailSimulation.simulationStateId) {
+                case Constants.simulationState.ValidationPending:
                     $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
                     $("#" + this.btnSendToCompaniesId).prop("disabled", true);
                     break;
                 case Constants.simulationState.Modificated:
                 case Constants.simulationState.Validated:                    
-                    $("#" + this.btnSendToSEDEId).removeAttr("disabled");
-                    $("#" + this.btnSendToSEDEId).prop("disabled", true);
                     $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
                     $("#" + this.btnSendToCompaniesId).prop("disabled", false);
                     break;
                 case Constants.simulationState.SendToCompany:
-                    $("#" + this.btnSendToSEDEId).removeAttr("disabled");
-                    $("#" + this.btnSendToSEDEId).prop("disabled", true);
                     $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
                     $("#" + this.btnSendToCompaniesId).prop("disabled", true);
                     break;
             }
         }
+
+        DetailSimulation.createIconSimulationState();
     }
 });

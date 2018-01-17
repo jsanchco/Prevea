@@ -104,7 +104,7 @@
                     </a>
                 </li>
                 <li class="active">
-                    <a onclick="DetailSimulation.goToDetailSimulation(this)" style="cursor: pointer;">
+                    <a onclick="DetailSimulation.goToDetailSimulation(0)" style="cursor: pointer;">
                         <strong>Detalle Simulación</strong>
                     </a>
                 </li>
@@ -142,9 +142,11 @@
     <br />
     
     <div class="row form-group">
-        <div class="col-sm-12" style="text-align: right">
-            <input type="button" id="btnSendToCompanies" value="Enviar a Empresas" onclick="DetailSimulation.goToSendToCompanies()" class="btn btn-prevea btn" />
-            <input type="button" id="btnSendToSEDE" value="Enviar a SEDE" onclick="DetailSimulation.goToSendToSEDE()" class="btn btn-prevea btn" style="display: none;"/>
+        <div class="col-sm-2">
+            <input type="button" id="btnValidate" value="Validar" onclick="DetailSimulation.goToValidate()" class="btn btn-prevea btn" />         
+        </div>
+        <div class="col-sm-offset-8 col-sm-2" style="text-align: right">
+            <input type="button" id="btnSendToCompanies" value="Enviar a Empresas" onclick="DetailSimulation.goToSendToCompanies()" class="btn btn-prevea btn" />            
         </div>
     </div>
 

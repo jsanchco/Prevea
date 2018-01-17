@@ -61,6 +61,7 @@
                 if (result.Status == Status.Error)
                     return this.Jsonp(new {Errors = errorSimulation});
 
+                var user = Service.GetUser(User.Id);
                 simulation.Id = data.Id;
                 var notification = new Model.Model.Notification
                 {
@@ -68,7 +69,7 @@
                     NotificationTypeId = (int)EnNotificationType.FromSimulation,
                     NotificationStateId = (int)EnNotificationState.Assigned,
                     SimulationId = simulation.Id,
-                    ToRoleId = (int)EnRole.PreveaPersonal,
+                    ToUserId = user.UserParentId,
                     Observations =
                         $"{Service.GetUser(User.Id).Initials} - Alta de la Simulación [{simulation.CompanyName}]"
                 };
@@ -141,7 +142,7 @@
                 if (resultService.Status == Status.Error)
                     return Json(resultService);
 
-                if (UpdateSimulation(foreignPreventionService.Id) == Status.Error)
+                if (UpdateSimulation(foreignPreventionService.Id, EnUpdateSimultationFrom.ForeignPreventionService) == Status.Error)
                 {
                     var resultUpdateSimulation = new Result
                     {
@@ -171,9 +172,22 @@
         {
             try
             {
-                var result = Service.SaveAgencyService(agencyService);
+                var resultService = Service.SaveAgencyService(agencyService);
+                if (resultService.Status == Status.Error)
+                    return Json(resultService);
 
-                return Json(result);
+                if (UpdateSimulation(agencyService.Id, EnUpdateSimultationFrom.AgencyService) == Status.Error)
+                {
+                    var resultUpdateSimulation = new Result
+                    {
+                        Status = Status.Error,
+                        Object = null,
+                        Message = "Error en la actualización de la Simulación"
+                    };
+                    return Json(resultUpdateSimulation);
+                }
+
+                return Json(resultService);
             }
             catch (Exception e)
             {
@@ -192,9 +206,22 @@
         {
             try
             {
-                var result = Service.SaveTrainingService(trainingService);
+                var resultService = Service.SaveTrainingService(trainingService);
+                if (resultService.Status == Status.Error)
+                    return Json(resultService);
 
-                return Json(result);
+                if (UpdateSimulation(trainingService.Id, EnUpdateSimultationFrom.TrainngService) == Status.Error)
+                {
+                    var resultUpdateSimulation = new Result
+                    {
+                        Status = Status.Error,
+                        Object = null,
+                        Message = "Error en la actualización de la Simulación"
+                    };
+                    return Json(resultUpdateSimulation);
+                }
+
+                return Json(resultService);
             }
             catch (Exception e)
             {
@@ -229,7 +256,6 @@
                     NotificationStateId = (int)EnNotificationState.Issued,
                     SimulationId = simulation.Id,
                     ToUserId = simulation.UserAssignedId,
-                    ToRoleId = (int)EnRole.PreveaPersonal,
                     Observations =
                         $"{Service.GetUser(User.Id).Initials} - Borrada la Simulación [{simulation.CompanyName}]"
                 };
@@ -284,7 +310,6 @@
                 NotificationStateId = (int) EnNotificationState.Issued,
                 SimulationId = simulationId,
                 ToUserId = simulation.UserId,
-                ToRoleId = (int) EnRole.PreveaPersonal,
                 Observations =
                     $"{Service.GetUser(User.Id).Initials} - Asignada la Simulación [{simulation.CompanyName}]"
             };
@@ -298,7 +323,7 @@
             return Json(new {result = resultSimulation}, JsonRequestBehavior.AllowGet);
         }
 
-        private Status UpdateSimulation(int simulationId)
+        private Status UpdateSimulation(int simulationId, EnUpdateSimultationFrom updateSimultationFrom)
         {
             var user = Service.GetUser(User.Id);
             var simulation = Service.GetSimulation(simulationId);
@@ -323,10 +348,8 @@
                         NotificationTypeId = (int) EnNotificationType.FromSede,
                         NotificationStateId = (int) EnNotificationState.Issued,
                         SimulationId = simulationId,
-                        ToUserId = simulation.UserId,
-                        ToRoleId = (int)EnRole.PreveaPersonal,
-                        Observations =
-                            $"{Service.GetUser(User.Id).Initials} - Modificada la Simulación [{simulation.CompanyName}] -> TEC: {simulation.ForeignPreventionService.AmountTecniques}€ VS: {simulation.ForeignPreventionService.AmountHealthVigilance}€ RM: {simulation.ForeignPreventionService.AmountMedicalExamination}€"
+                        ToUserId = simulation.UserId,                        
+                        Observations = GetObservation(simulation, updateSimultationFrom)                         
                     };
                     resultNotification = Service.SaveNotification(notification);
 
@@ -345,17 +368,9 @@
                         NotificationTypeId = (int)EnNotificationType.FromUser,
                         NotificationStateId = (int)EnNotificationState.Issued,
                         SimulationId = simulationId,
-                        Observations =
-                            $"{Service.GetUser(User.Id).Initials} - Modificada la Simulación (SPA) [{simulation.CompanyName}] -> TEC: {simulation.ForeignPreventionService.AmountTecniques}€ VS: {simulation.ForeignPreventionService.AmountHealthVigilance}€ RM: {simulation.ForeignPreventionService.AmountMedicalExamination}€"
+                        ToUserId = user.UserParentId,
+                        Observations = GetObservation(simulation, updateSimultationFrom)
                     };
-                    if (simulation.UserAssignedId != null)
-                    {
-                        notification.ToUserId = simulation.UserAssignedId;
-                    }
-                    else
-                    {
-                        notification.ToRoleId = (int) EnRole.PreveaPersonal;
-                    }
 
                     resultNotification = Service.SaveNotification(notification);
 
@@ -372,17 +387,48 @@
             }
         }
 
+        private string GetObservation(Simulation simulation, EnUpdateSimultationFrom updateSimultationFrom)
+        {
+            var user = Service.GetUser(User.Id);
+
+            string observations;
+            switch (updateSimultationFrom)
+            {
+                case EnUpdateSimultationFrom.ForeignPreventionService:
+                    observations =
+                        $"{user.Initials} - Modificada la Simulación (SPA) [{simulation.CompanyName}] -> TEC: {simulation.ForeignPreventionService.AmountTecniques}€ VS: {simulation.ForeignPreventionService.AmountHealthVigilance}€ RM: {simulation.ForeignPreventionService.AmountMedicalExamination}€ Total: {Service.GetTotalSimulation(simulation.Id)}€";
+
+                    break;
+                case EnUpdateSimultationFrom.AgencyService:
+                    observations =
+                        $"{user.Initials} - Modificada la Simulación (Gestoría) [{simulation.CompanyName}]";
+
+                    break;
+                case EnUpdateSimultationFrom.TrainngService:
+                    observations =
+                        $"{user.Initials} - Modificada la Simulación (Formación) [{simulation.CompanyName}]";
+
+                    break;
+                default:
+                    observations = String.Empty;
+                    break;
+            }
+
+            return observations;
+        }
+
         [HttpPost]
         public JsonResult SendToSEDE(int simulationId)
         {
             var simulation = Service.GetSimulation(simulationId);
+            var user = Service.GetUser(User.Id);
             var notification = new Model.Model.Notification
             {
                 DateCreation = DateTime.Now,
                 NotificationTypeId = (int)EnNotificationType.FromSimulation,
                 NotificationStateId = (int)EnNotificationState.Issued,
                 SimulationId = simulationId,
-                ToRoleId = (int)EnRole.PreveaPersonal,
+                ToUserId = user.UserParentId,
                 Observations =
                     $"{Service.GetUser(User.Id).Initials} - Modificación de la Simulación [{simulation.CompanyName}]"
             };
@@ -397,6 +443,8 @@
         public JsonResult SendNotificationValidateToUser(int simulationId)
         {
             var simulation = Service.GetSimulation(simulationId);
+            var user = Service.GetUser(User.Id);
+
             simulation.SimulationStateId = (int) EnSimulationState.Validated;
 
             var resultSimulation = Service.UpdateSimulation(simulationId, simulation);
@@ -411,7 +459,7 @@
                 SimulationId = simulationId,
                 ToUserId = simulation.UserId,
                 Observations =
-                    $"{Service.GetUser(User.Id).Initials} - Validada la Simulación [{simulation.CompanyName}]"
+                    $"{user.Initials} - Validada la Simulación [{simulation.CompanyName}]"
             };
             var resultNotification = Service.SaveNotification(notification);
             if (resultNotification.Status == Status.Error)
@@ -435,6 +483,8 @@
         {
             try
             {
+                var user = Service.GetUser(User.Id);
+
                 var trainingCourseTrainingService = this.DeserializeObject<TrainingCourseTrainingService>("course");
                 if (trainingCourseTrainingService == null)
                 {
@@ -448,7 +498,7 @@
                 var trainingCourseTrainingServiceFind =
                     Service.GetTrainingCourseTrainingService(trainingCourseTrainingService.Id);
                 var observations =
-                    $"{Service.GetUser(User.Id).Initials} - Actualizado el Curso {trainingCourseTrainingServiceFind.TrainingCourse.Name} en la Simulación [{trainingCourseTrainingServiceFind.TrainingService.Simulation.CompanyName}]";
+                    $"{user.Initials} - Actualizado el Curso {trainingCourseTrainingServiceFind.TrainingCourse.Name} en la Simulación [{trainingCourseTrainingServiceFind.TrainingService.Simulation.CompanyName}]";
 
                 var notification = new Model.Model.Notification
                 {
@@ -456,7 +506,7 @@
                     NotificationTypeId = (int)EnNotificationType.FromUser,
                     NotificationStateId = (int)EnNotificationState.Validated,
                     SimulationId = trainingCourseTrainingServiceFind.TrainingServiceId,
-                    ToRoleId = (int)EnRole.PreveaPersonal,
+                    ToUserId = user.UserParentId,
                     Observations = observations
                 };
                 var resultNotification = Service.SaveNotification(notification);
@@ -478,6 +528,8 @@
         {
             try
             {
+                var user = Service.GetUser(User.Id);
+
                 var trainingCourseTrainingService = this.DeserializeObject<TrainingCourseTrainingService>("course");
                 if (trainingCourseTrainingService == null)
                 {
@@ -487,7 +539,7 @@
                 var trainingCourseTrainingServiceFind =
                     Service.GetTrainingCourseTrainingService(trainingCourseTrainingService.Id);
                 var observations =
-                    $"{Service.GetUser(User.Id).Initials} - Borrado el Curso {trainingCourseTrainingServiceFind.TrainingCourse.Name} a la Simulación [{trainingCourseTrainingServiceFind.TrainingService.Simulation.CompanyName}]";
+                    $"{user.Initials} - Borrado el Curso {trainingCourseTrainingServiceFind.TrainingCourse.Name} a la Simulación [{trainingCourseTrainingServiceFind.TrainingService.Simulation.CompanyName}]";
 
                 var result = Service.DeleteTrainingCourseTrainingService(trainingCourseTrainingService.Id);
                 if (result.Status == Status.Error)
@@ -499,7 +551,7 @@
                     NotificationTypeId = (int)EnNotificationType.FromUser,
                     NotificationStateId = (int)EnNotificationState.Validated,
                     SimulationId = trainingCourseTrainingServiceFind.TrainingServiceId,
-                    ToRoleId = (int)EnRole.PreveaPersonal,
+                    ToUserId = user.UserParentId,
                     Observations = observations                       
                 };
                 var resultNotification = Service.SaveNotification(notification);
@@ -520,6 +572,8 @@
         {
             try
             {
+                var user = Service.GetUser(User.Id);
+
                 var trainingCourseTrainingService = this.DeserializeObject<TrainingCourseTrainingService>("course");
                 if (trainingCourseTrainingService == null)
                 {
@@ -538,9 +592,9 @@
                     NotificationTypeId = (int)EnNotificationType.FromSede,
                     NotificationStateId = (int)EnNotificationState.Validated,
                     SimulationId = trainingCourseTrainingService.TrainingServiceId,
-                    ToRoleId = (int)EnRole.PreveaPersonal,
+                    ToUserId = user.UserParentId,
                     Observations =
-                        $"{Service.GetUser(User.Id).Initials} - Agregado el Curso {trainingCourseTrainingServiceFind.TrainingCourse.Name } a la Simulación [{trainingCourseTrainingServiceFind.TrainingService.Simulation.CompanyName}]"
+                        $"{user.Initials} - Agregado el Curso {trainingCourseTrainingServiceFind.TrainingCourse.Name } a la Simulación [{trainingCourseTrainingServiceFind.TrainingService.Simulation.CompanyName}]"
                 };
                 var resultNotification = Service.SaveNotification(notification);
                 if (resultNotification.Status == Status.Error)
@@ -582,4 +636,6 @@
             return PartialView("~/Views/CommercialTool/Simulations/ChooseCourse.cshtml");
         }
     }
+
+    public enum EnUpdateSimultationFrom { ForeignPreventionService, AgencyService, TrainngService }
 }
