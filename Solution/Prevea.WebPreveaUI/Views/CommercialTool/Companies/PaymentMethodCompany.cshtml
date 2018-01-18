@@ -17,12 +17,6 @@
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
 
-            @*<div class="row form-group">
-                <label class="col-sm-4 control-label" style="color: black; text-align: center; font-size: 16px; font-weight: bold; margin-top: 30px; margin-bottom: 20px;">FORMA de COBRO</label>
-                <label class="col-sm-4 control-label" style="color: black; text-align: center; font-size: 16px; font-weight: bold; margin-top: 30px; margin-bottom: 20px;">MODALIDAD de PAGO</label>
-                <label class="col-sm-4 control-label" style="color: black; text-align: center; font-size: 16px; font-weight: bold; margin-top: 30px; margin-bottom: 20px;">COBRO R. MÉDICOS</label>
-            </div>*@
-
             <div class="row form-group">
                 <label class="col-sm-4 control-label" style="">Forma de cobro</label>
                 <label class="col-sm-4 control-label" style="">Modalidad de pago</label>
@@ -81,13 +75,18 @@
             </div>
 
             <div class="row form-group">
+                <label class="col-sm-4 control-label" style="">Nombre de la Entidad</label>
                 <label class="col-sm-4 control-label" style="">Número de cuenta</label>
             </div>
 
             <div class="row form-group" style="margin-top: -10px;">
                 <div class="col-sm-4">
+                    @Html.TextBoxFor(model => model.EntityName, new { @id = "textBoxEntityName", @class = "form-control", style = "width:100%", placeholder = "Nombre de la Entidad" })
+                </div>
+
+                <div class="col-sm-4">
                     @Html.TextBoxFor(model => model.AccountNumber, new { @id = "textBoxAccountNumber", @class = "form-control", style = "width:100%", placeholder = "Número de cuenta" })
-                </div>   
+                </div>
             </div>         
 
             <br />

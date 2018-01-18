@@ -197,6 +197,9 @@
         public ActionResult EconomicDataCompany(int companyId)
         {
             var company = Service.GetCompany(companyId);
+            const decimal iva = 1.21m;
+
+            ViewBag.Total = Math.Round(Service.GetTotalSimulation(company.SimulationCompany.SimulationId) * iva, 2);
 
             return PartialView("~/Views/CommercialTool/Companies/EconomicDataCompany.cshtml", company);
         }

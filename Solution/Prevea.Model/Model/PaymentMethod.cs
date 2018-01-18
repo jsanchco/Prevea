@@ -46,5 +46,6 @@
         public virtual ModePaymentMedicalExamination ModePaymentMedicalExamination { get; set; }
 
         public string AccountNumber { get; set; }
+        public string EntityName { get; set; }
     }
 }

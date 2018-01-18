@@ -115,8 +115,7 @@
                     DetailSimulation.updateButtonsFromSimulationServices(false);
 
                     GeneralData.showNotification(Constants.ok, "", "success");
-                }
-                if (data.result.Status === Constants.resultStatus.Error) {
+                } else {
                     GeneralData.showNotification(Constants.ko, "", "error");
                 }
             },

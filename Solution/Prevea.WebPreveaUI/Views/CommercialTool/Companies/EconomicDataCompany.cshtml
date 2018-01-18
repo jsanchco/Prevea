@@ -1,11 +1,11 @@
 ﻿@model Company
 
 <script>
-    EconomicDataCompany.init(@Model.Id);
+    EconomicDataCompany.init(@Model.Id, @Model.SimulationCompany.SimulationId);
 </script>
 
 <div class="row" id="pageEconomicDataCompany" style="width: 95%">
-    
+
     <br />
 
     <div class="col-sm-12" style="text-align: right; color: #00639e; font-size: x-small">
@@ -13,41 +13,114 @@
     </div>
 
     <div class="col-sm-12" style="text-align: center">
-        <H2><strong>Servicio de Prevención Ajeno</strong>
+        <H2>
+            <strong>Servicio de Prevención Ajeno</strong>
         </H2>
 
-        <br/>
+        <br />
+        
+        @{
+            var totalAmountTecniques = 0.0m;
+            var totalAmountHealthVigilance = 0.0m;
+            var totalAmountMedicalExamination = 0.0m;
+            if (Model.SimulationCompany.Simulation.ForeignPreventionService != null)
+            {
+                if (Model.SimulationCompany.Simulation.ForeignPreventionService.AmountTecniques != null)
+                {
+                    totalAmountTecniques = (decimal) Model.SimulationCompany.Simulation.ForeignPreventionService.AmountTecniques * Model.SimulationCompany.Simulation.NumberEmployees;
+                }
+                if (Model.SimulationCompany.Simulation.ForeignPreventionService.AmountHealthVigilance != null)
+                {
+                    totalAmountHealthVigilance = (decimal) Model.SimulationCompany.Simulation.ForeignPreventionService.AmountHealthVigilance * Model.SimulationCompany.Simulation.NumberEmployees;
+                }
+                if (Model.SimulationCompany.Simulation.ForeignPreventionService.AmountMedicalExamination != null)
+                {
+                    totalAmountMedicalExamination = (decimal) Model.SimulationCompany.Simulation.ForeignPreventionService.AmountMedicalExamination * Model.SimulationCompany.Simulation.NumberEmployees;
+                }
+            }
+        }
 
         <div class="row">
-            <div class="col-sm-offset-2 col-sm-2 control-label" style="text-align: left">Especialidades Técnicas</div>
+            <div class="col-sm-offset-2 col-sm-3 control-label" style="text-align: left">Especialidades Técnicas</div>
+            <div class="col-sm-1 control-label" style="text-align: left; font-weight: bold;">@totalAmountHealthVigilance €</div>
+            <div class="col-sm-2 control-label" style="text-align: left">(IVA no incluído)</div>
         </div>
 
-        <br/>
+        <br />
 
         <div class="row">
-            <div class="col-sm-offset-2 col-sm-2 control-label" style="text-align: left">Vigilancia de la Salud</div>
+            <div class="col-sm-offset-2 col-sm-3 control-label" style="text-align: left">Vigilancia de la Salud</div>
+            <div class="col-sm-1 control-label" style="text-align: left; font-weight: bold;">@totalAmountMedicalExamination €</div>
+            <div class="col-sm-2 control-label" style="text-align: left">(IVA no incluído)</div>
         </div>
-    </div>
 
-    <br/>
-
-    <div class="col-sm-12" style="text-align: center">
-        <H2><strong>Gestoría</strong>
-        </H2>
-    </div>
-
-    <br/>
-
-    <div class="col-sm-12" style="text-align: center">
-        <H2><strong>Formación</strong>
-        </H2>
-
-        <br/>
+        <br />
 
         <div class="row">
-            <div class="col-sm-12" style="width: 100%">
-                <div id="gridTrainingCourseTrainingService" style="height: 40vh;"></div>
+            <div class="col-sm-offset-2 col-sm-3 control-label" style="text-align: left">Rec. Médico realizado en clínica</div>
+            <div class="col-sm-1 control-label" style="text-align: left; font-weight: bold;">@totalAmountTecniques €</div>
+            <div class="col-sm-2 control-label" style="text-align: left">(Exento de IVA)</div>
+        </div>
+
+    </div>
+
+    <br />
+    <br />
+
+    <div class="col-sm-12" style="text-align: center">
+        <H2>
+            <strong>Gestoría</strong>
+        </H2>
+
+        <div class="row">
+            @if (Model.SimulationCompany.Simulation.AgencyService != null)
+            {
+                <div class="col-sm-offset-2 col-sm-3 control-label" style="text-align: left">Servicios de Gestoría</div>
+                <div class="col-sm-1 control-label" style="text-align: left; font-weight: bold;">@Model.SimulationCompany.Simulation.AgencyService.Total €</div>
+                <div class="col-sm-2 control-label" style="text-align: left">(IVA no incluído)</div>                    
+            }
+            else
+            {         
+                <div class="col-sm-offset-2 col-sm-8 control-label">No tiene contratada Gestoría</div>
+            }
+        </div>
+
+    </div>
+
+    <br />
+    <br />
+
+    <div class="col-sm-12" style="text-align: center">
+        <H2>
+            <strong>Formación</strong>
+        </H2>
+        
+        <div class="row">
+            <div class="col-sm-offset-2 col-sm-8">
+                @if (Model.SimulationCompany.Simulation.TrainingService != null)
+                {
+                    <div id="gridTrainingCourses" style="height: 40vh;"></div>
+                }
+                else
+                {
+                    <div id="gridTrainingCourses" style="height: 40vh; display: none"></div>
+                    <div class="control-label">No tiene contratada Formación</div>
+                }
             </div>
+        </div>
+
+        <br />
+        
+        <div class="row">
+            <div class="col-sm-offset-2 col-sm-8">
+                <hr />
+            </div>
+        </div>        
+
+        <div class="row" style="text-align: left">
+            <div class="col-sm-offset-2 col-sm-3 control-label" style="font-size: large; color: #00639e; font-weight: bold">Total</div>
+            <div class="col-sm-1 control-label" style="font-size: large; color: #00639e; font-weight: bold">@ViewBag.Total €</div>
+            <div class="col-sm-2 control-label" style="font-size: large; color: #00639e; text-align: left">(IVA incluído)</div>
         </div>
 
     </div>

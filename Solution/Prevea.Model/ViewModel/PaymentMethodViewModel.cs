@@ -21,5 +21,6 @@ namespace Prevea.Model.ViewModel
         public int ModePaymentId { get; set; }
         public int? ModePaymentMedicalExaminationId { get; set; }
         public string AccountNumber { get; set; }
+        public string EntityName { get; set; }
     }
 }
