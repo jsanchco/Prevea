@@ -631,7 +631,12 @@
         public ActionResult OfferView(int contractualDocumentId)
         {
             var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
+
             ViewBag.ContractualDocumentId = contractualDocumentId;
+            ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
+            ViewBag.NumberWorkCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId).Count(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta);
+
+            var workCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId);
 
             return PartialView("~/Views/CommercialTool/Companies/Reports/OfferReport.cshtml", contractualDocument.Company);
         }
@@ -642,6 +647,7 @@
             var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
 
             ViewBag.ContractualDocumentId = contractualDocumentId;
+            ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
             ViewBag.NumberWorkCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId).Count(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta);
 
             return View("~/Views/CommercialTool/Companies/Reports/OfferReport.cshtml", contractualDocument.Company);

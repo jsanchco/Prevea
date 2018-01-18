@@ -642,6 +642,7 @@
     <Content Include="Images\image_not_found.png" />
     <Content Include="Images\loader-1.gif" />
     <Content Include="Images\loader-2.gif" />
+    <Content Include="Images\Logo_report.png" />
     <Content Include="Images\Logo.png" />
     <Content Include="Images\notes-lines.png" />
     <Content Include="Images\pdf_opt.png" />

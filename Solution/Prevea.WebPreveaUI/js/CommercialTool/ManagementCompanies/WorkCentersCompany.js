@@ -24,6 +24,7 @@
                     fields: {
                         Id: { type: "number", defaultValue: 0 },
                         Address: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
+                        Province: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         Description: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         CompanyId: { type: "number", defaultValue: WorkCentersCompany.companyId },
                         EstablishmentTypeId: { type: "number", defaultValue: 1 },
@@ -108,6 +109,10 @@
                 title: "Dirección",
                 width: 200
             }, {
+                field: "Province",
+                title: "Provincia",
+                width: 100
+            },{
                 field: "Description",
                 title: "Descripción",
                 width: 200,
