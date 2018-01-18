@@ -110,10 +110,13 @@
             type: "post",
             dataType: "json",
             success: function (data) {
-                if (data.result.Status === 0) {
+                if (data.resultSimulation.Status === Constants.resultStatus.Ok) {
+                    DetailSimulation.simulationStateId = Constants.simulationState.SendToCompany;
+                    DetailSimulation.updateButtonsFromSimulationServices(false);
+
                     GeneralData.showNotification(Constants.ok, "", "success");
                 }
-                if (data.result.Status === 1) {
+                if (data.result.Status === Constants.resultStatus.Error) {
                     GeneralData.showNotification(Constants.ko, "", "error");
                 }
             },

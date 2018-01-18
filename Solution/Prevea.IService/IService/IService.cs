@@ -103,15 +103,6 @@
 
         #endregion
 
-        #region Economic Data
-
-        EconomicData GetEconomicData(int economicDataId);
-        Result SaveEconomicData(EconomicData economicData);
-        Result UpdateEconomicData(int economicDataId, EconomicData economicData);
-        Result DeleteEconomicData(int economicDataId);
-
-        #endregion
-
         #region Payment Method
 
         PaymentMethod GetPaymentMethod(int paymentMethodId);

@@ -205,7 +205,8 @@
                     Name = simulation.CompanyName,
                     NIF = simulation.NIF,
                     FromSimulation = true,
-                    GestorId = simulation.UserId
+                    GestorId = simulation.UserId,
+                    EmployeesNumber = simulation.NumberEmployees
                 };
                 company = Repository.SaveCompany(company);
                 if (company == null)

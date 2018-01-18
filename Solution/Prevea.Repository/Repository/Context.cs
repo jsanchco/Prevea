@@ -27,7 +27,6 @@
         public DbSet<Agency> Agencies { get; set; }
         public DbSet<ContactPerson> ContactPersons { get; set; }
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<EconomicData> EconomicsDatas { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<ModePayment> ModesPayment { get; set; }
         public DbSet<ModePaymentMedicalExamination> ModesPaymentMedicalExamination { get; set; }

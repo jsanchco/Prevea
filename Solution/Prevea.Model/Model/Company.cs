@@ -48,6 +48,7 @@ namespace Prevea.Model.Model
         public string Province { get; set; }
         public DateTime Date { get; set; }
         public bool FromSimulation { get; set; }
+        public int EmployeesNumber { get; set; }
 
         public int? CnaeId { get; set; }
         public virtual Cnae Cnae { get; set; }
@@ -58,7 +59,6 @@ namespace Prevea.Model.Model
         public int GestorId { get; set; }
         public virtual User Gestor { get; set; }
 
-        public virtual EconomicData EconomicData { get; set; }
         public virtual PaymentMethod PaymentMethod { get; set; }
 
         public virtual ICollection<Document> Documents { get; set; }

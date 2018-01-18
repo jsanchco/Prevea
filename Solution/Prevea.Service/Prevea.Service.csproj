@@ -50,7 +50,6 @@
     <Compile Include="Service\ServiceCompanies.cs" />
     <Compile Include="Service\ServiceContractualsDocuments.cs" />
     <Compile Include="Service\ServiceDocuments.cs" />
-    <Compile Include="Service\ServiceEconomicsDatas.cs" />
     <Compile Include="Service\ServiceEstablishmentTypes.cs" />
     <Compile Include="Service\ServiceForeignPreventionServices.cs" />
     <Compile Include="Service\ServiceHistoricDownloadDocuments.cs" />

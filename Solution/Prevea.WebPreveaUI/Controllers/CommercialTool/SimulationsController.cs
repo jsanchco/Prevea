@@ -287,9 +287,29 @@
         [HttpPost]
         public JsonResult SendToCompanies(int simulationId)
         {
-            var result = Service.SendToCompanies(simulationId);
+            var user = Service.GetUser(User.Id);
 
-            return Json(new {result}, JsonRequestBehavior.AllowGet);
+            var resultSimulation = Service.SendToCompanies(simulationId);
+            if (resultSimulation.Status == Status.Error)
+                return Json(new { result = resultSimulation }, JsonRequestBehavior.AllowGet);
+
+            var simulation = Service.GetSimulation(simulationId);
+            var notification = new Model.Model.Notification
+            {
+                DateCreation = DateTime.Now,
+                NotificationTypeId = (int)EnNotificationType.FromUser,
+                NotificationStateId = (int)EnNotificationState.Issued,
+                SimulationId = simulationId,
+                ToUserId = user.UserParentId,
+                Observations =
+                    $"{user.Initials} - Enviada a Empresa la Simulación [{simulation.CompanyName}]"
+            };
+            var resultNotification = Service.SaveNotification(notification);
+
+            if (resultNotification.Status == Status.Error)
+                return Json(new { result = resultSimulation }, JsonRequestBehavior.AllowGet);
+
+            return Json(new { resultSimulation }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

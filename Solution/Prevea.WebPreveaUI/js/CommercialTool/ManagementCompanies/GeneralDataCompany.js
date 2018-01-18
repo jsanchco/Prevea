@@ -6,6 +6,7 @@
     textBoxAddressId: "textBoxAddress",
     textBoxProvinceId: "textBoxProvince",
     cmbCnae: "CnaeId",
+    textEmployeesNumberId: "textEmployeesNumber",
     btnValidateId: "btnValidate",
     errorFromFrontId: "errorFromFront",
 
@@ -14,6 +15,11 @@
     },
 
     setKendoUIWidgets: function () {
+        $("#" + this.textEmployeesNumberId).kendoNumericTextBox({
+            decimals: 0,
+            format: "n0"
+        });
+
         $($("#" + this.btnValidateId)).on("click", function (e) {
             var errors = GeneralDataCompany.validateForm();
             GeneralDataCompany.showErrors(errors);

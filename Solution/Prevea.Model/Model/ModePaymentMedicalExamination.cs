@@ -19,9 +19,6 @@
 
         [NotMapped]
         public string Description => Helpers.HelperClass.GetDescription(Enum.GetName(typeof(EnModePaymentMedicalExamination), Id));
-
-
-        public virtual ICollection<EconomicData> EconomicsDatasCompany { get; set; }
     }
 
     public enum EnModePaymentMedicalExamination { NotMapped, ALaFirmaDelContrato, ALaRealizacion, Otros }

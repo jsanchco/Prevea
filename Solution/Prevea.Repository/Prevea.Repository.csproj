@@ -60,7 +60,6 @@
     <Compile Include="Repository\RepositoryContactPersons.cs" />
     <Compile Include="Repository\RepositoryContractualsDocuments.cs" />
     <Compile Include="Repository\RepositoryDocuments.cs" />
-    <Compile Include="Repository\RepositoryEconomicsDatas.cs" />
     <Compile Include="Repository\RepositoryEmployees.cs" />
     <Compile Include="Repository\RepositoryEntities.cs" />
     <Compile Include="Repository\RepositoryEstablishmentTypes.cs" />

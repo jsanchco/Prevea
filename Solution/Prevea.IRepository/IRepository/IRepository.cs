@@ -130,15 +130,6 @@
         bool DeleteEmployee(Employee employee);
         #endregion
 
-        #region Economic Data
-
-        EconomicData GetEconomicData(int economicDataId);
-        EconomicData SaveEconomicData(EconomicData economicData);
-        EconomicData UpdateEconomicData(int economicDataId, EconomicData economicData);
-        bool DeleteEconomicData(int economicDataId);
-
-        #endregion
-
         #region Payment Method
 
         PaymentMethod GetPaymentMethod(int paymentMethodId);

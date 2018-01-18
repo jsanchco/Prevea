@@ -10,6 +10,7 @@
         public string Address { get; set; }
         public string NIF { get; set; }
         public string CnaeName { get; set; }
+        public int EmployeesNumber { get; set; }
         public string Enrollment { get; set; }
         public string ContactPersonName { get; set; }
         public string ContactPersonPhoneNumber { get; set; }

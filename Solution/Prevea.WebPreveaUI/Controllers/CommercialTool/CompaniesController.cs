@@ -198,76 +198,7 @@
         {
             var company = Service.GetCompany(companyId);
 
-            var subscribeNumberEmployees = company.Employees.Count(e => e.User.UserStateId == (int)EnUserState.Alta);
-
-            if (company.EconomicData == null)
-            {
-                return PartialView("~/Views/CommercialTool/Companies/EconomicDataCompany.cshtml", new EconomicDataViewModel
-                {
-                    Id = companyId,
-                    SubscribeNumberEmployees = subscribeNumberEmployees,
-                    StretchCalculate = Service.GetStretchCalculateByNumberEmployees(subscribeNumberEmployees)
-                });
-            }
-
-            var data = AutoMapper.Mapper.Map<EconomicDataViewModel>(company.EconomicData);
-            data.SubscribeNumberEmployees = subscribeNumberEmployees;
-            data.StretchCalculate = Service.GetStretchCalculateByNumberEmployees(subscribeNumberEmployees);
-
-            return PartialView("~/Views/CommercialTool/Companies/EconomicDataCompany.cshtml", data);
-        }
-
-        [HttpPost]
-        public ActionResult UpdateEconomicDataCompany(EconomicDataViewModel economicData)
-        {
-            try
-            {
-                var economicDataSave = AutoMapper.Mapper.Map<EconomicData>(economicData);
-                if (economicDataSave.AmountTecniques == decimal.Zero)
-                    economicDataSave.AmountTecniques = null;
-                if (economicDataSave.AmountHealthVigilance == decimal.Zero)
-                    economicDataSave.AmountHealthVigilance = null;
-                if (economicDataSave.AmountMedicalExamination == decimal.Zero)
-                    economicDataSave.AmountMedicalExamination = null;
-
-                var result = Service.SaveEconomicData(economicDataSave);
-
-                var company = Service.GetCompany(economicData.Id);
-
-                ViewBag.SelectTabId = 4;
-
-                if (result.Status != Status.Error)
-                {
-                    ViewBag.Notification = result.Message;
-
-                    return PartialView("~/Views/CommercialTool/Companies/DetailCompany.cshtml", company);
-                }
-
-                ViewBag.Error = new List<string> { result.Message };
-
-                return PartialView("~/Views/CommercialTool/Companies/DetailCompany.cshtml", company);
-            }
-            catch (Exception e)
-            {
-                var company = Service.GetCompany(economicData.Id);
-
-                ViewBag.SelectTabId = 4;
-
-                ViewBag.Error = new List<string> { e.Message };
-
-                return PartialView("~/Views/CommercialTool/Companies/DetailCompany.cshtml", company);
-            }
-        }
-
-        [HttpPost]
-        public JsonResult GetStretchCalculate(int companyId)
-        {
-            var company = Service.GetCompany(companyId);
-
-            var subscribeNumberEmployees = company.Employees.Count(e => e.User.UserStateId == (int)EnUserState.Alta);
-            var stretchCalculate = Service.GetStretchCalculateByNumberEmployees(subscribeNumberEmployees);
-
-            return Json(new { stretchCalculate, subscribeNumberEmployees }, JsonRequestBehavior.AllowGet);
+            return PartialView("~/Views/CommercialTool/Companies/EconomicDataCompany.cshtml", company);
         }
 
         #endregion

@@ -63,18 +63,32 @@
 
                 <div class="row">
                     <div class="form-group">
-                        <label class="col-sm-7 control-label">Dirección</label>
-                        <label class="col-sm-4 control-label">Provincia</label>
+                        <label class="col-sm-6 control-label">Dirección</label>
+                        <label class="col-sm-3 control-label">Provincia</label>
+                        <label class="col-sm-3 control-label">Nº de Empleados</label>
                     </div>
 
 
                     <div class="form-group">
-                        <div class="col-sm-7">
+                        <div class="col-sm-6">
                             @Html.TextBoxFor(model => model.Address, new { @id = "textBoxAddress", @class = "form-control", style = "width:100%", placeholder = "Dirección" })
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             @Html.TextBoxFor(model => model.Province, new { @id = "textBoxProvince", @class = "form-control", style = "width:100%", placeholder = "Provincia" })
+                        </div>
+                        
+                        <div class="col-sm-2">
+                            @Html.TextBoxFor(model => model.EmployeesNumber, new
+                            {
+                                id = "textEmployeesNumber",
+                                type = "nummeric",
+                                title = "Trabajadores totales en la Empresa",
+                                min = "0",
+                                value = "0",
+                                style = "width:100%; height: 31px",
+                                placeholder = "Trabajadores totales en la Empresa"
+                            })
                         </div>
 
                     </div>

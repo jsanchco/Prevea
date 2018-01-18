@@ -67,7 +67,6 @@
     <Compile Include="Model\ContractualDocumentCompany.cs" />
     <Compile Include="Model\DocumentUserCreator.cs" />
     <Compile Include="Model\DocumentUserOwner.cs" />
-    <Compile Include="Model\EconomicData.cs" />
     <Compile Include="Model\EmployeeDoctorWorkSheet.cs" />
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Model\EstablishmentType.cs" />
@@ -101,7 +100,6 @@
     <Compile Include="Model\UserRole.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\EconomicDataViewModel.cs" />
     <Compile Include="ViewModel\EstablishmentTypeViewModel.cs" />
     <Compile Include="ViewModel\HistoricDownloadDocumentViewModel.cs" />
     <Compile Include="ViewModel\NotificationViewModel.cs" />

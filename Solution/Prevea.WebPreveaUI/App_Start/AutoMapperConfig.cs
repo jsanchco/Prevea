@@ -48,11 +48,6 @@
             AutoMapper.Mapper.CreateMap<AgencyViewModel, Agency>();
             AutoMapper.Mapper.CreateMap<Agency, AgencyViewModel>();
 
-            AutoMapper.Mapper.CreateMap<EconomicData, EconomicDataViewModel>()
-                .ForMember(x => x.CompanyName, x => x.MapFrom(y => y.Company.Name))
-                .ForMember(x => x.CompanyEnrollment, x => x.MapFrom(y => y.Company.Enrollment));
-            AutoMapper.Mapper.CreateMap<EconomicDataViewModel, EconomicData>();
-
             AutoMapper.Mapper.CreateMap<Simulation, SimulationViewModel>()
                 .ForMember(x => x.SimulationStateName, x => x.MapFrom(y => y.SimulationState.Name))
                 .ForMember(x => x.SimulationStateName, x => x.MapFrom(y => y.SimulationState.Description))
