@@ -1,4 +1,6 @@
-﻿namespace Prevea.WebPreveaUI.Controllers.CommercialTool
+﻿using System.Globalization;
+
+namespace Prevea.WebPreveaUI.Controllers.CommercialTool
 {
     #region Using
 
@@ -282,6 +284,28 @@
             var stretchCalculate = Service.GetStretchCalculateByNumberEmployees(numberEmployees);
 
             return Json(new {stretchCalculate}, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult GetStretchAgencyByNumberEmployees(int numberEmployees)
+        {
+            var stretchAgency = Service.GetStretchAgencyByNumberEmployees(numberEmployees);
+
+            return Json(new { stretchAgency }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetEngagementTypes()
+        {
+            var engagementTypes = Service.GetEngagmentTypes();
+            var items = new List<SelectListItem>();
+            items.AddRange(engagementTypes.Select(engagementType => new SelectListItem
+            {
+                Text = engagementType.Description,
+                Value = engagementType.Id.ToString(CultureInfo.InvariantCulture)
+            }));
+
+            return Json(items, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

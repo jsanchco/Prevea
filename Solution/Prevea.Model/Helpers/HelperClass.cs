@@ -121,6 +121,10 @@
                     return "Otros";
                 case "Permanent":
                     return "Permanente";
+                case "Society":
+                    return "Sociedad";
+                case "Autonomous":
+                    return "Autónomo";
 
                 default:
                     return name;

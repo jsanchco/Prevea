@@ -280,7 +280,26 @@
 
         #region EstablishmentType
 
-        List<EstablishmentType> GetEstablishmentTypes();        
+        List<EstablishmentType> GetEstablishmentTypes();
+
+        #endregion
+
+        #region Configuration
+
+        string GetTagValue(string tag);
+
+        #endregion
+
+        #region StretchAgency
+
+        StretchAgency GetStretchAgencyByNumberEmployees(int numberEmployees);
+
+        #endregion
+
+        #region EngagementType
+
+        List<EngagementType> GetEngagmentTypes();
+        EngagementType GetEngagementType(int id);
 
         #endregion
     }

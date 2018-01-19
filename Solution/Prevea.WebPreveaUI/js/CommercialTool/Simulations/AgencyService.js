@@ -3,9 +3,12 @@
     textTotalId: "textTotalAgencyService",
     textAreaObservationsId: "textAreaObservationsAgencyService",
     btnValidateId: "btnValidateAgencyService",
+    textAmountByEngagementTypeId: "textAmountByEngagementType",
+    textAmountByRosterId: "textAmountByRoster",
 
     simulationId: null,
     numberEmployees: null,
+    stretchAgency: null,
 
     init: function (id, numberEmployees) {
         this.simulationId = id;
@@ -13,10 +16,23 @@
 
         this.setUpWidgets();
 
+        this.getStretchAgency();
+
         this.blockFields();
     },
 
-    setUpWidgets: function() {
+    setUpWidgets: function () {
+        $("#" + this.textAmountByEngagementTypeId).kendoNumericTextBox({
+            format: "c",
+            decimals: 1,
+            change: AgencyService.onChangeTextAmountByEngagementType
+        });
+        $("#" + this.textAmountByRosterId).kendoNumericTextBox({
+            format: "c",
+            decimals: 1,
+            change: AgencyService.onChangeTextAmountByRoster
+        });
+
         $("#" + this.btnValidateId).removeAttr("disabled");
         $("#" + this.btnValidateId).prop("disabled", true);
 
@@ -66,5 +82,36 @@
             $("#" + AgencyService.btnValidateId).removeAttr("disabled");
             $("#" + AgencyService.btnValidateId).prop("disabled", true);
         }
+    },
+
+    getStretchAgency: function() {
+        $.ajax({
+            url: "/Simulations/GetStretchAgencyByNumberEmployees",
+            data: {
+                numberEmployees: this.numberEmployees
+            },
+            type: "post",
+            dataType: "json",
+            success: function (response) {
+                if (response.stretchAgency !== null) {
+                    AgencyService.stretchAgency = response.stretchAgency;
+                    AgencyService.updateView();
+                } else {
+                    GeneralData.showNotification(Constants.ko, "", "error");
+                }
+            }
+        });        
+    },
+
+    updateView: function() {
+        console.log("");
+    },
+
+    onChangeTextAmountByEngagementType: function() {
+        
+    },
+
+    onChangeTextAmountByRoster: function() {
+        
     }
 });

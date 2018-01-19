@@ -199,6 +199,34 @@ namespace Prevea.ConsoleTestModel.Migrations
             context.StretchesEmployees.AddOrUpdate(stretchEmployee);
             context.SaveChanges();
 
+            var stretchAgency = new StretchAgency
+            {
+                Initial = 1,
+                End = 3,
+                AmountByRoster = 18,
+                Percentege = 15
+            };
+            context.StretchesAgencies.AddOrUpdate(stretchAgency);
+
+            stretchAgency = new StretchAgency
+            {
+                Initial = 4,
+                End = 7,
+                AmountByRoster = 14,
+                Percentege = 10
+            };
+            context.StretchesAgencies.AddOrUpdate(stretchAgency);
+
+            stretchAgency = new StretchAgency
+            {
+                Initial = 8,
+                End = null,
+                AmountByRoster = 12,
+                Percentege = 10
+            };
+            context.StretchesAgencies.AddOrUpdate(stretchAgency);
+            context.SaveChanges();
+
             var companyStates = (EnCompanyState[])Enum.GetValues(typeof(EnCompanyState));
             foreach (var dSate in companyStates)
             {
@@ -279,10 +307,26 @@ namespace Prevea.ConsoleTestModel.Migrations
             }
             context.SaveChanges();
 
+            var typesEngagements = (EnEngagementType[])Enum.GetValues(typeof(EnEngagementType));
+            foreach (var type in typesEngagements)
+            {
+                if (type == EnEngagementType.NotMapped)
+                    continue;
+
+                context.EngagementTypes.AddOrUpdate(new EngagementType { Name = type.ToString() });
+            }
+            context.SaveChanges();
+
             context.TrainingCourses.Add(new TrainingCourse
             {
                 IsRoot = true
             });
+            context.SaveChanges();
+
+            context.Configurations.Add(new Model.Model.Configuration { Tag = "AmountAgencyBySociety", Value = "250"});
+            context.Configurations.Add(new Model.Model.Configuration { Tag = "AmountAgencyByAutonomous", Value = "100" });
+            context.Configurations.Add(new Model.Model.Configuration { Tag = "PercentegeStretchEmployees", Value = "20" });
+            context.Configurations.Add(new Model.Model.Configuration { Tag = "PercentegeStretchAgencies", Value = "20" });
             context.SaveChanges();
         }
     }

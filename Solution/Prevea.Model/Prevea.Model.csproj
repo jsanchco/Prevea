@@ -60,6 +60,7 @@
     <Compile Include="Model\Company.cs" />
     <Compile Include="Model\CompanyCnae.cs" />
     <Compile Include="Model\CompanyState.cs" />
+    <Compile Include="Model\Configuration.cs" />
     <Compile Include="Model\ContactPerson.cs" />
     <Compile Include="Model\ContractualDocumentType.cs" />
     <Compile Include="Model\DoctorWorkSheet.cs" />
@@ -81,10 +82,12 @@
     <Compile Include="Model\Simulation.cs" />
     <Compile Include="Model\SimulationCompany.cs" />
     <Compile Include="Model\SimulationState.cs" />
-    <Compile Include="Model\StretcheEmployee.cs" />
+    <Compile Include="Model\StretchAgency.cs" />
+    <Compile Include="Model\StretchEmployee.cs" />
     <Compile Include="Model\TrainingCourseTrainingService.cs" />
     <Compile Include="Model\TrainingService.cs" />
     <Compile Include="Model\TrainingCourse.cs" />
+    <Compile Include="Model\EngagementType.cs" />
     <Compile Include="Model\UserState.cs" />
     <Compile Include="Model\TrainingCourseModality.cs" />
     <Compile Include="Model\WorkCenter.cs" />

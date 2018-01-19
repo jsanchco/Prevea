@@ -10,55 +10,87 @@
         <div class="col-sm-12">
 
             @using (Ajax.BeginForm("AgencyService", "Simulations", null, new AjaxOptions
-            {
-                HttpMethod = "POST",
-                UpdateTargetId = "framePpal",
-                OnSuccess = "AgencyService.onSuccessUpdate"
-            }, new { id = "formAgencyService" }))
-            {
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true)
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "framePpal",
+        OnSuccess = "AgencyService.onSuccessUpdate"
+    }, new { id = "formAgencyService" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
 
-                <div class="row form-group">
-                    <label class="col-sm-4 control-label">Total</label>
-                </div>
+        <div class="row form-group">
+            <label class="col-sm-3 control-label">Tipo de Contratación</label>
+            <label class="col-sm-3 control-label">Precio por Contratación</label>
+            <label class="col-sm-3 control-label">Precio por Nómina</label>
+        </div>
 
-                <div class="row form-group">
-                    <div class="col-sm-4">
-                        @Html.TextBoxFor(model => model.Total, new
-                        {
-                            id = "textTotalAgencyService",
-                            type = "nummeric",
-                            title = "Total final",
-                            min = "0",
-                            value = "0",
-                            style = "width:100%; height: 31px",
-                            placeholder = "Total final"
-                        })
-                    </div>
-                </div>
+        <div class="row form-group">
+            <div class="col-sm-3">
+                @(Html.Kendo()
+                      .DropDownListFor(model => model.EngagementTypeId)
+                      .Name("EngagementTypeId")
+                      .OptionLabel("-- Seleccionar --")
+                      .DataTextField("Text")
+                      .DataValueField("Value")
+                      .DataSource(source =>
+                      {
+                          source.Read(read =>
+                          {
+                              read.Action("GetEngagementTypes", "Simulations");
+                          }).ServerFiltering(false);
+                      })
+                      .HtmlAttributes(new { style = "width: 100%" }))                
+            </div>
 
-                <br />
+            <div class="col-sm-3">
+                @Html.TextBoxFor(model => model.AmountByEngagementType, new
+               {
+                   id = "textAmountByEngagementType",
+                   type = "nummeric",
+                   title = "Precio por tipo de Contratación",
+                   min = "0",
+                   value = "0",
+                   style = "width:100%; height: 31px",
+                   placeholder = "Precio por tipo de Contratación"
+               })
+            </div>
+            <div class="col-sm-3">
+                @Html.TextBoxFor(model => model.AmountByRoster, new
+               {
+                   id = "textAmountByRoster",
+                   type = "nummeric",
+                   title = "Precio por Nómina",
+                   min = "0",
+                   value = "0",
+                   style = "width:100%; height: 31px",
+                   placeholder = "Precio por Nómina"
+               })
+            </div>
 
-                <div class="row form-group">
-                    <label class="col-sm-4 control-label">Observaciones</label>
-                </div>
+        </div>
 
-                <div class="row form-group">
-                    <div class="col-sm-12">
-                        @Html.TextAreaFor(model => model.Observations, new {@id = "textAreaObservationsAgencyService", @class = "form-control autogrow", style = "width:100%", placeholder = "Observaciones"})
-                    </div>
-                </div>
+        <br />
 
-                <br />
+        <div class="row form-group">
+            <label class="col-sm-4 control-label">Observaciones</label>
+        </div>
 
-                <div>
-                    @Html.HiddenFor(x => x.Id)
+        <div class="row form-group">
+            <div class="col-sm-12">
+                @Html.TextAreaFor(model => model.Observations, new { @id = "textAreaObservationsAgencyService", @class = "form-control autogrow", style = "width:100%", placeholder = "Observaciones" })
+            </div>
+        </div>
 
-                    <input type="submit" id="btnValidateAgencyService" value="Guardar" class="btn btn-prevea btn" />
-                </div>
+        <br />
 
-            }
+        <div>
+            @Html.HiddenFor(x => x.Id)
+
+            <input type="submit" id="btnValidateAgencyService" value="Guardar" class="btn btn-prevea btn" />
+        </div>
+
+}
 
         </div>
     </div>

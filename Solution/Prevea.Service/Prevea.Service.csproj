@@ -48,8 +48,10 @@
     <Compile Include="Service\ServiceAreas.cs" />
     <Compile Include="Service\ServiceCnaes.cs" />
     <Compile Include="Service\ServiceCompanies.cs" />
+    <Compile Include="Service\ServiceConfiguration.cs" />
     <Compile Include="Service\ServiceContractualsDocuments.cs" />
     <Compile Include="Service\ServiceDocuments.cs" />
+    <Compile Include="Service\ServiceEngagementTypes.cs" />
     <Compile Include="Service\ServiceEstablishmentTypes.cs" />
     <Compile Include="Service\ServiceForeignPreventionServices.cs" />
     <Compile Include="Service\ServiceHistoricDownloadDocuments.cs" />
@@ -59,6 +61,7 @@
     <Compile Include="Service\ServiceNotificationTypes.cs" />
     <Compile Include="Service\ServicePaymentMethods.cs" />
     <Compile Include="Service\ServiceSimulations.cs" />
+    <Compile Include="Service\ServiceStretchesAgencies.cs" />
     <Compile Include="Service\ServiceStretchesEmployees.cs" />
     <Compile Include="Service\ServiceTrainingCourses.cs" />
     <Compile Include="Service\ServiceTrainingCoursesTrainingServices.cs" />
