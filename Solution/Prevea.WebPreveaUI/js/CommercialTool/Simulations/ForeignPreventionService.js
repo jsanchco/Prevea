@@ -77,6 +77,9 @@
             decimals: 1,
             change: ForeignPreventionService.onChangeTextTotal
         });
+
+        $("#" + this.btnSaveForeignPreventionServiceId).removeAttr("disabled");
+        $("#" + this.btnSaveForeignPreventionServiceId).prop("disabled", true);
     },
 
     getStretchCalculateByNumberEmployees: function () {

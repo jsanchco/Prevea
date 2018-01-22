@@ -8,6 +8,7 @@
     gridTrainingCourseTrainingServiceId: "gridTrainingCourseTrainingService",
     chooseCourseId: "chooseCourse",
     chooseCourseWindow: null,
+    percentageDesviation: 0.8,
 
     trainingCourseTrainingServiceDataSource: null,
 
@@ -39,6 +40,8 @@
                         Id: { type: "number", defaultValue: 0 },
                         AssistantsNumber: { type: "number", defaultValue: 1, validation: { required: { message: " Campo Obligatorio " } } },
                         Price: { type: "number", validation: { required: { message: " Campo Obligatorio " } } },
+                        OriginalPrice: { type: "number" },
+                        Desviation: { type: "number" },
                         Total: { type: "number", validation: { required: { message: " Campo Obligatorio " } } },
                         TrainingCourseId: { type: "number" },
                         TrainingCourseName: { type: "string", editable: false },
@@ -114,6 +117,7 @@
     },
 
     createTrainingCourseTrainingServiceGrid: function () {
+        var that = this;
         $("#" + this.gridTrainingCourseTrainingServiceId).kendoGrid({
             columns: [{
                 field: "TrainingCourseName",
@@ -141,6 +145,12 @@
                 template: "#= Templates.getColumnTemplateCurrencyRight(data.Total, 'c0') #",
                 aggregates: ["sum"],
                 footerTemplate: "Suma: #= kendo.toString(sum, 'c0') #"
+            }, {
+                field: "Desviation",
+                title: "Desviación",
+                width: 120,
+                groupable: "false",
+                format: "{0:p}"
             }, {
                 title: "Comandos",
                 field: "Commands",
@@ -206,6 +216,22 @@
                 allowUnsort: false
             },
             groupable: false,
+            dataBound: function (e) {
+                var grid = $("#" + that.gridTrainingCourseTrainingServiceId).data("kendoGrid");
+                var items = e.sender.items();
+                items.each(function () {
+                    var dataItem = grid.dataItem(this);
+                    if (dataItem.Desviation > 1) {
+                        this.className = "highPercentage";
+                        return;
+                    }
+                    if (dataItem.Desviation < that.percentageDesviation) {
+                        this.className = "lowPercentage";
+                        return;
+                    }
+                    this.className = "equalPercentage";
+                });
+            },
             edit: function (e) {
                 $("#" + TrainingService.btnCreateCourseId).removeAttr("disabled");
                 $("#" + TrainingService.btnCreateCourseId).prop("disabled", true);
@@ -221,6 +247,8 @@
                 if (e.model.isNew() && !e.model.dirty) {
                     e.model.set("TrainingCourseId", TrainingService.selectedCourse.Id);
                     e.model.set("Price", TrainingService.selectedCourse.Price);
+                    e.model.set("OriginalPrice", TrainingService.selectedCourse.Price);
+                    e.model.set("Desviation", 0);
                     e.model.set("Total", TrainingService.selectedCourse.Price);
 
                     html = TrainingService.getColumnTemplateNameCourse(TrainingService.selectedCourse.Name);

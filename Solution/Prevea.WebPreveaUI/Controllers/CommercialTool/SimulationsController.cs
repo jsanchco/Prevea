@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace Prevea.WebPreveaUI.Controllers.CommercialTool
+﻿namespace Prevea.WebPreveaUI.Controllers.CommercialTool
 {
     #region Using
 
@@ -545,6 +543,12 @@ namespace Prevea.WebPreveaUI.Controllers.CommercialTool
         public JsonResult Courses_Read([DataSourceRequest] DataSourceRequest request, int trainingServiceId)
         {
             var data = AutoMapper.Mapper.Map<List<TrainingCourseTrainingServiceViewModel>>(Service.GetTrainingCoursesTrainingServiceByTrainingService(trainingServiceId));
+            foreach (var trainingCourseTrainingService in data)
+            {
+                var course = Service.GetTrainingCourse(trainingCourseTrainingService.TrainingCourseId);
+                trainingCourseTrainingService.OriginalPrice = course.Price;
+                trainingCourseTrainingService.Desviation = trainingCourseTrainingService.Price / course.Price;
+            }
 
             return this.Jsonp(data);
         }

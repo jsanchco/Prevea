@@ -91,6 +91,8 @@
             $("#" + this.lblPercentageAmountByEngagementTypeId).text("%");
         } else {
             numerictextbox.enable(true);
+
+            this.getStretchAgencyByType($("#" + this.cmbEngagementTypeId).val());            
         }
     },
 
@@ -172,6 +174,8 @@
                     var strValue = kendo.format("{0} €", AgencyService.amountAgencyByType);
                     $("#" + AgencyService.lblAmountByEngagementTypeId).text(strValue);
                     $("#" + AgencyService.lblPercentageAmountByEngagementTypeId).text("%");
+
+                    AgencyService.onChangeTextAmountByEngagementType(true);
                 } else {
                     GeneralData.showNotification(Constants.ko, "", "error");
                 }
@@ -221,7 +225,7 @@
             widget.wrapper.width("100%");
             $("#" + AgencyService.lblPercentageAmountByEngagementTypeId).text("%");
 
-            AgencyService.calculateTotal(fromUpdateView);
+            AgencyService.calculateTotal();
 
             return;
         }
@@ -254,7 +258,7 @@
             $("#" + AgencyService.btnValidateId).prop("disabled", true);
         }
 
-        AgencyService.calculateTotal(fromUpdateView);
+        AgencyService.calculateTotal();
     },
 
     onChangeTextAmountByRoster: function (fromUpdateView) {
@@ -271,7 +275,7 @@
             $("#" + AgencyService.lblPercentageAmountByRosterId).text("%");
             $("#" + AgencyService.lblTotalByRoster).text("€");
 
-            AgencyService.calculateTotal(fromUpdateView);
+            AgencyService.calculateTotal();
 
             return;
         }
@@ -305,10 +309,10 @@
             $("#" + AgencyService.btnValidateId).prop("disabled", true);
         }
 
-        AgencyService.calculateTotal(fromUpdateView);
+        AgencyService.calculateTotal();
     },
 
-    calculateTotal: function (fromUpdateView) {
+    calculateTotal: function () {
         var total = parseFloat($("#" + AgencyService.textAmountByEngagementTypeId).val());
 
         var strValue = $("#" + AgencyService.lblTotalByRoster).text();
@@ -318,6 +322,7 @@
         }
 
         $("#" + AgencyService.lblTotalCalculateAgencyServiceId).text(total + " €");
+        $("#Total").val(total);
     },
 
     validateForm: function () {

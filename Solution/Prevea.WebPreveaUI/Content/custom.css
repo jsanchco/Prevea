@@ -74,6 +74,18 @@ body {
     background: #F9A938;
 }
 
+.highPercentage {
+    background: #008d4c;
+}
+
+.lowPercentage {
+    background: #f56954;
+}
+
+.equalPercentage {
+    background: white;
+}
+
 .control-label {
     color: #4b4b4b;
     font-size: 15px;
