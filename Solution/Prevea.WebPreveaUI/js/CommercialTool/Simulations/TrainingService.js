@@ -8,7 +8,7 @@
     gridTrainingCourseTrainingServiceId: "gridTrainingCourseTrainingService",
     chooseCourseId: "chooseCourse",
     chooseCourseWindow: null,
-    percentageDesviation: 0.8,
+    percentageDesviation: -0.2,
 
     trainingCourseTrainingServiceDataSource: null,
 
@@ -41,7 +41,7 @@
                         AssistantsNumber: { type: "number", defaultValue: 1, validation: { required: { message: " Campo Obligatorio " } } },
                         Price: { type: "number", validation: { required: { message: " Campo Obligatorio " } } },
                         OriginalPrice: { type: "number" },
-                        Desviation: { type: "number" },
+                        Desviation: { type: "number", editable: false },
                         Total: { type: "number", validation: { required: { message: " Campo Obligatorio " } } },
                         TrainingCourseId: { type: "number" },
                         TrainingCourseName: { type: "string", editable: false },
@@ -108,7 +108,11 @@
                         value = dataItem.Total / dataItem.AssistantsNumber;
                         dataItem.set("Price", value);
                     }
-
+                    if (e.field === "Price") {
+                        dataItem = e.items[0];
+                        value = (dataItem.Price / dataItem.OriginalPrice) - 1;
+                        dataItem.Desviation = value;
+                    }
                 }
             },
             aggregate: [ { field: "Total", aggregate: "sum" }],
@@ -150,6 +154,7 @@
                 title: "Desviación",
                 width: 120,
                 groupable: "false",
+                template: "#= Templates.getColumnTemplateCurrencyRight(data.Desviation, 'p0') #",
                 format: "{0:p}"
             }, {
                 title: "Comandos",
@@ -221,15 +226,15 @@
                 var items = e.sender.items();
                 items.each(function () {
                     var dataItem = grid.dataItem(this);
-                    if (dataItem.Desviation > 1) {
+                    if (dataItem.Desviation > 0) {
                         this.className = "highPercentage";
-                        return;
-                    }
-                    if (dataItem.Desviation < that.percentageDesviation) {
-                        this.className = "lowPercentage";
-                        return;
-                    }
-                    this.className = "equalPercentage";
+                    } else {
+                        if (dataItem.Desviation < that.percentageDesviation) {
+                            this.className = "lowPercentage";
+                        } else {
+                            this.className = "equalPercentage";
+                        }
+                    }                           
                 });
             },
             edit: function (e) {

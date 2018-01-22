@@ -547,7 +547,7 @@
             {
                 var course = Service.GetTrainingCourse(trainingCourseTrainingService.TrainingCourseId);
                 trainingCourseTrainingService.OriginalPrice = course.Price;
-                trainingCourseTrainingService.Desviation = trainingCourseTrainingService.Price / course.Price;
+                trainingCourseTrainingService.Desviation = (trainingCourseTrainingService.Price / course.Price) - 1;
             }
 
             return this.Jsonp(data);
@@ -588,6 +588,10 @@
                     return Json(new { result = resultNotification }, JsonRequestBehavior.AllowGet);
 
                 var data = AutoMapper.Mapper.Map<TrainingCourseTrainingServiceViewModel>(trainingCourseTrainingServiceFind);
+                var course = Service.GetTrainingCourse(trainingCourseTrainingService.TrainingCourseId);
+                data.OriginalPrice = course.Price;
+                data.Desviation = (trainingCourseTrainingService.Price / course.Price) - 1;
+
                 return this.Jsonp(data);
             }
             catch (Exception e)
