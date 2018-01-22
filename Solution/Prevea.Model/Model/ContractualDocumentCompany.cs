@@ -16,7 +16,7 @@
 
         public DateTime BeginDate { get; set; }
 
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         public string Observations { get; set; }
 
@@ -24,6 +24,9 @@
 
         public int ContractualDocumentTypeId { get; set; }
         public virtual ContractualDocumentType ContractualDocumentType { get; set; }
+
+        public int? ContractualDocumentCompanyParentId { get; set; }
+        public virtual ContractualDocumentCompany ContractualDocumentCompanyParent { get; set; }
 
         public int CompanyId { get; set; }
         public virtual Company Company { get; set; }

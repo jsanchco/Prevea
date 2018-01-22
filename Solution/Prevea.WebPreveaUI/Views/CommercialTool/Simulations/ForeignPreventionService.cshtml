@@ -99,9 +99,9 @@
                     <label class="col-sm-2 control-label" style="color: #00639e; text-align: center; font-size: 20px; font-weight: bold; margin-top: 30px; margin-bottom: 20px;">TOTAL CALCULADO</label>
                     <label id="lblTotal" class="col-sm-2 control-label" style="color: #00639e; text-align: center; font-size: 20px; font-weight: bold; margin-top: 30px; margin-bottom: 20px;">€</label>
                     
-                    <label class="col-sm-1 control-label" style="color: #00639e; text-align: center; font-size: 20px; font-weight: bold; margin-top: 30px; margin-bottom: 20px;">TOTAL</label>
+                    <label class="col-sm-1 control-label" style="display: none; color: #00639e; text-align: center; font-size: 20px; font-weight: bold; margin-top: 30px; margin-bottom: 20px;">TOTAL</label>
 
-                    <div class="col-sm-3" style="margin-top: 20px;">
+                    <div class="col-sm-3" style="display: none; margin-top: 20px;">
                         @Html.TextBoxFor(model => model.Total, new
                         {
                             id = "textTotal",
@@ -116,7 +116,7 @@
                 </div>
 
                 <div class="row form-group">
-                    <label id="lblPercentegeTotal" class="col-sm-offset-5 col-sm-3 control-label" style="margin-top: -20px; text-align: center">%</label>
+                    <label id="lblPercentegeTotal" class="col-sm-offset-5 col-sm-3 control-label" style="display: none; margin-top: -20px; text-align: center">%</label>
                 </div>
 
                 <br/>

@@ -10,87 +10,116 @@
         <div class="col-sm-12">
 
             @using (Ajax.BeginForm("AgencyService", "Simulations", null, new AjaxOptions
-    {
-        HttpMethod = "POST",
-        UpdateTargetId = "framePpal",
-        OnSuccess = "AgencyService.onSuccessUpdate"
-    }, new { id = "formAgencyService" }))
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true)
+            {
+                HttpMethod = "POST",
+                UpdateTargetId = "framePpal",
+                OnSuccess = "AgencyService.onSuccessUpdate"
+            }, new { id = "formAgencyService" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
 
-        <div class="row form-group">
-            <label class="col-sm-3 control-label">Tipo de Contratación</label>
-            <label class="col-sm-3 control-label">Precio por Contratación</label>
-            <label class="col-sm-3 control-label">Precio por Nómina</label>
-        </div>
+                <div class="row form-group">
+                    <label class="col-sm-4 control-label">Tipo de Contratación</label>
+                    <label class="col-sm-4 control-label">Precio por Contratación</label>
+                    <label class="col-sm-4 control-label">Precio por Nómina</label>
+                </div>
 
-        <div class="row form-group">
-            <div class="col-sm-3">
-                @(Html.Kendo()
-                      .DropDownListFor(model => model.EngagementTypeId)
-                      .Name("EngagementTypeId")
-                      .OptionLabel("-- Seleccionar --")
-                      .DataTextField("Text")
-                      .DataValueField("Value")
-                      .DataSource(source =>
-                      {
-                          source.Read(read =>
-                          {
-                              read.Action("GetEngagementTypes", "Simulations");
-                          }).ServerFiltering(false);
-                      })
-                      .HtmlAttributes(new { style = "width: 100%" }))                
-            </div>
+                <div class="row form-group">
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.EngagementTypeId, new { id = "cmbEngagementType", style = "width:100%" })
+                        @*<input id="EngagementTypeId" style="width: 100%;"/>*@
 
-            <div class="col-sm-3">
-                @Html.TextBoxFor(model => model.AmountByEngagementType, new
-               {
-                   id = "textAmountByEngagementType",
-                   type = "nummeric",
-                   title = "Precio por tipo de Contratación",
-                   min = "0",
-                   value = "0",
-                   style = "width:100%; height: 31px",
-                   placeholder = "Precio por tipo de Contratación"
-               })
-            </div>
-            <div class="col-sm-3">
-                @Html.TextBoxFor(model => model.AmountByRoster, new
-               {
-                   id = "textAmountByRoster",
-                   type = "nummeric",
-                   title = "Precio por Nómina",
-                   min = "0",
-                   value = "0",
-                   style = "width:100%; height: 31px",
-                   placeholder = "Precio por Nómina"
-               })
-            </div>
+                        @*@(Html.Kendo()
+                              .DropDownListFor(model => model.EngagementTypeId)
+                              .Name("EngagementTypeId")
+                              .OptionLabel("-- Seleccionar --")
+                              .DataTextField("Text")
+                              .DataValueField("Value")
+                              .DataSource(source =>
+                              {
+                                  source.Read(read =>
+                                  {
+                                      read.Action("GetEngagementTypes", "Simulations");
+                                  });
+                              })
+                              .Events(e =>
+                              {
+                                  e.Select("AgencyService.onSelectEngagementType").Change("AgencyService.onChangeEngagementType");
+                              })
+                              .HtmlAttributes(new {id = "cmbEngagementType", style = "width: 100%"}))*@
+                    </div>
 
-        </div>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.AmountByEngagementType, new
+                   {
+                       id = "textAmountByEngagementType",
+                       type = "nummeric",
+                       title = "Precio por tipo de Contratación",
+                       min = "0",
+                       value = "0",
+                       style = "width:100%; height: 31px",
+                       placeholder = "Precio por tipo de Contratación"
+                   })
+                    </div>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(model => model.AmountByRoster, new
+                   {
+                       id = "textAmountByRoster",
+                       type = "nummeric",
+                       title = "Precio por Nómina",
+                       min = "0",
+                       value = "0",
+                       style = "width:100%; height: 31px",
+                       placeholder = "Precio por Nómina"
+                   })
+                    </div>
 
-        <br />
+                </div>
 
-        <div class="row form-group">
-            <label class="col-sm-4 control-label">Observaciones</label>
-        </div>
+                <div class="row form-group">
+                    <label id="lblAmountByEngagementType" class="col-sm-offset-4 col-sm-4 control-label" style="text-align: center;"> €</label>
+                    <label id="lblAmountByRoster" class="col-sm-4 control-label" style="text-align: center;"> €</label>
+                </div>
 
-        <div class="row form-group">
-            <div class="col-sm-12">
-                @Html.TextAreaFor(model => model.Observations, new { @id = "textAreaObservationsAgencyService", @class = "form-control autogrow", style = "width:100%", placeholder = "Observaciones" })
-            </div>
-        </div>
+                <div class="row form-group">
+                    <label id="lblPercentageAmountByEngagementType" class="col-sm-offset-4 col-sm-4 control-label" style="text-align: center;"> %</label>
+                    <label id="lblPercentageAmountByRoster" class="col-sm-4 control-label" style="text-align: center;"> %</label>
+                </div>
 
-        <br />
+                <div class="row form-group">
+                    <label class="col-sm-12 control-label" style="color: black; text-align: center; font-size: 16px; font-weight: bold; margin-top: 30px; margin-bottom: 20px;">TOTALES</label>
+                </div>
 
-        <div>
-            @Html.HiddenFor(x => x.Id)
+                <div class="row form-group">
+                    <label id="lblTotalByRoster" class="col-sm-offset-8 col-sm-4 control-label" style="margin-top: 10px; text-align: center">€</label>
+                </div>
 
-            <input type="submit" id="btnValidateAgencyService" value="Guardar" class="btn btn-prevea btn" />
-        </div>
+                <div class="row form-group">
+                    <label class="col-sm-2 control-label" style="color: #00639e; text-align: center; font-size: 20px; font-weight: bold; margin-top: 30px; margin-bottom: 20px;">TOTAL CALCULADO</label>
+                    <label id="lblTotalCalculateAgencyService" class="col-sm-2 control-label" style="color: #00639e; text-align: center; font-size: 20px; font-weight: bold; margin-top: 30px; margin-bottom: 20px;">€</label>
+                </div>
 
-}
+                @*<br />
+
+                <div class="row form-group">
+                    <label class="col-sm-4 control-label">Observaciones</label>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-sm-12">
+                        @Html.TextAreaFor(model => model.Observations, new { @id = "textAreaObservationsAgencyService", @class = "form-control autogrow", style = "width:100%", placeholder = "Observaciones" })
+                    </div>
+                </div>*@
+
+                <br />
+
+                <div>
+                    @Html.HiddenFor(x => x.Id)
+
+                    <input type="submit" id="btnValidateAgencyService" value="Guardar" class="btn btn-prevea btn" />
+                </div>
+            }
 
         </div>
     </div>

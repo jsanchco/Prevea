@@ -93,6 +93,9 @@
 
             AutoMapper.Mapper.CreateMap<EstablishmentTypeViewModel, EstablishmentType>();
             AutoMapper.Mapper.CreateMap<EstablishmentType, EstablishmentTypeViewModel>();
+
+            AutoMapper.Mapper.CreateMap<EngagementTypeViewModel, EngagementType>();
+            AutoMapper.Mapper.CreateMap<EngagementType, EngagementTypeViewModel>();
         }
     }
 }

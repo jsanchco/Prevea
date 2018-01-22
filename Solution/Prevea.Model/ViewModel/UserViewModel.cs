@@ -32,6 +32,8 @@
         public string Email { get; set; }
         public string Nick { get; set; }
         public DateTime BirthDate { get; set; }
+        public DateTime ChargeDate { get; set; }
+        public DateTime? DischargeDate { get; set; }
         public string Password { get; set; }
         public int? UserParentId { get; set; }
         public string UserParentInitials { get; set; }

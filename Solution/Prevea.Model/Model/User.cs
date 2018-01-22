@@ -19,6 +19,7 @@
             Password = "123456";
             UserStateId = (int)EnUserState.Alta;
             BirthDate = DateTime.Now;
+            ChargeDate = DateTime.Now;
         }
 
         #endregion
@@ -60,7 +61,9 @@
         public string Email { get; set; }
         public string Nick { get; set; }
         public DateTime BirthDate { get; set; }
- 
+        public DateTime ChargeDate { get; set; }
+        public DateTime? DischargeDate { get; set; }
+
         [Required]
         public string Password { get; set; }
 

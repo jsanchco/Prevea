@@ -294,18 +294,44 @@ namespace Prevea.WebPreveaUI.Controllers.CommercialTool
             return Json(new { stretchAgency }, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpGet]
-        public JsonResult GetEngagementTypes()
+        [HttpPost]
+        public JsonResult GetStretchAgencyByType(int type)
         {
-            var engagementTypes = Service.GetEngagmentTypes();
-            var items = new List<SelectListItem>();
-            items.AddRange(engagementTypes.Select(engagementType => new SelectListItem
-            {
-                Text = engagementType.Description,
-                Value = engagementType.Id.ToString(CultureInfo.InvariantCulture)
-            }));
+            var amountAgencyByType = 0.0m;
+            var percentageAgencyByType = Convert.ToDecimal(Service.GetTagValue("PercentegeStretchAgencies"));
 
-            return Json(items, JsonRequestBehavior.AllowGet);
+            switch (type)
+            {
+                case (int)EnEngagementType.Society:
+                    amountAgencyByType = Convert.ToDecimal(Service.GetTagValue("AmountAgencyBySociety"));
+                    break;
+                case (int)EnEngagementType.Autonomous:
+                    amountAgencyByType = Convert.ToDecimal(Service.GetTagValue("AmountAgencyByAutonomous"));
+                    break;
+            }
+
+            return Json(new { amountAgencyByType, percentageAgencyByType }, JsonRequestBehavior.AllowGet);
+        }
+
+        //[HttpGet]
+        //public JsonResult GetEngagementTypes()
+        //{
+        //    var engagementTypes = Service.GetEngagmentTypes();
+        //    var items = new List<SelectListItem>();
+        //    items.AddRange(engagementTypes.Select(engagementType => new SelectListItem
+        //    {
+        //        Text = engagementType.Description,
+        //        Value = engagementType.Id.ToString(CultureInfo.InvariantCulture)
+        //    }));
+
+        //    return Json(items, JsonRequestBehavior.AllowGet);
+        //}
+
+        public ActionResult GetEngagementTypes()
+        {
+            var data = Service.GetEngagmentTypes();
+
+            return this.Jsonp(AutoMapper.Mapper.Map<List<EngagementTypeViewModel>>(data));
         }
 
         [HttpPost]
