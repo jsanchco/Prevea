@@ -96,6 +96,9 @@
 
             AutoMapper.Mapper.CreateMap<EngagementTypeViewModel, EngagementType>();
             AutoMapper.Mapper.CreateMap<EngagementType, EngagementTypeViewModel>();
+
+            AutoMapper.Mapper.CreateMap<AgencyServiceViewModel, AgencyService>();
+            AutoMapper.Mapper.CreateMap<AgencyService, AgencyServiceViewModel>();
         }
     }
 }

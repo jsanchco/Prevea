@@ -187,6 +187,7 @@
                     return Json(resultUpdateSimulation);
                 }
 
+                resultService.Object = AutoMapper.Mapper.Map<AgencyServiceViewModel>(resultService.Object);
                 return Json(resultService);
             }
             catch (Exception e)
