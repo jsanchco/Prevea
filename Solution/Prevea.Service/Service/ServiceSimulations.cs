@@ -298,9 +298,9 @@
                 {
                     total = (decimal)simulation.ForeignPreventionService.AmountHealthVigilance * simulation.NumberEmployees * IVA;
                 }
-                if (simulation.ForeignPreventionService.AmountHealthVigilance != null)
+                if (simulation.ForeignPreventionService.AmountMedicalExamination != null)
                 {
-                    total = (decimal)simulation.ForeignPreventionService.AmountHealthVigilance * simulation.NumberEmployees;
+                    total = (decimal)simulation.ForeignPreventionService.AmountMedicalExamination * simulation.NumberEmployees;
                 }
                 total = simulation.ForeignPreventionService.Total;
             }                

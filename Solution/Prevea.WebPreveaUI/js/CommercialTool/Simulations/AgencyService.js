@@ -119,12 +119,7 @@
     },
 
     onFailureUpdate: function (data) {
-        if (data.Status === Constants.resultStatus.Ok) {
-            GeneralData.showNotification(Constants.ok, "", "success");
-        }
-        if (data.Status === Constants.resultStatus.Error) {
-            GeneralData.showNotification(Constants.ko, "", "error");
-        }
+        GeneralData.showNotification(Constants.ko, "", "error");
 
         AgencyService.goToAgencyService();
     },
