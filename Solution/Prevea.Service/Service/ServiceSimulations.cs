@@ -283,18 +283,33 @@
 
         public decimal GetTotalSimulation(int simulationId)
         {
+            var IVA = Convert.ToDecimal(Repository.GetTagValue("IVA"));
             var simulation = Repository.GetSimulation(simulationId);
 
             var total = 0.0m;
 
             if (simulation.ForeignPreventionService != null)
+            {
+                if (simulation.ForeignPreventionService.AmountTecniques != null)
+                {
+                    total = (decimal)simulation.ForeignPreventionService.AmountTecniques * simulation.NumberEmployees * IVA;
+                }
+                if (simulation.ForeignPreventionService.AmountHealthVigilance != null)
+                {
+                    total = (decimal)simulation.ForeignPreventionService.AmountHealthVigilance * simulation.NumberEmployees * IVA;
+                }
+                if (simulation.ForeignPreventionService.AmountMedicalExamination != null)
+                {
+                    total = (decimal)simulation.ForeignPreventionService.AmountMedicalExamination * simulation.NumberEmployees;
+                }
                 total = simulation.ForeignPreventionService.Total;
+            }                
 
             if (simulation.AgencyService != null)
-                total += simulation.AgencyService.Total;
+                total += simulation.AgencyService.Total * IVA;
 
             if (simulation.TrainingService != null)
-                total += simulation.TrainingService.Total;
+                total += simulation.TrainingService.Total * IVA;
 
             return total;
         }

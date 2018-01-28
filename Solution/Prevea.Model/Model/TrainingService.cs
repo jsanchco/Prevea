@@ -9,11 +9,20 @@
 
     public class TrainingService
     {
+        #region Constructor
+
+        public TrainingService()
+        {
+            IncludeInContractualDocument = true;
+        }
+
+        #endregion
+
         [ForeignKey("Simulation")]
         public int Id { get; set; }
 
         public string Observations { get; set; }
-
+        public bool IncludeInContractualDocument { get; set; }
         public decimal Total { get; set; }
 
         public virtual Simulation Simulation { get; set; }

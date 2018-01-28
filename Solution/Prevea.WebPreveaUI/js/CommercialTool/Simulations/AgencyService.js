@@ -108,12 +108,18 @@
     },
 
     onSuccessUpdate: function (data) {
-        if (data.Status === 0) {
+        if (data.Status === Constants.resultStatus.Ok) {
             GeneralData.showNotification(Constants.ok, "", "success");
         }
-        if (data.Status === 1) {
+        if (data.Status === Constants.resultStatus.Error) {
             GeneralData.showNotification(Constants.ko, "", "error");
         }
+
+        AgencyService.goToAgencyService();
+    },
+
+    onFailureUpdate: function (data) {
+        GeneralData.showNotification(Constants.ko, "", "error");
 
         AgencyService.goToAgencyService();
     },

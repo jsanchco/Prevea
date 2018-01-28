@@ -18,7 +18,7 @@
         </H2>
 
         <br />
-        
+
         @{
             var totalAmountTecniques = 0.0m;
             var totalAmountHealthVigilance = 0.0m;
@@ -27,15 +27,15 @@
             {
                 if (Model.SimulationCompany.Simulation.ForeignPreventionService.AmountTecniques != null)
                 {
-                    totalAmountTecniques = (decimal) Model.SimulationCompany.Simulation.ForeignPreventionService.AmountTecniques * Model.SimulationCompany.Simulation.NumberEmployees;
+                    totalAmountTecniques = (decimal)Model.SimulationCompany.Simulation.ForeignPreventionService.AmountTecniques * Model.SimulationCompany.Simulation.NumberEmployees;
                 }
                 if (Model.SimulationCompany.Simulation.ForeignPreventionService.AmountHealthVigilance != null)
                 {
-                    totalAmountHealthVigilance = (decimal) Model.SimulationCompany.Simulation.ForeignPreventionService.AmountHealthVigilance * Model.SimulationCompany.Simulation.NumberEmployees;
+                    totalAmountHealthVigilance = (decimal)Model.SimulationCompany.Simulation.ForeignPreventionService.AmountHealthVigilance * Model.SimulationCompany.Simulation.NumberEmployees;
                 }
                 if (Model.SimulationCompany.Simulation.ForeignPreventionService.AmountMedicalExamination != null)
                 {
-                    totalAmountMedicalExamination = (decimal) Model.SimulationCompany.Simulation.ForeignPreventionService.AmountMedicalExamination * Model.SimulationCompany.Simulation.NumberEmployees;
+                    totalAmountMedicalExamination = (decimal)Model.SimulationCompany.Simulation.ForeignPreventionService.AmountMedicalExamination * Model.SimulationCompany.Simulation.NumberEmployees;
                 }
             }
         }
@@ -64,6 +64,12 @@
 
     </div>
 
+    <div class="row">
+        <div class="col-sm-offset-2 col-sm-8">
+            <hr />
+        </div>
+    </div>
+
     <br />
     <br />
 
@@ -77,14 +83,20 @@
             {
                 <div class="col-sm-offset-2 col-sm-3 control-label" style="text-align: left">Servicios de Gestoría</div>
                 <div class="col-sm-1 control-label" style="text-align: left; font-weight: bold;">@Model.SimulationCompany.Simulation.AgencyService.Total €</div>
-                <div class="col-sm-2 control-label" style="text-align: left">(IVA no incluído)</div>                    
+                <div class="col-sm-2 control-label" style="text-align: left">(IVA no incluído)</div>
             }
             else
-            {         
+            {
                 <div class="col-sm-offset-2 col-sm-8 control-label">No tiene contratada Gestoría</div>
             }
         </div>
 
+    </div>
+
+    <div class="row">
+        <div class="col-sm-offset-2 col-sm-8">
+            <hr />
+        </div>
     </div>
 
     <br />
@@ -94,7 +106,7 @@
         <H2>
             <strong>Formación</strong>
         </H2>
-        
+
         <div class="row">
             <div class="col-sm-offset-2 col-sm-8">
                 @if (Model.SimulationCompany.Simulation.TrainingService != null)
@@ -110,12 +122,12 @@
         </div>
 
         <br />
-        
+
         <div class="row">
             <div class="col-sm-offset-2 col-sm-8">
                 <hr />
             </div>
-        </div>        
+        </div>
 
         <div class="row" style="text-align: left">
             <div class="col-sm-offset-2 col-sm-3 control-label" style="font-size: large; color: #00639e; font-weight: bold">Total</div>

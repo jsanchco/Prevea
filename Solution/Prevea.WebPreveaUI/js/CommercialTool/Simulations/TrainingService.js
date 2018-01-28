@@ -41,7 +41,7 @@
                         AssistantsNumber: { type: "number", defaultValue: 1, validation: { required: { message: " Campo Obligatorio " } } },
                         Price: { type: "number", validation: { required: { message: " Campo Obligatorio " } } },
                         OriginalPrice: { type: "number" },
-                        Desviation: { type: "number", editable: false },
+                        Desviation: { type: "number" },
                         Total: { type: "number", validation: { required: { message: " Campo Obligatorio " } } },
                         TrainingCourseId: { type: "number" },
                         TrainingCourseName: { type: "string", editable: false },
@@ -100,18 +100,27 @@
                     var value;
                     if (e.field === "AssistantsNumber") {
                         dataItem = e.items[0];
+
+                        value = (dataItem.Price / dataItem.OriginalPrice) - 1;
+                        dataItem.set("Desviation", value);
+
                         value = dataItem.AssistantsNumber * dataItem.Price;
                         dataItem.set("Total", value);
+
                     }
                     if (e.field === "Total") {
                         dataItem = e.items[0];
+
+                        value = (dataItem.Price / dataItem.OriginalPrice) - 1;
+                        dataItem.set("Desviation", value);
+
                         value = dataItem.Total / dataItem.AssistantsNumber;
                         dataItem.set("Price", value);
                     }
                     if (e.field === "Price") {
                         dataItem = e.items[0];
                         value = (dataItem.Price / dataItem.OriginalPrice) - 1;
-                        dataItem.Desviation = value;
+                        dataItem.set("Desviation", value);
                     }
                 }
             },
@@ -246,8 +255,7 @@
                 html += "<a class='k-grid-update' toggle='tooltip' title='Guardar' style='cursor: pointer;'><i class='glyphicon glyphicon-saved' style='font-size: 18px;'></i></a>&nbsp;&nbsp;";
                 html += "<a class='k-grid-cancel' toggle='tooltip' title='Cancelar' style='cursor: pointer;'><i class='glyphicon glyphicon-ban-circle' style='font-size: 18px;' onclick='TrainingService.cancelEdit()'></i></a>";
                 html += "</div>";
-
-                commandCell.html(html);
+                commandCell.html(html);                
 
                 if (e.model.isNew() && !e.model.dirty) {
                     e.model.set("TrainingCourseId", TrainingService.selectedCourse.Id);

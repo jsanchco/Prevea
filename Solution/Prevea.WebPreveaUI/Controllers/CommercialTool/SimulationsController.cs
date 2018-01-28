@@ -187,6 +187,7 @@
                     return Json(resultUpdateSimulation);
                 }
 
+                resultService.Object = AutoMapper.Mapper.Map<AgencyServiceViewModel>(resultService.Object);
                 return Json(resultService);
             }
             catch (Exception e)
@@ -679,6 +680,10 @@
                     return Json(new { result = resultNotification }, JsonRequestBehavior.AllowGet);
 
                 var data = AutoMapper.Mapper.Map<TrainingCourseTrainingServiceViewModel>(trainingCourseTrainingService);
+                var course = Service.GetTrainingCourse(trainingCourseTrainingService.TrainingCourseId);
+                data.OriginalPrice = course.Price;
+                data.Desviation = (trainingCourseTrainingService.Price / course.Price) - 1;
+
                 return this.Jsonp(data);
             }
             catch (Exception e)
