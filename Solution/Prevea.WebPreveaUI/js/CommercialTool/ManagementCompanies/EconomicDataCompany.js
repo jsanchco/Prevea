@@ -1,15 +1,23 @@
 ﻿var EconomicDataCompany = kendo.observable({
 
     gridTrainingCoursesId: "gridTrainingCourses",
+    switchSPAId: "switchSPA",
     trainingCoursesDataSource: null,
 
     companyId: null,
+    simulationId: null,
+    stateSPA: null,
+    stateSG: null,
+    stateSF: null,
 
-    init: function (companyId, simulationId) {
+    init: function (companyId, simulationId, stateSPA, stateSG, stateSF) {
         kendo.culture("es-ES");
 
         this.companyId = companyId;
         this.simulationId = simulationId;
+        this.stateSPA = stateSPA;
+        this.stateSG = stateSG;
+        this.stateSF = stateSF;
 
         this.createTrainingCoursesDataSource();
         this.createTrainingCoursesGrid();
@@ -139,7 +147,9 @@
     },
 
     setKendoUIWidgets: function () {
-        
+        $("#" + this.switchSPAId).kendoMobileSwitch({
+            onLabel: "SI",
+            offLabel: "NO"
+        });
     }
-
 });

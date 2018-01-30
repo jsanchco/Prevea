@@ -1,6 +1,25 @@
 ﻿@model Company
+    
+@{
+    var stateSPA = false;
+    if (Model.SimulationCompany.Simulation.ForeignPreventionService != null)
+    {
+        stateSPA = Model.SimulationCompany.Simulation.ForeignPreventionService.IncludeInContractualDocument;
+    }
+    var stateSG = false;
+    if (Model.SimulationCompany.Simulation.ForeignPreventionService != null)
+    {
+        stateSG = Model.SimulationCompany.Simulation.AgencyService.IncludeInContractualDocument;
+    }
+    var stateSF = false;
+    if (Model.SimulationCompany.Simulation.TrainingService != null)
+    {
+        stateSF = Model.SimulationCompany.Simulation.AgencyService.IncludeInContractualDocument;
+    }
+}
 
 <script>
+    //EconomicDataCompany.init(@Model.Id, @Model.SimulationCompany.SimulationId, stateSPA, stateSG, stateSF);
     EconomicDataCompany.init(@Model.Id, @Model.SimulationCompany.SimulationId);
 </script>
 
@@ -13,11 +32,19 @@
     </div>
 
     <div class="col-sm-12" style="text-align: center">
-        <H2>
-            <strong>Servicio de Prevención Ajeno</strong>
-        </H2>
-
-        <br />
+        
+        <div class="row">
+            <div class="col-sm-10">
+                <H2>
+                    <strong>Servicio de Prevención Ajeno</strong>
+                </H2>
+            </div>
+            <div class="col-sm-2" style="text-align: left; margin-left: -300px; margin-top: 20px;">
+                <input id="switchSPA" aria-label="SPA Switch" />
+            </div>
+        </div>
+    
+        <br/>
 
         @{
             var totalAmountTecniques = 0.0m;
@@ -27,15 +54,15 @@
             {
                 if (Model.SimulationCompany.Simulation.ForeignPreventionService.AmountTecniques != null)
                 {
-                    totalAmountTecniques = (decimal)Model.SimulationCompany.Simulation.ForeignPreventionService.AmountTecniques * Model.SimulationCompany.Simulation.NumberEmployees;
+                    totalAmountTecniques = (decimal) Model.SimulationCompany.Simulation.ForeignPreventionService.AmountTecniques * Model.SimulationCompany.Simulation.NumberEmployees;
                 }
                 if (Model.SimulationCompany.Simulation.ForeignPreventionService.AmountHealthVigilance != null)
                 {
-                    totalAmountHealthVigilance = (decimal)Model.SimulationCompany.Simulation.ForeignPreventionService.AmountHealthVigilance * Model.SimulationCompany.Simulation.NumberEmployees;
+                    totalAmountHealthVigilance = (decimal) Model.SimulationCompany.Simulation.ForeignPreventionService.AmountHealthVigilance * Model.SimulationCompany.Simulation.NumberEmployees;
                 }
                 if (Model.SimulationCompany.Simulation.ForeignPreventionService.AmountMedicalExamination != null)
                 {
-                    totalAmountMedicalExamination = (decimal)Model.SimulationCompany.Simulation.ForeignPreventionService.AmountMedicalExamination * Model.SimulationCompany.Simulation.NumberEmployees;
+                    totalAmountMedicalExamination = (decimal) Model.SimulationCompany.Simulation.ForeignPreventionService.AmountMedicalExamination * Model.SimulationCompany.Simulation.NumberEmployees;
                 }
             }
         }
@@ -46,7 +73,7 @@
             <div class="col-sm-2 control-label" style="text-align: left">(IVA no incluído)</div>
         </div>
 
-        <br />
+        <br/>
 
         <div class="row">
             <div class="col-sm-offset-2 col-sm-3 control-label" style="text-align: left">Vigilancia de la Salud</div>
@@ -54,7 +81,7 @@
             <div class="col-sm-2 control-label" style="text-align: left">(IVA no incluído)</div>
         </div>
 
-        <br />
+        <br/>
 
         <div class="row">
             <div class="col-sm-offset-2 col-sm-3 control-label" style="text-align: left">Rec. Médico realizado en clínica</div>

@@ -327,7 +327,7 @@ namespace Prevea.ConsoleTestModel.Migrations
             context.Configurations.Add(new Model.Model.Configuration { Tag = "AmountAgencyByAutonomous", Value = "100" });
             context.Configurations.Add(new Model.Model.Configuration { Tag = "PercentegeStretchEmployees", Value = "20" });
             context.Configurations.Add(new Model.Model.Configuration { Tag = "PercentegeStretchAgencies", Value = "20" });
-            context.Configurations.Add(new Model.Model.Configuration { Tag = "IVA", Value = "1.21" });
+            context.Configurations.Add(new Model.Model.Configuration { Tag = "IVA", Value = "1,21" });
             context.SaveChanges();
         }
     }
