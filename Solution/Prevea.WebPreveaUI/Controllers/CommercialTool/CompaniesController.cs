@@ -203,6 +203,49 @@
             return PartialView("~/Views/CommercialTool/Companies/EconomicDataCompany.cshtml", company);
         }
 
+        [HttpPost]
+        public JsonResult UpdateIncludeInContractualDocument(int simulationId, string contractualDocument, bool check)
+        {
+            try
+            {
+                var simulation = Service.GetSimulation(simulationId);
+
+                if (simulation == null)
+                    return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
+
+                Result result;
+                switch (contractualDocument)
+                {
+                    case "switchForeignPreventionService":
+                        simulation.ForeignPreventionService.IncludeInContractualDocument = check;
+                        result = Service.SaveForeignPreventionService(simulation.ForeignPreventionService);
+                        if (result.Status == Status.Error)
+                            return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
+                        break;
+                    case "switchAgencyService":
+                        simulation.AgencyService.IncludeInContractualDocument = check;
+                        result = Service.SaveAgencyService(simulation.AgencyService);
+                        if (result.Status == Status.Error)
+                            return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
+                        break;
+                    case "switchTrainingService":
+                        simulation.TrainingService.IncludeInContractualDocument = check;
+                        result = Service.SaveTrainingService(simulation.TrainingService);
+                        if (result.Status == Status.Error)
+                            return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
+                        break;
+                }
+
+                return Json(new { resultStatus = Status.Ok }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+
+                return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         #endregion
 
         #region Payment Method
@@ -633,9 +676,39 @@
 
             ViewBag.ContractualDocumentId = contractualDocumentId;
             ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
-            ViewBag.NumberWorkCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId).Count(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta);
-
-            var workCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId);
+            
+            var workCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
+            ViewBag.NumberWorkCenters = workCenters.Count;
+            var provincesWorkCenters = string.Empty;
+            if (workCenters.Count == 1)
+            {
+                provincesWorkCenters = $"{workCenters[0].Province.Trim()}.";
+            }
+            else
+            {
+                for (var i = 0; i < workCenters.Count; i++)
+                {
+                    var workCenter = workCenters[i];
+                    var newWorkCenter = workCenter.Province.Trim();
+                    if (newWorkCenter != string.Empty)
+                    {
+                        if (i == workCenters.Count - 1)
+                        {
+                            if (provincesWorkCenters.EndsWith(", "))
+                            {
+                                provincesWorkCenters = provincesWorkCenters.Substring(0, provincesWorkCenters.Length - 2);
+                            }
+                            provincesWorkCenters += $" y {newWorkCenter}.";
+                        }
+                        else
+                        {
+                            provincesWorkCenters += $"{newWorkCenter}, ";
+                        }                        
+                    }
+                }     
+            }
+  
+            ViewBag.ProvincesWorkCenters = provincesWorkCenters;
 
             return PartialView("~/Views/CommercialTool/Companies/Reports/OfferReport.cshtml", contractualDocument.Company);
         }

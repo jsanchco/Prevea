@@ -1,26 +1,12 @@
 ﻿@model Company
     
-@{
-    var stateSPA = false;
-    if (Model.SimulationCompany.Simulation.ForeignPreventionService != null)
-    {
-        stateSPA = Model.SimulationCompany.Simulation.ForeignPreventionService.IncludeInContractualDocument;
-    }
-    var stateSG = false;
-    if (Model.SimulationCompany.Simulation.ForeignPreventionService != null)
-    {
-        stateSG = Model.SimulationCompany.Simulation.AgencyService.IncludeInContractualDocument;
-    }
-    var stateSF = false;
-    if (Model.SimulationCompany.Simulation.TrainingService != null)
-    {
-        stateSF = Model.SimulationCompany.Simulation.AgencyService.IncludeInContractualDocument;
-    }
-}
-
 <script>
-    //EconomicDataCompany.init(@Model.Id, @Model.SimulationCompany.SimulationId, stateSPA, stateSG, stateSF);
-    EconomicDataCompany.init(@Model.Id, @Model.SimulationCompany.SimulationId);
+    EconomicDataCompany.init(
+        @Model.Id, 
+        @Model.SimulationCompany.SimulationId, 
+        "@Model.SimulationCompany.Simulation.StateForeignPreventionService",
+        "@Model.SimulationCompany.Simulation.StateAgencyService",
+        "@Model.SimulationCompany.Simulation.StateTrainingService");
 </script>
 
 <div class="row" id="pageEconomicDataCompany" style="width: 95%">
@@ -34,14 +20,21 @@
     <div class="col-sm-12" style="text-align: center">
         
         <div class="row">
-            <div class="col-sm-10">
+            <div class="col-sm-9">
                 <H2>
                     <strong>Servicio de Prevención Ajeno</strong>
                 </H2>
             </div>
-            <div class="col-sm-2" style="text-align: left; margin-left: -300px; margin-top: 20px;">
-                <input id="switchSPA" aria-label="SPA Switch" />
+            <div class="col-sm-1" style="text-align: left; margin-left: -300px; margin-top: 20px;">
+            @if (Model.SimulationCompany.Simulation.ForeignPreventionService != null)
+            {
+                <input id="switchForeignPreventionService" aria-label="FPS Switch" />
+            }
             </div>
+        @if (Model.SimulationCompany.Simulation.ForeignPreventionService != null)
+        {
+            <div class="col-sm-2" style="text-align: left; margin-left: -220px; margin-top: 23px;">Incluir en el Contrato</div>
+        }            
         </div>
     
         <br/>
@@ -66,28 +59,35 @@
                 }
             }
         }
+        
+        @if (Model.SimulationCompany.Simulation.ForeignPreventionService != null)
+        {
+            <div class="row">
+                <div class="col-sm-offset-2 col-sm-3 control-label" style="text-align: left">Especialidades Técnicas</div>
+                <div class="col-sm-1 control-label" style="text-align: left; font-weight: bold;">@totalAmountHealthVigilance €</div>
+                <div class="col-sm-2 control-label" style="text-align: left">(IVA no incluído)</div>
+            </div>
 
-        <div class="row">
-            <div class="col-sm-offset-2 col-sm-3 control-label" style="text-align: left">Especialidades Técnicas</div>
-            <div class="col-sm-1 control-label" style="text-align: left; font-weight: bold;">@totalAmountHealthVigilance €</div>
-            <div class="col-sm-2 control-label" style="text-align: left">(IVA no incluído)</div>
-        </div>
+            <br/>
 
-        <br/>
+            <div class="row">
+                <div class="col-sm-offset-2 col-sm-3 control-label" style="text-align: left">Vigilancia de la Salud</div>
+                <div class="col-sm-1 control-label" style="text-align: left; font-weight: bold;">@totalAmountMedicalExamination €</div>
+                <div class="col-sm-2 control-label" style="text-align: left">(IVA no incluído)</div>
+            </div>
 
-        <div class="row">
-            <div class="col-sm-offset-2 col-sm-3 control-label" style="text-align: left">Vigilancia de la Salud</div>
-            <div class="col-sm-1 control-label" style="text-align: left; font-weight: bold;">@totalAmountMedicalExamination €</div>
-            <div class="col-sm-2 control-label" style="text-align: left">(IVA no incluído)</div>
-        </div>
+            <br/>
 
-        <br/>
-
-        <div class="row">
-            <div class="col-sm-offset-2 col-sm-3 control-label" style="text-align: left">Rec. Médico realizado en clínica</div>
-            <div class="col-sm-1 control-label" style="text-align: left; font-weight: bold;">@totalAmountTecniques €</div>
-            <div class="col-sm-2 control-label" style="text-align: left">(Exento de IVA)</div>
-        </div>
+            <div class="row">
+                <div class="col-sm-offset-2 col-sm-3 control-label" style="text-align: left">Rec. Médico realizado en clínica</div>
+                <div class="col-sm-1 control-label" style="text-align: left; font-weight: bold;">@totalAmountTecniques €</div>
+                <div class="col-sm-2 control-label" style="text-align: left">(Exento de IVA)</div>
+            </div>
+        }
+        else
+        {
+            <div class="col-sm-offset-2 col-sm-8 control-label" style="text-align: left;">No tiene contratado el Servicio de Prevención</div>
+        }
 
     </div>
 
@@ -101,9 +101,23 @@
     <br />
 
     <div class="col-sm-12" style="text-align: center">
-        <H2>
-            <strong>Gestoría</strong>
-        </H2>
+        <div class="row">
+            <div class="col-sm-9">
+                <H2>
+                    <strong>Gestoría</strong>
+                </H2>
+            </div>
+            <div class="col-sm-1" style="text-align: left; margin-left: -300px; margin-top: 20px;">
+            @if (Model.SimulationCompany.Simulation.AgencyService != null)
+            {
+                <input id="switchAgencyService" aria-label="AS Switch" />
+            }
+            </div>
+        @if (Model.SimulationCompany.Simulation.AgencyService != null)
+        {
+            <div class="col-sm-2" style="text-align: left; margin-left: -220px; margin-top: 23px;">Incluir en el Contrato</div>
+        }  
+        </div>
 
         <div class="row">
             @if (Model.SimulationCompany.Simulation.AgencyService != null)
@@ -114,7 +128,7 @@
             }
             else
             {
-                <div class="col-sm-offset-2 col-sm-8 control-label">No tiene contratada Gestoría</div>
+                <div class="col-sm-offset-2 col-sm-8 control-label" style="text-align: left;">No tiene contratada Gestoría</div>
             }
         </div>
 
@@ -130,9 +144,23 @@
     <br />
 
     <div class="col-sm-12" style="text-align: center">
-        <H2>
-            <strong>Formación</strong>
-        </H2>
+        <div class="row">
+            <div class="col-sm-9">
+                <H2>
+                    <strong>Formación</strong>
+                </H2>
+            </div>
+            <div class="col-sm-1" style="text-align: left; margin-left: -300px; margin-top: 20px;">
+            @if (Model.SimulationCompany.Simulation.TrainingService != null)
+            {
+                <input id="switchTrainingService" aria-label="TS Switch"/>
+            }
+            </div>
+        @if (Model.SimulationCompany.Simulation.TrainingService != null)
+        {
+            <div class="col-sm-2" style="text-align: left; margin-left: -220px; margin-top: 23px;">Incluir en el Contrato</div>
+        }  
+        </div>
 
         <div class="row">
             <div class="col-sm-offset-2 col-sm-8">
@@ -143,7 +171,7 @@
                 else
                 {
                     <div id="gridTrainingCourses" style="height: 40vh; display: none"></div>
-                    <div class="control-label">No tiene contratada Formación</div>
+                    <div class="control-label" style="text-align: left;">No tiene contratada Formación</div>
                 }
             </div>
         </div>

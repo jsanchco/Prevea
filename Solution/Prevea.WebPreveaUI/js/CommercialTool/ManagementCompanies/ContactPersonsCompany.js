@@ -30,7 +30,8 @@
                         WorkStation: { type: "string" },
                         UserStateId: { type: "number", defaultValue: 1 },
                         CompanyId: { type: "number", defaultValue: that.companyId },
-                        BirthDate: { type: "date", defaultValue:  new Date() }
+                        BirthDate: { type: "date", defaultValue:  new Date() },
+                        ChargeDate: { type: "date" }
                     }
                 }
             },

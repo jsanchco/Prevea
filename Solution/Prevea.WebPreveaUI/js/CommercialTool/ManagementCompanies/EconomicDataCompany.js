@@ -1,23 +1,26 @@
 ﻿var EconomicDataCompany = kendo.observable({
 
     gridTrainingCoursesId: "gridTrainingCourses",
-    switchSPAId: "switchSPA",
+    switchForeignPreventionServiceId: "switchForeignPreventionService",
+    switchAgencyServiceId: "switchAgencyService",
+    switchTrainingServiceId: "switchTrainingService",
+
     trainingCoursesDataSource: null,
 
     companyId: null,
     simulationId: null,
-    stateSPA: null,
-    stateSG: null,
-    stateSF: null,
+    stateForeignPreventionService: null,
+    stateAgencyService: null,
+    stateTrainingService: null,
 
-    init: function (companyId, simulationId, stateSPA, stateSG, stateSF) {
+    init: function (companyId, simulationId, stateForeignPreventionService, stateAgencyService, stateTrainingService) {
         kendo.culture("es-ES");
 
         this.companyId = companyId;
         this.simulationId = simulationId;
-        this.stateSPA = stateSPA;
-        this.stateSG = stateSG;
-        this.stateSF = stateSF;
+        this.stateForeignPreventionService = (stateForeignPreventionService.toLowerCase() === "true");
+        this.stateAgencyService = (stateAgencyService.toLowerCase() === "true");
+        this.stateTrainingService = (stateTrainingService.toLowerCase() === "true");
 
         this.createTrainingCoursesDataSource();
         this.createTrainingCoursesGrid();
@@ -147,9 +150,45 @@
     },
 
     setKendoUIWidgets: function () {
-        $("#" + this.switchSPAId).kendoMobileSwitch({
+        $("#" + this.switchForeignPreventionServiceId).kendoMobileSwitch({
             onLabel: "SI",
-            offLabel: "NO"
+            offLabel: "NO",
+            checked: EconomicDataCompany.stateForeignPreventionService,
+            change: EconomicDataCompany.onChangeSwitch
+        });
+
+        $("#" + this.switchAgencyServiceId).kendoMobileSwitch({
+            onLabel: "SI",
+            offLabel: "NO",
+            checked: EconomicDataCompany.stateAgencyService,
+            change: EconomicDataCompany.onChangeSwitch
+        });
+
+        $("#" + this.switchTrainingServiceId).kendoMobileSwitch({
+            onLabel: "SI",
+            offLabel: "NO",
+            checked: EconomicDataCompany.stateTrainingService,
+            change: EconomicDataCompany.onChangeSwitch
+        });
+    },
+
+    onChangeSwitch: function (e) {
+        $.ajax({
+            url: "/Companies/UpdateIncludeInContractualDocument",
+            data: {
+                simulationId: EconomicDataCompany.simulationId,
+                contractualDocument: this.element.attr("id"),
+                check: e.checked
+            },
+            type: "post",
+            dataType: "json",
+            success: function (response) {
+                if (response.resultStatus === Constants.resultStatus.Ok) {
+                    GeneralData.showNotification(Constants.ok, "", "success");
+                } else {
+                    GeneralData.showNotification(Constants.ko, "", "error");
+                }
+            }
         });
     }
 });

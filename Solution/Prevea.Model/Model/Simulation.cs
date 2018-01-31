@@ -46,6 +46,13 @@
         [NotMapped]
         public decimal Total { get; set; }
 
+        [NotMapped]
+        public bool StateForeignPreventionService => ForeignPreventionService != null && ForeignPreventionService.IncludeInContractualDocument;
+        [NotMapped]
+        public bool StateAgencyService => AgencyService != null && AgencyService.IncludeInContractualDocument;
+        [NotMapped]
+        public bool StateTrainingService => TrainingService != null && TrainingService.IncludeInContractualDocument;
+
         public int UserId { get; set; }
         public virtual User User { get; set; }
 
