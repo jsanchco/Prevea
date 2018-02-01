@@ -679,35 +679,49 @@
             
             var workCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
             ViewBag.NumberWorkCenters = workCenters.Count;
+
             var provincesWorkCenters = string.Empty;
-            if (workCenters.Count == 1)
+            if (workCenters.Count > 0)
             {
-                provincesWorkCenters = $"{workCenters[0].Province.Trim()}.";
-            }
-            else
-            {
-                for (var i = 0; i < workCenters.Count; i++)
-                {
-                    var workCenter = workCenters[i];
-                    var newWorkCenter = workCenter.Province.Trim();
-                    if (newWorkCenter != string.Empty)
+                var distinctWorkCenters = workCenters
+                    .GroupBy(x => x.Province.Trim())
+                    .Select(g => new
                     {
-                        if (i == workCenters.Count - 1)
+                        Field = g.Key,
+                        Count = g.Count()
+                    }).ToList();
+
+                
+                if (distinctWorkCenters.Count == 1)
+                {
+                    provincesWorkCenters = distinctWorkCenters[0].Count == 1 ?
+                        $"{distinctWorkCenters[0].Field.Trim()}." :
+                        $"{distinctWorkCenters[0].Field.Trim()}({distinctWorkCenters[0].Count}).";
+                }
+                else
+                {
+                    for (var i = 0; i < distinctWorkCenters.Count; i++)
+                    {
+                        var workCenter = distinctWorkCenters[i];
+                        var newWorkCenter = workCenter.Field.Trim();
+                        if (newWorkCenter != string.Empty)
                         {
-                            if (provincesWorkCenters.EndsWith(", "))
+                            if (i == distinctWorkCenters.Count - 1)
                             {
-                                provincesWorkCenters = provincesWorkCenters.Substring(0, provincesWorkCenters.Length - 2);
+                                provincesWorkCenters += distinctWorkCenters[i].Count == 1 ?
+                                    $"{newWorkCenter}." :
+                                    $"{newWorkCenter}({distinctWorkCenters[i].Count}).";
                             }
-                            provincesWorkCenters += $" y {newWorkCenter}.";
+                            else
+                            {
+                                provincesWorkCenters += distinctWorkCenters[i].Count == 1 ?
+                                    $"{newWorkCenter}, " :
+                                    $"{newWorkCenter}({distinctWorkCenters[i].Count}), ";
+                            }
                         }
-                        else
-                        {
-                            provincesWorkCenters += $"{newWorkCenter}, ";
-                        }                        
                     }
-                }     
+                }                
             }
-  
             ViewBag.ProvincesWorkCenters = provincesWorkCenters;
 
             return PartialView("~/Views/CommercialTool/Companies/Reports/OfferReport.cshtml", contractualDocument.Company);
@@ -720,7 +734,53 @@
 
             ViewBag.ContractualDocumentId = contractualDocumentId;
             ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
-            ViewBag.NumberWorkCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId).Count(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta);
+
+            var workCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
+            ViewBag.NumberWorkCenters = workCenters.Count;
+
+            var provincesWorkCenters = string.Empty;
+            if (workCenters.Count > 0)
+            {
+                var distinctWorkCenters = workCenters
+                    .GroupBy(x => x.Province.Trim())
+                    .Select(g => new
+                    {
+                        Field = g.Key,
+                        Count = g.Count()
+                    }).ToList();
+
+
+                if (distinctWorkCenters.Count == 1)
+                {
+                    provincesWorkCenters = distinctWorkCenters[0].Count == 1 ?
+                        $"{distinctWorkCenters[0].Field.Trim()}." :
+                        $"{distinctWorkCenters[0].Field.Trim()}({distinctWorkCenters[0].Count}).";
+                }
+                else
+                {
+                    for (var i = 0; i < distinctWorkCenters.Count; i++)
+                    {
+                        var workCenter = distinctWorkCenters[i];
+                        var newWorkCenter = workCenter.Field.Trim();
+                        if (newWorkCenter != string.Empty)
+                        {
+                            if (i == distinctWorkCenters.Count - 1)
+                            {
+                                provincesWorkCenters += distinctWorkCenters[i].Count == 1 ?
+                                    $"{newWorkCenter}." :
+                                    $"{newWorkCenter}({distinctWorkCenters[i].Count}).";
+                            }
+                            else
+                            {
+                                provincesWorkCenters += distinctWorkCenters[i].Count == 1 ?
+                                    $"{newWorkCenter}, " :
+                                    $"{newWorkCenter}({distinctWorkCenters[i].Count}), ";
+                            }
+                        }
+                    }
+                }
+            }
+            ViewBag.ProvincesWorkCenters = provincesWorkCenters;
 
             return View("~/Views/CommercialTool/Companies/Reports/OfferReport.cshtml", contractualDocument.Company);
         }
