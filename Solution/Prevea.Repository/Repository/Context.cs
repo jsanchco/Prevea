@@ -79,6 +79,8 @@
 
             modelBuilder.Entity<Simulation>().HasOptional(x => x.UserAssigned).WithMany(y => y.SimulationsAssigned);
 
+            modelBuilder.Entity<ContractualDocumentCompany>().HasOptional(x => x.ContractualDocumentCompanyFirmed).WithMany().HasForeignKey(y => y.ContractualDocumentCompanyFirmedId);
+
             modelBuilder.Entity<Employee>().HasRequired(x => x.User).WithMany().WillCascadeOnDelete(false);
         }
     }

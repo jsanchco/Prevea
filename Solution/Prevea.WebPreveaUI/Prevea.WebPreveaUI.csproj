@@ -646,6 +646,7 @@
     <Content Include="Images\Logo.png" />
     <Content Include="Images\notes-lines.png" />
     <Content Include="Images\pdf_opt.png" />
+    <Content Include="Images\pdf_opt_little.jpg" />
     <Content Include="Images\unknown_opt.png" />
     <Content Include="Images\user_1.png" />
     <Content Include="Images\xls_opt.png" />

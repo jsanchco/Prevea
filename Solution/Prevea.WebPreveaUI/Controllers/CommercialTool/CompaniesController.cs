@@ -795,6 +795,18 @@
             return Json(new { result = Status.Error, message }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult AddContractualDocumentFirmed(int contractualDocumentId)
+        {
+            return Json(new { result = Status.Ok }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult DeleteContractualDocumentCompanyFirmed(int ContractualDocumentCompanyFirmedId)
+        {
+            return Json(new { result = Status.Ok }, JsonRequestBehavior.AllowGet);
+        }
+
         private bool CreatePdf(ContractualDocumentCompany contractualDocument)
         {
             try

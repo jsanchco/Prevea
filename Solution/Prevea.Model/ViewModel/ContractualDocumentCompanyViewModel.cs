@@ -16,6 +16,9 @@
         public string Observations { get; set; }
         public int ContractualDocumentTypeId { get; set; }
         public string ContractualDocumentTypeName { get; set; }
+        public int? ContractualDocumentCompanyFirmedId { get; set; }
+        public string ContractualDocumentCompanyFirmedEnrollment { get; set; }
+        public string ContractualDocumentCompanyFirmedUrlRelative { get; set; }
         public string UrlRelative { get; set; }        
         public int CompanyId { get; set; }
     }

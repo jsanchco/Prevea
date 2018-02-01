@@ -35,7 +35,10 @@
                         BeginDate: { type: "date", defaultValue: beginDate, format: "{0:dd/MM/yy}" },
                         EndDate: { type: "date", defaultValue: endDate, format: "{0:dd/MM/yy}" },
                         UrlRelative: { type: "string" },
-                        Observations: { type: "string" }
+                        Observations: { type: "string" },
+                        ContractualDocumentCompanyFirmedId: { type: "number" },
+                        ContractualDocumentCompanyFirmedEnrollment: { type: "string" },
+                        ContractualDocumentCompanyFirmedUrlRelative: { type: "string" }
                     }
                 }
             },
@@ -228,7 +231,25 @@
     },
 
     getColumnTemplateEnrollment: function (data) {
-        var html = kendo.format("<div style='text-align: center; font-size: 16px; font-weight: bold;'>{0}</div>", data.Enrollment);
+        var html = "";
+        if (data.ContractualDocumentCompanyFirmedId == null) {
+            html = "<div style='text-align: center'>";
+            html += "<div style='text-align: left'>";
+            html += kendo.format("<div id='circleFirmPending' toggle='tooltip' title='Agregar Documento Firmado' onclick='ContractualsDocumentsCompany.goToAddContractualDocumentFirmed(\"{0}\")' style='cursor: pointer; float: left; text-align: left;'>", data.Id);
+            html += "</div></div>";
+            html += kendo.format("<div style='font-size: 16px; font-weight: bold;'>{0}", data.Enrollment);
+            html += "</div></div>";
+        } else {
+            html = "<div style='text-align: center'>";
+            html += "<div style='text-align: left'>";
+            html += "<div style='cursor: pointer; float: left; text-align: left; margin-top: -10px;'>";
+            html += kendo.format("<img toggle='tooltip' title='Ver Documento Firmado' onclick='ContractualsDocumentsCompany.goToViewContractualDocumentCompanyFirmed(\"{0}\")' src='../../Images/pdf_opt_little.jpg'>&nbsp;&nbsp;", data.ContractualDocumentCompanyFirmedId);
+            html += kendo.format("<a toggle='tooltip' title='Eliminar Documento Firmado' onclick='ContractualsDocumentsCompany.goToDeleteContractualDocumentCompanyFirmed(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 7px;'></i></a>", data.ContractualDocumentCompanyFirmedId);
+            html += "</div>";            
+            html += "</div>";
+            html += kendo.format("<div style='font-size: 16px; font-weight: bold;'>{0}", data.Enrollment);
+            html += "</div></div>";
+        }
         
         return html;
     },
@@ -291,6 +312,66 @@
         var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
 
         grid.editRow(tr);
+    },
+
+    goToAddContractualDocumentFirmed: function (contractualDocumentId) {
+        $.ajax({
+            url: "/Companies/AddContractualDocumentFirmed",
+            data: {
+                contractualDocumentId: contractualDocumentId
+            },
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                if (data.result === Constants.resultStatus.Ok) {
+                    GeneralData.showNotification(Constants.ok, "", "success");
+                }
+                if (data.result === Constants.resultStatus.Error) {
+                    GeneralData.showNotification(Constants.ko, "", "error");
+                }
+            },
+            error: function () {
+                GeneralData.showNotification(Constants.ko, "", "error");
+            }
+        });
+    },
+
+    goToViewContractualDocumentCompanyFirmed: function (ContractualDocumentCompanyFirmedId) {
+        $.ajax({
+            url: "/Reports/OfferAsPdf",
+            dataType: "html",
+            type: "GET",
+            data: {
+                companyId: this.companyId,
+                ContractualDocumentCompanyFirmedId: ContractualDocumentCompanyFirmedId
+            },
+            success: function (result) {
+                var w = window.open();
+                $(w.document.body).html(result);
+            }
+        });
+    },
+
+    goToDeleteContractualDocumentCompanyFirmed: function (ContractualDocumentCompanyFirmedId) {
+        $.ajax({
+            url: "/Companies/DeleteContractualDocumentCompanyFirmed",
+            data: {
+                ContractualDocumentCompanyFirmedId: ContractualDocumentCompanyFirmedId
+            },
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                if (data.result === Constants.resultStatus.Ok) {
+                    GeneralData.showNotification(Constants.ok, "", "success");
+                }
+                if (data.result === Constants.resultStatus.Error) {
+                    GeneralData.showNotification(Constants.ko, "", "error");
+                }
+            },
+            error: function () {
+                GeneralData.showNotification(Constants.ko, "", "error");
+            }
+        });        
     },
 
     updateTemplate: function() {

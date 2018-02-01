@@ -64,7 +64,9 @@
             AutoMapper.Mapper.CreateMap<PaymentMethod, PaymentMethodViewModel>();
 
             AutoMapper.Mapper.CreateMap<ContractualDocumentCompany, ContractualDocumentCompanyViewModel>()
-                .ForMember(x => x.ContractualDocumentTypeName, x => x.MapFrom(y => y.ContractualDocumentType.Name));
+                .ForMember(x => x.ContractualDocumentTypeName, x => x.MapFrom(y => y.ContractualDocumentType.Name))
+                .ForMember(x => x.ContractualDocumentCompanyFirmedEnrollment, x => x.MapFrom(y => y.ContractualDocumentCompanyFirmed.Enrollment))
+                .ForMember(x => x.ContractualDocumentCompanyFirmedUrlRelative, x => x.MapFrom(y => y.ContractualDocumentCompanyFirmed.UrlRelative));
             AutoMapper.Mapper.CreateMap<ContractualDocumentCompanyViewModel, ContractualDocumentCompany>();
 
             AutoMapper.Mapper.CreateMap<Notification, NotificationViewModel>()

@@ -31,6 +31,15 @@
     {
         color: black;
     }
+
+    #circleFirmPending {
+        width: 10px;
+        height: 10px;
+        -webkit-border-radius: 25px;
+        -moz-border-radius: 25px;
+        border-radius: 25px;
+        background: #CC2424
+    }
 </style>
 
 <div style="font-size: 14px;">
@@ -52,8 +61,8 @@
     </div>
 
     <br />
-<br />
-    
+    <br />
+
     <div class="row">
         <div class="col-xs-3" style="font-size: large; font-weight: bold; text-align: left">OFERTA DE SERVICIO</div>
         <div class="col-xs-offset-6 col-xs-3">
@@ -69,10 +78,10 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-xs-12">
-            <hr/>
+            <hr />
         </div>
     </div>
 
@@ -194,15 +203,15 @@
 
     <br />
     <br />
-    
+
     <div class="row" style="text-align: center;">
         <div class="col-xs-12" style="border-style: solid; border-width: thin; background: blue;">
             <span style="font-size: large; font-weight: bold; color: white;">ESPECIALIDADES OBJETO DE LA OFERTA</span>
-        </div>       
+        </div>
     </div>
-        
+
     <br />
-    
+
     @{
         var tecniches = "No";
         var health = "No";
@@ -221,7 +230,7 @@
         }
 
     }
-    
+
     <div class="row" style="text-align: left;">
         <div class="col-xs-4">
             SEGURIDAD EN EL TRABAJO
@@ -236,7 +245,7 @@
             @tecniches
         </div>
     </div>
-    
+
     <div class="row" style="text-align: left;">
         <div class="col-xs-4">
             ERGONOMÍA Y PSICOSOCIOLOGÍA
@@ -251,23 +260,23 @@
             @health
         </div>
     </div>
-    
+
     <br />
     <br />
-        
+
     <div class="row" style="text-align: center;">
         <div class="col-xs-12" style="border-style: solid; border-width: thin; background: blue;">
             <span style="font-size: large; font-weight: bold; color: white;">CENTROS DE TRABAJO</span>
-        </div>       
+        </div>
     </div>
-    
+
     <br />
-    
+
     <div class="row">
         <div class="col-xs-12">
             @{
-                var workCenters = ViewBag.NumberWorkCenters == 0 ? 
-                    "No tiene declarados Centros de Trabajo" : 
+                var workCenters = ViewBag.NumberWorkCenters == 0 ?
+                    "No tiene declarados Centros de Trabajo" :
                     "Centros de trabajo permanentes y móviles con domicilio en ";
             }
             @workCenters <strong>@ViewBag.ProvincesWorkCenters</strong>
@@ -276,14 +285,14 @@
             Según manifestación declarada por el empresario a la firma del contrato, debiendo ser comunicada las modificaciones de altas y bajas al Servicio de Prevención para la incorporación de los mismos en la base de datos, a los efectos de actualizar la evaluación de riesgos y la planificación preventiva de los centros incorporados, previa visita a los centros informados
         </div>
     </div>
-    
+
     <br />
     <br />
 
     <div class="row" style="text-align: center;">
         <div class="col-xs-12" style="border-style: solid; border-width: thin; background: blue;">
             <span style="font-size: large; font-weight: bold; color: white;">OBSERVACIONES (nº de trabajadores, maquinaria y medios auxiliares, etc.,)</span>
-        </div>       
+        </div>
     </div>
 
     <br />
@@ -314,7 +323,7 @@
             </span>
         </div>
     </div>
-    
+
     <br />
 
     <div class="row">
@@ -386,6 +395,22 @@
                 @Model.PaymentMethod.AccountNumber
             </span>
         </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-xs-2">
+            <div style="text-align: center">
+                <div style="text-align: left">
+                    <div id="circleFirmPending" style="float: left; text-align: left;"></div>
+                </div>
+                <div style="font-size: 16px; font-weight: bold;">
+                    OF_00001/2018
+                </div>
+            </div>
+        </div>        
     </div>
 
 </div>

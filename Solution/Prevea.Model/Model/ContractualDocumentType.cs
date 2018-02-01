@@ -23,5 +23,5 @@
         public virtual ICollection<ContractualDocumentCompany> ContractualsDocumentsCompany { get; set; }
     }
 
-    public enum EnContractualDocumentType { NotMapped, Offer, Contract, Annex }
+    public enum EnContractualDocumentType { NotMapped, Offer, Contract, Annex, UnSubscribe, Firmed }
 }

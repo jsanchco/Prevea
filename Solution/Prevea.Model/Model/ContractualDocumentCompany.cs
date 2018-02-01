@@ -28,6 +28,9 @@
         public int? ContractualDocumentCompanyParentId { get; set; }
         public virtual ContractualDocumentCompany ContractualDocumentCompanyParent { get; set; }
 
+        public int? ContractualDocumentCompanyFirmedId { get; set; }
+        public virtual ContractualDocumentCompany ContractualDocumentCompanyFirmed { get; set; }
+
         public int CompanyId { get; set; }
         public virtual Company Company { get; set; }
     }

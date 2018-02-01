@@ -125,6 +125,10 @@
                     return "Sociedad";
                 case "Autonomous":
                     return "Autónomo";
+                case "UnSubscribe":
+                    return "Baja";
+                case "Firmed":
+                    return "Firmado";                    
 
                 default:
                     return name;
