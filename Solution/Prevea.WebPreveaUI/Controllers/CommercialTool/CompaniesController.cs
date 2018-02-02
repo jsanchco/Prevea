@@ -807,6 +807,13 @@
             return Json(new { result = Status.Ok }, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetContractualDocumentTypes([DataSourceRequest] DataSourceRequest request)
+        {
+            var data = AutoMapper.Mapper.Map<List<ContractualDocumentType>>(Service.GetContractualDocumentTypes());
+
+            return this.Jsonp(data);
+        }
+        
         private bool CreatePdf(ContractualDocumentCompany contractualDocument)
         {
             try

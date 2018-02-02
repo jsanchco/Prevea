@@ -1,9 +1,8 @@
-﻿using System;
-
-namespace Prevea.Repository.Repository
+﻿namespace Prevea.Repository.Repository
 {
     #region Using
 
+    using System;
     using System.Collections.Generic;
     using Model.Model;
     using System.Linq;

@@ -13,6 +13,7 @@
         this.companyId = companyId;
 
         this.createContractualsDocumentsCompanyDataSource();
+        this.createContractualDocumentTypeDataSource();
         this.createContractualsDocumentsCompanyGrid();
     },
 
@@ -30,8 +31,8 @@
                         Id: { type: "number", defaultValue: 0 },
                         CompanyId: { type: "number", defaultValue: ContractualsDocumentsCompany.companyId },
                         Enrollment: { type: "string", editable: false },
-                        ContractualDocumentTypeId: { type: "number", editable: false },
-                        ContractualDocumentTypeName: { type: "string", editable: false },
+                        ContractualDocumentTypeId: { type: "number", validation: { required: { message: " Campo Obligatorio " } } },
+                        ContractualDocumentTypeName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         BeginDate: { type: "date", defaultValue: beginDate, format: "{0:dd/MM/yy}" },
                         EndDate: { type: "date", defaultValue: endDate, format: "{0:dd/MM/yy}" },
                         UrlRelative: { type: "string" },
@@ -83,6 +84,27 @@
         });
     },
 
+    createContractualDocumentTypeDataSource: function () {
+        ContractualsDocumentsCompany.contractualDocumentTypeDataSorce = new kendo.data.DataSource({
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: { type: "number" },
+                        Name: { type: "string" },
+                        Description: { type: "string" }
+                    }
+                }
+            },
+            transport: {
+                read: {
+                    url: "/Companies/GetcontractualDocumentTypes",
+                    dataType: "jsonp"
+                }
+            }
+        });
+    },
+
     createContractualsDocumentsCompanyGrid: function () {
         $("#" + this.gridContractualsDocumentsCompanyId).kendoGrid({
             columns: [
@@ -92,6 +114,12 @@
                     width: 250,
                     groupable: "false",
                     template: "#= ContractualsDocumentsCompany.getColumnTemplateEnrollment(data) #"
+                }, {
+                    field: "ContractualDocumentTypeId",
+                    title: "Tipo",
+                    width: "90px",
+                    editor: ContractualsDocumentsCompany.contractualDocumentTypeDropDownEditor,
+                    template: "#=ContractualDocumentTypeDescription#"
                 }, {
                     field: "BeginDate",
                     title: "Fecha Inicio",
@@ -184,6 +212,17 @@
 
         });
         kendo.bind($("#" + this.gridContractualsDocumentsCompanyId), this);
+    },
+
+    contractualDocumentTypeDropDownEditor: function (container, options) {
+        $("<input required name='" + options.field + "'/>")
+            .appendTo(container)
+            .kendoDropDownList({
+                dataTextField: "Description",
+                optionLabel: "Selecciona ...",
+                dataValueField: "Id",
+                dataSource: ContractualsDocumentsCompany.contractualDocumentTypeDataSorce
+            });
     },
 
     getTemplateToolBar: function () {

@@ -128,7 +128,19 @@
                 case "UnSubscribe":
                     return "Baja";
                 case "Firmed":
-                    return "Firmado";                    
+                    return "Documento Firmado";
+                case "OfferSPA":
+                    return "Oferta SPA";
+                case "OfferGES":
+                    return "Oferta Gestoría";
+                case "OfferFOR":
+                    return "Oferta Formación";
+                case "ContractSPA":
+                    return "Contrato SPA";
+                case "ContractGES":
+                    return "Contrato Gestoría";
+                case "ContractFOR":
+                    return "Contrato Formación";
 
                 default:
                     return name;

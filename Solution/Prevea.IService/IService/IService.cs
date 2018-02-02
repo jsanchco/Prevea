@@ -269,5 +269,11 @@
         EngagementType GetEngagementType(int id);
 
         #endregion
+
+        #region ContractualDocumentType
+
+        List<ContractualDocumentType> GetContractualDocumentTypes();
+        ContractualDocumentType GetContractualDocumentType(int id);
+        #endregion
     }
 }
