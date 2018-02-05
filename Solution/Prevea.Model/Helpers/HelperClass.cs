@@ -141,7 +141,9 @@
                     return "Contrato Gestoría";
                 case "ContractFOR":
                     return "Contrato Formación";
-
+                case "UnSubscribeContract":
+                    return "Baja de Contrato";
+                    
                 default:
                     return name;
             }

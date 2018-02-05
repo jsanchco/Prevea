@@ -101,6 +101,9 @@
 
             AutoMapper.Mapper.CreateMap<AgencyServiceViewModel, AgencyService>();
             AutoMapper.Mapper.CreateMap<AgencyService, AgencyServiceViewModel>();
+
+            AutoMapper.Mapper.CreateMap<ContractualDocumentTypeViewModel, ContractualDocumentType>();
+            AutoMapper.Mapper.CreateMap<ContractualDocumentType, ContractualDocumentTypeViewModel>();
         }
     }
 }

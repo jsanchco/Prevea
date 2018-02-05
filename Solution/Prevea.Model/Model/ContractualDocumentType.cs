@@ -18,7 +18,7 @@
         public string Name { get; set; }
 
         [NotMapped]
-        public string Description => Helpers.HelperClass.GetDescription(Enum.GetName(typeof(EnNotificationState), Id));
+        public string Description => Helpers.HelperClass.GetDescription(Enum.GetName(typeof(EnContractualDocumentType), Id));
 
         public virtual ICollection<ContractualDocumentCompany> ContractualsDocumentsCompany { get; set; }
     }

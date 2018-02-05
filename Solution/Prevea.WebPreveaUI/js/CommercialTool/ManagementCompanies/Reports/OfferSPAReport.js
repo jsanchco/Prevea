@@ -1,4 +1,4 @@
-﻿var OfferReport = kendo.observable({
+﻿var OfferSPAReport = kendo.observable({
 
     companyId: null,
     contractualDocumentId: null,
@@ -12,7 +12,8 @@
         var params = {
             url: "/Companies/OfferView",
             data: {
-                contractualDocumentId: this.contractualDocumentId
+                contractualDocumentId: OfferSPAReport.contractualDocumentId,
+                isPartialView: true
             }
         };
         GeneralData.goToActionController(params);

@@ -69,7 +69,11 @@
                     e.response !== null) {
                     if (typeof e.response.Errors !== "undefined") {
                         GeneralData.showNotification(Constants.ko, "", "error");
-                        this.cancelChanges();
+                        if (e.type === "create") {
+                            this.data().remove(this.data().at(0));
+                        } else {
+                            this.cancelChanges();
+                        }
                     } else {
                         GeneralData.showNotification(Constants.ok, "", "success");
                     }

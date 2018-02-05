@@ -1,0 +1,31 @@
+﻿@model ContractualDocumentCompany
+
+<style>
+    .k-window-titlebar {
+        height: 30px;
+    }
+
+    .k-window-content .k-content {
+        position: static;
+    }
+
+    .k-block > .k-header, .k-window-titlebar {
+        position: static;
+    }
+</style>
+
+<script>
+    AddDocumentFirmed.init(@Model.Id);
+</script>
+
+<div id="addDocumentFirmedContainer">
+    <br />
+
+    <p @*style="color: #BBBBBB; font-size: x-small"*@>
+        Documento: <strong>@Model.Enrollment</strong>
+    </p>
+
+    <p style="">
+        <input type="file" id="fileDocumentFirmed" name="fileDocumentFirmed" accept=".pdf">
+    </p>
+</div>

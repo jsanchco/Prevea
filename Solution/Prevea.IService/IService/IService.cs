@@ -139,8 +139,8 @@
         Result SaveContractualDocument(ContractualDocumentCompany contractualDocument);
         Result UpdateContractualDocument(int contractualDocumentId, ContractualDocumentCompany contractualDocument);
         bool DeleteContractualDocument(int contractualDocumentId);
-        EnContractualDocumentType GetNewContractualDocumentType(int companyId);
-        string VerifyNewContractualDocument(int companyId);
+        string CanAddContractualDocument(int companyId, int contractualDocumentTypeId);
+        string VerifyNewContractualDocument(int companyId, int contractualDocumentTypeId);
 
         #endregion
 

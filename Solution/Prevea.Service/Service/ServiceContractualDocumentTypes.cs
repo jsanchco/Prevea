@@ -4,6 +4,7 @@
 
     using System.Collections.Generic;
     using Model.Model;
+    using System.Linq;
 
     #endregion
 
@@ -11,7 +12,9 @@
     {
         public List<ContractualDocumentType> GetContractualDocumentTypes()
         {
-            return Repository.GetContractualDocumentTypes();
+            return Repository.GetContractualDocumentTypes()
+                .Where(x => x.Id != (int)EnContractualDocumentType.Firmed)
+                .ToList();
         }
 
         public ContractualDocumentType GetContractualDocumentType(int id)

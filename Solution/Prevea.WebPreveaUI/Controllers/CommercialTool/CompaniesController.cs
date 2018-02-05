@@ -606,6 +606,7 @@
 
         #region Documents
 
+        #region CRUD
         [HttpGet]
         public ActionResult ContractualsDocumentsCompany(int companyId)
         {
@@ -628,6 +629,13 @@
                 var contractualDocument = this.DeserializeObject<ContractualDocumentCompanyViewModel>("contractualDocument");
                 if (contractualDocument == null)
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
+
+                var error = Service.VerifyNewContractualDocument(contractualDocument.CompanyId, contractualDocument.ContractualDocumentTypeId);
+                if (!string.IsNullOrEmpty(error))
+                {
+                    ModelState.AddModelError("VerifyNewContractualDocument", error);                    
+                    return this.Jsonp(new { Errors = error });
+                }
 
                 var result = Service.SaveContractualDocument(AutoMapper.Mapper.Map<ContractualDocumentCompany>(contractualDocument));
                 if (result.Status == Status.Error)
@@ -668,68 +676,40 @@
                 return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del Documento" });
             }
         }
+        #endregion
 
         [HttpGet]
-        public ActionResult OfferView(int contractualDocumentId)
+        public ActionResult AddDocumentFirmed(int contractualDocumentId)
         {
             var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
 
-            ViewBag.ContractualDocumentId = contractualDocumentId;
-            ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
-            
-            var workCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
-            ViewBag.NumberWorkCenters = workCenters.Count;
+            return PartialView("~/Views/CommercialTool/Companies/AddDocumentFirmed.cshtml", contractualDocument);
+        }
 
-            var provincesWorkCenters = string.Empty;
-            if (workCenters.Count > 0)
-            {
-                var distinctWorkCenters = workCenters
-                    .GroupBy(x => x.Province.Trim())
-                    .Select(g => new
-                    {
-                        Field = g.Key,
-                        Count = g.Count()
-                    }).ToList();
+        //[HttpGet]
+        //public ActionResult AddDocumentFirmed()
+        //{
+        //    var contractualDocument = Service.GetContractualDocument(17);
 
-                
-                if (distinctWorkCenters.Count == 1)
-                {
-                    provincesWorkCenters = distinctWorkCenters[0].Count == 1 ?
-                        $"{distinctWorkCenters[0].Field.Trim()}." :
-                        $"{distinctWorkCenters[0].Field.Trim()}({distinctWorkCenters[0].Count}).";
-                }
-                else
-                {
-                    for (var i = 0; i < distinctWorkCenters.Count; i++)
-                    {
-                        var workCenter = distinctWorkCenters[i];
-                        var newWorkCenter = workCenter.Field.Trim();
-                        if (newWorkCenter != string.Empty)
-                        {
-                            if (i == distinctWorkCenters.Count - 1)
-                            {
-                                provincesWorkCenters += distinctWorkCenters[i].Count == 1 ?
-                                    $"{newWorkCenter}." :
-                                    $"{newWorkCenter}({distinctWorkCenters[i].Count}).";
-                            }
-                            else
-                            {
-                                provincesWorkCenters += distinctWorkCenters[i].Count == 1 ?
-                                    $"{newWorkCenter}, " :
-                                    $"{newWorkCenter}({distinctWorkCenters[i].Count}), ";
-                            }
-                        }
-                    }
-                }                
-            }
-            ViewBag.ProvincesWorkCenters = provincesWorkCenters;
+        //    return PartialView("~/Views/CommercialTool/Companies/AddDocumentFirmed.cshtml", contractualDocument);
+        //}
 
-            return PartialView("~/Views/CommercialTool/Companies/Reports/OfferReport.cshtml", contractualDocument.Company);
+        [HttpGet]
+        public ActionResult OfferView(int contractualDocumentId, bool isPartialView)
+        {
+            var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
+
+            return RedirectToAction(
+                GetActionResultForReport(contractualDocument.ContractualDocumentTypeId), 
+                "Companies", 
+                new { contractualDocumentId = contractualDocument.Id, isPartialView } );
         }
 
         [HttpGet]
-        public ActionResult OfferReport(int contractualDocumentId)
+        public ActionResult OfferSPAReport(int contractualDocumentId, bool isPartialView = false)
         {
+            ViewBag.IsPartialView = isPartialView;
+
             var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
 
             ViewBag.ContractualDocumentId = contractualDocumentId;
@@ -781,14 +761,25 @@
                 }
             }
             ViewBag.ProvincesWorkCenters = provincesWorkCenters;
+            
+            if (isPartialView)
+                return PartialView("~/Views/CommercialTool/Companies/Reports/OfferSPAReport.cshtml", contractualDocument.Company);
 
-            return View("~/Views/CommercialTool/Companies/Reports/OfferReport.cshtml", contractualDocument.Company);
+            return View("~/Views/CommercialTool/Companies/Reports/OfferSPAReport.cshtml", contractualDocument.Company);
+        }
+
+        [HttpGet]
+        public ActionResult DefaultReport(int contractualDocumentId)
+        {
+            var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
+
+            return View("~/Views/CommercialTool/Companies/Reports/DefaultReport.cshtml", contractualDocument.Company);
         }
 
         [HttpPost]
         public JsonResult CanAddContractualDocument(int companyId)
         {
-            var message = Service.VerifyNewContractualDocument(companyId);
+            var message = Service.VerifyNewContractualDocument(companyId, 0);
             if (string.IsNullOrEmpty(message))
                 return Json(new { result = Status.Ok }, JsonRequestBehavior.AllowGet);
 
@@ -802,14 +793,14 @@
         }
 
         [HttpPost]
-        public JsonResult DeleteContractualDocumentCompanyFirmed(int ContractualDocumentCompanyFirmedId)
+        public JsonResult DeleteContractualDocumentCompanyFirmed(int contractualDocumentCompanyFirmedId)
         {
             return Json(new { result = Status.Ok }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetContractualDocumentTypes([DataSourceRequest] DataSourceRequest request)
         {
-            var data = AutoMapper.Mapper.Map<List<ContractualDocumentType>>(Service.GetContractualDocumentTypes());
+            var data = AutoMapper.Mapper.Map<List<ContractualDocumentTypeViewModel>>(Service.GetContractualDocumentTypes());
 
             return this.Jsonp(data);
         }
@@ -819,7 +810,11 @@
             try
             {
                 var filePath = Server.MapPath(contractualDocument.UrlRelative);
-                var actionPdf = new ActionAsPdf("OfferReport", new { contractualDocumentId = contractualDocument.Id });
+
+                var actionPdf = new ActionAsPdf(
+                    GetActionResultForReport(contractualDocument.ContractualDocumentTypeId), 
+                    new { contractualDocumentId = contractualDocument.Id });
+
                 var applicationPdfData = actionPdf.BuildPdf(ControllerContext);
                 var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
                 fileStream.Write(applicationPdfData, 0, applicationPdfData.Length);
@@ -833,6 +828,22 @@
 
                 return false;
             }      
+        }
+
+        private string GetActionResultForReport(int contractualDocumentTypeId)
+        {
+            string actionResult;
+            switch (contractualDocumentTypeId)
+            {
+                case (int)EnContractualDocumentType.OfferSPA:
+                    actionResult = "OfferSPAReport";
+                    break;
+                default:
+                    actionResult = "DefaultReport";
+                    break;
+            }
+
+            return actionResult;
         }
 
         #endregion

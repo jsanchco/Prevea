@@ -650,11 +650,13 @@
     <Content Include="Images\unknown_opt.png" />
     <Content Include="Images\user_1.png" />
     <Content Include="Images\xls_opt.png" />
+    <Content Include="js\CommercialTool\ManagementCompanies\AddDocumentFirmed.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\AgencyCompany.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\DetailCompany.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\ContractualsDocumentsCompany.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\EconomicDataCompany.js" />
-    <Content Include="js\CommercialTool\ManagementCompanies\OfferReport.js" />
+    <Content Include="js\CommercialTool\ManagementCompanies\Reports\DefaultReport.js" />
+    <Content Include="js\CommercialTool\ManagementCompanies\Reports\OfferSPAReport.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\WorkCentersCompany.js" />
     <Content Include="js\CommercialTool\Simulations\AgencyService.js" />
     <Content Include="js\CommercialTool\Simulations\ChooseCourse.js" />
@@ -1127,6 +1129,9 @@
     <Content Include="Views\Profile\PersonalDataProfile.cshtml" />
     <Content Include="Views\Profile\EconomicTrackingProfile.cshtml" />
     <Content Include="Views\Profile\DocumentsProfile.cshtml" />
+    <Content Include="Views\CommercialTool\Companies\Reports\DefaultReport.cshtml" />
+    <Content Include="Views\CommercialTool\Companies\Reports\OfferSPAReport.cshtml" />
+    <Content Include="Views\CommercialTool\Companies\AddDocumentFirmed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

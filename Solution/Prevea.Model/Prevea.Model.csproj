@@ -97,6 +97,7 @@
     <Compile Include="ViewModel\AgencyViewModel.cs" />
     <Compile Include="ViewModel\CompanyViewModel.cs" />
     <Compile Include="ViewModel\ContractualDocumentCompanyViewModel.cs" />
+    <Compile Include="ViewModel\ContractualDocumentTypeViewModel.cs" />
     <Compile Include="ViewModel\DocumentViewModel.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\Role.cs" />
