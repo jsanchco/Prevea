@@ -136,11 +136,14 @@
 
         ContractualDocumentCompany GetContractualDocument(int contractualDocumentId);
         List<ContractualDocumentCompany> GetContractualsDocuments(int? companyId = null);
+        List<ContractualDocumentCompany> GetChildrenContractualsDocuments(int contractualDocumentParentId);
         Result SaveContractualDocument(ContractualDocumentCompany contractualDocument);
         Result UpdateContractualDocument(int contractualDocumentId, ContractualDocumentCompany contractualDocument);
         bool DeleteContractualDocument(int contractualDocumentId);
         string CanAddContractualDocument(int companyId, int contractualDocumentTypeId);
         string VerifyNewContractualDocument(int companyId, int contractualDocumentTypeId);
+        Result SaveContractualDocumentFirmed(HttpPostedFileBase fileDocumentFirmed, int contractualDocumentId);
+        Result DeleteContractualDocumentCompanyFirmed(int contractualDocumentCompanyFirmedId);
 
         #endregion
 
@@ -273,6 +276,7 @@
         #region ContractualDocumentType
 
         List<ContractualDocumentType> GetContractualDocumentTypes();
+        List<ContractualDocumentType> GetContractualDocumentTypesByParent(int contractualParentId);
         ContractualDocumentType GetContractualDocumentType(int id);
         #endregion
     }

@@ -1,4 +1,6 @@
-﻿namespace Prevea.WebPreveaUI.Controllers.CommercialTool
+﻿using System.Web;
+
+namespace Prevea.WebPreveaUI.Controllers.CommercialTool
 {
     #region Using
 
@@ -622,6 +624,15 @@
             return this.Jsonp(data);
         }
 
+        [HttpGet]
+        [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial")]
+        public JsonResult ChildrenContractualsDocumentsCompany_Read([DataSourceRequest] DataSourceRequest request, int contractualDocumentId)
+        {
+            var data = AutoMapper.Mapper.Map<List<ContractualDocumentCompanyViewModel>>(Service.GetChildrenContractualsDocuments(contractualDocumentId));
+
+            return this.Jsonp(data);
+        }
+
         public ActionResult ContractualsDocumentsCompany_Create()
         {
             try
@@ -686,13 +697,29 @@
             return PartialView("~/Views/CommercialTool/Companies/AddDocumentFirmed.cshtml", contractualDocument);
         }
 
-        //[HttpGet]
-        //public ActionResult AddDocumentFirmed()
-        //{
-        //    var contractualDocument = Service.GetContractualDocument(17);
+        [HttpPost]
+        public ActionResult SaveDocumentFirmed(IEnumerable<HttpPostedFileBase> fileDocumentFirmed, int contractualDocumentId)
+        {
+            if (fileDocumentFirmed == null || !fileDocumentFirmed.Any())
+                return Json(new Result { Status = Status.Error }, JsonRequestBehavior.AllowGet);
 
-        //    return PartialView("~/Views/CommercialTool/Companies/AddDocumentFirmed.cshtml", contractualDocument);
-        //}
+            var result =
+                Service.SaveContractualDocumentFirmed(fileDocumentFirmed.FirstOrDefault(), contractualDocumentId);
+
+            if (result.Status == Status.Error)
+            {
+                return Json(new Result
+                {
+                    Status = Status.Error
+                }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new Result
+            {
+                Status = Status.Ok,
+                Object = AutoMapper.Mapper.Map<ContractualDocumentCompanyViewModel>(result.Object)
+            }, JsonRequestBehavior.AllowGet);    
+        }
 
         [HttpGet]
         public ActionResult OfferView(int contractualDocumentId, bool isPartialView)
@@ -777,16 +804,6 @@
         }
 
         [HttpPost]
-        public JsonResult CanAddContractualDocument(int companyId)
-        {
-            var message = Service.VerifyNewContractualDocument(companyId, 0);
-            if (string.IsNullOrEmpty(message))
-                return Json(new { result = Status.Ok }, JsonRequestBehavior.AllowGet);
-
-            return Json(new { result = Status.Error, message }, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
         public JsonResult AddContractualDocumentFirmed(int contractualDocumentId)
         {
             return Json(new { result = Status.Ok }, JsonRequestBehavior.AllowGet);
@@ -795,7 +812,22 @@
         [HttpPost]
         public JsonResult DeleteContractualDocumentCompanyFirmed(int contractualDocumentCompanyFirmedId)
         {
-            return Json(new { result = Status.Ok }, JsonRequestBehavior.AllowGet);
+            var result =
+                Service.DeleteContractualDocumentCompanyFirmed(contractualDocumentCompanyFirmedId);
+
+            if (result.Status == Status.Error)
+            {
+                return Json(new Result
+                {
+                    Status = Status.Error
+                }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new Result
+            {
+                Status = Status.Ok,
+                Object = AutoMapper.Mapper.Map<ContractualDocumentCompanyViewModel>(result.Object)
+            }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetContractualDocumentTypes([DataSourceRequest] DataSourceRequest request)
@@ -804,7 +836,14 @@
 
             return this.Jsonp(data);
         }
-        
+
+        public JsonResult GetChildrenContractualDocumentTypes([DataSourceRequest] DataSourceRequest request, int contractualParentId)
+        {            
+            var data = AutoMapper.Mapper.Map<List<ContractualDocumentTypeViewModel>>(Service.GetContractualDocumentTypes());
+
+            return this.Jsonp(data);
+        }
+
         private bool CreatePdf(ContractualDocumentCompany contractualDocument)
         {
             try
@@ -830,7 +869,7 @@
             }      
         }
 
-        private string GetActionResultForReport(int contractualDocumentTypeId)
+        private static string GetActionResultForReport(int contractualDocumentTypeId)
         {
             string actionResult;
             switch (contractualDocumentTypeId)

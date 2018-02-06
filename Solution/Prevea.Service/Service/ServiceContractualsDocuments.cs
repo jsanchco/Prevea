@@ -9,6 +9,7 @@
     using System.Linq;
     using System.Web;
     using System.IO;
+    using System.Diagnostics;
 
     #endregion
 
@@ -24,29 +25,24 @@
 
         public List<ContractualDocumentCompany> GetContractualsDocuments(int? companyId = null)
         {
-            return Repository.GetContractualsDocuments(companyId);
+            var contractualsDocuments = Repository.GetContractualsDocuments(companyId);
+
+            return contractualsDocuments.Where(x => x.ContractualDocumentTypeId != (int)EnContractualDocumentType.Firmed).ToList();
+        }
+
+        public List<ContractualDocumentCompany> GetChildrenContractualsDocuments(int contractualDocumentParentId)
+        {
+            var contractualDocumentParent = GetContractualDocument(contractualDocumentParentId);
+            var contractualsDocuments = GetContractualsDocuments(contractualDocumentParent.CompanyId);
+
+            return contractualsDocuments.Where(x => x.ContractualDocumentCompanyParentId == contractualDocumentParentId).ToList();
         }
 
         public Result SaveContractualDocument(ContractualDocumentCompany contractualDocument)
         {
             try
             {                
-                if (contractualDocument.ContractualDocumentTypeId == (int) EnContractualDocumentType.Firmed)
-                {
-                    if (contractualDocument.ContractualDocumentCompanyParentId == null)
-                    {
-                        return new Result
-                        {
-                            Message = "Se ha producido un error en la Grabación del Documento",
-                            Object = null,
-                            Status = Status.Error
-                        };
-                    }
-                    var parent =
-                        Repository.GetContractualDocument((int)contractualDocument.ContractualDocumentCompanyParentId);
-                    contractualDocument.Enrollment = parent.Enrollment + "_F";
-                }
-                else
+                if (contractualDocument.ContractualDocumentTypeId != (int) EnContractualDocumentType.Firmed)
                 {
                     var typeId = GetTypeEnrollmentInit(contractualDocument.ContractualDocumentTypeId);
                     if (typeId == string.Empty)
@@ -60,9 +56,8 @@
                     }
                     contractualDocument.Enrollment =
                         $"{typeId}_{Repository.GetContractualsDocuments().Count + 1:00000}/{contractualDocument.BeginDate.Year}";
+                    contractualDocument.UrlRelative = GetUrlRelativeContractualDocument(contractualDocument);
                 }
-
-                contractualDocument.UrlRelative = GetUrlRelativeContractualDocument(contractualDocument);
 
                 contractualDocument = Repository.SaveContractualDocument(contractualDocument);
 
@@ -125,6 +120,17 @@
             if (!RemoveFile(physicalPath))
                 return false;
 
+            if (contractualDocument.ContractualDocumentCompanyFirmedId != null)
+            {
+                var contractualDocumentFirmed = Repository.GetContractualDocument((int)contractualDocument.ContractualDocumentCompanyFirmedId);
+                physicalPath = HttpContext.Current.Server.MapPath(contractualDocumentFirmed.UrlRelative);
+                if (!RemoveFile(physicalPath))
+                    return false;
+
+                if (!Repository.DeleteContractualDocument(contractualDocumentFirmed.Id))
+                    return false;
+            }
+   
             return Repository.DeleteContractualDocument(contractualDocumentId);
         }
 
@@ -304,6 +310,81 @@
             return error;
         }
 
+        public Result SaveContractualDocumentFirmed(HttpPostedFileBase fileDocumentFirmed, int contractualDocumentId)
+        {
+            try
+            {
+                var contractualDocument = GetContractualDocument(contractualDocumentId);
+                if (contractualDocument == null)
+                    return new Result { Status = Status.Error };
+
+                var path = contractualDocument.UrlRelative.Substring(0, contractualDocument.UrlRelative.LastIndexOf("/", StringComparison.Ordinal) + 1);
+                var fileName = contractualDocument.UrlRelative.Substring(contractualDocument.UrlRelative.LastIndexOf("/", StringComparison.Ordinal) + 1);
+                var enrollment = fileName.Replace("_", "F_");
+
+                var url = Path.Combine(HttpContext.Current.Server.MapPath(path), enrollment);
+                fileDocumentFirmed.SaveAs(url);
+
+                var newContractualDocumentFirmed = new ContractualDocumentCompany
+                {
+                    Enrollment = contractualDocument.Enrollment.Replace("_", "F_"),
+                    BeginDate = DateTime.Now,
+                    CompanyId = contractualDocument.CompanyId,
+                    ContractualDocumentCompanyParentId = contractualDocumentId,
+                    ContractualDocumentTypeId = (int)EnContractualDocumentType.Firmed,
+                    UrlRelative = path + enrollment
+                };
+                var result = SaveContractualDocument(newContractualDocumentFirmed);
+                if (result.Status == Status.Error)
+                    return new Result { Status = Status.Error };
+                if (!(result.Object is ContractualDocumentCompany))
+                    return new Result { Status = Status.Error };
+
+                contractualDocument.ContractualDocumentCompanyFirmedId =
+                    ((ContractualDocumentCompany)result.Object).Id;
+                result = UpdateContractualDocument(contractualDocumentId, contractualDocument);
+                if (result.Status == Status.Error)
+                    return new Result { Status = Status.Error };
+
+                return new Result
+                {
+                    Status = Status.Ok,
+                    Object = result.Object
+                };
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+
+                return new Result { Status = Status.Error };
+            }
+        }
+
+        public Result DeleteContractualDocumentCompanyFirmed(int contractualDocumentCompanyFirmedId)
+        {
+            var contractualDocumentCompanyFirmed = GetContractualDocument(contractualDocumentCompanyFirmedId);
+            if (contractualDocumentCompanyFirmed == null)
+                return new Result { Status = Status.Error };
+
+            if (contractualDocumentCompanyFirmed.ContractualDocumentCompanyParentId == null)
+                return new Result { Status = Status.Error };
+
+            var contractualDocumentCompanyParent = GetContractualDocument((int)contractualDocumentCompanyFirmed.ContractualDocumentCompanyParentId);
+            contractualDocumentCompanyParent.ContractualDocumentCompanyFirmedId = null;
+
+            var deleteDocument = DeleteContractualDocument(contractualDocumentCompanyFirmedId);
+            if (!deleteDocument)
+                return new Result { Status = Status.Error };
+
+            var result = UpdateContractualDocument(contractualDocumentCompanyParent.Id, contractualDocumentCompanyParent);
+
+            return new Result
+            {
+                Status = Status.Ok,
+                Object = result.Object
+            };
+        }
+
         private string GetUrlRelativeContractualDocument(ContractualDocumentCompany contractualDocument)
         {
             var pathContractualDocument = COMPANIES;
@@ -320,7 +401,7 @@
             return $"{pathContractualDocument}.pdf";
         }
 
-        private void CreateDirectoryIfNotExists(string directory)
+        private static void CreateDirectoryIfNotExists(string directory)
         {
             var physicalPath = HttpContext.Current.Server.MapPath(directory);
 
@@ -330,7 +411,7 @@
                 Directory.CreateDirectory(physicalPath);
         }
 
-        private string GetErrorInGeneralData(Company company)
+        private static string GetErrorInGeneralData(Company company)
         {
             var error = string.Empty;
 
@@ -344,7 +425,7 @@
             return error;
         }
 
-        private string GetErrorInPaymentMethod(Company company)
+        private static string GetErrorInPaymentMethod(Company company)
         {
             var error = string.Empty;
 

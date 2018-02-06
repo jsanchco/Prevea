@@ -23,14 +23,8 @@
                 clearSelectedFiles: "Eliminar",
                 uploadSelectedFiles: "Guardar"
             },
-            select: function (e) {
-                var fileInfo = e.files[0];
-
-                var wrapper = this.wrapper;
-
-                setTimeout(function () {
-                    ChoosePhoto.addPreview(fileInfo, wrapper);
-                });
+            upload:function(e) {
+                e.data = { contractualDocumentId: AddDocumentFirmed.contractualDocumentId };
             },
             success: AddDocumentFirmed.onSuccessSaveDocument,
             error: AddDocumentFirmed.onErrorSaveDocument
@@ -43,6 +37,8 @@
 
             var addDocumentFirmedWindow = $("#" + AddDocumentFirmed.addDocumentFirmedId);
             addDocumentFirmedWindow.data("kendoWindow").close();
+
+            ContractualsDocumentsCompany.updateRow(e.response.Object);
         } else {
             GeneralData.showNotification(Constants.ko, "", "error");
         }

@@ -17,6 +17,27 @@
                 .ToList();
         }
 
+        public List<ContractualDocumentType> GetContractualDocumentTypesByParent(int contractualParentId)
+        {
+            var contractualParent = GetContractualDocument(contractualParentId);
+
+            var listContractualDocumentTypes = new List<ContractualDocumentType>();
+            switch (contractualParent.ContractualDocumentTypeId)
+            {
+                case (int)EnContractualDocumentType.ContractSPA:
+                    listContractualDocumentTypes.Add(Repository.GetContractualDocumentType(4));
+                    listContractualDocumentTypes.Add(Repository.GetContractualDocumentType(7));
+                    listContractualDocumentTypes.Add(Repository.GetContractualDocumentType(8));
+                    break;
+                case (int)EnContractualDocumentType.ContractGES:
+                    listContractualDocumentTypes.Add(Repository.GetContractualDocumentType(7));
+                    listContractualDocumentTypes.Add(Repository.GetContractualDocumentType(8));
+                    break;
+            }
+
+            return listContractualDocumentTypes;
+        }
+
         public ContractualDocumentType GetContractualDocumentType(int id)
         {
             return Repository.GetContractualDocumentType(id);
