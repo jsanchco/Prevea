@@ -32,10 +32,11 @@
 
         public List<ContractualDocumentCompany> GetChildrenContractualsDocuments(int contractualDocumentParentId)
         {
-            var contractualDocumentParent = GetContractualDocument(contractualDocumentParentId);
-            var contractualsDocuments = GetContractualsDocuments(contractualDocumentParent.CompanyId);
+            var contractualDocument = Repository.GetContractualDocument(contractualDocumentParentId);
+            var childrenContractualsDocuments = GetContractualsDocuments(contractualDocument.CompanyId)
+                .Where(x => x.ContractualDocumentCompanyParentId == contractualDocumentParentId).ToList();
 
-            return contractualsDocuments.Where(x => x.ContractualDocumentCompanyParentId == contractualDocumentParentId).ToList();
+            return childrenContractualsDocuments;
         }
 
         public Result SaveContractualDocument(ContractualDocumentCompany contractualDocument)

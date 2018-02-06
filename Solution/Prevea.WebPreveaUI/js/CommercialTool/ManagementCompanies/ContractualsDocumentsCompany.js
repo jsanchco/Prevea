@@ -238,6 +238,20 @@
             },
             dataBound: function () {
                 ContractualsDocumentsCompany.updateTemplate();
+
+                var grid = this;
+                grid.tbody.find(">tr").each(function() {
+                    var dataItem = grid.dataItem(this);
+                    if (dataItem.ContractualDocumentTypeId === Constants.contractualDocumentType.OfferSPA ||
+                        dataItem.ContractualDocumentTypeId === Constants.contractualDocumentType.OfferGES ||
+                        dataItem.ContractualDocumentTypeId === Constants.contractualDocumentType.OfferFOR ||
+                        dataItem.ContractualDocumentTypeId === Constants.contractualDocumentType.ContractFOR ||
+                        dataItem.ContractualDocumentTypeId === Constants.contractualDocumentType.Annex ||
+                        dataItem.ContractualDocumentTypeId === Constants.contractualDocumentType.UnSubscribeContract ||
+                        dataItem.ContractualDocumentTypeId === Constants.contractualDocumentType.Firmed) {
+                        $(this).find(".k-hierarchy-cell a").removeClass("k-icon");
+                    }
+                });
             },
             edit: function (e) {
                 var commandCell = e.container.find("td:last");
@@ -462,6 +476,16 @@
         endDate.setFullYear(beginDate.getFullYear());
         endDate.setDate(endDate.getDate() - 1);
 
+        if (e.data.ContractualDocumentTypeId === Constants.contractualDocumentType.OfferSPA ||
+            e.data.ContractualDocumentTypeId === Constants.contractualDocumentType.OfferGES ||
+            e.data.ContractualDocumentTypeId === Constants.contractualDocumentType.OfferFOR ||
+            e.data.ContractualDocumentTypeId === Constants.contractualDocumentType.ContractFOR ||
+            e.data.ContractualDocumentTypeId === Constants.contractualDocumentType.Annex ||
+            e.data.ContractualDocumentTypeId === Constants.contractualDocumentType.UnSubscribeContract ||
+            e.data.ContractualDocumentTypeId === Constants.contractualDocumentType.Firmed) {
+            return;
+        }
+
         $("<div/>").appendTo(e.detailCell).kendoGrid({
             dataSource: {
                 schema: {
@@ -652,6 +676,7 @@
     },
 
     contractualChildrenDocumentTypeDropDownEditor: function (container, options) {
+        var contractualParentId = options.model.ContractualDocumentCompanyParentId;
         $("<input required name='" + options.field + "'/>")
             .appendTo(container)
             .kendoDropDownList({
@@ -674,11 +699,11 @@
                         read: {
                             url: "/Companies/GetChildrenContractualDocumentTypes",
                             dataType: "jsonp",
-                            data: { contractualParentId: options.ContractualDocumentCompanyParentId }
+                            data: { contractualParentId: contractualParentId }
                         },
                         parameterMap: function (options, operation) {
                             if (operation === "read") {
-                                return { contractualParentId: options.ContractualDocumentCompanyParentId };
+                                return { contractualParentId: options.contractualParentId };
                             }
   
                             return null;

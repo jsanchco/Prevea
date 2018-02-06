@@ -42,15 +42,20 @@
         Deleted: 5
     },
 
-    contractualDocumentType: {
-        Offer: 1,
-        Contract: 2,
-        Annex: 3
-    },
-
     workCenterState: {
         Alta: 1,
         Baja: 2
-    }
+    },
 
+    contractualDocumentType: {
+        OfferSPA: 1, 
+        OfferGES: 2, 
+        OfferFOR: 3, 
+        ContractSPA: 4, 
+        ContractGES: 5, 
+        ContractFOR: 6, 
+        Annex: 7, 
+        UnSubscribeContract: 8, 
+        Firmed: 9
+    }
 });

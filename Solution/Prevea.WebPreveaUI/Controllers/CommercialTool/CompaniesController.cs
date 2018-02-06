@@ -839,7 +839,7 @@ namespace Prevea.WebPreveaUI.Controllers.CommercialTool
 
         public JsonResult GetChildrenContractualDocumentTypes([DataSourceRequest] DataSourceRequest request, int contractualParentId)
         {            
-            var data = AutoMapper.Mapper.Map<List<ContractualDocumentTypeViewModel>>(Service.GetContractualDocumentTypes());
+            var data = AutoMapper.Mapper.Map<List<ContractualDocumentTypeViewModel>>(Service.GetContractualDocumentTypesByParent(contractualParentId));
 
             return this.Jsonp(data);
         }

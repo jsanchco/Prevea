@@ -25,7 +25,6 @@
             switch (contractualParent.ContractualDocumentTypeId)
             {
                 case (int)EnContractualDocumentType.ContractSPA:
-                    listContractualDocumentTypes.Add(Repository.GetContractualDocumentType(4));
                     listContractualDocumentTypes.Add(Repository.GetContractualDocumentType(7));
                     listContractualDocumentTypes.Add(Repository.GetContractualDocumentType(8));
                     break;
