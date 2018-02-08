@@ -226,6 +226,7 @@
             resizable: true,
             autoScroll: true,
             selectable: true,
+            detailTemplate: this.getTemplateChildren(),
             detailInit: ContractualsDocumentsCompany.childrenDocuments,
             sortable: {
                 mode: "single",
@@ -300,6 +301,15 @@
         html += "<span name='create' class='k-grid-add' id='createUser'>";
         html += "<a class='btn btn-prevea k-grid-add' role='button'> Agregar nuevo</a>";
         html += "</span></div>";
+
+        return html;
+    },
+
+    getTemplateChildren: function () {
+        var html = "<div>";
+        html += "<H2 style='text-align: center;'>Documentos Relacionados</H2><br />";
+        html += "<div class='gridContractualsDocumentsCompanyChildren'></div><br /><br />";
+        html += "</div>";
 
         return html;
     },
@@ -486,7 +496,8 @@
             return;
         }
 
-        $("<div/>").appendTo(e.detailCell).kendoGrid({
+        var detailRow = e.detailRow;
+        detailRow.find(".gridContractualsDocumentsCompanyChildren").kendoGrid({
             dataSource: {
                 schema: {
                     model: {
