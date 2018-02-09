@@ -642,11 +642,8 @@ namespace Prevea.WebPreveaUI.Controllers.CommercialTool
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
 
                 var error = Service.VerifyNewContractualDocument(contractualDocument.CompanyId, contractualDocument.ContractualDocumentTypeId);
-                if (!string.IsNullOrEmpty(error))
-                {
-                    ModelState.AddModelError("VerifyNewContractualDocument", error);                    
+                if (!string.IsNullOrEmpty(error))  
                     return this.Jsonp(new { Errors = error });
-                }
 
                 var result = Service.SaveContractualDocument(AutoMapper.Mapper.Map<ContractualDocumentCompany>(contractualDocument));
                 if (result.Status == Status.Error)
