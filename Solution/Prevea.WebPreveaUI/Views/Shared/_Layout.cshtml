@@ -106,6 +106,7 @@
     <script src="~/js/CommercialTool/ManagementCompanies/PaymentMethodCompany.js"></script>
     <script src="~/js/CommercialTool/ManagementCompanies/WorkCentersCompany.js"></script>
     <script src="~/js/CommercialTool/ManagementCompanies/AddDocumentFirmed.js"></script>
+    <script src="~/js/CommercialTool/ManagementCompanies/AddAnnex.js"></script>
     <script src="~/js/CommercialTool/Simulations/Simulations.js"></script>
     <script src="~/js/CommercialTool/Simulations/DetailSimulation.js"></script>
     <script src="~/js/CommercialTool/Simulations/ForeignPreventionService.js"></script>
@@ -124,7 +125,7 @@
     <script src="~/js/Error/ErrorPage.js"></script>
     <script src="~/js/Shared/Templates.js"></script>
     <script src="~/js/Shared/Constants.js"></script>
-    
+
     <script src="~/js/CommercialTool/ManagementCompanies/Reports/DefaultReport.js"></script>
     <script src="~/js/CommercialTool/ManagementCompanies/Reports/OfferSPAReport.js"></script>
 
@@ -132,36 +133,36 @@
 
 </head>
 <body class="page-body skin-red loaded page-fade" onresize="GeneralData.resizeWindow()">
-<div class="page-container" id="pageContainer">
-    <!-- sidebar-menu -->
-    <div class="sidebar-menu" id="menuPpal">
-        <div class="sidebar-menu-inner">
-            <header class="logo-env">
-                <!-- logo -->
-                <div class="logo">
-                    <a href="#">
-                        <img width="120" alt="" src="~/Images/Logo.png">
-                    </a>
-                </div>
-                <!-- logo collapse icon -->
-                <div class="sidebar-collapse">
-                    <a class="sidebar-collapse-icon" href="#">
-                        <!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
-                        <i class="icon-menu"></i>
-                    </a>
-                </div>
-                <!-- open/close menu icon (do not remove if you want to enable menu on mobile devices) -->
-                <div class="sidebar-mobile-menu visible-xs">
-                    <a class="with-animation" href="#">
-                        <!-- add class "with-animation" to support animation -->
-                        <i class="icon-menu"></i>
-                    </a>
-                </div>
-            </header>
-            <div class="sidebar-user-info">
-                <div class="sui-normal">
-                    <a class="user-link" href="#">
-                        @{
+    <div class="page-container" id="pageContainer">
+        <!-- sidebar-menu -->
+        <div class="sidebar-menu" id="menuPpal">
+            <div class="sidebar-menu-inner">
+                <header class="logo-env">
+                    <!-- logo -->
+                    <div class="logo">
+                        <a href="#">
+                            <img width="120" alt="" src="~/Images/Logo.png">
+                        </a>
+                    </div>
+                    <!-- logo collapse icon -->
+                    <div class="sidebar-collapse">
+                        <a class="sidebar-collapse-icon" href="#">
+                            <!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
+                            <i class="icon-menu"></i>
+                        </a>
+                    </div>
+                    <!-- open/close menu icon (do not remove if you want to enable menu on mobile devices) -->
+                    <div class="sidebar-mobile-menu visible-xs">
+                        <a class="with-animation" href="#">
+                            <!-- add class "with-animation" to support animation -->
+                            <i class="icon-menu"></i>
+                        </a>
+                    </div>
+                </header>
+                <div class="sidebar-user-info">
+                    <div class="sui-normal">
+                        <a class="user-link" href="#">
+                            @{
                             var pathPhoto = "image_not_found.png";
                             var name = "";
                             if (Model != null)
@@ -172,68 +173,69 @@
                                 }
                                 name = string.Format("{0} {1}", Model.FirstName, Model.LastName);
                             }
-                        }
-                        <img id="photoProfileSideBar" width="55" class="img-circle" alt="" src="~/Images/@pathPhoto">
-                        <span>Hola,</span>
-                        <strong>@name</strong>
-                    </a>
+                            }
+                            <img id="photoProfileSideBar" width="55" class="img-circle" alt="" src="~/Images/@pathPhoto">
+                            <span>Hola,</span>
+                            <strong>@name</strong>
+                        </a>
+                    </div>
+                    <div class="sui-hover inline-links animate-in">
+                        <a id="notifications" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                            <i class="icon-attention"></i>
+                            <span id="numberNotifications" style="font-size:xx-small; margin-left: -5px; margin-top: -5px; vertical-align: text-top;"></span>
+                            Avisos
+                        </a>
+                        <a id="profile" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                            <i class="fa fa-user"></i>
+                            Perfil
+                        </a>
+                        <a id="logOff" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                            <i class="icon-lock"></i>
+                            Log Off
+                        </a>
+                        <span class="close-sui-popup">×</span>
+                    </div>
                 </div>
-                <div class="sui-hover inline-links animate-in">
-                    <a id="notifications" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
-                        <i class="icon-attention"></i>
-                        <span id="numberNotifications" style="font-size:xx-small; margin-left: -5px; margin-top: -5px; vertical-align: text-top;"></span>
-                        Avisos 
-                    </a>
-                    <a id="profile" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
-                        <i class="fa fa-user"></i>
-                        Perfil
-                    </a>
-                    <a id="logOff" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
-                        <i class="icon-lock"></i>
-                        Log Off
-                    </a>
-                    <span class="close-sui-popup">×</span>
+
+                @Html.MenuRole(Model)
+
+                <br />
+                <br />
+                <br />
+                <br />
+
+                <div class="circle" id="circleRole" style="margin: auto;"></div>
+
+            </div>
+        </div>
+        <!-- sidebar-menu -->
+        <div class="main-content">
+
+            <span id="spanErrorPpal"></span>
+            <span id="notification" style="display: none;"></span>
+
+            <div id="framePpal">
+                @RenderBody()
+            </div>
+
+            <!-- Footer -->
+
+            <div id="footerPartialView" style="position: absolute; bottom: 0;">
+                <div class="row">
+                    <div class="col-sm-12">
+                        &copy; 2017 <strong>AdminPrevea</strong> Designed by Jesús Sánchez
+                    </div>
                 </div>
             </div>
-            
-            @Html.MenuRole(Model)
-
-            <br />
-            <br />
-            <br />
-            <br />
-
-            <div class="circle" id="circleRole" style="margin: auto;"></div>
 
         </div>
-    </div>
-    <!-- sidebar-menu -->
-    <div class="main-content">
-        
-        <span id="spanErrorPpal"></span>
-        <span id="notification" style="display: none;"></span>
 
-        <div id="framePpal">
-            @RenderBody()
-        </div>
-
-        <!-- Footer -->
-
-        <div id="footerPartialView" style="position: absolute; bottom: 0;">
-            <div class="row">
-                <div class="col-sm-12">
-                    &copy; 2017 <strong>AdminPrevea</strong> Designed by Jesús Sánchez
-                </div>
-            </div>        
-        </div>
+        <div id="chooseCourse"></div>
+        <div id="choosePhoto"></div>
+        <div id="addDocumentFirmed"></div>
+        <div id="addAnnex"></div>
 
     </div>
-    
-    <div id="chooseCourse"></div>
-    <div id="choosePhoto"></div>
-    <div id="addDocumentFirmed"></div>
-
-</div>
     
 <script type="text/javascript">
 

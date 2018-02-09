@@ -57,7 +57,11 @@
                     }
                     contractualDocument.Enrollment =
                         $"{typeId}_{Repository.GetContractualsDocuments().Count + 1:00000}/{contractualDocument.BeginDate.Year}";
-                    contractualDocument.UrlRelative = GetUrlRelativeContractualDocument(contractualDocument);
+
+                    if (contractualDocument.ContractualDocumentTypeId != (int)EnContractualDocumentType.Annex)
+                    {
+                        contractualDocument.UrlRelative = GetUrlRelativeContractualDocument(contractualDocument);
+                    }
                 }
 
                 contractualDocument = Repository.SaveContractualDocument(contractualDocument);
@@ -344,6 +348,39 @@
                 contractualDocument.ContractualDocumentCompanyFirmedId =
                     ((ContractualDocumentCompany)result.Object).Id;
                 result = UpdateContractualDocument(contractualDocumentId, contractualDocument);
+                if (result.Status == Status.Error)
+                    return new Result { Status = Status.Error };
+
+                return new Result
+                {
+                    Status = Status.Ok,
+                    Object = result.Object
+                };
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+
+                return new Result { Status = Status.Error };
+            }
+        }
+
+        public Result SaveAnnex(HttpPostedFileBase fileAnnex, int contractualDocumentId)
+        {
+            try
+            {
+                var contractualDocument = GetContractualDocument(contractualDocumentId);
+                if (contractualDocument == null)
+                    return new Result { Status = Status.Error };
+
+                contractualDocument.UrlRelative = contractualDocument.UrlRelative = GetUrlRelativeContractualDocument(contractualDocument);
+
+                var path = contractualDocument.UrlRelative.Substring(0, contractualDocument.UrlRelative.LastIndexOf("/", StringComparison.Ordinal) + 1);
+                var fileName = contractualDocument.UrlRelative.Substring(contractualDocument.UrlRelative.LastIndexOf("/", StringComparison.Ordinal) + 1);
+                var url = Path.Combine(HttpContext.Current.Server.MapPath(path), fileName);
+                fileAnnex.SaveAs(url);
+
+                var result = UpdateContractualDocument(contractualDocument.Id, contractualDocument);
                 if (result.Status == Status.Error)
                     return new Result { Status = Status.Error };
 

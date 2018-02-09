@@ -606,7 +606,7 @@ namespace Prevea.WebPreveaUI.Controllers.CommercialTool
 
         #endregion
 
-        #region Documents
+        #region Contractual Documents
 
         #region CRUD
         [HttpGet]
@@ -648,6 +648,9 @@ namespace Prevea.WebPreveaUI.Controllers.CommercialTool
                 var result = Service.SaveContractualDocument(AutoMapper.Mapper.Map<ContractualDocumentCompany>(contractualDocument));
                 if (result.Status == Status.Error)
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
+
+                if (contractualDocument.ContractualDocumentTypeId == (int)EnContractualDocumentType.Annex)
+                    return this.Jsonp(AutoMapper.Mapper.Map<ContractualDocumentCompanyViewModel>(result.Object));
 
                 if (!CreatePdf(result.Object as ContractualDocumentCompany))  
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
@@ -694,6 +697,14 @@ namespace Prevea.WebPreveaUI.Controllers.CommercialTool
             return PartialView("~/Views/CommercialTool/Companies/AddDocumentFirmed.cshtml", contractualDocument);
         }
 
+        [HttpGet]
+        public ActionResult AddAnnex(int contractualDocumentId)
+        {
+            var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
+
+            return PartialView("~/Views/CommercialTool/Companies/AddAnnex.cshtml", contractualDocument);
+        }
+
         [HttpPost]
         public ActionResult SaveDocumentFirmed(IEnumerable<HttpPostedFileBase> fileDocumentFirmed, int contractualDocumentId)
         {
@@ -716,6 +727,30 @@ namespace Prevea.WebPreveaUI.Controllers.CommercialTool
                 Status = Status.Ok,
                 Object = AutoMapper.Mapper.Map<ContractualDocumentCompanyViewModel>(result.Object)
             }, JsonRequestBehavior.AllowGet);    
+        }
+
+        [HttpPost]
+        public ActionResult SaveAnnex(IEnumerable<HttpPostedFileBase> fileAnnex, int contractualDocumentId)
+        {
+            if (fileAnnex == null || !fileAnnex.Any())
+                return Json(new Result { Status = Status.Error }, JsonRequestBehavior.AllowGet);
+
+            var result =
+                Service.SaveAnnex(fileAnnex.FirstOrDefault(), contractualDocumentId);
+
+            if (result.Status == Status.Error)
+            {
+                return Json(new Result
+                {
+                    Status = Status.Error
+                }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new Result
+            {
+                Status = Status.Ok,
+                Object = AutoMapper.Mapper.Map<ContractualDocumentCompanyViewModel>(result.Object)
+            }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

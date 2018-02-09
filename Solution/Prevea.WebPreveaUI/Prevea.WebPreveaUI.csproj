@@ -650,6 +650,7 @@
     <Content Include="Images\unknown_opt.png" />
     <Content Include="Images\user_1.png" />
     <Content Include="Images\xls_opt.png" />
+    <Content Include="js\CommercialTool\ManagementCompanies\AddAnnex.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\AddDocumentFirmed.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\AgencyCompany.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\DetailCompany.js" />
@@ -1132,6 +1133,7 @@
     <Content Include="Views\CommercialTool\Companies\Reports\DefaultReport.cshtml" />
     <Content Include="Views\CommercialTool\Companies\Reports\OfferSPAReport.cshtml" />
     <Content Include="Views\CommercialTool\Companies\AddDocumentFirmed.cshtml" />
+    <Content Include="Views\CommercialTool\Companies\AddAnnex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

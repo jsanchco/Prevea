@@ -1,0 +1,32 @@
+﻿@model ContractualDocumentCompany
+
+<style>
+    .k-window-titlebar {
+        height: 30px;
+    }
+
+    .k-window-content .k-content {
+        position: static;
+    }
+
+    .k-block > .k-header, .k-window-titlebar {
+        position: static;
+    }
+</style>
+
+<script>
+    AddAnnex.init(@Model.Id);
+</script>
+
+<div id="addAnnexContainer">
+    <br />
+
+    <p @*style="color: #BBBBBB; font-size: x-small"*@>
+        Anexo: <strong>@Model.Enrollment</strong>
+    </p>
+
+    <p style="">
+        <input type="file" id="fileAnnex" name="fileAnnex" accept=".pdf">
+    </p>
+</div>
+

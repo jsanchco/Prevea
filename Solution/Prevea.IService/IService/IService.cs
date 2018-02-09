@@ -143,6 +143,7 @@
         string CanAddContractualDocument(int companyId, int contractualDocumentTypeId);
         string VerifyNewContractualDocument(int companyId, int contractualDocumentTypeId);
         Result SaveContractualDocumentFirmed(HttpPostedFileBase fileDocumentFirmed, int contractualDocumentId);
+        Result SaveAnnex(HttpPostedFileBase fileAnnex, int contractualDocumentId);
         Result DeleteContractualDocumentCompanyFirmed(int contractualDocumentCompanyFirmedId);
 
         #endregion
