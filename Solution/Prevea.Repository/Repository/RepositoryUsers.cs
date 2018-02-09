@@ -160,7 +160,8 @@
                         }
                     }
 
-                    user.Nick = GetNick((int)roleId, user.DNI);
+                    if (string.IsNullOrEmpty(user.Nick) && roleId != null)
+                        user.Nick = GetNick((int)roleId, user.DNI);
 
                     Context.Entry(userFind).CurrentValues.SetValues(user);
                     Context.SaveChanges();

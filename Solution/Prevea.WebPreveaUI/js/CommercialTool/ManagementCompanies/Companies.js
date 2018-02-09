@@ -289,7 +289,7 @@
 
     subscribeCompany: function (companyId, subscribe) {
         $.ajax({
-            url: "/Company/Company_Subscribe",
+            url: "/Companies/Company_Subscribe",
             type: "post",
             cache: false,
             datatype: "json",
