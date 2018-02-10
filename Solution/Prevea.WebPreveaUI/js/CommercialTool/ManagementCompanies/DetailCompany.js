@@ -155,8 +155,11 @@
     },
 
     createTabStripCompany: function () {
-        var that = this;
         var tabStrip = $("#" + this.tabStripDetailCompanyId).kendoTabStrip().data("kendoTabStrip");
+        tabStrip.append({
+            text: "SIMULACIONES",
+            contentUrl: kendo.format("/Companies/SimulationsCompany?companyId={0}", this.id)
+        });
         tabStrip.append({
             text: "DATOS GENERALES",
             contentUrl: kendo.format("/Companies/GeneralDataCompany?companyId={0}", this.id)
@@ -191,14 +194,6 @@
         });
 
         tabStrip = $("#" + this.tabStripDetailCompanyId).data("kendoTabStrip");
-
-        tabStrip.bind("activate",
-            function() {
-                if (tabStrip.select().index() === 4) {
-                    that.updateStretchCalculate();
-                }
-            });
-
         tabStrip.select(this.selectTabId);
     },
 

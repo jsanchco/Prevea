@@ -658,6 +658,7 @@
     <Content Include="js\CommercialTool\ManagementCompanies\EconomicDataCompany.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\Reports\DefaultReport.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\Reports\OfferSPAReport.js" />
+    <Content Include="js\CommercialTool\ManagementCompanies\SimulationsCompany.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\WorkCentersCompany.js" />
     <Content Include="js\CommercialTool\Simulations\AgencyService.js" />
     <Content Include="js\CommercialTool\Simulations\ChooseCourse.js" />
@@ -1134,6 +1135,7 @@
     <Content Include="Views\CommercialTool\Companies\Reports\OfferSPAReport.cshtml" />
     <Content Include="Views\CommercialTool\Companies\AddDocumentFirmed.cshtml" />
     <Content Include="Views\CommercialTool\Companies\AddAnnex.cshtml" />
+    <Content Include="Views\CommercialTool\Companies\SimulationsCompany.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

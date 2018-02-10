@@ -77,7 +77,6 @@ var Simulations = kendo.observable({
     },
 
     createGridSimulations: function () {
-        //var that = this;
         $("#" + this.gridSimulationsId).kendoGrid({
             columns: [
                 {
@@ -202,7 +201,6 @@ var Simulations = kendo.observable({
             $("#" + Simulations.btnCreateSimulationId).removeAttr("disabled");
             $("#" + Simulations.btnCreateSimulationId).prop("disabled", true);
         }
- 
     },
 
     getTemplateToolBar: function () {

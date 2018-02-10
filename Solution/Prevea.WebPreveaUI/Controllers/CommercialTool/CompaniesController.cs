@@ -91,6 +91,16 @@ namespace Prevea.WebPreveaUI.Controllers.CommercialTool
 
         #endregion
 
+        #region Simulations
+
+        [HttpGet]
+        public ActionResult SimulationsCompany(int companyId)
+        {
+            return PartialView("~/Views/CommercialTool/Companies/SimulationsCompany.cshtml", Service.GetCompany(companyId));
+        }
+
+        #endregion
+
         #region GeneralData
 
         [HttpGet]
@@ -106,7 +116,7 @@ namespace Prevea.WebPreveaUI.Controllers.CommercialTool
             {
                 var result = Service.UpdateCompany(company.Id, company);
 
-                ViewBag.SelectTabId = 0;
+                ViewBag.SelectTabId = 1;
 
                 if (result.Status != Status.Error)
                 {
@@ -166,7 +176,7 @@ namespace Prevea.WebPreveaUI.Controllers.CommercialTool
 
                 var company = Service.GetCompany(agency.CompanyId);
 
-                ViewBag.SelectTabId = 2;
+                ViewBag.SelectTabId = 3;
 
                 if (result.Status != Status.Error)
                 {
@@ -183,7 +193,7 @@ namespace Prevea.WebPreveaUI.Controllers.CommercialTool
             {
                 var company = Service.GetCompany(agency.CompanyId);
 
-                ViewBag.SelectTabId = 2;
+                ViewBag.SelectTabId = 3;
 
                 ViewBag.Error = new List<string> { e.Message };
 
@@ -279,7 +289,7 @@ namespace Prevea.WebPreveaUI.Controllers.CommercialTool
 
                 var company = Service.GetCompany(paymentMethod.Id);
 
-                ViewBag.SelectTabId = 5;
+                ViewBag.SelectTabId = 6;
 
                 if (result.Status != Status.Error)
                 {
@@ -296,7 +306,7 @@ namespace Prevea.WebPreveaUI.Controllers.CommercialTool
             {
                 var company = Service.GetCompany(paymentMethod.Id);
 
-                ViewBag.SelectTabId = 5;
+                ViewBag.SelectTabId = 6;
 
                 ViewBag.Error = new List<string> { e.Message };
 

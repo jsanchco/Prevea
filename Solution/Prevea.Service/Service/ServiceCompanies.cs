@@ -1,4 +1,6 @@
-﻿namespace Prevea.Service.Service
+﻿using System.Linq;
+
+namespace Prevea.Service.Service
 {
     #region Using
 
@@ -131,7 +133,7 @@
                 {
                     var employeeFind = Repository.GetUser(employee.UserId);
                     employeeFind.UserStateId = subscribe ? (int)EnUserState.Alta : (int)EnUserState.BajaPorAdmin;
-                    employeeFind = Repository.UpdateUser(employee.UserId, employeeFind);
+                    employeeFind = Repository.UpdateUser(employee.UserId, employeeFind, (int)EnRole.Employee);
 
                     if (employeeFind == null)
                     {
@@ -148,7 +150,7 @@
                 {
                     var contactPersonFind = Repository.GetUser(contactPerson.UserId);
                     contactPersonFind.UserStateId = subscribe ? (int)EnUserState.Alta : (int)EnUserState.BajaPorAdmin;
-                    contactPersonFind = Repository.UpdateUser(contactPerson.UserId, contactPersonFind);
+                    contactPersonFind = Repository.UpdateUser(contactPerson.UserId, contactPersonFind, (int)EnRole.ContactPerson);
 
                     if (contactPersonFind == null)
                     {
