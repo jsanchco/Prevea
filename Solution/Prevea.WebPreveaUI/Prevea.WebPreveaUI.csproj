@@ -631,6 +631,7 @@
     <Content Include="Images\colorpicker\hue-horizontal.png" />
     <Content Include="Images\colorpicker\hue.png" />
     <Content Include="Images\colorpicker\saturation.png" />
+    <Content Include="Images\companySeal.png" />
     <Content Include="Images\doc_opt.png" />
     <Content Include="Images\favicon.ico" />
     <Content Include="Images\favicon_FondoBlanco_32x32.png" />

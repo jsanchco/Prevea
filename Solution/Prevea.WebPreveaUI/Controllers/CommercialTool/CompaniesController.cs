@@ -767,9 +767,10 @@ namespace Prevea.WebPreveaUI.Controllers.CommercialTool
         public ActionResult OfferView(int contractualDocumentId, bool isPartialView)
         {
             var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
+            var actionResult = GetActionResultForReport(contractualDocument.ContractualDocumentTypeId);
 
             return RedirectToAction(
-                GetActionResultForReport(contractualDocument.ContractualDocumentTypeId), 
+                actionResult, 
                 "Companies", 
                 new { contractualDocumentId = contractualDocument.Id, isPartialView } );
         }
@@ -783,6 +784,7 @@ namespace Prevea.WebPreveaUI.Controllers.CommercialTool
 
             ViewBag.ContractualDocumentId = contractualDocumentId;
             ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
+            ViewBag.IVA = Service.GetTagValue("IVA");
 
             var workCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
             ViewBag.NumberWorkCenters = workCenters.Count;
@@ -893,8 +895,9 @@ namespace Prevea.WebPreveaUI.Controllers.CommercialTool
                 var filePath = Server.MapPath(contractualDocument.UrlRelative);
 
                 var actionPdf = new ActionAsPdf(
-                    GetActionResultForReport(contractualDocument.ContractualDocumentTypeId), 
-                    new { contractualDocumentId = contractualDocument.Id });
+                    GetActionResultForReport(contractualDocument.ContractualDocumentTypeId),
+                    new {contractualDocumentId = contractualDocument.Id});
+                actionPdf.RotativaOptions.CustomSwitches = Constants.FooterPdf;
 
                 var applicationPdfData = actionPdf.BuildPdf(ControllerContext);
                 var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
