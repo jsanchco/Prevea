@@ -25,6 +25,9 @@
         public int Id { get; set; }
 
         [Required]
+        public string Name { get; set; }
+
+        [Required]
         public string CompanyName { get; set; }
 
         [Required]
@@ -59,7 +62,13 @@
         public int? UserAssignedId { get; set; }
         public virtual User UserAssigned { get; set; }
 
+        public int? SimulationParentId { get; set; }
+        public virtual Simulation SimulationParent { get; set; }
+
         public virtual ICollection<Notification> Notifications { get; set; }
+
+        public int SimulationCompanyActiveId { get; set; }
+        public virtual SimulationCompany SimulationCompanyActive { get; set; }
 
         [NotMapped]
         public SimulationCompany SimulationCompany => SimulationCompanies?.FirstOrDefault();

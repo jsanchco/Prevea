@@ -75,7 +75,10 @@
         {
             modelBuilder.Entity<HistoricDownloadDocument>().HasRequired(x => x.User).WithMany(y => y.HistoricDownloadDocuments).WillCascadeOnDelete(false);
             modelBuilder.Entity<ContactPerson>().HasRequired(x => x.Company).WithMany(y => y.ContactPersons).WillCascadeOnDelete(false);
-            modelBuilder.Entity<Employee>().HasRequired(x => x.Company).WithMany(y => y.Employees).WillCascadeOnDelete(false);            
+            modelBuilder.Entity<Employee>().HasRequired(x => x.Company).WithMany(y => y.Employees).WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Simulation>().HasOptional(x => x.SimulationCompanyActive).WithOptionalDependent().WillCascadeOnDelete(false);
+            modelBuilder.Entity<Company>().HasOptional(x => x.SimulationCompanyActive).WithOptionalDependent().WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Simulation>().HasOptional(x => x.UserAssigned).WithMany(y => y.SimulationsAssigned);
 
