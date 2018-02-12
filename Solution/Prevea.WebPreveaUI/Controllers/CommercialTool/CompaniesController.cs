@@ -1,6 +1,4 @@
-﻿using System.Web;
-
-namespace Prevea.WebPreveaUI.Controllers.CommercialTool
+﻿namespace Prevea.WebPreveaUI.Controllers.CommercialTool
 {
     #region Using
 
@@ -18,6 +16,7 @@ namespace Prevea.WebPreveaUI.Controllers.CommercialTool
     using System.Diagnostics;
     using System.IO;
     using Rotativa.MVC;
+    using System.Web;
 
     #endregion
 

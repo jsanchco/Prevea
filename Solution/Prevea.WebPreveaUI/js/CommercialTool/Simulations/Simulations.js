@@ -1,7 +1,4 @@
-﻿/// <reference path="~/Scripts/kendo/2016.3.1118/kendo.all-vsdoc.js" />
-
-var Simulations = kendo.observable({
-
+﻿var Simulations = kendo.observable({
     gridSimulationsId: "gridSimulations",
     confirmId: "confirm",
     btnCreateSimulationId: "btnCreateSimulation",
@@ -9,12 +6,12 @@ var Simulations = kendo.observable({
 
     simulationsDataSource: null,
 
-    init: function () {
+    init: function() {
         this.createSimulationsDataSource();
         this.createGridSimulations();
     },
 
-    createSimulationsDataSource: function () {
+    createSimulationsDataSource: function() {
         this.simulationsDataSource = new kendo.data.DataSource({
             schema: {
                 model: {
@@ -25,14 +22,28 @@ var Simulations = kendo.observable({
                         UserInitials: { type: "string", editable: false },
                         UserAssignedId: { type: "number", defaultValue: null },
                         UserAssignedInitials: { type: "string", editable: false },
+                        Name: { type: "string", defaultValue: "Original" },
+                        Original: { type: "boolean", defaultValue: true },
+                        SimulationParentId: { type: "number", defaultValue: null },
                         CompanyName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         CompanyId: { type: "number", editable: false },
                         NIF: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
-                        NumberEmployees: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
+                        NumberEmployees: {
+                            type: "string",
+                            validation: { required: { message: " Campo Obligatorio " } }
+                        },
                         Date: { type: "date", editable: false },
-                        SimulationStateId: { type: "number", editable: false, defaultValue: 1 },
+                        SimulationStateId: {
+                            type: "number",
+                            editable: false,
+                            defaultValue: Constants.simulationState.ValidationPending
+                        },
                         SimulationStateName: { type: "string", editable: false, defaultValue: "ValidationPending" },
-                        SimulationStateDescription: { type: "string", editable: false, defaultValue: "Pendiente de Validación" }
+                        SimulationStateDescription: {
+                            type: "string",
+                            editable: false,
+                            defaultValue: "Pendiente de Validación"
+                        }
                     }
                 }
             },
@@ -49,7 +60,7 @@ var Simulations = kendo.observable({
                     url: "/CommercialTool/Simulations/Simulations_Create",
                     dataType: "jsonp"
                 },
-                parameterMap: function (options, operation) {
+                parameterMap: function(options, operation) {
                     if (operation !== "read" && options) {
                         return { simulation: kendo.stringify(options) };
                     }
@@ -57,7 +68,7 @@ var Simulations = kendo.observable({
                     return null;
                 }
             },
-            requestEnd: function (e) {
+            requestEnd: function(e) {
                 if ((e.type === "update" || e.type === "destroy" || e.type === "create") &&
                     e.response !== null) {
                     if (typeof e.response.Errors !== "undefined") {
@@ -76,7 +87,7 @@ var Simulations = kendo.observable({
         });
     },
 
-    createGridSimulations: function () {
+    createGridSimulations: function() {
         $("#" + this.gridSimulationsId).kendoGrid({
             columns: [
                 {
@@ -118,7 +129,8 @@ var Simulations = kendo.observable({
                     groupable: "false",
                     filterable: false,
                     template: "#= Simulations.getColumnTemplateCommands(data) #"
-                }],
+                }
+            ],
             pageable: {
                 buttonCount: 2,
                 pageSizes: [20, 40, "all"],
@@ -175,12 +187,27 @@ var Simulations = kendo.observable({
                 mode: "single",
                 allowUnsort: false
             },
+            detailTemplate: Simulations.getTemplateChildren(),
+            detailInit: Simulations.childrenSimulations,
             groupable: false,
-            edit: function (e) {
+            dataBound: function() {
+                var grid = this;
+                grid.tbody.find(">tr").each(function() {
+                    var dataItem = grid.dataItem(this);
+                    if (dataItem.SimulationStateId === Constants.simulationState.ValidationPending ||
+                        dataItem.SimulationStateId === Constants.simulationState.Modificated ||
+                        dataItem.SimulationStateId === Constants.simulationState.Validated) {
+                        $(this).find(".k-hierarchy-cell a").removeClass("k-icon");
+                    }
+                });
+            },
+            edit: function(e) {
                 var commandCell = e.container.find("td:last");
                 var html = "<div align='center'>";
-                html += "<a class='k-grid-update' toggle='tooltip' title='Guardar' style='cursor: pointer;'><i class='glyphicon glyphicon-saved' style='font-size: 18px;'></i></a>&nbsp;&nbsp;";
-                html += "<a class='k-grid-cancel' toggle='tooltip' title='Cancelar' style='cursor: pointer;'><i class='glyphicon glyphicon-ban-circle' style='font-size: 18px;'></i></a>";
+                html +=
+                    "<a class='k-grid-update' toggle='tooltip' title='Guardar' style='cursor: pointer;'><i class='glyphicon glyphicon-saved' style='font-size: 18px;'></i></a>&nbsp;&nbsp;";
+                html +=
+                    "<a class='k-grid-cancel' toggle='tooltip' title='Cancelar' style='cursor: pointer;'><i class='glyphicon glyphicon-ban-circle' style='font-size: 18px;'></i></a>";
                 html += "</div>";
 
                 commandCell.html(html);
@@ -203,7 +230,7 @@ var Simulations = kendo.observable({
         }
     },
 
-    getTemplateToolBar: function () {
+    getTemplateToolBar: function() {
         var html = "<div class='toolbar'>";
         html += "<span name='create' class='k-grid-add' id='createSimulation'>";
         html += "<a class='btn btn-prevea' role='button' id='btnCreateSimulation'> Agregar nuevo</a>";
@@ -212,8 +239,9 @@ var Simulations = kendo.observable({
         return html;
     },
 
-    getTemplateSimulationState: function (data) {
-        var html = kendo.format("<div style='float: left; text-align: left; display: inline;'>{0}</div>", data.SimulationStateDescription);
+    getTemplateSimulationState: function(data) {
+        var html = kendo.format("<div style='float: left; text-align: left; display: inline;'>{0}</div>",
+            data.SimulationStateDescription);
 
         if (data.SimulationStateId === Constants.simulationState.ValidationPending) {
             html += kendo.format("<div id='circleError' style='float: right; text-align: right;'></div></div>");
@@ -234,30 +262,49 @@ var Simulations = kendo.observable({
         return html;
     },
 
-    getColumnTemplateCommands: function (data) {
+    getColumnTemplateCommands: function(data) {
         var html = "<div align='center'>";
         if (data.SimulationStateId === Constants.simulationState.SendToCompany) {
-            html += kendo.format("<a toggle='tooltip' title='Ir a Empresa' onclick='Simulations.goToCompanyFromSimulation(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.CompanyId);
-            html += kendo.format("<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+            html += kendo.format(
+                "<a toggle='tooltip' title='Ir a Empresa' onclick='Simulations.goToCompanyFromSimulation(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                data.CompanyId);
+            html += kendo.format(
+                "<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                data.Id);
         } else {
             if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {
-                html += kendo.format("<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
-                html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+                html += kendo.format(
+                    "<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                    data.Id);
+                html += kendo.format(
+                    "<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                    data.Id);
             }
             if (GeneralData.userRoleId === Constants.role.Super) {
-                if (GeneralData.userId !== data.UserAssignedId && data.SimulationStateId !== Constants.simulationState.Deleted) {
-                    html += kendo.format("<a toggle='tooltip' title='Asignar' onclick='Simulations.goToAssignSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-hand-o-left' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
-                }                
-                html += kendo.format("<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+                if (GeneralData.userId !== data.UserAssignedId &&
+                    data.SimulationStateId !== Constants.simulationState.Deleted) {
+                    html += kendo.format(
+                        "<a toggle='tooltip' title='Asignar' onclick='Simulations.goToAssignSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-hand-o-left' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                        data.Id);
+                }
+                html += kendo.format(
+                    "<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                    data.Id);
                 if (data.SimulationStateId !== Constants.simulationState.Deleted) {
-                    html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
-                }                
+                    html += kendo.format(
+                        "<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                        data.Id);
+                }
             }
-            if (GeneralData.userRoleId === Constants.role.PreveaPersonal) {                
+            if (GeneralData.userRoleId === Constants.role.PreveaPersonal) {
                 if (GeneralData.userId === data.UserAssignedId) {
-                    html += kendo.format("<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+                    html += kendo.format(
+                        "<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                        data.Id);
                 } else {
-                    html += kendo.format("<a toggle='tooltip' title='Asignar' onclick='Simulations.goToAssignSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-hand-o-left' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+                    html += kendo.format(
+                        "<a toggle='tooltip' title='Asignar' onclick='Simulations.goToAssignSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-hand-o-left' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                        data.Id);
                 }
             }
         }
@@ -266,7 +313,7 @@ var Simulations = kendo.observable({
         return html;
     },
 
-    goToSimulations: function () {
+    goToSimulations: function() {
         var params = {
             url: "/CommercialTool/Simulations/Simulations",
             data: {}
@@ -274,7 +321,7 @@ var Simulations = kendo.observable({
         GeneralData.goToActionController(params);
     },
 
-    goToDetailSimulation: function (id) {
+    goToDetailSimulation: function(id) {
         var params = {
             url: "/CommercialTool/Simulations/DetailSimulation",
             data: {
@@ -285,7 +332,7 @@ var Simulations = kendo.observable({
         GeneralData.goToActionController(params);
     },
 
-    goToDeleteSimulation: function (simulationId) {
+    goToDeleteSimulation: function(simulationId) {
         var dialog = $("#" + this.confirmId);
         dialog.kendoDialog({
             width: "400px",
@@ -295,10 +342,12 @@ var Simulations = kendo.observable({
             content: "¿Quieres <strong>Borrar</strong> esta Simulación?",
             actions: [
                 {
-                    text: "Cancelar", primary: true
+                    text: "Cancelar",
+                    primary: true
                 },
                 {
-                    text: "Borrar", action: function () {
+                    text: "Borrar",
+                    action: function() {
                         var grid = $("#" + Simulations.gridSimulationsId).data("kendoGrid");
                         var item = grid.dataSource.get(simulationId);
                         var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
@@ -311,7 +360,7 @@ var Simulations = kendo.observable({
         dialog.data("kendoDialog").open();
     },
 
-    goToCompanyFromSimulation: function (id) {
+    goToCompanyFromSimulation: function(id) {
         var params = {
             url: "/Companies/DetailCompany",
             data: {
@@ -322,7 +371,7 @@ var Simulations = kendo.observable({
         GeneralData.goToActionController(params);
     },
 
-    goToAssignSimulation: function (simulationId) {
+    goToAssignSimulation: function(simulationId) {
         $.ajax({
             url: "/Simulations/AssignSimulation",
             data: {
@@ -330,7 +379,7 @@ var Simulations = kendo.observable({
             },
             type: "post",
             dataType: "json",
-            success: function (data) {
+            success: function(data) {
                 if (data.result.Status === Constants.resultStatus.Ok) {
                     Simulations.simulationsDataSource.read();
                     GeneralData.showNotification(Constants.ok, "", "success");
@@ -339,9 +388,193 @@ var Simulations = kendo.observable({
                     GeneralData.showNotification(Constants.ko, "", "error");
                 }
             },
-            error: function () {
+            error: function() {
                 GeneralData.showNotification(Constants.ko, "", "error");
             }
         });
+    },
+
+    childrenSimulations: function(e) {
+        var dataSourceChildren = new kendo.data.DataSource({
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: { type: "number", defaultValue: 0 },
+                        UserId: { type: "number" },
+                        UserAssignedId: { type: "number", defaultValue: e.data.UserAssignedId },
+                        CompanyId: { type: "number", defaultValue: e.data.CompanyId },
+                        Original: { type: "boolean", defaultValue: false },
+                        SimulationParentId: { type: "number", defaultValue: e.data.Id },
+                        NumberEmployees: { type: "string", defaultValue: e.data.NumberEmployees, validation: { required: { message: " Campo Obligatorio " } } },
+                        Date: { type: "date", editable: false },
+                        SimulationStateId: { type: "number", editable: false, defaultValue: Constants.simulationState.ValidationPending },
+                        SimulationStateName: { type: "string", editable: false, defaultValue: "ValidationPending" },
+                        SimulationStateDescription: { type: "string", editable: false, defaultValue: "Pendiente de Validación" }
+                    }
+                }
+            },
+            transport: {
+                read: {
+                    url: "Simulations/SimulationsChildren_Read",
+                    dataType: "jsonp",
+                    data: { simulationParentId: e.data.Id }
+                },
+                destroy: {
+                    url: "Simulations/Simulations_Destroy",
+                    dataType: "jsonp"
+                },
+                create: {
+                    url: "Simulations/Simulations_Create",
+                    dataType: "jsonp"
+                },
+                parameterMap: function (options, operation) {
+                    if (operation === "read") {
+                        return { simulationParentId: options.simulationParentId };
+                    }
+                    if (operation !== "read" && options) {
+                        return { simulation: kendo.stringify(options) };
+                    }
+
+                    return null;
+                }
+            },
+            requestEnd: function (e) {
+                if ((e.type === "update" || e.type === "destroy" || e.type === "create") &&
+                    e.response !== null) {
+                    if (typeof e.response.Errors !== "undefined") {
+                        GeneralData.showNotification(Constants.ko, "", "error");
+                        if (e.type === "create") {
+                            this.data().remove(this.data().at(0));
+                        } else {
+                            this.cancelChanges();
+                        }
+                    } else {
+                        GeneralData.showNotification(Constants.ok, "", "success");
+                    }
+                }
+            },
+            pageSize: 20
+        });
+
+        var detailRow = e.detailRow;
+        detailRow.find(".gridSimulationsChildren").kendoGrid({
+            columns: [
+                {
+                    field: "NumberEmployees",
+                    title: "Número de Empleados",
+                    width: 200,
+                    template: "#= Templates.getColumnTemplateIncreaseRight(data.NumberEmployees) #"
+                }, {
+                    field: "Date",
+                    title: "Fecha",
+                    groupable: "false",
+                    template: "#= Templates.getColumnTemplateDate(data.Date) #"
+                }, {
+                    title: "Estado",
+                    field: "SimulationStateDescription",
+                    template: "#= Simulations.getTemplateSimulationState(data) #"
+                }, {
+                    title: "Comandos",
+                    field: "Commands",
+                    width: 130,
+                    groupable: "false",
+                    filterable: false,
+                    template: "#= Simulations.getColumnTemplateCommands(data) #"
+                }],
+            pageable: {
+                buttonCount: 2,
+                pageSizes: [20, 40, "all"],
+                refresh: true,
+                messages: {
+                    display: "Elementos mostrados {0} - {1} de {2}",
+                    itemsPerPage: "Elementos por página",
+                    allPages: "Todos",
+                    empty: "No existen registros para mostrar"
+                }
+            },
+            filterable: {
+                messages: {
+                    info: "Filtrar por: ",
+                    and: "Y",
+                    or: "O",
+                    filter: "Aplicar",
+                    clear: "Limpiar"
+                },
+                operators: {
+                    string: {
+                        contains: "Contiene",
+                        eq: "Igual a",
+                        neq: "No igual a",
+                        startswith: "Empieza con",
+                        endswith: "Termina con",
+                        doesnotcontain: "No contiene",
+                        isempty: "Está vacio",
+                        isnotnull: "No está vacio"
+                    },
+                    number: {
+                        eq: "Igual a",
+                        gt: "Más grande que",
+                        lt: "Más pequeño que"
+                    },
+                    date: {
+                        eq: "Igual a",
+                        gt: "Antes que",
+                        lt: "Después que",
+                        isnull: "Está vacio"
+                    }
+                }
+            },
+            toolbar: Simulations.getTemplateChildrenToolBar(),
+            editable: {
+                mode: "inline",
+                confirmation: false
+            },
+            resizable: true,
+            autoScroll: true,
+            selectable: true,
+            sortable: {
+                mode: "single",
+                allowUnsort: false
+            },
+            groupable: false,
+            edit: function (e) {
+                var commandCell = e.container.find("td:last");
+                var html = "<div align='center'>";
+                html += "<a class='k-grid-update' toggle='tooltip' title='Guardar' style='cursor: pointer;'><i class='glyphicon glyphicon-saved' style='font-size: 18px;'></i></a>&nbsp;&nbsp;";
+                html += "<a class='k-grid-cancel' toggle='tooltip' title='Cancelar' style='cursor: pointer;'><i class='glyphicon glyphicon-ban-circle' style='font-size: 18px;'></i></a>";
+                html += "</div>";
+
+                commandCell.html(html);
+            }
+        });        
+        var grid = detailRow.find(".gridSimulationsChildren").data("kendoGrid");
+        grid.setDataSource(dataSourceChildren);
+
+        if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {
+            $("#btnCreateChildrenSimulation").removeAttr("disabled");
+            $("#btnCreateChildrenSimulation").prop("disabled", false);
+        } else {
+            $("#btnCreateChildrenSimulation").removeAttr("disabled");
+            $("#btnCreateChildrenSimulation").prop("disabled", true);
+        }
+    },
+
+    getTemplateChildren: function () {
+        var html = "<div>";
+        html += "<H2 style='text-align: center;'>Simulaciones Dependientes</H2><br />";
+        html += "<div class='gridSimulationsChildren'></div><br /><br />";
+        html += "</div>";
+
+        return html;
+    },
+
+    getTemplateChildrenToolBar: function () {
+        var html = "<div class='toolbar'>";
+        html += "<span name='create' class='k-grid-add' id='createChildrenSimulation'>";
+        html += "<a class='btn btn-prevea' role='button' id='btnCreateChildrenSimulation'> Agregar nuevo</a>";
+        html += "</span></div>";
+
+        return html;
     }
 });

@@ -6,6 +6,7 @@
     using Model.Model;
     using System;
     using IService.IService;
+    using System.Linq;
 
     #endregion
 
@@ -172,6 +173,16 @@
         public List<Simulation> GetSimulationsByUser(int userId)
         {
             return Repository.GetSimulationByUser(userId);
+        }
+
+        public List<Simulation> GetSimulationsOriginalsByUser(int userId)
+        {
+            return GetSimulationsByUser(userId).Where(x => x.Original).ToList();
+        }
+
+        public List<Simulation> GetSimulationsChildrenByUser(int userId, int simulationParentId)
+        {
+            return GetSimulationsByUser(userId).Where(x => x.SimulationParentId == simulationParentId).ToList();
         }
 
         public Result SendToCompanies(int simulationId)

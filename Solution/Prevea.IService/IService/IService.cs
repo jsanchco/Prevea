@@ -160,6 +160,8 @@
         #endregion
 
         List<Simulation> GetSimulationsByUser(int userId);
+        List<Simulation> GetSimulationsOriginalsByUser(int userId);
+        List<Simulation> GetSimulationsChildrenByUser(int userId, int simulationParentId);
         Result SendToCompanies(int simulationId);
         decimal GetTotalSimulation(int simulationId);
 

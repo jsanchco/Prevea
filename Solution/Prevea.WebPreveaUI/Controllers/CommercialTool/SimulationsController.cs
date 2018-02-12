@@ -35,7 +35,15 @@
         [HttpGet]
         public JsonResult Simulations_Read([DataSourceRequest] DataSourceRequest request)
         {
-            var data = AutoMapper.Mapper.Map<List<SimulationViewModel>>(Service.GetSimulationsByUser(User.Id));
+            var data = AutoMapper.Mapper.Map<List<SimulationViewModel>>(Service.GetSimulationsOriginalsByUser(User.Id));
+
+            return this.Jsonp(data);
+        }
+
+        [HttpGet]
+        public JsonResult SimulationsChildren_Read([DataSourceRequest] DataSourceRequest request, int simulationParentId)
+        {
+            var data = AutoMapper.Mapper.Map<List<SimulationViewModel>>(Service.GetSimulationsChildrenByUser(User.Id, simulationParentId));
 
             return this.Jsonp(data);
         }

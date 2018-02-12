@@ -14,6 +14,9 @@
         public int? UserAssignedId { get; set; }
         public string UserAssignedInitials { get; set; }
         public int CompanyId { get; set; }
+        public string Name { get; set; }
+        public bool Original { get; set; }
+        public int? SimulationParentId { get; set; }
         public string CompanyName { get; set; }
         public string CompanyEnrollment { get; set; }
         public string NIF { get; set; }
