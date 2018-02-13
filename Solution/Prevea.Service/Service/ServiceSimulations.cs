@@ -263,7 +263,6 @@
                     };
                 }
                 simulationCompany.CompanyId = company.Id;
-                simulationCompany.Active = true;
                 simulationCompany = Repository.UpdateSimulationCompany(simulationId, company.Id);
                 if (simulationCompany == null)
                 {
