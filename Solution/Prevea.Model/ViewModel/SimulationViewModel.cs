@@ -29,5 +29,6 @@
         public decimal TotalTrainingService { get; set; }
         public DateTime Date { get; set; }
         public decimal Total { get; set; }
+        public bool Active { get; set; }
     }
 }

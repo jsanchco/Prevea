@@ -67,8 +67,8 @@ namespace Prevea.Model.Model
 
         public virtual ICollection<SimulationCompany> SimulationCompanies { get; set; }
 
-        public int SimulationCompanyActiveId { get; set; }
-        public virtual SimulationCompany SimulationCompanyActive { get; set; }
+        [NotMapped]
+        public SimulationCompany SimulationCompanyActive { get; set; }
 
         [NotMapped]
         public SimulationCompany SimulationCompany => SimulationCompanies?.FirstOrDefault();

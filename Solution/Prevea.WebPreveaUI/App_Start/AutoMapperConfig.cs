@@ -57,7 +57,8 @@
                 .ForMember(x => x.TotalForeignPreventionService, x => x.MapFrom(y => y.SimulationCompany.Simulation.ForeignPreventionService.Total))
                 .ForMember(x => x.TotalAgencyService, x => x.MapFrom(y => y.SimulationCompany.Simulation.AgencyService.Total))
                 .ForMember(x => x.TotalTrainingService, x => x.MapFrom(y => y.SimulationCompany.Simulation.TrainingService.Total))
-                .ForMember(x => x.UserAssignedInitials, x => x.MapFrom(y => y.UserAssigned.Initials));
+                .ForMember(x => x.UserAssignedInitials, x => x.MapFrom(y => y.UserAssigned.Initials))
+                .ForMember(x => x.Active, x => x.MapFrom(y => y.SimulationCompany.Active));
             AutoMapper.Mapper.CreateMap<SimulationViewModel, Simulation>();
 
             AutoMapper.Mapper.CreateMap<PaymentMethodViewModel, PaymentMethod>();

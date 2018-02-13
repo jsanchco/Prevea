@@ -14,23 +14,35 @@
     {
         public Simulation GetSimulation(int id)
         {
-            return Context.Simulations
+            var simulation =  Context.Simulations
                 .Include(x => x.User)
                 .Include(x => x.UserAssigned)
                 .Include(x => x.SimulationState)
                 .Include(x => x.SimulationCompanies)
                 .FirstOrDefault(m => m.Id == id);
+
+            if (simulation != null)
+                simulation.SimulationCompanyActive = AssignSimulationActive(simulation);
+
+            return simulation;
         }
 
         public List<Simulation> GetSimulations()
         {
-            return Context.Simulations
+            var simulations =  Context.Simulations
                 .Include(x => x.User)
                 .Include(x => x.UserAssigned)
                 .Include(x => x.SimulationState)
                 .Include(x => x.SimulationCompanies)
                 .OrderByDescending(x => x.Date)
                 .ToList();
+
+            foreach (var simulation in simulations)
+            {
+                simulation.SimulationCompanyActive = AssignSimulationActive(simulation);
+            }
+
+            return simulations;
         }
 
         public Simulation SaveSimulation(Simulation simulation)
@@ -44,8 +56,7 @@
 
                     dbContextTransaction.Commit();
 
-                    return simulation;
-
+                    return GetSimulation(simulation.Id);
                 }
                 catch (Exception ex)
                 {
@@ -72,7 +83,7 @@
 
                     dbContextTransaction.Commit();
 
-                    return simulation;
+                    return GetSimulation(simulation.Id);
                 }
                 catch (Exception ex)
                 {
@@ -152,36 +163,26 @@
             switch (userRole.RoleId)
             {
                 case (int) EnRole.Super:
-                    return Context.Simulations
-                        .Include(x => x.User)
-                        .Include(x => x.UserAssigned)
-                        .Include(x => x.SimulationState)
-                        .Include(x => x.SimulationCompanies)
-                        .OrderByDescending(x => x.Date)
-                        .ToList();
+                    return GetSimulations();
 
                 case (int)EnRole.PreveaPersonal:
                     var usersChildren = Context.Users.Where(x => x.UserParentId == userId).Select(x => x.Id);
 
-                    return Context.Simulations
-                    .Include(x => x.User)
-                    .Include(x => x.UserAssigned)
-                    .Include(x => x.SimulationState)
-                    .Include(x => x.SimulationCompanies)
-                    .OrderByDescending(x => x.Date)
-                    .Where(x => x.SimulationStateId != (int)EnSimulationState.Deleted && usersChildren.Contains(x.UserId))
-                    .ToList();
+                    return GetSimulations()
+                        .Where(x => x.SimulationStateId != (int)EnSimulationState.Deleted && usersChildren.Contains(x.UserId))
+                        .ToList();
 
                 default:
-                    return Context.Simulations
-                        .Include(x => x.User)
-                        .Include(x => x.UserAssigned)
-                        .Include(x => x.SimulationState)
-                        .Include(x => x.SimulationCompanies)
-                        .OrderByDescending(x => x.Date)
+                    return GetSimulations()
                         .Where(x => x.UserId == userId && x.SimulationStateId != (int)EnSimulationState.Deleted)
                         .ToList();
             }
+        }
+
+        private SimulationCompany AssignSimulationActive(Simulation simulation)
+        {
+            return simulation.SimulationCompany?.CompanyId == null ? null : 
+                Context.SimulationCompanies.FirstOrDefault(x => x.CompanyId == simulation.SimulationCompany.CompanyId && x.Active);
         }
     }
 }

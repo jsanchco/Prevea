@@ -19,6 +19,7 @@
                     fields: {
                         Id: { type: "number", defaultValue: 0 },
                         UserId: { type: "number" },
+                        Active: { type: "boolean", editable: false, defaultValue: false },
                         UserInitials: { type: "string", editable: false },
                         UserAssignedId: { type: "number", defaultValue: null },
                         UserAssignedInitials: { type: "string", editable: false },
@@ -90,6 +91,13 @@
     createGridSimulations: function() {
         $("#" + this.gridSimulationsId).kendoGrid({
             columns: [
+                {
+                    field: "Active",
+                    title: "Activa",
+                    width: 100,
+                    groupable: "true",
+                    template: "#= Templates.getColumnTemplateBooleanIncrease(data.Active) #"
+                },
                 {
                     field: "CompanyName",
                     title: "Razón Social",
@@ -402,6 +410,7 @@
                     fields: {
                         Id: { type: "number", defaultValue: 0 },
                         UserId: { type: "number" },
+                        Active: { type: "boolean", editable: false, defaultValue: false },
                         UserAssignedId: { type: "number", defaultValue: e.data.UserAssignedId },
                         CompanyId: { type: "number", defaultValue: e.data.CompanyId },
                         Original: { type: "boolean", defaultValue: false },
@@ -410,22 +419,25 @@
                         Date: { type: "date", editable: false },
                         SimulationStateId: { type: "number", editable: false, defaultValue: Constants.simulationState.ValidationPending },
                         SimulationStateName: { type: "string", editable: false, defaultValue: "ValidationPending" },
-                        SimulationStateDescription: { type: "string", editable: false, defaultValue: "Pendiente de Validación" }
+                        SimulationStateDescription: { type: "string", editable: false, defaultValue: "Pendiente de Validación" },
+                        CompanyName: { type: "string", defaultValue: e.data.CompanyName },
+                        NIF: { type: "string", defaultValue: e.data.NIF },
+                        Name: { type: "string", defaultValue: "Dependiente" }
                     }
                 }
             },
             transport: {
                 read: {
-                    url: "Simulations/SimulationsChildren_Read",
+                    url: "/Simulations/SimulationsChildren_Read",
                     dataType: "jsonp",
                     data: { simulationParentId: e.data.Id }
                 },
                 destroy: {
-                    url: "Simulations/Simulations_Destroy",
+                    url: "/Simulations/Simulations_Destroy",
                     dataType: "jsonp"
                 },
                 create: {
-                    url: "Simulations/Simulations_Create",
+                    url: "/Simulations/Simulations_Create",
                     dataType: "jsonp"
                 },
                 parameterMap: function (options, operation) {
@@ -460,6 +472,13 @@
         var detailRow = e.detailRow;
         detailRow.find(".gridSimulationsChildren").kendoGrid({
             columns: [
+                {
+                    field: "Active",
+                    title: "Activa",
+                    width: 100,
+                    groupable: "true",
+                    template: "#= Templates.getColumnTemplateBooleanIncrease(data.Active) #"
+                },
                 {
                     field: "NumberEmployees",
                     title: "Número de Empleados",

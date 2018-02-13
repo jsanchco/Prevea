@@ -83,5 +83,17 @@
         var html = kendo.format("<div align='center'>{0}</div>", data);
 
         return html;
+    },
+
+    getColumnTemplateBooleanIncrease: function (value) {
+        var text = "No";
+        if (value === true) {
+            text = "Si";
+        }
+
+        var html = kendo.format("<div align='center' style='font-size: 15px; font-weight: bold'>{0}</div>",
+            text);
+
+        return html;
     }
 });
