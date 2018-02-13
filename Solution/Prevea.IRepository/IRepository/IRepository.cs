@@ -6,10 +6,11 @@
     using System.Threading.Tasks;
     using Model.Model;
     using Model.CustomModel;
+    using System;
 
     #endregion
 
-    public interface IRepository
+    public interface IRepository : IDisposable
     {
         #region User
 

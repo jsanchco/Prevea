@@ -6,10 +6,11 @@
     using Model.Model;
     using System.Web;
     using Model.CustomModel;
+    using System;
 
     #endregion
 
-    public interface IService
+    public interface IService : IDisposable
     {
         #region Document
 

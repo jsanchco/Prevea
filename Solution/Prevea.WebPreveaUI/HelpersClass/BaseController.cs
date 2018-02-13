@@ -89,5 +89,14 @@
 
             return File(filedata, contentType);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Service.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

@@ -6,10 +6,9 @@
 
     #endregion
 
-    public class RepositoryBase : IDisposable
+    public class RepositoryBase
     {
         private bool _disposed;
-
         protected readonly Context Context;
 
         #region Constuctor

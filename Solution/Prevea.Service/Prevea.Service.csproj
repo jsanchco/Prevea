@@ -46,6 +46,7 @@
     <Compile Include="Service\ServiceAgencies.cs" />
     <Compile Include="Service\ServiceAgencyServices.cs" />
     <Compile Include="Service\ServiceAreas.cs" />
+    <Compile Include="Service\ServiceBase.cs" />
     <Compile Include="Service\ServiceCnaes.cs" />
     <Compile Include="Service\ServiceCompanies.cs" />
     <Compile Include="Service\ServiceConfiguration.cs" />

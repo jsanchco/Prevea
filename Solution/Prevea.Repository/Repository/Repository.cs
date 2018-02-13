@@ -1,6 +1,5 @@
 ﻿namespace Prevea.Repository.Repository
 {
-    using System.Collections.Generic;
     #region Using
 
     using IRepository.IRepository;
