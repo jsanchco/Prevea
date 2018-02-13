@@ -18,5 +18,5 @@
         public virtual ICollection<Company> Companies { get; set; }
     }
 
-    public enum EnCompanyState { NotMapped, Alta, BajaPorAdmin, Borrado }
+    public enum EnCompanyState { Alta = 1, BajaPorAdmin, Borrado }
 }

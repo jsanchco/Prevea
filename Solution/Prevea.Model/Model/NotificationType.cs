@@ -23,5 +23,5 @@
         public virtual ICollection<Notification> Notifications { get; set; }
     }
 
-    public enum EnNotificationType { NotMapped, FromSimulation, FromForeignPrevention, FromAgency, FromTraining, FromSede, FromUser, FromRole }
+    public enum EnNotificationType { FromSimulation = 1, FromForeignPrevention, FromAgency, FromTraining, FromSede, FromUser, FromRole }
 }

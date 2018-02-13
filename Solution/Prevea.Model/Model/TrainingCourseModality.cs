@@ -23,5 +23,5 @@
         public virtual ICollection<TrainingCourse> TrainingCourses { get; set; }
     }
 
-    public enum EnTrainingCourseModality { NotMapped, Presencial, OnLine }
+    public enum EnTrainingCourseModality { Presencial = 1, OnLine }
 }

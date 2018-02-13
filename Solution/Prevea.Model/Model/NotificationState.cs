@@ -23,5 +23,5 @@
         public virtual ICollection<Notification> Notifications { get; set; }
     }
 
-    public enum EnNotificationState { NotMapped, Issued, Assigned, ReAssigned, Validated }
+    public enum EnNotificationState { Issued = 1, Assigned, ReAssigned, Validated }
 }

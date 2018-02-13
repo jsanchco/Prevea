@@ -18,5 +18,5 @@
         public virtual ICollection<User> Users { get; set; }
     }
 
-    public enum EnUserState { NotMapped, Alta, BajaPorCompany, BajaPorAdmin, Borrado }
+    public enum EnUserState { Alta = 1, BajaPorCompany, BajaPorAdmin, Borrado }
 }

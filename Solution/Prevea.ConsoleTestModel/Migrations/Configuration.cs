@@ -22,9 +22,6 @@ namespace Prevea.ConsoleTestModel.Migrations
             var userState = (EnUserState[])Enum.GetValues(typeof(EnUserState));
             foreach (var uState in userState)
             {
-                if (uState == EnUserState.NotMapped)
-                    continue;
-
                 context.UserStates.AddOrUpdate(new UserState { Name = uState.ToString() });
             }
             context.SaveChanges();
@@ -44,9 +41,6 @@ namespace Prevea.ConsoleTestModel.Migrations
             var roles = (EnRole[]) Enum.GetValues(typeof(EnRole));
             foreach (var rol in roles)
             {
-                if (rol == EnRole.NotMapped)
-                    continue;
-
                 context.Roles.AddOrUpdate(new Role { Name = rol.ToString() });
             }
             context.SaveChanges();
@@ -85,9 +79,6 @@ namespace Prevea.ConsoleTestModel.Migrations
             var dStates = (EnDocumentState[])Enum.GetValues(typeof(EnDocumentState));
             foreach (var dSate in dStates)
             {
-                if (dSate == EnDocumentState.NotMapped)
-                    continue;
-
                 context.DocumentStates.AddOrUpdate(new DocumentState { Name = dSate.ToString() });
             }
             context.SaveChanges();
@@ -95,9 +86,6 @@ namespace Prevea.ConsoleTestModel.Migrations
             var modesPayment = (EnModePayment[])Enum.GetValues(typeof(EnModePayment));
             foreach (var modePayment in modesPayment)
             {
-                if (modePayment == EnModePayment.NotMapped)
-                    continue;
-
                 context.ModesPayment.AddOrUpdate(new ModePayment { Name = modePayment.ToString() });
             }
             context.SaveChanges();
@@ -105,9 +93,6 @@ namespace Prevea.ConsoleTestModel.Migrations
             var modesPaymentMedicalExamination = (EnModePaymentMedicalExamination[])Enum.GetValues(typeof(EnModePaymentMedicalExamination));
             foreach (var modePaymentMedicalExamination in modesPaymentMedicalExamination)
             {
-                if (modePaymentMedicalExamination == EnModePaymentMedicalExamination.NotMapped)
-                    continue;
-
                 context.ModesPaymentMedicalExamination.AddOrUpdate(new ModePaymentMedicalExamination { Name = modePaymentMedicalExamination.ToString() });
             }
             context.SaveChanges();
@@ -230,9 +215,6 @@ namespace Prevea.ConsoleTestModel.Migrations
             var companyStates = (EnCompanyState[])Enum.GetValues(typeof(EnCompanyState));
             foreach (var dSate in companyStates)
             {
-                if (dSate == EnCompanyState.NotMapped)
-                    continue;
-
                 context.CompanyStates.AddOrUpdate(new CompanyState { Name = dSate.ToString() });
             }
             context.SaveChanges();
@@ -240,9 +222,6 @@ namespace Prevea.ConsoleTestModel.Migrations
             var contractualCompanyStates = (EnContractualDocumentType[])Enum.GetValues(typeof(EnContractualDocumentType));
             foreach (var dType in contractualCompanyStates)
             {
-                if (dType == EnContractualDocumentType.NotMapped)
-                    continue;
-
                 context.ContractualDocumentTypes.AddOrUpdate(new ContractualDocumentType { Name = dType.ToString() });
             }
             context.SaveChanges();
@@ -250,9 +229,6 @@ namespace Prevea.ConsoleTestModel.Migrations
             var notificationTypes = (EnNotificationType[])Enum.GetValues(typeof(EnNotificationType));
             foreach (var dType in notificationTypes)
             {
-                if (dType == EnNotificationType.NotMapped)
-                    continue;
-
                 context.NotificationTypes.AddOrUpdate(new NotificationType { Name = dType.ToString() });
             }
             context.SaveChanges();
@@ -260,9 +236,6 @@ namespace Prevea.ConsoleTestModel.Migrations
             var notificationStates = (EnNotificationState[])Enum.GetValues(typeof(EnNotificationState));
             foreach (var dState in notificationStates)
             {
-                if (dState == EnNotificationState.NotMapped)
-                    continue;
-
                 context.NotificationStates.AddOrUpdate(new NotificationState { Name = dState.ToString() });
             }
             context.SaveChanges();
@@ -270,9 +243,6 @@ namespace Prevea.ConsoleTestModel.Migrations
             var simulationStates = (EnSimulationState[])Enum.GetValues(typeof(EnSimulationState));
             foreach (var dState in simulationStates)
             {
-                if (dState == EnSimulationState.NotMapped)
-                    continue;
-
                 context.SimulationStates.AddOrUpdate(new SimulationState { Name = dState.ToString() });
             }
             context.SaveChanges();
@@ -280,9 +250,6 @@ namespace Prevea.ConsoleTestModel.Migrations
             var trainingCourseModalities = (EnTrainingCourseModality[])Enum.GetValues(typeof(EnTrainingCourseModality));
             foreach (var dState in trainingCourseModalities)
             {
-                if (dState == EnTrainingCourseModality.NotMapped)
-                    continue;
-
                 context.TrainingCourseModalities.AddOrUpdate(new TrainingCourseModality { Name = dState.ToString() });
             }
             context.SaveChanges();
@@ -290,9 +257,6 @@ namespace Prevea.ConsoleTestModel.Migrations
             var establishmentTypes = (EnEstablishmentType[])Enum.GetValues(typeof(EnEstablishmentType));
             foreach (var dState in establishmentTypes)
             {
-                if (dState == EnEstablishmentType.NotMapped)
-                    continue;
-
                 context.EstablishmentTypes.AddOrUpdate(new EstablishmentType { Name = dState.ToString() });
             }
             context.SaveChanges();
@@ -300,19 +264,13 @@ namespace Prevea.ConsoleTestModel.Migrations
             var worksCenterStates = (EnWorkCenterState[])Enum.GetValues(typeof(EnWorkCenterState));
             foreach (var dState in worksCenterStates)
             {
-                if (dState == EnWorkCenterState.NotMapped)
-                    continue;
-
                 context.WorkCenterStates.AddOrUpdate(new WorkCenterState { Name = dState.ToString() });
             }
             context.SaveChanges();
 
             var typesEngagements = (EnEngagementType[])Enum.GetValues(typeof(EnEngagementType));
             foreach (var type in typesEngagements)
-            {
-                if (type == EnEngagementType.NotMapped)
-                    continue;
-
+            {            
                 context.EngagementTypes.AddOrUpdate(new EngagementType { Name = type.ToString() });
             }
             context.SaveChanges();

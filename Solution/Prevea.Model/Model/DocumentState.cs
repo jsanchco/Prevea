@@ -18,5 +18,5 @@
         public virtual ICollection<Document> Documents { get; set; }
     }
 
-    public enum EnDocumentState { NotMapped, Activo, Modificado, Baja }
+    public enum EnDocumentState { Activo = 1, Modificado, Baja }
 }

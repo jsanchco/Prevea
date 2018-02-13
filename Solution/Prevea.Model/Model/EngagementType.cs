@@ -23,5 +23,5 @@
         public virtual ICollection<AgencyService> AgencyServices { get; set; }
     }
 
-    public enum EnEngagementType { NotMapped, Society, Autonomous }
+    public enum EnEngagementType { Society = 1, Autonomous }
 }

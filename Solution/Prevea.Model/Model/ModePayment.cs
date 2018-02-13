@@ -21,5 +21,5 @@
         public string Description => Helpers.HelperClass.GetDescription(Enum.GetName(typeof(EnModePayment), Id));
     }
 
-    public enum EnModePayment { NotMapped, Remesa, Transferencia, Caja, Otros }
+    public enum EnModePayment { Remesa = 1, Transferencia, Caja, Otros }
 }

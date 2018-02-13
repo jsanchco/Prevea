@@ -23,5 +23,5 @@
         public virtual ICollection<WorkCenter> WorkCenters { get; set; }
     }
 
-    public enum EnEstablishmentType { NotMapped, Permanent, Movil }
+    public enum EnEstablishmentType { Permanent = 1, Movil }
 }

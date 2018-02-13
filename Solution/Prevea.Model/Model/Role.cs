@@ -24,5 +24,5 @@
         public virtual ICollection<Notification> Notifications { get; set; }
     }
         
-    public enum EnRole { NotMapped, Super, Admin, Library, ContactPerson, Employee, Agency, Doctor, Manager, PreveaPersonal, PreveaCommercial, ExternalPersonal }
+    public enum EnRole { Super = 1, Admin, Library, ContactPerson, Employee, Agency, Doctor, Manager, PreveaPersonal, PreveaCommercial, ExternalPersonal }
 }

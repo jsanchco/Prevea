@@ -23,5 +23,5 @@
         public virtual ICollection<WorkCenter> WorksCenters { get; set; }
     }
 
-    public enum EnWorkCenterState { NotMapped, Alta, Baja }
+    public enum EnWorkCenterState { Alta = 1, Baja }
 }
