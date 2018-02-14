@@ -1,4 +1,6 @@
-﻿namespace Prevea.Repository.Repository
+﻿using System.Collections.Generic;
+
+namespace Prevea.Repository.Repository
 {
     #region Using
 
@@ -104,6 +106,14 @@
                     return false;
                 }
             }
+        }
+
+        public List<SimulationCompany> GetSimulationsCompanyByCompany(int companyId)
+        {
+            return Context.SimulationCompanies
+                .Include(x => x.Simulation)
+                .Include(x => x.Company)
+                .Where(x => x.CompanyId == companyId).ToList();
         }
     }
 }

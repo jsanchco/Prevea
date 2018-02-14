@@ -212,6 +212,7 @@
         SimulationCompany SaveSimulationCompany(int simulationId, int? companyId = null);
         SimulationCompany UpdateSimulationCompany(int simulationId, int companyId);
         bool DeleteSimulationCompany(int simulationId, int companyId);
+        List<SimulationCompany> GetSimulationsCompanyByCompany(int companyId);
         #endregion
 
         #region Notification

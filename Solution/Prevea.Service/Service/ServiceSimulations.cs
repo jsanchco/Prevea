@@ -189,6 +189,8 @@
         {
             try
             {
+                var random = new Random();
+
                 var simulation = Repository.GetSimulation(simulationId);
                 if (simulation == null)
                 {
@@ -200,6 +202,7 @@
                     };
                 }
                 simulation.SimulationStateId = (int) EnSimulationState.SendToCompany;
+                simulation.Active = true;
                 simulation = Repository.UpdateSimulation(simulationId, simulation);
                 if (simulation == null)
                 {
@@ -209,47 +212,6 @@
                         Object = null,
                         Status = Status.Error
                     };
-                }
-
-                var company = new Company
-                {
-                    Name = simulation.CompanyName,
-                    NIF = simulation.NIF,
-                    FromSimulation = true,
-                    GestorId = simulation.UserId,
-                    EmployeesNumber = simulation.NumberEmployees
-                };
-                company = Repository.SaveCompany(company);
-                if (company == null)
-                {
-                    return new Result
-                    {
-                        Message = "Se ha producido un error al crear la Empresa",
-                        Object = null,
-                        Status = Status.Error
-                    };
-                }
-                var random = new Random();
-                var randomNumber = random.Next(0, 10000000);
-                for (var i = 0; i < simulation.NumberEmployees; i++)
-                {
-                    var dni = $"{randomNumber}{RandomString(1)}";
-
-                    var user = new User
-                    {
-                        FirstName = $"Trabajador {randomNumber++}",
-                        DNI = dni
-                    };
-                    var resultEmployee = SaveEmployeeCompany((int) EnRole.Employee, company.Id, user);
-                    if (resultEmployee.Status == Status.Error)
-                    {
-                        return new Result
-                        {
-                            Message = "Se ha producido un error al crear el Trabajador",
-                            Object = null,
-                            Status = Status.Error
-                        };
-                    }
                 }
 
                 var simulationCompany = Repository.GetSimulationCompany(simulationId);
@@ -262,9 +224,66 @@
                         Status = Status.Error
                     };
                 }
-                simulationCompany.CompanyId = company.Id;
-                simulationCompany = Repository.UpdateSimulationCompany(simulationId, company.Id);
-                if (simulationCompany == null)
+
+                #region Creamos la Empresa si no existe
+                if (simulationCompany.Company == null)
+                {
+                    var company = new Company
+                    {
+                        Name = simulation.CompanyName,
+                        NIF = simulation.NIF,
+                        FromSimulation = true,
+                        GestorId = simulation.UserId,
+                        EmployeesNumber = simulation.NumberEmployees
+                    };
+                    company = Repository.SaveCompany(company);
+                    if (company == null)
+                    {
+                        return new Result
+                        {
+                            Message = "Se ha producido un error al crear la Empresa",
+                            Object = null,
+                            Status = Status.Error
+                        };
+                    }
+                    
+                    var randomNumber = random.Next(0, 10000000);
+                    for (var i = 0; i < simulation.NumberEmployees; i++)
+                    {
+                        var dni = $"{randomNumber}{RandomString(1)}";
+
+                        var user = new User
+                        {
+                            FirstName = $"Trabajador {randomNumber++}",
+                            DNI = dni
+                        };
+                        var resultEmployee = SaveEmployeeCompany((int)EnRole.Employee, company.Id, user);
+                        if (resultEmployee.Status == Status.Error)
+                        {
+                            return new Result
+                            {
+                                Message = "Se ha producido un error al crear el Trabajador",
+                                Object = null,
+                                Status = Status.Error
+                            };
+                        }
+                    }
+
+                    simulationCompany.CompanyId = company.Id;
+                    simulationCompany = Repository.UpdateSimulationCompany(simulationId, company.Id);
+                    if (simulationCompany == null)
+                    {
+                        return new Result
+                        {
+                            Message = "Se ha producido un error al actualizar la Simulación-Empresa",
+                            Object = null,
+                            Status = Status.Error
+                        };
+                    }
+                }
+                #endregion
+
+                if (simulationCompany.CompanyId == null)
                 {
                     return new Result
                     {
@@ -273,12 +292,66 @@
                         Status = Status.Error
                     };
                 }
+                var simulationsCompanyByCompany = Repository.GetSimulationsCompanyByCompany((int)simulationCompany.CompanyId);
+                foreach (var simComp in simulationsCompanyByCompany)
+                {
+                    if (simComp.Simulation.Id == simulationId)
+                        continue;
+
+                    simComp.Simulation.Active = false;
+                    var resultSim =  Repository.UpdateSimulation(simComp.Simulation.Id, simComp.Simulation);
+                    if (resultSim == null)
+                    {
+                        return new Result
+                        {
+                            Message = "Se ha producido un error al actualizar la Simulación-Empresa",
+                            Object = null,
+                            Status = Status.Error
+                        };
+                    }
+                }
+
+                var status = Status.Ok;
+                if (!simulation.Original)
+                {
+                    if (simulation.NumberEmployees > simulationCompany.Company.EmployeesNumber)
+                    {
+                        var randomNumber = random.Next(0, 10000000);
+                        for (var i = 0;
+                            i < (simulation.NumberEmployees - simulationCompany.Company.EmployeesNumber);
+                            i++)
+                        {
+                            var dni = $"{randomNumber}{RandomString(1)}";
+
+                            var user = new User
+                            {
+                                FirstName = $"Trabajador {randomNumber++}",
+                                DNI = dni
+                            };
+                            var resultEmployee =
+                                SaveEmployeeCompany((int) EnRole.Employee, (int) simulationCompany.CompanyId, user);
+                            if (resultEmployee.Status == Status.Error)
+                            {
+                                return new Result
+                                {
+                                    Message = "Se ha producido un error al crear el Trabajador",
+                                    Object = null,
+                                    Status = Status.Error
+                                };
+                            }
+                        }
+                    }
+                    if (simulation.NumberEmployees < simulationCompany.Company.EmployeesNumber)
+                    {
+                        status = Status.Warning;
+                    }
+                }
 
                 return new Result
                 {
                     Message = "La creación de la Empresa se ha producido con éxito",
-                    Object = company.Id,
-                    Status = Status.Ok
+                    Object = simulationCompany.CompanyId,
+                    Status = status
                 };
             }
             catch (Exception)

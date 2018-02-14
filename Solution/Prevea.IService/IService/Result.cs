@@ -1,6 +1,6 @@
 ﻿namespace Prevea.IService.IService
 {
-    public enum Status { Ok, Error};
+    public enum Status { Ok, Error, Warning }
 
     public class Result
     {

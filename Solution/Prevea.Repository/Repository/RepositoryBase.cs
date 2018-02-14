@@ -8,8 +8,12 @@
 
     public class RepositoryBase
     {
+        #region Members
+
         private bool _disposed;
         protected readonly Context Context;
+
+        #endregion
 
         #region Constuctor
 
