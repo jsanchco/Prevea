@@ -123,8 +123,12 @@
                     }
                     if (e.field === "Price") {
                         dataItem = e.items[0];
+
                         value = (dataItem.Price / dataItem.OriginalPrice) - 1;
                         dataItem.set("Desviation", value);
+
+                        value = (dataItem.Price * dataItem.AssistantsNumber);
+                        dataItem.set("Total", value);
                     }
                 }
             },
