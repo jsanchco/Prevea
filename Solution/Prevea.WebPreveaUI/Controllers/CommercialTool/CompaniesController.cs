@@ -44,6 +44,10 @@
 
             ViewBag.SelectTabId = selectTabId;
 
+            var simulationActive = Service.GetSimulationActive(id);
+            if (simulationActive.NumberEmployees != company.Employees.Count)
+                ViewBag.Error = new[] { "El número de Trabajadores no coincide con los Datos de la Simulación" };
+
             return PartialView("~/Views/CommercialTool/Companies/DetailCompany.cshtml", company);
         }
 
@@ -209,7 +213,7 @@
         {
             var company = Service.GetCompany(companyId);
 
-            ViewBag.Total = Math.Round(Service.GetTotalSimulation(company.SimulationCompany.SimulationId), 2);
+            ViewBag.Total = Math.Round(Service.GetTotalSimulation(company.SimulationCompanyActive.SimulationId), 2);
 
             return PartialView("~/Views/CommercialTool/Companies/EconomicDataCompany.cshtml", company);
         }

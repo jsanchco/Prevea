@@ -22,7 +22,7 @@
             return Repository.GetSimulations();
         }
 
-        public Result SaveSimulation(Simulation simulation)
+        public Result SaveSimulation(Simulation simulation, int? companyId = null)
         {
             try
             {
@@ -38,7 +38,7 @@
                     };
                 }
 
-                var simulationCompany = Repository.SaveSimulationCompany(simulation.Id);
+                var simulationCompany = Repository.SaveSimulationCompany(simulation.Id, companyId);
 
                 if (simulationCompany == null)
                 {
@@ -311,7 +311,8 @@
                     }
                 }
 
-                var status = Status.Ok;
+                var message = "La creación de la Empresa se ha producido con éxito";
+                var status = Status.Ok;                
                 if (!simulation.Original)
                 {
                     if (simulation.NumberEmployees > simulationCompany.Company.EmployeesNumber)
@@ -341,15 +342,17 @@
                             }
                         }
                     }
+                    
                     if (simulation.NumberEmployees < simulationCompany.Company.EmployeesNumber)
                     {
+                        message = "Debes revisar a los Empleados de la Empresa. El número no coincide con los datos de la Simulación";
                         status = Status.Warning;
                     }
                 }
 
                 return new Result
                 {
-                    Message = "La creación de la Empresa se ha producido con éxito",
+                    Message = message,
                     Object = simulationCompany.CompanyId,
                     Status = status
                 };
@@ -396,6 +399,11 @@
                 total += simulation.TrainingService.Total * IVA;
 
             return total;
+        }
+
+        public Simulation GetSimulationActive(int companyId)
+        {
+            return Repository.GetSimulationsCompanyByCompany(companyId).FirstOrDefault(x => x.Simulation.Active)?.Simulation;
         }
     }
 }

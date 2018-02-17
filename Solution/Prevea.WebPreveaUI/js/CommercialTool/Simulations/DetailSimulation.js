@@ -110,13 +110,22 @@
             type: "post",
             dataType: "json",
             success: function (data) {
-                if (data.resultSimulation.Status === Constants.resultStatus.Ok) {
-                    DetailSimulation.simulationStateId = Constants.simulationState.SendToCompany;
-                    DetailSimulation.updateButtonsFromSimulationServices(false);
+                switch (data.resultSimulation.Status) {
+                    case Constants.resultStatus.Ok:
+                        DetailSimulation.simulationStateId = Constants.simulationState.SendToCompany;
+                        DetailSimulation.updateButtonsFromSimulationServices(false);
+                        GeneralData.showNotification(Constants.ok, "", "success");
 
-                    GeneralData.showNotification(Constants.ok, "", "success");
-                } else {
-                    GeneralData.showNotification(Constants.ko, "", "error");
+                        break;
+                    case Constants.resultStatus.Warning:
+                        DetailSimulation.simulationStateId = Constants.simulationState.SendToCompany;
+                        DetailSimulation.updateButtonsFromSimulationServices(false);
+                        GeneralData.showNotification(data.resultSimulation.Message, "", "warning");
+
+                        break;
+                    case Constants.resultStatus.Error:
+                        GeneralData.showNotification(Constants.ko, "", "error");
+                        break;
                 }
             },
             error: function () {

@@ -27,7 +27,7 @@
                         Original: { type: "boolean", defaultValue: true },
                         SimulationParentId: { type: "number", defaultValue: null },
                         CompanyName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
-                        CompanyId: { type: "number", editable: false },
+                        CompanyId: { type: "number", editable: false, defaultValue: null },
                         NIF: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         NumberEmployees: {
                             type: "string",

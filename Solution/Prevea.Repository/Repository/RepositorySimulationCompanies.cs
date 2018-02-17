@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Prevea.Repository.Repository
+﻿namespace Prevea.Repository.Repository
 {
     #region Using
 
@@ -8,6 +6,7 @@ namespace Prevea.Repository.Repository
     using System.Linq;
     using System.Data.Entity;
     using System;
+    using System.Collections.Generic;
 
     #endregion
 
@@ -15,11 +14,15 @@ namespace Prevea.Repository.Repository
     {
         public SimulationCompany GetSimulationCompany(int simulationId, int? companyId = null)
         {
-
-            return Context.SimulationCompanies
-                .Include(x => x.Simulation)
-                .Include(x => x.Company)
-                .FirstOrDefault(x => x.SimulationId == simulationId && x.CompanyId == companyId);
+            return companyId != null
+                ? Context.SimulationCompanies
+                    .Include(x => x.Simulation)
+                    .Include(x => x.Company)
+                    .FirstOrDefault(x => x.SimulationId == simulationId && x.CompanyId == companyId)
+                : Context.SimulationCompanies
+                    .Include(x => x.Simulation)
+                    .Include(x => x.Company)
+                    .FirstOrDefault(x => x.SimulationId == simulationId);
         }
 
         public SimulationCompany SaveSimulationCompany(int simulationId, int? companyId = null)

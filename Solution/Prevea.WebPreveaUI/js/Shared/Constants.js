@@ -17,7 +17,8 @@
 
     resultStatus: {
         Ok: 0,
-        Error: 1
+        Error: 1,
+        Warning: 2
     },
 
     role: {

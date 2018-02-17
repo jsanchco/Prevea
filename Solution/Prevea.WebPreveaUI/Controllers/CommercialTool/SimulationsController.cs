@@ -41,6 +41,14 @@
         }
 
         [HttpGet]
+        public JsonResult SimulationsAll_Read([DataSourceRequest] DataSourceRequest request)
+        {
+            var data = AutoMapper.Mapper.Map<List<SimulationViewModel>>(Service.GetSimulationsByUser(User.Id));
+
+            return this.Jsonp(data);
+        }
+
+        [HttpGet]
         public JsonResult SimulationsChildren_Read([DataSourceRequest] DataSourceRequest request, int simulationParentId)
         {
             var data = AutoMapper.Mapper.Map<List<SimulationViewModel>>(Service.GetSimulationsChildrenByUser(User.Id, simulationParentId));
@@ -64,7 +72,7 @@
 
                 data.UserId = User.Id;
                 data.SimulationStateId = (int) EnSimulationState.ValidationPending;
-                var result = Service.SaveSimulation(data);
+                var result = Service.SaveSimulation(data, simulation.CompanyId);
 
                 if (result.Status == Status.Error)
                     return this.Jsonp(new {Errors = errorSimulation});
@@ -523,6 +531,8 @@
             var user = Service.GetUser(User.Id);
 
             simulation.SimulationStateId = (int) EnSimulationState.Validated;
+            if (simulation.DateAssigned == null)
+                simulation.DateAssigned = DateTime.Now;
 
             var resultSimulation = Service.UpdateSimulation(simulationId, simulation);
             if (resultSimulation.Status == Status.Error)

@@ -154,7 +154,7 @@
         #region Generic
         Simulation GetSimulation(int simulationId);
         List<Simulation> GetSimulations();
-        Result SaveSimulation(Simulation simulation);
+        Result SaveSimulation(Simulation simulation, int? companyId = null);
         Result UpdateSimulation(int simulationId, Simulation simulation);
         Result DeleteSimulation(int simulationId);
         Result SubscribeSimulation(int simulationId, bool subscribe);
@@ -165,6 +165,7 @@
         List<Simulation> GetSimulationsChildrenByUser(int userId, int simulationParentId);
         Result SendToCompanies(int simulationId);
         decimal GetTotalSimulation(int simulationId);
+        Simulation GetSimulationActive(int companyId);
 
         #endregion
 

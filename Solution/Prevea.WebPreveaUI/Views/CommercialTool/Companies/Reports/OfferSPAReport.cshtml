@@ -204,14 +204,14 @@
         var tecniches = "No";
         var health = "No";
 
-        if (Model.SimulationCompany.Simulation.ForeignPreventionService != null)
+        if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService != null)
         {
-            if (Model.SimulationCompany.Simulation.ForeignPreventionService.AmountTecniques != null)
+            if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques != null)
             {
                 tecniches = "Si";
             }
-            if (Model.SimulationCompany.Simulation.ForeignPreventionService.AmountHealthVigilance != null &&
-                Model.SimulationCompany.Simulation.ForeignPreventionService.AmountMedicalExamination != null)
+            if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance != null &&
+                Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination != null)
             {
                 health = "Si";
             }
@@ -505,19 +505,19 @@
         var totalAmountHealthVigilance = 0.0m;
         var totalAmountMedicalExamination = 0.0m;
         decimal total;
-        if (Model.SimulationCompany.Simulation.ForeignPreventionService != null)
+        if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService != null)
         {
-            if (Model.SimulationCompany.Simulation.ForeignPreventionService.AmountTecniques != null)
+            if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques != null)
             {
-                totalAmountTecniques = (decimal)Model.SimulationCompany.Simulation.ForeignPreventionService.AmountTecniques * Model.SimulationCompany.Simulation.NumberEmployees;
+                totalAmountTecniques = (decimal)Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques * Model.SimulationCompanyActive.Simulation.NumberEmployees;
             }
-            if (Model.SimulationCompany.Simulation.ForeignPreventionService.AmountHealthVigilance != null)
+            if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance != null)
             {
-                totalAmountHealthVigilance = (decimal)Model.SimulationCompany.Simulation.ForeignPreventionService.AmountHealthVigilance * Model.SimulationCompany.Simulation.NumberEmployees;
+                totalAmountHealthVigilance = (decimal)Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance * Model.SimulationCompanyActive.Simulation.NumberEmployees;
             }
-            if (Model.SimulationCompany.Simulation.ForeignPreventionService.AmountMedicalExamination != null)
+            if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination != null)
             {
-                totalAmountMedicalExamination = (decimal)Model.SimulationCompany.Simulation.ForeignPreventionService.AmountMedicalExamination * Model.SimulationCompany.Simulation.NumberEmployees;
+                totalAmountMedicalExamination = (decimal)Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination * Model.SimulationCompanyActive.Simulation.NumberEmployees;
             }
         }
 

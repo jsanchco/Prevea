@@ -216,14 +216,14 @@
         var tecniches = "No";
         var health = "No";
 
-        if (Model.SimulationCompany.Simulation.ForeignPreventionService != null)
+        if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService != null)
         {
-            if (Model.SimulationCompany.Simulation.ForeignPreventionService.AmountTecniques != null)
+            if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques != null)
             {
                 tecniches = "Si";
             }
-            if (Model.SimulationCompany.Simulation.ForeignPreventionService.AmountHealthVigilance != null &&
-                Model.SimulationCompany.Simulation.ForeignPreventionService.AmountMedicalExamination != null)
+            if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance != null &&
+                Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination != null)
             {
                 health = "Si";
             }

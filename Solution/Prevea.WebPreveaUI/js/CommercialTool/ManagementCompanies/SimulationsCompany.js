@@ -30,13 +30,14 @@
                         Date: { type: "date", editable: false },
                         SimulationStateId: { type: "number", editable: false, defaultValue: 1 },
                         SimulationStateName: { type: "string", editable: false, defaultValue: "ValidationPending" },
-                        SimulationStateDescription: { type: "string", editable: false, defaultValue: "Pendiente de Validación" }
+                        SimulationStateDescription: { type: "string", editable: false, defaultValue: "Pendiente de Validación" },
+                        Active: { type: "boolean" }
                     }
                 }
             },
             transport: {
                 read: {
-                    url: "/CommercialTool/Simulations/Simulations_Read",
+                    url: "/CommercialTool/Simulations/SimulationsAll_Read",
                     dataType: "jsonp"
                 },
                 parameterMap: function (options, operation) {
@@ -67,7 +68,7 @@
                 }, {
                     title: "Estado",
                     field: "SimulationStateDescription",
-                    template: "#= Simulations.getTemplateSimulationState(data) #"
+                    template: "#= SimulationsCompany.getTemplateSimulationState(data) #"
                 }],
             pageable: {
                 buttonCount: 2,
@@ -123,5 +124,17 @@
             groupable: false
         });
         kendo.bind($("#" + this.gridSimulationsCompanyId), this);
+    },
+
+    getTemplateSimulationState: function (data) {
+        var active = "Activa";
+        if (data.Active === false)
+            active = "No Activa";
+
+        var html = kendo.format("<div style='font-size: 15px;'>{0} <strong>[{1}]</strong></div>",
+            data.SimulationStateDescription,
+            active);
+
+        return html;
     }
 });
