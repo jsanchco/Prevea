@@ -260,7 +260,7 @@
     goToEditCompany: function (userId) {
         var grid = $("#" + Companies.gridCompaniesId).data("kendoGrid");
         var item = grid.dataSource.get(userId);
-        var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
+        var tr = $("[data-uid='" + item.uid + "']", grid.tbody);        
 
         grid.editRow(tr);
     },

@@ -215,7 +215,32 @@
 
             ViewBag.Total = Math.Round(Service.GetTotalSimulation(company.SimulationCompanyActive.SimulationId), 2);
 
-            return PartialView("~/Views/CommercialTool/Companies/EconomicDataCompany.cshtml", company);
+            var simulationCompany = new SimulationCompany
+            {
+                CompanyId = companyId,
+                Company = company,
+                SimulationId = company.SimulationCompanyActive.SimulationId,
+                Simulation = company.SimulationCompanyActive.Simulation
+            };
+            return PartialView("~/Views/CommercialTool/Companies/EconomicDataCompany.cshtml", simulationCompany);
+        }
+
+        [HttpGet]
+        public ActionResult EconomicDataSimulation(int simulationId)
+        {
+            var simulation = Service.GetSimulation(simulationId);
+
+            ViewBag.Total = Math.Round(Service.GetTotalSimulation(simulationId), 2);
+
+            var company = simulation.SimulationCompanies.FirstOrDefault().Company;
+            var simulationCompany = new SimulationCompany
+            {
+                CompanyId = company.Id,
+                Company = company,
+                SimulationId = simulationId,
+                Simulation = simulation
+            };
+            return PartialView("~/Views/CommercialTool/Companies/EconomicDataCompany.cshtml", simulationCompany);
         }
 
         [HttpPost]

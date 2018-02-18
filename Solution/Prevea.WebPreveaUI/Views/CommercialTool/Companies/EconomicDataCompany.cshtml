@@ -1,12 +1,12 @@
-﻿@model Company
+﻿@model SimulationCompany
     
 <script>
     EconomicDataCompany.init(
-        @Model.Id, 
-        @Model.SimulationCompanyActive.SimulationId, 
-        "@Model.SimulationCompanyActive.Simulation.StateForeignPreventionService",
-        "@Model.SimulationCompanyActive.Simulation.StateAgencyService",
-        "@Model.SimulationCompanyActive.Simulation.StateTrainingService");
+        @Model.CompanyId,
+        @Model.SimulationId,
+        "@Model.Simulation.StateForeignPreventionService",
+        "@Model.Simulation.StateAgencyService",
+        "@Model.Simulation.StateTrainingService");
 </script>
 
 <div class="row" id="pageEconomicDataCompany" style="width: 95%">
@@ -14,7 +14,7 @@
     <br />
 
     <div class="col-sm-12" style="text-align: right; color: #00639e; font-size: x-small">
-        Estimando inicialmente un número de trabajadores, fijado por la Empresa Contratante en: <strong>@Model.Employees.Count</strong>
+        Estimando inicialmente un número de trabajadores, fijado por la Empresa Contratante en: <strong>@Model.Simulation.NumberEmployees</strong>
     </div>
 
     <div class="col-sm-12" style="text-align: center">
@@ -26,12 +26,12 @@
                 </H2>
             </div>
             <div class="col-sm-1" style="text-align: left; margin-left: -300px; margin-top: 20px;">
-            @if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService != null)
+            @if (Model.Simulation.ForeignPreventionService != null)
             {
                 <input id="switchForeignPreventionService" aria-label="FPS Switch" />
             }
             </div>
-        @if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService != null)
+        @if (Model.Simulation.ForeignPreventionService != null)
         {
             <div class="col-sm-2" style="text-align: left; margin-left: -220px; margin-top: 23px;">Incluir en el Contrato</div>
         }            
@@ -43,24 +43,24 @@
             var totalAmountTecniques = 0.0m;
             var totalAmountHealthVigilance = 0.0m;
             var totalAmountMedicalExamination = 0.0m;
-            if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService != null)
+            if (Model.Simulation.ForeignPreventionService != null)
             {
-                if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques != null)
+                if (Model.Simulation.ForeignPreventionService.AmountTecniques != null)
                 {
-                    totalAmountTecniques = (decimal) Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques * Model.SimulationCompanyActive.Simulation.NumberEmployees;
+                    totalAmountTecniques = (decimal) Model.Simulation.ForeignPreventionService.AmountTecniques * Model.Simulation.NumberEmployees;
                 }
-                if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance != null)
+                if (Model.Simulation.ForeignPreventionService.AmountHealthVigilance != null)
                 {
-                    totalAmountHealthVigilance = (decimal) Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance * Model.SimulationCompanyActive.Simulation.NumberEmployees;
+                    totalAmountHealthVigilance = (decimal) Model.Simulation.ForeignPreventionService.AmountHealthVigilance * Model.Simulation.NumberEmployees;
                 }
-                if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination != null)
+                if (Model.Simulation.ForeignPreventionService.AmountMedicalExamination != null)
                 {
-                    totalAmountMedicalExamination = (decimal) Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination * Model.SimulationCompanyActive.Simulation.NumberEmployees;
+                    totalAmountMedicalExamination = (decimal) Model.Simulation.ForeignPreventionService.AmountMedicalExamination * Model.Simulation.NumberEmployees;
                 }
             }
         }
         
-        @if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService != null)
+        @if (Model.Simulation.ForeignPreventionService != null)
         {
             <div class="row">
                 <div class="col-sm-offset-2 col-sm-3 control-label" style="text-align: left">Especialidades Técnicas</div>
@@ -108,22 +108,22 @@
                 </H2>
             </div>
             <div class="col-sm-1" style="text-align: left; margin-left: -300px; margin-top: 20px;">
-            @if (Model.SimulationCompanyActive.Simulation.AgencyService != null)
+            @if (Model.Simulation.AgencyService != null)
             {
                 <input id="switchAgencyService" aria-label="AS Switch" />
             }
             </div>
-        @if (Model.SimulationCompanyActive.Simulation.AgencyService != null)
+        @if (Model.Simulation.AgencyService != null)
         {
             <div class="col-sm-2" style="text-align: left; margin-left: -220px; margin-top: 23px;">Incluir en el Contrato</div>
         }  
         </div>
 
         <div class="row">
-            @if (Model.SimulationCompanyActive.Simulation.AgencyService != null)
+            @if (Model.Simulation.AgencyService != null)
             {
                 <div class="col-sm-offset-2 col-sm-3 control-label" style="text-align: left">Servicios de Gestoría</div>
-                <div class="col-sm-1 control-label" style="text-align: left; font-weight: bold;">@Model.SimulationCompanyActive.Simulation.AgencyService.Total €</div>
+                <div class="col-sm-1 control-label" style="text-align: left; font-weight: bold;">@Model.Simulation.AgencyService.Total €</div>
                 <div class="col-sm-2 control-label" style="text-align: left">(IVA no incluído)</div>
             }
             else
@@ -151,12 +151,12 @@
                 </H2>
             </div>
             <div class="col-sm-1" style="text-align: left; margin-left: -300px; margin-top: 20px;">
-            @if (Model.SimulationCompanyActive.Simulation.TrainingService != null)
+            @if (Model.Simulation.TrainingService != null)
             {
                 <input id="switchTrainingService" aria-label="TS Switch"/>
             }
             </div>
-        @if (Model.SimulationCompanyActive.Simulation.TrainingService != null)
+        @if (Model.Simulation.TrainingService != null)
         {
             <div class="col-sm-2" style="text-align: left; margin-left: -220px; margin-top: 23px;">Incluir en el Contrato</div>
         }  
@@ -164,7 +164,7 @@
 
         <div class="row">
             <div class="col-sm-offset-2 col-sm-8">
-                @if (Model.SimulationCompanyActive.Simulation.TrainingService != null)
+                @if (Model.Simulation.TrainingService != null)
                 {
                     <div id="gridTrainingCourses" style="height: 40vh;"></div>
                 }

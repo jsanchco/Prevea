@@ -114,6 +114,27 @@
                 }
             },
             dataSource: this.simulationsCompanyDataSource,
+            detailTemplate: SimulationsCompany.getTemplateChildren(),
+            detailInit: SimulationsCompany.childrenSimulationsCompany,
+            //detailTemplate: function (dataItem) {
+            //    var params = {
+            //        url: "/Companies/EconomicDataCompany",
+            //        data: {
+            //            companyId: dataItem.CompanyId
+            //        }
+            //    };
+            //    $.ajax({
+            //        url: params.url,
+            //        type: "GET",
+            //        cache: false,
+            //        datatype: "html",
+            //        data: params.data,
+            //        success: function (result) {
+            //            return result;
+            //            //return kendo.template(result);
+            //        }
+            //    });
+            //},
             resizable: true,
             autoScroll: true,
             selectable: true,
@@ -136,5 +157,35 @@
             active);
 
         return html;
+    },
+
+    getTemplateChildren: function () {
+        var html = "<div style='border: 1px solid; border-radius: 16px; border-color: grey;'>";
+        html += "<H2 style='text-align: center;'><strong>Datos Económicos</strong></H2><br />";
+        html += "<div class='economicDataView'></div><br /><br />";
+        html += "</div>";
+
+        return html;
+    },
+
+    childrenSimulationsCompany: function(e) {
+        var params = {
+            url: "/Companies/EconomicDataSimulation",
+            data: {
+                simulationId: e.data.Id
+            }
+        };
+        $.ajax({
+            url: params.url,
+            type: "GET",
+            cache: false,
+            datatype: "html",
+            data: params.data,
+            success: function (result) {
+                var detailRow = e.detailRow;
+                var economicDataView = detailRow.find(".economicDataView");
+                economicDataView.html(result);
+            }
+        });
     }
 });

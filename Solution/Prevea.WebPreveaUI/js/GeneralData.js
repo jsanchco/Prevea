@@ -255,7 +255,7 @@
         if (elements !== null && elements.length > 0) {
             for (var index = 0; index < elements.length; index ++) {
                 var grid = $("#" + elements[index].id);
-                if (grid !== null) {
+                if (grid !== null && (typeof grid.data("kendoGrid") !== "undefined")) {
                     grid.data("kendoGrid").resize();    
                 }                
             }
