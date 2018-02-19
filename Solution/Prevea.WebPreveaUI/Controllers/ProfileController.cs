@@ -60,6 +60,11 @@
             return PartialView("~/Views/Profile/ChoosePhoto.cshtml", user);
         }
 
+        public ActionResult ChangePassword()
+        {
+            return PartialView("~/Views/Profile/ChangePassword.cshtml", new ChangePassword());
+        }
+
         [HttpPost]
         public ActionResult SavePhoto(IEnumerable<HttpPostedFileBase> filePhoto)
         {
@@ -128,6 +133,25 @@
                 ViewBag.Error = new List<string> { e.Message };
 
                 return PartialView("~/Views/Profile/ProfileUser.cshtml", user);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult UpdatePasswordProfile(ChangePassword changePassword)
+        {
+            try
+            {
+                ViewBag.SelectTabId = 0;
+
+                return PartialView("~/Views/Profile/ProfileUser.cshtml", AutoMapper.Mapper.Map<UserViewModel>(Service.GetUser(changePassword.UserId)));
+            }
+            catch (Exception e)
+            {
+                ViewBag.SelectTabId = 0;
+
+                ViewBag.Error = new List<string> { e.Message };
+
+                return PartialView("~/Views/Profile/ProfileUser.cshtml", AutoMapper.Mapper.Map<UserViewModel>(Service.GetUser(changePassword.UserId)));
             }
         }
         #endregion

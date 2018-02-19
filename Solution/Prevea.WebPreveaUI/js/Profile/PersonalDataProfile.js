@@ -1,5 +1,4 @@
 ﻿var PersonalDataProfile = kendo.observable({
-
     spInitialsId: "spInitials",
     errorFromFrontId: "errorFromFront",
 
@@ -13,6 +12,10 @@
     textBoxProfessionalCategoryId: "textBoxProfessionalCategory",
 
     btnValidateId: "btnValidate",
+    btnChangePasswordId: "btnChangePassword",
+
+    changePasswordId: "changePassword",
+    changePasswordWindowId: null,
 
     userId: null,
 
@@ -60,6 +63,21 @@
             if (errors.length > 0) {
                 e.preventDefault();
             }
+        });
+
+        this.changePasswordWindowId = $("#" + this.changePasswordId);
+        this.changePasswordWindowId.kendoWindow({
+            width: "330px",
+            title: "Cambiar Foto",
+            visible: false,
+            modal: true,
+            actions: [
+                "Close"
+            ],
+            content: "/Profile/ChangePassword"
+        });
+        $($("#" + this.btnChangePasswordId)).on("click", function () {
+            PersonalDataProfile.changePasswordWindowId.data("kendoWindow").center().open();
         });
     },
 

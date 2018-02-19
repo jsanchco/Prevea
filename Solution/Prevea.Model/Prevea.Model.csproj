@@ -95,6 +95,7 @@
     <Compile Include="Model\WorkCenterState.cs" />
     <Compile Include="ViewModel\AgencyServiceViewModel.cs" />
     <Compile Include="ViewModel\AgencyViewModel.cs" />
+    <Compile Include="ViewModel\ChangePassword.cs" />
     <Compile Include="ViewModel\CompanyViewModel.cs" />
     <Compile Include="ViewModel\ContractualDocumentCompanyViewModel.cs" />
     <Compile Include="ViewModel\ContractualDocumentTypeViewModel.cs" />

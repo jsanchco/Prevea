@@ -102,15 +102,23 @@
             <br />
             <br />
 
-            <div class="form-actions" style="text-align: right;">
+            <div class="row">
+                <div class="col-sm-2" style="text-align: left;">
+                    <input type="button" id="btnChangePassword" value="Cambio de Contraseña" class="btn btn-prevea btn" />
+                </div>
+                                  
+                <div class="col-sm-offset-8 col-sm-2" style="text-align: right;">
 
-                @Html.HiddenFor(model => model.Id)
-                @Html.HiddenFor(model => model.RoleId)
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.RoleId)
 
-                <input type="submit" id="btnValidate" value="Guardar" class="btn btn-prevea btn" />
+                    <input type="submit" id="btnValidate" value="Guardar" class="btn btn-prevea btn"/>
 
+                </div>
             </div>
+     
         }           
 
     </div>
+
 </div>

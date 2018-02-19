@@ -674,6 +674,7 @@
     <Content Include="js\CommercialTool\Simulations\TrainingService.js" />
     <Content Include="js\Courses\ManagementCourses\ManagementCourses.js" />
     <Content Include="js\Notifications\Notifications.js" />
+    <Content Include="js\Profile\ChangePassword.js" />
     <Content Include="js\Profile\ChoosePhoto.js" />
     <Content Include="js\Profile\DocumentsProfile.js" />
     <Content Include="js\Profile\EconomicTrackingProfile.js" />
@@ -1137,6 +1138,7 @@
     <Content Include="Views\CommercialTool\Companies\AddDocumentFirmed.cshtml" />
     <Content Include="Views\CommercialTool\Companies\AddAnnex.cshtml" />
     <Content Include="Views\CommercialTool\Companies\SimulationsCompany.cshtml" />
+    <Content Include="Views\Profile\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
