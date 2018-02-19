@@ -69,6 +69,13 @@
                     title: "Estado",
                     field: "SimulationStateDescription",
                     template: "#= SimulationsCompany.getTemplateSimulationState(data) #"
+                }, {
+                    title: "Comandos",
+                    field: "Commands",
+                    width: 130,
+                    groupable: "false",
+                    filterable: false,
+                    template: "#= SimulationsCompany.getColumnTemplateCommands(data) #"
                 }],
             pageable: {
                 buttonCount: 2,
@@ -116,25 +123,6 @@
             dataSource: this.simulationsCompanyDataSource,
             detailTemplate: SimulationsCompany.getTemplateChildren(),
             detailInit: SimulationsCompany.childrenSimulationsCompany,
-            //detailTemplate: function (dataItem) {
-            //    var params = {
-            //        url: "/Companies/EconomicDataCompany",
-            //        data: {
-            //            companyId: dataItem.CompanyId
-            //        }
-            //    };
-            //    $.ajax({
-            //        url: params.url,
-            //        type: "GET",
-            //        cache: false,
-            //        datatype: "html",
-            //        data: params.data,
-            //        success: function (result) {
-            //            return result;
-            //            //return kendo.template(result);
-            //        }
-            //    });
-            //},
             resizable: true,
             autoScroll: true,
             selectable: true,
@@ -159,6 +147,16 @@
         return html;
     },
 
+    getColumnTemplateCommands: function (data) {
+        var html = "<div align='center'>";
+        html += kendo.format(
+            "<a toggle='tooltip' title='Ir a Simulación' onclick='SimulationsCompany.goToSimulationFromSimulationsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+            data.Id);
+        html += kendo.format("</div>");
+
+        return html;
+    },
+
     getTemplateChildren: function () {
         var html = "<div style='border: 1px solid; border-radius: 16px; border-color: grey;'>";
         html += "<H2 style='text-align: center;'><strong>Datos Económicos</strong></H2><br />";
@@ -166,6 +164,17 @@
         html += "</div>";
 
         return html;
+    },
+
+    goToSimulationFromSimulationsCompany: function (simulationId) {
+        var params = {
+            url: "/Simulations/DetailSimulation",
+            data: {
+                simulationId: simulationId,
+                selectTabId: 0
+            }
+        };
+        GeneralData.goToActionController(params);
     },
 
     childrenSimulationsCompany: function(e) {

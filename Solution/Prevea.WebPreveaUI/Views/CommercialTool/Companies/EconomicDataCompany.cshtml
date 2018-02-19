@@ -24,17 +24,7 @@
                 <H2>
                     <strong>Servicio de Prevención Ajeno</strong>
                 </H2>
-            </div>
-            <div class="col-sm-1" style="text-align: left; margin-left: -300px; margin-top: 20px;">
-            @if (Model.Simulation.ForeignPreventionService != null)
-            {
-                <input id="switchForeignPreventionService" aria-label="FPS Switch" />
-            }
-            </div>
-        @if (Model.Simulation.ForeignPreventionService != null)
-        {
-            <div class="col-sm-2" style="text-align: left; margin-left: -220px; margin-top: 23px;">Incluir en el Contrato</div>
-        }            
+            </div>      
         </div>
     
         <br/>
@@ -106,17 +96,7 @@
                 <H2>
                     <strong>Gestoría</strong>
                 </H2>
-            </div>
-            <div class="col-sm-1" style="text-align: left; margin-left: -300px; margin-top: 20px;">
-            @if (Model.Simulation.AgencyService != null)
-            {
-                <input id="switchAgencyService" aria-label="AS Switch" />
-            }
-            </div>
-        @if (Model.Simulation.AgencyService != null)
-        {
-            <div class="col-sm-2" style="text-align: left; margin-left: -220px; margin-top: 23px;">Incluir en el Contrato</div>
-        }  
+            </div> 
         </div>
 
         <div class="row">
@@ -150,16 +130,6 @@
                     <strong>Formación</strong>
                 </H2>
             </div>
-            <div class="col-sm-1" style="text-align: left; margin-left: -300px; margin-top: 20px;">
-            @if (Model.Simulation.TrainingService != null)
-            {
-                <input id="switchTrainingService" aria-label="TS Switch"/>
-            }
-            </div>
-        @if (Model.Simulation.TrainingService != null)
-        {
-            <div class="col-sm-2" style="text-align: left; margin-left: -220px; margin-top: 23px;">Incluir en el Contrato</div>
-        }  
         </div>
 
         <div class="row">

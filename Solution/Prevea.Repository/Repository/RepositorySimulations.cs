@@ -14,23 +14,44 @@
     {
         public Simulation GetSimulation(int id)
         {
-            return Context.Simulations
+            var simulation = Context.Simulations
                 .Include(x => x.User)
                 .Include(x => x.UserAssigned)
                 .Include(x => x.SimulationState)
                 .Include(x => x.SimulationCompanies)
                 .FirstOrDefault(m => m.Id == id);
+
+            var simulationCompany = simulation?.SimulationCompanies.FirstOrDefault();
+            if (simulationCompany?.CompanyId != null)
+            {
+                simulation.SimulationCompanyActive = GetSimulationsCompanyByCompany((int) simulationCompany.CompanyId)
+                    .FirstOrDefault(x => x.Simulation.Active);
+            }
+           
+            return simulation;
         }
 
         public List<Simulation> GetSimulations()
         {
-            return Context.Simulations
+            var simulations = Context.Simulations
                 .Include(x => x.User)
                 .Include(x => x.UserAssigned)
                 .Include(x => x.SimulationState)
                 .Include(x => x.SimulationCompanies)
                 .OrderByDescending(x => x.Date)
                 .ToList();
+
+            foreach (var simulation in simulations)
+            {
+                var simulationCompany = simulation?.SimulationCompanies.FirstOrDefault();
+                if (simulationCompany?.CompanyId != null)
+                {
+                    simulation.SimulationCompanyActive = GetSimulationsCompanyByCompany((int)simulationCompany.CompanyId)
+                        .FirstOrDefault(x => x.Simulation.Active);
+                }
+            }
+
+            return simulations;
         }
 
         public Simulation SaveSimulation(Simulation simulation)

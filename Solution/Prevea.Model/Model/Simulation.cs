@@ -71,10 +71,7 @@
         public virtual ICollection<Notification> Notifications { get; set; }
 
         [NotMapped]
-        public SimulationCompany SimulationCompanyActive => SimulationCompanies.FirstOrDefault(x => x.Simulation.Active);
-
-        //[NotMapped]
-        //public SimulationCompany SimulationCompany => SimulationCompanies?.FirstOrDefault();
+        public SimulationCompany SimulationCompanyActive { get; set; }
 
         public virtual ICollection<SimulationCompany> SimulationCompanies { get; set; }
     }
