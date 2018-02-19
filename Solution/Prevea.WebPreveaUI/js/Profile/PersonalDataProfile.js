@@ -68,7 +68,7 @@
         this.changePasswordWindowId = $("#" + this.changePasswordId);
         this.changePasswordWindowId.kendoWindow({
             width: "330px",
-            title: "Cambiar Foto",
+            title: "Cambiar Contraseña",
             visible: false,
             modal: true,
             actions: [

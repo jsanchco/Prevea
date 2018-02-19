@@ -14,6 +14,7 @@
     using System.IO;
     using Kendo.Mvc.UI;
     using Common;
+    using System.Diagnostics;
 
     #endregion
 
@@ -62,7 +63,7 @@
 
         public ActionResult ChangePassword()
         {
-            return PartialView("~/Views/Profile/ChangePassword.cshtml", new ChangePassword());
+            return PartialView("~/Views/Profile/ChangePassword.cshtml");
         }
 
         [HttpPost]
@@ -80,7 +81,7 @@
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.Message);
 
                 return Json(new Result { Status = Status.Error }, JsonRequestBehavior.AllowGet);
             }
@@ -137,21 +138,24 @@
         }
 
         [HttpPost]
-        public ActionResult UpdatePasswordProfile(ChangePassword changePassword)
+        public JsonResult UpdatePassword(string oldPassword, string newPassword)
         {
             try
             {
-                ViewBag.SelectTabId = 0;
+                var user = Service.GetUser(User.Id);
+                if (user.Password != oldPassword)
+                    return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
 
-                return PartialView("~/Views/Profile/ProfileUser.cshtml", AutoMapper.Mapper.Map<UserViewModel>(Service.GetUser(changePassword.UserId)));
+                user.Password = newPassword;
+                Service.SaveUser(User.Id, user);
+
+                return Json(new Result { Status = Status.Ok }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
-                ViewBag.SelectTabId = 0;
+                Debug.WriteLine(e.Message);
 
-                ViewBag.Error = new List<string> { e.Message };
-
-                return PartialView("~/Views/Profile/ProfileUser.cshtml", AutoMapper.Mapper.Map<UserViewModel>(Service.GetUser(changePassword.UserId)));
+                return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
             }
         }
         #endregion
