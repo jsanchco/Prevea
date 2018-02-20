@@ -736,11 +736,11 @@
         }
 
         [HttpGet]
-        public ActionResult AddAnnex(int contractualDocumentId)
+        public ActionResult AddOtherDocument(int contractualDocumentId)
         {
             var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
 
-            return PartialView("~/Views/CommercialTool/Companies/AddAnnex.cshtml", contractualDocument);
+            return PartialView("~/Views/CommercialTool/Companies/AddOtherDocument.cshtml", contractualDocument);
         }
 
         [HttpPost]
@@ -768,13 +768,13 @@
         }
 
         [HttpPost]
-        public ActionResult SaveAnnex(IEnumerable<HttpPostedFileBase> fileAnnex, int contractualDocumentId)
+        public ActionResult SaveOtherDocument(IEnumerable<HttpPostedFileBase> fileOtherDocument, int contractualDocumentId)
         {
-            if (fileAnnex == null || !fileAnnex.Any())
+            if (fileOtherDocument == null || !fileOtherDocument.Any())
                 return Json(new Result { Status = Status.Error }, JsonRequestBehavior.AllowGet);
 
             var result =
-                Service.SaveAnnex(fileAnnex.FirstOrDefault(), contractualDocumentId);
+                Service.SaveOtherDocument(fileOtherDocument.FirstOrDefault(), contractualDocumentId);
 
             if (result.Status == Status.Error)
             {

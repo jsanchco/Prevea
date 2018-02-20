@@ -365,7 +365,7 @@
             }
         }
 
-        public Result SaveAnnex(HttpPostedFileBase fileAnnex, int contractualDocumentId)
+        public Result SaveOtherDocument(HttpPostedFileBase fileOtherDocument, int contractualDocumentId)
         {
             try
             {
@@ -378,7 +378,7 @@
                 var path = contractualDocument.UrlRelative.Substring(0, contractualDocument.UrlRelative.LastIndexOf("/", StringComparison.Ordinal) + 1);
                 var fileName = contractualDocument.UrlRelative.Substring(contractualDocument.UrlRelative.LastIndexOf("/", StringComparison.Ordinal) + 1);
                 var url = Path.Combine(HttpContext.Current.Server.MapPath(path), fileName);
-                fileAnnex.SaveAs(url);
+                fileOtherDocument.SaveAs(url);
 
                 var result = UpdateContractualDocument(contractualDocument.Id, contractualDocument);
                 if (result.Status == Status.Error)
@@ -506,6 +506,9 @@
                     break;
                 case (int)EnContractualDocumentType.UnSubscribeContract:
                     typeId = "COBAJ";
+                    break;
+                case (int)EnContractualDocumentType.OtherDocuments:
+                    typeId = "OTDOC";
                     break;
                 default:
                     typeId = string.Empty;

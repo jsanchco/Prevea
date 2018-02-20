@@ -78,6 +78,7 @@
         });
         $($("#" + this.btnChangePasswordId)).on("click", function () {
             PersonalDataProfile.changePasswordWindowId.data("kendoWindow").center().open();
+            ChangePassword.resetFields();
         });
     },
 

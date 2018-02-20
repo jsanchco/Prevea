@@ -53,5 +53,11 @@
                 }
             }
         });
+    },
+
+    resetFields: function() {
+        $("#" + this.textBoxOldPasswordId).val("");
+        $("#" + this.textBoxNewPasswordId).val("");
+        $("#" + this.textBoxRepeatPasswordId).val("");
     }
 });

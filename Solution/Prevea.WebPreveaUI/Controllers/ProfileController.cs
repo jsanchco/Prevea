@@ -145,9 +145,13 @@
                 var user = Service.GetUser(User.Id);
                 if (user.Password != oldPassword)
                     return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
+                
+                var role = user.UserRoles.FirstOrDefault()?.Role;
+                if (role == null)
+                    return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
 
                 user.Password = newPassword;
-                Service.SaveUser(User.Id, user);
+                Service.SaveUser(role.Id, user);
 
                 return Json(new Result { Status = Status.Ok }, JsonRequestBehavior.AllowGet);
             }

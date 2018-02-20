@@ -1,9 +1,9 @@
-﻿var AddAnnex = kendo.observable({
+﻿var AddOtherDocument = kendo.observable({
 
-    addAnnexId: "addAnnex",
+    addOtherDocumentId: "addOtherDocument",
 
     contractualDocumentId: null,
-    fileAnnexId: "fileAnnex",
+    fileOtherDocumentId: "fileOtherDocument",
 
     init: function (contractualDocumentId) {
         this.contractualDocumentId = contractualDocumentId;
@@ -12,9 +12,9 @@
     },
 
     setUpWidgets: function () {
-        $("#" + this.fileAnnexId).kendoUpload({
+        $("#" + this.fileOtherDocumentd).kendoUpload({
             async: {
-                saveUrl: "/Companies/SaveAnnex",
+                saveUrl: "/Companies/SaveOtherDocument",
                 autoUpload: false
             },
             multiple: false,
@@ -24,10 +24,10 @@
                 uploadSelectedFiles: "Guardar"
             },
             upload: function (e) {
-                e.data = { contractualDocumentId: AddAnnex.contractualDocumentId };
+                e.data = { contractualDocumentId: AddOtherDocument.contractualDocumentId };
             },
-            success: AddAnnex.onSuccessSaveDocument,
-            error: AddAnnex.onErrorSaveDocument
+            success: AddOtherDocument.onSuccessSaveDocument,
+            error: AddOtherDocument.onErrorSaveDocument
         });
     },
 
@@ -35,10 +35,10 @@
         if (e.response.Status === Constants.resultStatus.Ok) {
             GeneralData.showNotification(Constants.ok, "", "success");
 
-            var addAnnexWindow = $("#" + AddAnnex.addAnnexId);
-            addAnnexWindow.data("kendoWindow").close();
+            var addOtherDocumentWindow = $("#" + AddOtherDocument.addOtherDocumentId);
+            addOtherDocumentWindow.data("kendoWindow").close();
 
-            ContractualsDocumentsCompany.updateRowAnnex(e.response.Object);
+            ContractualsDocumentsCompany.updateRowOtherDocument(e.response.Object);
         } else {
             GeneralData.showNotification(Constants.ko, "", "error");
         }

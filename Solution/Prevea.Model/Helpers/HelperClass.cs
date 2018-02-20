@@ -143,6 +143,8 @@
                     return "Contrato Formación";
                 case "UnSubscribeContract":
                     return "Baja de Contrato";
+                case "OtherDocuments":
+                    return "Otros Documentos";
                     
                 default:
                     return name;

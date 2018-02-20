@@ -7,8 +7,8 @@
 
     addDocumentFirmedWindow: null,
     addDocumentFirmedId: "addDocumentFirmed",
-    addAnnexWindow: null,
-    addAnnexId: "addAnnex",
+    addOtherDocumentWindow: null,
+    addOtherDocumentId: "addOtherDocument",
 
     contractualsDocumentsCompanyDataSource: null,
     contractualDocumentTypeDataSorce: null,
@@ -38,12 +38,12 @@
         });
     },
 
-    setUpAddAnnexWindow: function (contractualDocumentId) {
-        var url = "/Companies/AddAnnex?contractualDocumentId=" + contractualDocumentId;
-        this.addAnnexWindow = $("#" + this.addAnnexId);
-        this.addAnnexWindow.kendoWindow({
+    setUpAddOtherDocumentWindow: function (contractualDocumentId) {
+        var url = "/Companies/AddOtherDocument?contractualDocumentId=" + contractualDocumentId;
+        this.addOtherDocumentWindow = $("#" + this.addOtherDocumentId);
+        this.addOtherDocumentWindow.kendoWindow({
             width: "330px",
-            title: "Agregar Anexo",
+            title: "Agregar Documento",
             visible: false,
             modal: true,
             actions: [
@@ -126,7 +126,7 @@
 
                             GeneralData.showNotification(Constants.ok, "", "success");
                             if (!e.response.UrlRelative) {
-                                ContractualsDocumentsCompany.goToAddAnnex(e.response.Id);
+                                ContractualsDocumentsCompany.goToAddOtherDocument(e.response.Id);
                             }
                         }                                                
                     }
@@ -342,7 +342,7 @@
             html += kendo.format("<a toggle='tooltip' title='Abrir Documento' onclick='GeneralData.goToOpenContractualDocument(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>&nbsp;&nbsp;", data.Id);
             //html += kendo.format("<a toggle='tooltip' title='Ver Documento' onclick='ContractualsDocumentsCompany.goToOfferView(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>&nbsp;&nbsp;", data.Id);
         } else {
-            html += kendo.format("<a toggle='tooltip' title='Agregar Anexo' onclick='ContractualsDocumentsCompany.goToAddAnnex(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/unknown_opt.png'></a></div></a>&nbsp;&nbsp;&nbsp;", data.Id);
+            html += kendo.format("<a toggle='tooltip' title='Agregar Otro Documento' onclick='ContractualsDocumentsCompany.goToAddOtherDocument(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/unknown_opt.png'></a></div></a>&nbsp;&nbsp;&nbsp;", data.Id);
             //html += kendo.format("<a toggle='tooltip' title='Ver Documento' onclick='ContractualsDocumentsCompany.goToOfferView(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/unknown_opt.png'></a></div></a>&nbsp;&nbsp;", data.Id);
         }
 
@@ -433,9 +433,9 @@
         this.addDocumentFirmedWindow.data("kendoWindow").center().open();
     },
 
-    goToAddAnnex: function (contractualDocumentId) {
-        this.setUpAddAnnexWindow(contractualDocumentId);
-        this.addAnnexWindow.data("kendoWindow").center().open();
+    goToAddOtherDocument: function (contractualDocumentId) {
+        this.setUpAddOtherDocumentWindow(contractualDocumentId);
+        this.addOtherDocumentWindow.data("kendoWindow").center().open();
     },
 
     goToDeleteContractualDocumentCompanyFirmed: function (contractualDocumentCompanyFirmedId) {
@@ -512,7 +512,7 @@
         grid.refresh();
     },
 
-    updateRowAnnex: function (contractualDocument) {
+    updateRowOtherDocument: function (contractualDocument) {
         var grid = $("#" + this.gridContractualsDocumentsCompanyId).data("kendoGrid");
         var dataItem = grid.dataSource.get(contractualDocument.Id);
         dataItem.UrlRelative = contractualDocument.UrlRelative;
