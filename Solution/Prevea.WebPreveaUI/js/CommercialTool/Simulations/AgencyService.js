@@ -1,6 +1,5 @@
 ﻿var AgencyService = kendo.observable({
 
-    textTotalId: "textTotalAgencyService",
     textAreaObservationsId: "textAreaObservationsAgencyService",
     btnValidateId: "btnValidateAgencyService",
     cmbEngagementTypeId: "cmbEngagementType",
@@ -57,13 +56,6 @@
             format: "c",
             decimals: 1,
             change: AgencyService.onChangeTextAmountByRoster
-        });
-        $("#" + this.textTotalId).kendoNumericTextBox({
-            format: "c",
-            decimals: 1,
-            change: function() {
-                AgencyService.updateButtonsOnChange();
-            }
         });
         $("#" + this.textAreaObservationsId).change(function () {
             AgencyService.updateButtonsOnChange();
@@ -126,14 +118,14 @@
 
     blockFields: function () {
         if (DetailSimulation.simulationStateId === Constants.simulationState.SendToCompany) {
-            var numerictextbox = $("#" + AgencyService.textTotalId).data("kendoNumericTextBox");
-            numerictextbox.enable(false);
-
-            numerictextbox = $("#" + AgencyService.textAmountByEngagementTypeId).data("kendoNumericTextBox");
+            var numerictextbox = $("#" + AgencyService.textAmountByEngagementTypeId).data("kendoNumericTextBox");
             numerictextbox.enable(false);
 
             numerictextbox = $("#" + AgencyService.textAmountByRosterId).data("kendoNumericTextBox");
             numerictextbox.enable(false);
+
+            var dropdownlist = $("#" + AgencyService.cmbEngagementTypeId).data("kendoDropDownList");
+            dropdownlist.enable(false);
 
             $("#" + AgencyService.textAreaObservationsId).removeAttr("disabled");
             $("#" + AgencyService.textAreaObservationsId).prop("disabled", true);

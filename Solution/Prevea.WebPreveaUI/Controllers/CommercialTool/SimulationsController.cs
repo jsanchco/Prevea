@@ -41,7 +41,7 @@
         }
 
         [HttpGet]
-        public JsonResult SimulationsAll_Read([DataSourceRequest] DataSourceRequest request)
+        public JsonResult SimulationsAll_Read([DataSourceRequest] DataSourceRequest request, int companyId)
         {
             var data = AutoMapper.Mapper.Map<List<SimulationViewModel>>(Service.GetSimulationsByUser(User.Id));
 

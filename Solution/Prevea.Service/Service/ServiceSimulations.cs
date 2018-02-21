@@ -185,6 +185,11 @@
             return GetSimulationsByUser(userId).Where(x => x.SimulationParentId == simulationParentId).ToList();
         }
 
+        public List<Simulation> GetSimulationsByCompany(int companyId)
+        {
+            throw new NotImplementedException();
+        }
+
         public Result SendToCompanies(int simulationId)
         {
             try

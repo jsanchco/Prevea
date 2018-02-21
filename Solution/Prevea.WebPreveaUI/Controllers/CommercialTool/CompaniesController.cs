@@ -902,9 +902,16 @@
             }, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetContractualDocumentTypes([DataSourceRequest] DataSourceRequest request)
+        public JsonResult GetAllContractualDocumentTypes([DataSourceRequest] DataSourceRequest request)
         {
             var data = AutoMapper.Mapper.Map<List<ContractualDocumentTypeViewModel>>(Service.GetContractualDocumentTypes());
+
+            return this.Jsonp(data);
+        }
+
+        public JsonResult GetContractualDocumentTypes([DataSourceRequest] DataSourceRequest request, int companyId)
+        {
+            var data = AutoMapper.Mapper.Map<List<ContractualDocumentTypeViewModel>>(Service.GetContractualDocumentTypes(companyId));
 
             return this.Jsonp(data);
         }

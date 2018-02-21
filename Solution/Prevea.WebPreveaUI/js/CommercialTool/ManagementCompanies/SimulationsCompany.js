@@ -38,9 +38,13 @@
             transport: {
                 read: {
                     url: "/CommercialTool/Simulations/SimulationsAll_Read",
-                    dataType: "jsonp"
+                    dataType: "jsonp",
+                    data: { companyId: this.companyId }
                 },
                 parameterMap: function (options, operation) {
+                    if (operation === "read") {
+                        return { companyId: options.companyId };
+                    }
                     if (operation !== "read" && options) {
                         return { simulation: kendo.stringify(options) };
                     }

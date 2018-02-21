@@ -29,27 +29,7 @@
                 <div class="row form-group">
                     <div class="col-sm-4">
                         @Html.TextBoxFor(model => model.EngagementTypeId, new { id = "cmbEngagementType", style = "width:100%" })
-                        @*<input id="EngagementTypeId" style="width: 100%;"/>*@
-
-                        @*@(Html.Kendo()
-                              .DropDownListFor(model => model.EngagementTypeId)
-                              .Name("EngagementTypeId")
-                              .OptionLabel("-- Seleccionar --")
-                              .DataTextField("Text")
-                              .DataValueField("Value")
-                              .DataSource(source =>
-                              {
-                                  source.Read(read =>
-                                  {
-                                      read.Action("GetEngagementTypes", "Simulations");
-                                  });
-                              })
-                              .Events(e =>
-                              {
-                                  e.Select("AgencyService.onSelectEngagementType").Change("AgencyService.onChangeEngagementType");
-                              })
-                              .HtmlAttributes(new {id = "cmbEngagementType", style = "width: 100%"}))*@
-                    </div>
+                     </div>
 
                     <div class="col-sm-4">
                         @Html.TextBoxFor(model => model.AmountByEngagementType, new

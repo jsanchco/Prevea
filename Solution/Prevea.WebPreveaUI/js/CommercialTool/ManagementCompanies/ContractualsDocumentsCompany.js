@@ -150,8 +150,15 @@
             },
             transport: {
                 read: {
-                    url: "/Companies/GetContractualDocumentTypes",
+                    url: "/Companies/GetAllContractualDocumentTypes",
                     dataType: "jsonp"
+                },
+                parameterMap: function (options, operation) {
+                    if (operation === "read") {
+                        return { companyId: options.companyId };
+                    }
+
+                    return null;
                 }
             }
         });
@@ -247,7 +254,6 @@
             resizable: true,
             autoScroll: true,
             selectable: true,
-            detailTemplate: this.getTemplateChildren(),
             detailInit: ContractualsDocumentsCompany.childrenDocuments,
             sortable: {
                 mode: "single",
@@ -296,7 +302,32 @@
                 optionLabel: "Selecciona ...",
                 dataValueField: "Id",
                 autoWidth: true,
-                dataSource: ContractualsDocumentsCompany.contractualDocumentTypeDataSorce
+                dataSource: {
+                    schema: {
+                        model: {
+                            id: "Id",
+                            fields: {
+                                Id: { type: "number" },
+                                Name: { type: "string" },
+                                Description: { type: "string" }
+                            }
+                        }
+                    },
+                    transport: {
+                        read: {
+                            url: "/Companies/GetContractualDocumentTypes",
+                            dataType: "jsonp",
+                            data: { companyId: ContractualsDocumentsCompany.companyId }
+                        },
+                        parameterMap: function (options, operation) {
+                            if (operation === "read") {
+                                return { companyId: options.companyId };
+                            }
+
+                            return null;
+                        }
+                    }
+                }
             });
     },
 
@@ -322,15 +353,6 @@
         html += "<span name='create' class='k-grid-add' id='createUser'>";
         html += "<a class='btn btn-prevea k-grid-add' role='button'> Agregar nuevo</a>";
         html += "</span></div>";
-
-        return html;
-    },
-
-    getTemplateChildren: function () {
-        var html = "<div>";
-        html += "<H2 style='text-align: center;'>Documentos Relacionados</H2><br />";
-        html += "<div class='gridContractualsDocumentsCompanyChildren'></div><br /><br />";
-        html += "</div>";
 
         return html;
     },
@@ -518,249 +540,5 @@
         dataItem.UrlRelative = contractualDocument.UrlRelative;
 
         grid.refresh();
-    },
-
-    childrenDocuments: function (e) {
-        var beginDate = new Date();
-        var endDate = new Date();
-        endDate.setFullYear(beginDate.getFullYear());
-        endDate.setDate(endDate.getDate() - 1);
-
-        if (e.data.ContractualDocumentTypeId === Constants.contractualDocumentType.OfferSPA ||
-            e.data.ContractualDocumentTypeId === Constants.contractualDocumentType.OfferGES ||
-            e.data.ContractualDocumentTypeId === Constants.contractualDocumentType.OfferFOR ||
-            e.data.ContractualDocumentTypeId === Constants.contractualDocumentType.ContractFOR ||
-            e.data.ContractualDocumentTypeId === Constants.contractualDocumentType.Annex ||
-            e.data.ContractualDocumentTypeId === Constants.contractualDocumentType.UnSubscribeContract ||
-            e.data.ContractualDocumentTypeId === Constants.contractualDocumentType.Firmed) {
-            return;
-        }
-
-        var detailRow = e.detailRow;
-        detailRow.find(".gridContractualsDocumentsCompanyChildren").kendoGrid({
-            dataSource: {
-                schema: {
-                    model: {
-                        id: "Id",
-                        fields: {
-                            Id: { type: "number", defaultValue: 0 },
-                            CompanyId: { type: "number", defaultValue: e.data.CompanyId },
-                            Enrollment: { type: "string", editable: false },
-                            ContractualDocumentTypeId: {
-                                type: "number",
-                                validation: { required: { message: " Campo Obligatorio " } }
-                            },
-                            ContractualDocumentTypeName: {
-                                type: "string",
-                                validation: { required: { message: " Campo Obligatorio " } }
-                            },
-                            BeginDate: { type: "date", defaultValue: beginDate, format: "{0:dd/MM/yy}" },
-                            EndDate: { type: "date", defaultValue: endDate, format: "{0:dd/MM/yy}" },
-                            UrlRelative: { type: "string" },
-                            Observations: { type: "string" },
-                            ContractualDocumentCompanyFirmedId: { type: "number", defaultValue: null },
-                            ContractualDocumentCompanyFirmedEnrollment: { type: "string" },
-                            ContractualDocumentCompanyFirmedUrlRelative: { type: "string" },
-                            ContractualDocumentCompanyParentId: { type: "number", defaultValue: e.data.Id }
-                        }
-                    }
-                },
-                transport: {
-                    read: {
-                        url: "/Companies/ChildrenContractualsDocumentsCompany_Read",
-                        dataType: "jsonp",
-                        data: { contractualDocumentId: e.data.Id }
-                    },
-                    destroy: {
-                        url: "/Companies/ContractualsDocumentsCompany_Destroy",
-                        dataType: "jsonp"
-                    },
-                    create: {
-                        url: "/Companies/ContractualsDocumentsCompany_Create",
-                        dataType: "jsonp"
-                    },
-                    parameterMap: function(options, operation) {
-                        if (operation === "read") {
-                            return { contractualDocumentId: options.contractualDocumentId };
-                        }
-                        if (operation !== "read" && options) {
-                            return { contractualDocument: kendo.stringify(options) };
-                        }
-
-                        return null;
-                    }
-                },
-                requestEnd: function(e) {
-                    if ((e.type === "update" || e.type === "destroy" || e.type === "create") && e.response !== null) {
-                        var grid = $("#" + ContractualsDocumentsCompany.gridContractualsDocumentsCompanyId)
-                            .data("kendoGrid");
-                        if (typeof e.response.Errors !== "undefined") {
-                            GeneralData.showNotification(e.response.Errors, "", "error");
-                            if (e.type === "create") {
-                                this.data().remove(this.data().at(0));
-
-                                kendo.ui.progress(grid.element, false);
-                            } else {
-                                if (e.type === "destroy") {
-                                    ContractualsDocumentsCompany.contractualsDocumentsCompanyDataSource.read();
-                                }
-                                this.cancelChanges();
-                            }
-                        } else {
-                            if (e.type === "create") {
-                                kendo.ui.progress(grid.element, false);
-
-                                GeneralData.showNotification(Constants.ok, "", "success");
-                            }
-                        }
-                    }
-                },
-                pageSize: 10
-            },
-            columns: [
-                {
-                    field: "Enrollment",
-                    title: "Matrícula",
-                    width: 250,
-                    groupable: "false",
-                    template: "#= ContractualsDocumentsCompany.getColumnTemplateEnrollment(data) #"
-                }, {
-                    field: "ContractualDocumentTypeId",
-                    title: "Tipo",
-                    width: "150px",
-                    editor: ContractualsDocumentsCompany.contractualChildrenDocumentTypeDropDownEditor,
-                    template: "#= ContractualsDocumentsCompany.getContractualDocumentTypeDescription(data.ContractualDocumentTypeId) #",
-                    groupHeaderTemplate: "Agrupado : #= ContractualsDocumentsCompany.getContractualDocumentTypeDescription(value) #"
-                }, {
-                    field: "BeginDate",
-                    title: "Fecha Inicio",
-                    template: "#= Templates.getColumnTemplateDate(data.BeginDate) #"
-                }, {
-                    field: "EndDate",
-                    title: "Fecha Fin",
-                    template: "#= Templates.getColumnTemplateDate(data.EndDate) #"
-                }, {
-                    field: "Observations",
-                    title: "Observaciones",
-                    groupable: "false"
-                }, {
-                    title: "Comandos",
-                    field: "Commands",
-                    width: 160,
-                    groupable: "false",
-                    filterable: false,
-                    template: "#= ContractualsDocumentsCompany.getColumnTemplateCommands(data) #"
-                }],
-            pageable: {
-                buttonCount: 2,
-                pageSizes: [10, 20, "all"],
-                refresh: true,
-                messages: {
-                    display: "Elementos mostrados {0} - {1} de {2}",
-                    itemsPerPage: "Elementos por página",
-                    allPages: "Todos",
-                    empty: "No existen registros para mostrar"
-                }
-            },
-            filterable: {
-                messages: {
-                    info: "Filtrar por: ",
-                    and: "Y",
-                    or: "O",
-                    filter: "Aplicar",
-                    clear: "Limpiar"
-                },
-                operators: {
-                    string: {
-                        contains: "Contiene",
-                        eq: "Igual a",
-                        neq: "No igual a",
-                        startswith: "Empieza con",
-                        endswith: "Termina con",
-                        doesnotcontain: "No contiene",
-                        isempty: "Está vacio",
-                        isnotnull: "No está vacio"
-                    },
-                    number: {
-                        eq: "Igual a",
-                        gt: "Más grande que",
-                        lt: "Más pequeño que"
-                    },
-                    date: {
-                        eq: "Igual a",
-                        gt: "Antes que",
-                        lt: "Después que",
-                        isnull: "Está vacio"
-                    }
-                }
-            },
-            toolbar: ContractualsDocumentsCompany.getTemplateToolBar(),
-            editable: {
-                mode: "inline",
-                confirmation: false
-            },
-            resizable: true,
-            autoScroll: true,
-            selectable: true,
-            sortable: {
-                mode: "single",
-                allowUnsort: false
-            },
-            groupable: {
-                messages: {
-                    empty: "Arrastre un encabezado de columna y póngalo aquí para agrupar por ella"
-                }
-            },
-            dataBound: function () {
-                ContractualsDocumentsCompany.updateTemplate();
-            },
-            edit: function (e) {
-                var commandCell = e.container.find("td:last");
-                var html = "<div align='center'>";
-                html += "<a class='k-grid-update' toggle='tooltip' title='Guardar' onclick='ContractualsDocumentsCompany.onSave();' style='cursor: pointer;'><i class='glyphicon glyphicon-saved' style='font-size: 18px;'></i></a>&nbsp;&nbsp;";
-                html += "<a class='k-grid-cancel' toggle='tooltip' title='Cancelar' style='cursor: pointer;'><i class='glyphicon glyphicon-ban-circle' style='font-size: 18px;'></i></a>";
-                html += "</div>";
-
-                commandCell.html(html);
-            }
-        });
-    },
-
-    contractualChildrenDocumentTypeDropDownEditor: function (container, options) {
-        var contractualParentId = options.model.ContractualDocumentCompanyParentId;
-        $("<input required name='" + options.field + "'/>")
-            .appendTo(container)
-            .kendoDropDownList({
-                dataTextField: "Description",
-                optionLabel: "Selecciona ...",
-                dataValueField: "Id",
-                autoWidth: true,
-                dataSource: {
-                    schema: {
-                        model: {
-                            id: "Id",
-                            fields: {
-                                Id: { type: "number" },
-                                Name: { type: "string" },
-                                Description: { type: "string" }
-                            }
-                        }
-                    },
-                    transport: {
-                        read: {
-                            url: "/Companies/GetChildrenContractualDocumentTypes",
-                            dataType: "jsonp",
-                            data: { contractualParentId: contractualParentId }
-                        },
-                        parameterMap: function (options, operation) {
-                            if (operation === "read") {
-                                return { contractualParentId: options.contractualParentId };
-                            }
-  
-                            return null;
-                        }
-                    }
-                }
-            });
     }
 });

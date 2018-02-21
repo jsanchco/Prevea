@@ -163,6 +163,7 @@
         List<Simulation> GetSimulationsByUser(int userId);
         List<Simulation> GetSimulationsOriginalsByUser(int userId);
         List<Simulation> GetSimulationsChildrenByUser(int userId, int simulationParentId);
+        List<Simulation> GetSimulationsByCompany(int companyId);
         Result SendToCompanies(int simulationId);
         decimal GetTotalSimulation(int simulationId);
         Simulation GetSimulationActive(int companyId);
@@ -283,6 +284,7 @@
         List<ContractualDocumentType> GetContractualDocumentTypes();
         List<ContractualDocumentType> GetContractualDocumentTypesByParent(int contractualParentId);
         ContractualDocumentType GetContractualDocumentType(int id);
+        List<ContractualDocumentType> GetContractualDocumentTypes(int companyId);
         #endregion
     }
 }
