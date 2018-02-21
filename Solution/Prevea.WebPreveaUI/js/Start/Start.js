@@ -16,6 +16,8 @@
         GeneralData.userRoleName = userRoleName;
         GeneralData.userRoleDescription = userRoleDescription;
 
+        console.log(kendo.format("Start.init -> userId[{0}], userInitials[{1}]", GeneralData.userId, GeneralData.userInitials));
+
         this.setUpPage();
     },
 
