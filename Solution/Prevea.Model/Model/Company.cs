@@ -70,9 +70,6 @@ namespace Prevea.Model.Model
         [NotMapped]
         public SimulationCompany SimulationCompanyActive => SimulationCompanies.FirstOrDefault(x => x.Simulation.Active);
 
-        //[NotMapped]
-        //public SimulationCompany SimulationCompany => SimulationCompanies?.FirstOrDefault();
-
         public virtual ICollection<ContractualDocumentCompany> ContractualsDocumentsCompany { get; set; }
 
         [Required]

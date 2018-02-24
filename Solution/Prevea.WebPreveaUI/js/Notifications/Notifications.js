@@ -243,7 +243,7 @@
 
     goToSimulationFromNotification: function(simulationId) {
         var params = {
-            url: "/CommercialTool/Simulations/DetailSimulation",
+            url: "/Simulations/DetailSimulation",
             data: {
                 simulationId: simulationId,
                 selectTabId: 0

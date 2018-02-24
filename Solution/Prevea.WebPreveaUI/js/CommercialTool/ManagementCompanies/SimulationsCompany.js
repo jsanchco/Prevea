@@ -37,7 +37,7 @@
             },
             transport: {
                 read: {
-                    url: "/CommercialTool/Simulations/SimulationsAll_Read",
+                    url: "/Simulations/SimulationsAll_Read",
                     dataType: "jsonp",
                     data: { companyId: this.companyId }
                 },

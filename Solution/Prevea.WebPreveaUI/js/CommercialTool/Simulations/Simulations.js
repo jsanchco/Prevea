@@ -50,15 +50,15 @@
             },
             transport: {
                 read: {
-                    url: "/CommercialTool/Simulations/Simulations_Read",
+                    url: "/Simulations/Simulations_Read",
                     dataType: "jsonp"
                 },
                 destroy: {
-                    url: "/CommercialTool/Simulations/Simulations_Destroy",
+                    url: "/Simulations/Simulations_Destroy",
                     dataType: "jsonp"
                 },
                 create: {
-                    url: "/CommercialTool/Simulations/Simulations_Create",
+                    url: "/Simulations/Simulations_Create",
                     dataType: "jsonp"
                 },
                 parameterMap: function(options, operation) {
@@ -136,7 +136,7 @@
                     width: 130,
                     groupable: "false",
                     filterable: false,
-                    template: "#= Simulations.getColumnTemplateCommands(data) #"
+                    template: "#= Simulations.getColumnTemplateCommands('gridSimulations', data) #"
                 }
             ],
             pageable: {
@@ -270,7 +270,7 @@
         return html;
     },
 
-    getColumnTemplateCommands: function(data) {
+    getColumnTemplateCommands: function(gridId, data) {
         var html = "<div align='center'>";
         if (data.SimulationStateId === Constants.simulationState.SendToCompany) {
             html += kendo.format(
@@ -285,7 +285,8 @@
                     "<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
                     data.Id);
                 html += kendo.format(
-                    "<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                    "<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\", \"{1}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                    gridId,
                     data.Id);
             }
             if (GeneralData.userRoleId === Constants.role.Super) {
@@ -300,7 +301,8 @@
                     data.Id);
                 if (data.SimulationStateId !== Constants.simulationState.Deleted) {
                     html += kendo.format(
-                        "<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                        "<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\", \"{1}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                        gridId,
                         data.Id);
                 }
             }
@@ -323,7 +325,7 @@
 
     goToSimulations: function() {
         var params = {
-            url: "/CommercialTool/Simulations/Simulations",
+            url: "/Simulations/Simulations",
             data: {}
         };
         GeneralData.goToActionController(params);
@@ -331,7 +333,7 @@
 
     goToDetailSimulation: function(id) {
         var params = {
-            url: "/CommercialTool/Simulations/DetailSimulation",
+            url: "/Simulations/DetailSimulation",
             data: {
                 simulationId: id,
                 selectTabId: 0
@@ -340,7 +342,7 @@
         GeneralData.goToActionController(params);
     },
 
-    goToDeleteSimulation: function(simulationId) {
+    goToDeleteSimulation: function(gridId, simulationId) {
         var dialog = $("#" + this.confirmId);
         dialog.kendoDialog({
             width: "400px",
@@ -356,7 +358,7 @@
                 {
                     text: "Borrar",
                     action: function() {
-                        var grid = $("#" + Simulations.gridSimulationsId).data("kendoGrid");
+                        var grid = $("#" + gridId).data("kendoGrid");
                         var item = grid.dataSource.get(simulationId);
                         var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
 
@@ -499,7 +501,7 @@
                     width: 130,
                     groupable: "false",
                     filterable: false,
-                    template: "#= Simulations.getColumnTemplateCommands(data) #"
+                    template: "#= Simulations.getColumnTemplateCommands('gridSimulationsChildren', data) #"
                 }],
             pageable: {
                 buttonCount: 2,
@@ -582,7 +584,7 @@
     getTemplateChildren: function () {
         var html = "<div>";
         html += "<H2 style='text-align: center;'>Simulaciones Dependientes</H2><br />";
-        html += "<div class='gridSimulationsChildren'></div><br /><br />";
+        html += "<div id='gridSimulationsChildren' class='gridSimulationsChildren'></div><br /><br />";
         html += "</div>";
 
         return html;

@@ -21,5 +21,6 @@
         public int? ContractualDocumentCompanyParentId { get; set; }
         public string UrlRelative { get; set; }        
         public int CompanyId { get; set; }
+        public int SimulationId { get; set; }
     }
 }

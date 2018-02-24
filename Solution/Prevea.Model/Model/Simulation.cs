@@ -5,7 +5,6 @@
     using System.ComponentModel.DataAnnotations;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.ComponentModel.DataAnnotations.Schema;
 
     #endregion
@@ -74,5 +73,7 @@
         public SimulationCompany SimulationCompanyActive { get; set; }
 
         public virtual ICollection<SimulationCompany> SimulationCompanies { get; set; }
+
+        public virtual ICollection<ContractualDocumentCompany> ContractualsDocumentsCompany { get; set; }
     }
 }

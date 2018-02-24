@@ -687,7 +687,7 @@
                 if (result.Status == Status.Error)
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
 
-                if (contractualDocument.ContractualDocumentTypeId == (int)EnContractualDocumentType.Annex)
+                if (contractualDocument.ContractualDocumentTypeId == (int)EnContractualDocumentType.OtherDocuments)
                     return this.Jsonp(AutoMapper.Mapper.Map<ContractualDocumentCompanyViewModel>(result.Object));
 
                 if (!CreatePdf(result.Object as ContractualDocumentCompany))  
@@ -909,9 +909,9 @@
             return this.Jsonp(data);
         }
 
-        public JsonResult GetContractualDocumentTypes([DataSourceRequest] DataSourceRequest request, int companyId)
+        public JsonResult GetContractualDocumentTypes([DataSourceRequest] DataSourceRequest request, int companyId, int simulationId)
         {
-            var data = AutoMapper.Mapper.Map<List<ContractualDocumentTypeViewModel>>(Service.GetContractualDocumentTypes(companyId));
+            var data = AutoMapper.Mapper.Map<List<ContractualDocumentTypeViewModel>>(Service.GetContractualDocumentTypesBySimulation(companyId, simulationId));
 
             return this.Jsonp(data);
         }

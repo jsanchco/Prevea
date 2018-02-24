@@ -187,7 +187,7 @@
 
         public List<Simulation> GetSimulationsByCompany(int companyId)
         {
-            throw new NotImplementedException();
+            return Repository.GetSimulationsCompanyByCompany(companyId).Select(x => x.Simulation).ToList();            
         }
 
         public Result SendToCompanies(int simulationId)

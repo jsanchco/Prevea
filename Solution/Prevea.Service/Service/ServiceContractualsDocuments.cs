@@ -58,7 +58,7 @@
                     contractualDocument.Enrollment =
                         $"{typeId}_{Repository.GetContractualsDocuments().Count + 1:00000}/{contractualDocument.BeginDate.Year}";
 
-                    if (contractualDocument.ContractualDocumentTypeId != (int)EnContractualDocumentType.Annex)
+                    if (contractualDocument.ContractualDocumentTypeId != (int)EnContractualDocumentType.OtherDocuments)
                     {
                         contractualDocument.UrlRelative = GetUrlRelativeContractualDocument(contractualDocument);
                     }
@@ -226,11 +226,11 @@
                 return "Empresa no encontrada";
             }
 
-            var errorInAdd = CanAddContractualDocument(companyId, contractualDocumentTypeId);
-            if (!string.IsNullOrEmpty(errorInAdd))
-            {
-                return errorInAdd;
-            }
+            //var errorInAdd = CanAddContractualDocument(companyId, contractualDocumentTypeId);
+            //if (!string.IsNullOrEmpty(errorInAdd))
+            //{
+            //    return errorInAdd;
+            //}
 
             switch (contractualDocumentTypeId)
             {
@@ -286,7 +286,7 @@
 
                     break;
 
-                case (int)EnContractualDocumentType.Annex:
+                case (int)EnContractualDocumentType.Annex:                
                 case (int)EnContractualDocumentType.UnSubscribeContract:
                     errorGeneralData = GetErrorInGeneralData(company);
                     if (!string.IsNullOrEmpty(errorGeneralData))

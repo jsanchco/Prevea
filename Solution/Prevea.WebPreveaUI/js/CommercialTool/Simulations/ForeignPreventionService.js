@@ -84,7 +84,7 @@
 
     getStretchCalculateByNumberEmployees: function () {
         $.ajax({
-            url: "/CommercialTool/Simulations/GetStretchCalculateByNumberEmployees",
+            url: "/Simulations/GetStretchCalculateByNumberEmployees",
             data: {
                 numberEmployees: this.numberEmployees
             },

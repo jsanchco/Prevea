@@ -62,15 +62,15 @@
         var tabStrip = $("#" + this.tabStripDetailSimulationId).kendoTabStrip().data("kendoTabStrip");
         tabStrip.append({
             text: "SERVICIO de PREVENCIÓN AJENO",
-            contentUrl: kendo.format("/CommercialTool/Simulations/ForeignPreventionService?simulationId={0}", this.simulationId)
+            contentUrl: kendo.format("/Simulations/ForeignPreventionService?simulationId={0}", this.simulationId)
         });
         tabStrip.append({
             text: "GESTORÍA",
-            contentUrl: kendo.format("/CommercialTool/Simulations/AgencyService?simulationId={0}", this.simulationId)
+            contentUrl: kendo.format("/Simulations/AgencyService?simulationId={0}", this.simulationId)
         });
         tabStrip.append({
             text: "FORMACIÓN",
-            contentUrl: kendo.format("/CommercialTool/Simulations/TrainingService?simulationId={0}", this.simulationId)
+            contentUrl: kendo.format("/Simulations/TrainingService?simulationId={0}", this.simulationId)
         });
 
         tabStrip = $("#" + this.tabStripDetailSimulationId).data("kendoTabStrip");
@@ -84,7 +84,7 @@
 
     goToSimulations: function () {
         var params = {
-            url: "/CommercialTool/Simulations/Simulations",
+            url: "/Simulations/Simulations",
             data: {}
         };
         GeneralData.goToActionController(params);
@@ -92,7 +92,7 @@
 
     goToDetailSimulation: function (selectTabId) {
         var params = {
-            url: "/CommercialTool/Simulations/DetailSimulation",
+            url: "/Simulations/DetailSimulation",
             data: {
                 simulationId: this.simulationId,
                 selectTabId: selectTabId

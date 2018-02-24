@@ -12,7 +12,7 @@
     },
 
     setUpWidgets: function () {
-        $("#" + this.fileOtherDocumentd).kendoUpload({
+        $("#" + this.fileOtherDocumentId).kendoUpload({
             async: {
                 saveUrl: "/Companies/SaveOtherDocument",
                 autoUpload: false

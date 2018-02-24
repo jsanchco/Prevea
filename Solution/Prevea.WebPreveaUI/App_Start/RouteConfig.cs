@@ -14,6 +14,12 @@
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "Default",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Login", action = "Index", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Simulations",
                 url: "CommercialTool/{controller}/{action}/{id}",
                 defaults: new { controller = "Simulations", action = "Simulations", id = UrlParameter.Optional }
@@ -30,12 +36,6 @@
                 url: "Courses/{controller}/{action}/{id}",
                 defaults: new { controller = "ManagementCourses", action = "ManagementCourses", id = UrlParameter.Optional }
             );
-
-            routes.MapRoute(
-                   name: "Default",                   
-                   url: "{controller}/{action}/{id}",
-                   defaults: new { controller = "Login", action = "Index", id = UrlParameter.Optional }
-               );
         }
     }
 }

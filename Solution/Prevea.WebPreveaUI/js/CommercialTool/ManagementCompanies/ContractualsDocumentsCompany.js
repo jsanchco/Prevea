@@ -4,6 +4,7 @@
     gridContractualsDocumentsCompanyId: "gridContractualsDocumentsCompany",
 
     companyId: null,
+    simulationId: null,
 
     addDocumentFirmedWindow: null,
     addDocumentFirmedId: "addDocumentFirmed",
@@ -13,10 +14,11 @@
     contractualsDocumentsCompanyDataSource: null,
     contractualDocumentTypeDataSorce: null,
 
-    init: function (companyId) {
+    init: function (companyId, simulationId) {
         kendo.culture("es-ES");
 
         this.companyId = companyId;
+        this.simulationId = simulationId;
 
         this.createContractualsDocumentsCompanyDataSource();
         this.createContractualDocumentTypeDataSource();
@@ -56,7 +58,7 @@
     createContractualsDocumentsCompanyDataSource: function () {
         var beginDate = new Date();
         var endDate = new Date();
-        endDate.setFullYear(beginDate.getFullYear());
+        endDate.setFullYear(beginDate.getFullYear() + 1);
         endDate.setDate(endDate.getDate() - 1);
 
         this.contractualsDocumentsCompanyDataSource = new kendo.data.DataSource({
@@ -66,6 +68,7 @@
                     fields: {
                         Id: { type: "number", defaultValue: 0 },
                         CompanyId: { type: "number", defaultValue: ContractualsDocumentsCompany.companyId },
+                        SimulationId: { type: "number", defaultValue: ContractualsDocumentsCompany.simulationId },
                         Enrollment: { type: "string", editable: false },
                         ContractualDocumentTypeId: { type: "number", validation: { required: { message: " Campo Obligatorio " } } },
                         ContractualDocumentTypeName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
@@ -317,11 +320,17 @@
                         read: {
                             url: "/Companies/GetContractualDocumentTypes",
                             dataType: "jsonp",
-                            data: { companyId: ContractualsDocumentsCompany.companyId }
+                            data: {
+                                 companyId: ContractualsDocumentsCompany.companyId,
+                                 simulationId: ContractualsDocumentsCompany.simulationId
+                            }
                         },
                         parameterMap: function (options, operation) {
                             if (operation === "read") {
-                                return { companyId: options.companyId };
+                                return {
+                                    companyId: options.companyId,
+                                    simulationId: options.simulationId
+                                };
                             }
 
                             return null;

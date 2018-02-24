@@ -136,7 +136,7 @@
         #region Contractual Document Company
 
         ContractualDocumentCompany GetContractualDocument(int contractualDocumentId);
-        List<ContractualDocumentCompany> GetContractualsDocuments(int? companyId = null);
+        List<ContractualDocumentCompany> GetContractualsDocuments(int? companyId = null);        
         List<ContractualDocumentCompany> GetChildrenContractualsDocuments(int contractualDocumentParentId);
         Result SaveContractualDocument(ContractualDocumentCompany contractualDocument);
         Result UpdateContractualDocument(int contractualDocumentId, ContractualDocumentCompany contractualDocument);
@@ -285,6 +285,8 @@
         List<ContractualDocumentType> GetContractualDocumentTypesByParent(int contractualParentId);
         ContractualDocumentType GetContractualDocumentType(int id);
         List<ContractualDocumentType> GetContractualDocumentTypes(int companyId);
+        List<ContractualDocumentType> GetContractualDocumentTypesBySimulation(int companyId, int simulationId);
+
         #endregion
     }
 }
