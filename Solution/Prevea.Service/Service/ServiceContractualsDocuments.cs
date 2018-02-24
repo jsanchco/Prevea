@@ -25,7 +25,7 @@
 
         public List<ContractualDocumentCompany> GetContractualsDocuments(int? companyId = null)
         {
-            var contractualsDocuments = Repository.GetContractualsDocuments(companyId);
+            var contractualsDocuments = Repository.GetContractualsDocuments(companyId).OrderByDescending(x => x.Date);
 
             return contractualsDocuments.Where(x => x.ContractualDocumentTypeId != (int)EnContractualDocumentType.Firmed).ToList();
         }

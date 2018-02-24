@@ -68,7 +68,7 @@
                 break;
 
             case "courses|management":
-                url = "/Courses/ManagementCourses";
+                url = "/ManagementCourses/ManagementCourses";
                 break;
 
             default:

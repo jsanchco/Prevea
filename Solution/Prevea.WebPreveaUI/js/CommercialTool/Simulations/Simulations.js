@@ -423,8 +423,7 @@
                         SimulationStateName: { type: "string", editable: false, defaultValue: "ValidationPending" },
                         SimulationStateDescription: { type: "string", editable: false, defaultValue: "Pendiente de Validación" },
                         CompanyName: { type: "string", defaultValue: e.data.CompanyName },
-                        NIF: { type: "string", defaultValue: e.data.NIF },
-                        Name: { type: "string", defaultValue: "Dependiente" }
+                        NIF: { type: "string", defaultValue: e.data.NIF }
                     }
                 }
             },

@@ -8,7 +8,6 @@
     using Model.ViewModel;
     using Common;
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using IService.IService;
     using Model.Model;
 
@@ -29,7 +28,6 @@
         }
 
         [HttpGet]
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
         public ActionResult TrainingCourses_Read(int? Id)
         {
             var data = AutoMapper.Mapper.Map<List<TrainingCourseViewModel>>(Service.GetTrainingCourses(Id));

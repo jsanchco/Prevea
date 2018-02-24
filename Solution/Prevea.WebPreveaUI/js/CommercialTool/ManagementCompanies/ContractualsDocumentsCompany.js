@@ -70,6 +70,7 @@
                         CompanyId: { type: "number", defaultValue: ContractualsDocumentsCompany.companyId },
                         SimulationId: { type: "number", defaultValue: ContractualsDocumentsCompany.simulationId },
                         Enrollment: { type: "string", editable: false },
+                        SimulationName: { type: "string", editable: false },
                         ContractualDocumentTypeId: { type: "number", validation: { required: { message: " Campo Obligatorio " } } },
                         ContractualDocumentTypeName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         BeginDate: { type: "date", defaultValue: beginDate, format: "{0:dd/MM/yy}" },
@@ -178,6 +179,12 @@
                     width: 250,
                     groupable: "false",
                     template: "#= ContractualsDocumentsCompany.getColumnTemplateEnrollment(data) #"
+                }, {
+                    field: "SimulationName",
+                    title: "Simulación",
+                    width: 200,
+                    groupable: "false",
+                    template: "#= ContractualsDocumentsCompany.getColumnTemplateSimulationName(data) #"
                 }, {
                     field: "ContractualDocumentTypeId",
                     title: "Tipo",
@@ -411,6 +418,17 @@
             html += "</div></div>";
         }
         
+        return html;
+    },
+    
+    getColumnTemplateSimulationName: function (data) {
+        var html = "<div align='center'>";
+        html += kendo.format(
+            "<a toggle='tooltip' title='Ir a Simulación' onclick='SimulationsCompany.goToSimulationFromSimulationsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'>{1}</a>&nbsp;&nbsp;",
+            data.SimulationId,
+            data.SimulationName);
+        html += kendo.format("</div>");
+
         return html;
     },
 

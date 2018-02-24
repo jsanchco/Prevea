@@ -9,10 +9,21 @@
 
     public class ContractualDocumentCompany
     {
+        #region Constructor
+
+        public ContractualDocumentCompany()
+        {
+            Date = DateTime.Now;
+        }
+
+        #endregion
+
         [Key, Required]
         public int Id { get; set; }
 
         public string Enrollment { get; set; }
+
+        public DateTime Date { get; set; }
 
         public DateTime BeginDate { get; set; }
 

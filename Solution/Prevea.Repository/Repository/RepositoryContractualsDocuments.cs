@@ -17,6 +17,7 @@
             return Context.ContractualsDocumentsCompany
                 .Include(x => x.Company)
                 .Include(x => x.ContractualDocumentType)
+                .Include(x => x.Simulation)
                 .FirstOrDefault(x => x.Id == contractualDocumentId);
         }
 
@@ -25,10 +26,12 @@
             if (companyId == null)
                 return Context.ContractualsDocumentsCompany
                     .Include(x => x.Company)
+                    .Include(x => x.Simulation)
                     .Include(x => x.ContractualDocumentType).ToList();
 
             return Context.ContractualsDocumentsCompany
                 .Include(x => x.Company)
+                .Include(x => x.Simulation)
                 .Include(x => x.ContractualDocumentType)
                 .Where(x => x.CompanyId == companyId).ToList();
         }
@@ -44,7 +47,7 @@
 
                     dbContextTransaction.Commit();
 
-                    return contractualDocument;
+                    return GetContractualDocument(contractualDocument.Id);
                 }
                 catch (Exception ex)
                 {

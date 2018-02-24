@@ -22,5 +22,6 @@
         public string UrlRelative { get; set; }        
         public int CompanyId { get; set; }
         public int SimulationId { get; set; }
+        public string SimulationName { get; set; }
     }
 }

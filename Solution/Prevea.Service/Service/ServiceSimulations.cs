@@ -26,6 +26,7 @@
         {
             try
             {
+                SetNameSimulation(simulation, companyId);
                 simulation = Repository.SaveSimulation(simulation);                
 
                 if (simulation == null)
@@ -409,6 +410,20 @@
         public Simulation GetSimulationActive(int companyId)
         {
             return Repository.GetSimulationsCompanyByCompany(companyId).FirstOrDefault(x => x.Simulation.Active)?.Simulation;
+        }
+
+        private void SetNameSimulation(Simulation simulation, int? companyId)
+        {
+            if (companyId == null)
+            {
+                simulation.Name = "Original";
+            }
+            else
+            {
+                var simulations = GetSimulationsByCompany((int)companyId);
+                simulation.Name = $"Anexo {simulations.Count}";
+            }
+            
         }
     }
 }
