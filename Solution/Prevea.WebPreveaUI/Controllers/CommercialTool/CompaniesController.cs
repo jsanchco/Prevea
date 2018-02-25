@@ -45,7 +45,8 @@
             ViewBag.SelectTabId = selectTabId;
 
             var simulationActive = Service.GetSimulationActive(id);
-            if (simulationActive.NumberEmployees != company.Employees.Count)
+            var employeesActives = company.Employees.Where(x => x.User.UserStateId == (int) EnUserState.Alta).ToList();
+            if (simulationActive.NumberEmployees != employeesActives.Count)
                 ViewBag.Error = new[] { "El número de Trabajadores no coincide con los Datos de la Simulación" };
 
             return PartialView("~/Views/CommercialTool/Companies/DetailCompany.cshtml", company);
