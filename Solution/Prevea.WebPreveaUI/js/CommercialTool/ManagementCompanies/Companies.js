@@ -230,7 +230,7 @@
     },
 
     getColumnTemplateContactPerson: function (data) {
-        var html = kendo.format("<div class='one-line'><div><strong>Nombre: </strong></div><div>{0}</div></div><div class='one-line'><div><strong>Teléfono: </strong></div><div>{1}</div></div><div class='one-line'><div><strong>Email: </strong></div><div>{2}</div></div>",
+        var html = kendo.format("<div class='one-line'><div><strong>Nombre: </strong></div><div>{0}</div></div><div class='one-line'><div><strong>Teléfono: </strong></div><div><a href='tel:{1}' data-rel='external' target='_blank'>{1}</a></div></div><div class='one-line'><div><strong>Email: </strong></div><div><a href='mailto:{2}' data-rel='external' target='_blank'>{2}</a></div></div>",
             data.ContactPersonName,
             data.ContactPersonPhoneNumber,
             data.ContactPersonEmail);
