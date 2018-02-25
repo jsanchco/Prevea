@@ -27,6 +27,16 @@
                 e.preventDefault();
             }
         });
+
+        if (GeneralData.userRoleId === Constants.role.ContactPerson) {
+            $("#" + this.textBoxNIFId).removeAttr("disabled");
+            $("#" + this.textBoxNIFId).prop("disabled", true);
+            $("#" + this.cmbCnae).removeAttr("disabled");
+            $("#" + this.cmbCnae).prop("disabled", true);
+
+            var numerictextbox = $("#" + this.textEmployeesNumberId).data("kendoNumericTextBox");
+            numerictextbox.enable(false);
+        }
     },
 
     validateForm: function () {

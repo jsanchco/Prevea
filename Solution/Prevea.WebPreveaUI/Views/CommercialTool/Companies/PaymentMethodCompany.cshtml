@@ -38,7 +38,7 @@
                                   read.Action("GetSplitPayment", "Companies");
                               }).ServerFiltering(false);
                           })
-                          .HtmlAttributes(new { style = "width: 100%; border: 1px solid #ebebeb; border-radius: 3px;" }))
+                          .HtmlAttributes(new { id = "cmbSplitPayment", style = "width: 100%; border: 1px solid #ebebeb; border-radius: 3px;" }))
                 </div>
                 <div class="col-sm-4">
                     @(Html.Kendo()
@@ -54,7 +54,7 @@
                                   read.Action("GetModesPayment", "Companies");
                               }).ServerFiltering(false);
                           })
-                          .HtmlAttributes(new { style = "width: 100%;" }))                    
+                          .HtmlAttributes(new { id = "cmbModePayment", style = "width: 100%;" }))                    
                 </div>
                 <div class="col-sm-4">
                     @(Html.Kendo()
@@ -70,7 +70,7 @@
                                   read.Action("GetModesPaymentMedicalExamination", "Companies");
                               }).ServerFiltering(false);
                           })
-                          .HtmlAttributes(new { style = "width: 100%;" }))                    
+                          .HtmlAttributes(new { id = "cmbModePaymentMedicalExamination", style = "width: 100%;" }))                    
                 </div>
             </div>
 

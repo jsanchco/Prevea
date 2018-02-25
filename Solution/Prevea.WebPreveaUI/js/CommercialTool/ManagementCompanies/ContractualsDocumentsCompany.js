@@ -2,6 +2,7 @@
 
     confirmId: "confirm",
     gridContractualsDocumentsCompanyId: "gridContractualsDocumentsCompany",
+    createContractualDocumentId: "createContractualDocument",
 
     companyId: null,
     simulationId: null,
@@ -302,6 +303,11 @@
             }
         });
         kendo.bind($("#" + this.gridContractualsDocumentsCompanyId), this);
+
+        if (GeneralData.userRoleId === Constants.role.ContactPerson) {
+            $("#" + this.createContractualDocumentId).removeAttr("disabled");
+            $("#" + this.createContractualDocumentId).prop("disabled", true);
+        }
     },
 
     contractualDocumentTypeDropDownEditor: function (container, options) {
@@ -366,8 +372,8 @@
 
     getTemplateToolBar: function () {
        var html = "<div class='toolbar'>";
-        html += "<span name='create' class='k-grid-add' id='createUser'>";
-        html += "<a class='btn btn-prevea k-grid-add' role='button'> Agregar nuevo</a>";
+        html += "<span name='create' class='k-grid-add'>";
+        html += "<a id='createContractualDocument' class='btn btn-prevea k-grid-add' role='button'> Agregar nuevo</a>";
         html += "</span></div>";
 
         return html;
@@ -384,8 +390,11 @@
             //html += kendo.format("<a toggle='tooltip' title='Ver Documento' onclick='ContractualsDocumentsCompany.goToOfferView(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/unknown_opt.png'></a></div></a>&nbsp;&nbsp;", data.Id);
         }
 
-        html += kendo.format("<a toggle='tooltip' title='Editar' onclick='ContractualsDocumentsCompany.goToEditContractualsDocumentsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
-        html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='ContractualsDocumentsCompany.goToDeleteContractualsDocumentsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>", data.Id);
+        if (GeneralData.userRoleId !== Constants.role.ContactPerson) {
+            html += kendo.format("<a toggle='tooltip' title='Editar' onclick='ContractualsDocumentsCompany.goToEditContractualsDocumentsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+            html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='ContractualsDocumentsCompany.goToDeleteContractualsDocumentsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>", data.Id);
+        }
+ 
         html += kendo.format("</div>");
 
         return html;
@@ -407,11 +416,16 @@
                 html = "";
             }
         } else {
+            var removeDocumentFirmed = "";
+            if (GeneralData.userRoleId !== Constants.role.ContactPerson) {
+                removeDocumentFirmed = kendo.format("<a toggle='tooltip' title='Eliminar Documento Firmado' onclick='ContractualsDocumentsCompany.goToDeleteContractualDocumentCompanyFirmed(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 7px;'></i></a>", data.ContractualDocumentCompanyFirmedId);
+            }
+
             html = "<div style='text-align: center'>";
             html += "<div style='text-align: left'>";
             html += "<div style='cursor: pointer; float: left; text-align: left; margin-top: -10px;'>";
             html += kendo.format("<img toggle='tooltip' title='Ver Documento Firmado' onclick='GeneralData.goToOpenContractualDocument(\"{0}\")' target='_blank' src='../../Images/pdf_opt_little.jpg'>&nbsp;&nbsp;", data.ContractualDocumentCompanyFirmedId);
-            html += kendo.format("<a toggle='tooltip' title='Eliminar Documento Firmado' onclick='ContractualsDocumentsCompany.goToDeleteContractualDocumentCompanyFirmed(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 7px;'></i></a>", data.ContractualDocumentCompanyFirmedId);
+            html += removeDocumentFirmed;
             html += "</div>";            
             html += "</div>";
             html += kendo.format("<div style='font-size: 16px; font-weight: bold;'>{0}", data.Enrollment);
@@ -423,10 +437,14 @@
     
     getColumnTemplateSimulationName: function (data) {
         var html = "<div align='center'>";
-        html += kendo.format(
-            "<a toggle='tooltip' title='Ir a Simulación' onclick='SimulationsCompany.goToSimulationFromSimulationsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'>{1}</a>&nbsp;&nbsp;",
-            data.SimulationId,
-            data.SimulationName);
+        if (GeneralData.userRoleId !== Constants.role.ContactPerson) {
+            html += kendo.format(
+                "<a toggle='tooltip' title='Ir a Simulación' onclick='SimulationsCompany.goToSimulationFromSimulationsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'>{1}</a>&nbsp;&nbsp;",
+                data.SimulationId,
+                data.SimulationName);
+        } else {
+            html += data.SimulationName;
+        }
         html += kendo.format("</div>");
 
         return html;
