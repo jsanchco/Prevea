@@ -71,6 +71,10 @@
                 url = "/ManagementCourses/ManagementCourses";
                 break;
 
+            case "myCompany":
+                url = "/Companies/DetailCompanyByContactPerson";
+                break;
+
             default:
                 break;
         };

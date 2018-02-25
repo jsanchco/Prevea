@@ -143,7 +143,7 @@
         bool DeleteContractualDocument(int contractualDocumentId);
         string CanAddContractualDocument(int companyId, int contractualDocumentTypeId);
         string VerifyNewContractualDocument(int companyId, int contractualDocumentTypeId);
-        Result SaveContractualDocumentFirmed(HttpPostedFileBase fileDocumentFirmed, int contractualDocumentId);
+        Result SaveContractualDocumentFirmed(HttpPostedFileBase fileDocumentFirmed, int companyId, int contractualDocumentId);
         Result SaveOtherDocument(HttpPostedFileBase fileOtherDocument, int contractualDocumentId);
         Result DeleteContractualDocumentCompanyFirmed(int contractualDocumentCompanyFirmedId);
 

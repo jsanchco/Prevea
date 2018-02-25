@@ -1139,6 +1139,8 @@
     <Content Include="Views\CommercialTool\Companies\AddOtherDocument.cshtml" />
     <Content Include="Views\CommercialTool\Companies\SimulationsCompany.cshtml" />
     <Content Include="Views\Profile\ChangePassword.cshtml" />
+    <Content Include="Views\Shared\MenuContactPerson.cshtml" />
+    <Content Include="Views\Shared\MenuEmployee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

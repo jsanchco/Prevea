@@ -25,8 +25,8 @@
         this.createContractualsDocumentsCompanyGrid();
     },
 
-    setUpAddDocumentFirmedWindow: function (contractualDocumentId) {
-        var url = "/Companies/AddDocumentFirmed?contractualDocumentId=" + contractualDocumentId;
+    setUpAddDocumentFirmedWindow: function (companyId, contractualDocumentId) {
+        var url = kendo.format("/Companies/AddDocumentFirmed?companyId={0}&contractualDocumentId={1}", companyId, contractualDocumentId);
         this.addDocumentFirmedWindow = $("#" + this.addDocumentFirmedId);
         this.addDocumentFirmedWindow.kendoWindow({
             width: "330px",
@@ -478,7 +478,7 @@
     },
 
     goToAddContractualDocumentFirmed: function (contractualDocumentId) {
-        this.setUpAddDocumentFirmedWindow(contractualDocumentId);
+        this.setUpAddDocumentFirmedWindow(this.companyId, contractualDocumentId);
         this.addDocumentFirmedWindow.data("kendoWindow").center().open();
     },
 

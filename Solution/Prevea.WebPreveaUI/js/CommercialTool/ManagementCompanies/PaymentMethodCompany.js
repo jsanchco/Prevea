@@ -1,12 +1,21 @@
 ﻿var PaymentMethodCompany = kendo.observable({
 
     companyId: null,
-    btnValidateId: "btnValidate",
+    btnValidateId: "btnValidatePaymentMethodCompany",
     MonthsSplitPaymentId: "MonthsSplitPayment",
     SplitPaymentId: "SplitPayment",
 
     init: function (id) {
         this.companyId = id;
+
+        this.setUpPage();
+    },
+
+    setUpPage: function() {
+        if (GeneralData.userRoleId === Constants.role.ContactPerson) {
+            $("#" + PaymentMethodCompany.btnValidateId).removeAttr("disabled");
+            $("#" + PaymentMethodCompany.btnValidateId).prop("disabled", true);
+        }
     },
 
     onClickValidate: function () {

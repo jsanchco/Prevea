@@ -315,12 +315,16 @@
             return error;
         }
 
-        public Result SaveContractualDocumentFirmed(HttpPostedFileBase fileDocumentFirmed, int contractualDocumentId)
+        public Result SaveContractualDocumentFirmed(HttpPostedFileBase fileDocumentFirmed, int companyId, int contractualDocumentId)
         {
             try
             {
                 var contractualDocument = GetContractualDocument(contractualDocumentId);
                 if (contractualDocument == null)
+                    return new Result { Status = Status.Error };
+
+                var company = GetCompany(companyId);
+                if (company == null)
                     return new Result { Status = Status.Error };
 
                 var path = contractualDocument.UrlRelative.Substring(0, contractualDocument.UrlRelative.LastIndexOf("/", StringComparison.Ordinal) + 1);
@@ -337,6 +341,7 @@
                     CompanyId = contractualDocument.CompanyId,
                     ContractualDocumentCompanyParentId = contractualDocumentId,
                     ContractualDocumentTypeId = (int)EnContractualDocumentType.Firmed,
+                    SimulationId = company.SimulationCompanyActive.SimulationId,
                     UrlRelative = path + enrollment
                 };
                 var result = SaveContractualDocument(newContractualDocumentFirmed);

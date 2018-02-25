@@ -1,11 +1,13 @@
 ﻿var AddDocumentFirmed = kendo.observable({
 
     addDocumentFirmedId: "addDocumentFirmed",
-
-    contractualDocumentId: null,
     fileDocumentFirmedId: "fileDocumentFirmed",
 
-    init: function (contractualDocumentId) {
+    companyId: null,
+    contractualDocumentId: null,
+
+    init: function (companyId, contractualDocumentId) {
+        this.companyId = companyId;
         this.contractualDocumentId = contractualDocumentId;
 
         this.setUpWidgets();
@@ -24,7 +26,10 @@
                 uploadSelectedFiles: "Guardar"
             },
             upload:function(e) {
-                e.data = { contractualDocumentId: AddDocumentFirmed.contractualDocumentId };
+                e.data = {
+                    companyId: AddDocumentFirmed.companyId,
+                    contractualDocumentId: AddDocumentFirmed.contractualDocumentId
+                };
             },
             success: AddDocumentFirmed.onSuccessSaveDocument,
             error: AddDocumentFirmed.onErrorSaveDocument

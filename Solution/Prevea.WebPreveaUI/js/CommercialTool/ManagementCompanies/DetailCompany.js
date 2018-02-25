@@ -1,4 +1,6 @@
 ﻿var DetailCompany = kendo.observable({
+    titleId: "title",
+    navigationId: "navigation",
     tabStripDetailCompanyId: "tabStripDetailCompany",
     spanNotificationId: "spanNotification",
     stretchCalculate: null,
@@ -21,11 +23,15 @@
             this.notification = null;
         }
 
-        this.createDataSources();
-        this.createKendoWidgets();
+        this.setUpPage();
+        this.createKendoWidgets();        
     },
 
-    createDataSources: function () {
+    setUpPage: function () {
+        if (GeneralData.userRoleId === Constants.role.ContactPerson) {
+            $("#" + this.navigationId).hide();
+            $("#" + this.titleId).text("Mi Empresa");
+        }
     },
 
     createKendoWidgets: function () {

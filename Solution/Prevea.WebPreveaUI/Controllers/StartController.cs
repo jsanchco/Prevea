@@ -21,7 +21,7 @@
         #endregion
 
         [HttpGet]
-        [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial")]
+        [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial,ContactPerson,Employee")]
         public ActionResult Index(int userId)
         {
             var user = Service.GetUser(userId);

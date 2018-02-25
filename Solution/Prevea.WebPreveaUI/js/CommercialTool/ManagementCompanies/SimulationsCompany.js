@@ -137,6 +137,11 @@
             groupable: false
         });
         kendo.bind($("#" + this.gridSimulationsCompanyId), this);
+
+        if (GeneralData.userRoleId === Constants.role.ContactPerson) {
+            var grid = $("#" + this.gridSimulationsCompanyId).data("kendoGrid");
+            grid.hideColumn("Commands");
+        }
     },
 
     getTemplateSimulationState: function (data) {

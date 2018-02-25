@@ -52,6 +52,22 @@
         }
 
         [HttpGet]
+        public ActionResult DetailCompanyByContactPerson()
+        {
+            var companies = Service.GetCompanies();
+            foreach (var company in companies)
+            {
+                var contactPerson = company.ContactPersons.FirstOrDefault(x => x.UserId == User.Id);
+                if (contactPerson != null)
+                {
+                    return RedirectToAction("DetailCompany", new { id = company.Id, selectTabId = 0 });
+                }
+            }
+
+            return PartialView("~/Views/Error/AccessDenied.cshtml");
+        }
+
+        [HttpGet]
         [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial")]
         public JsonResult Companies_Read([DataSourceRequest] DataSourceRequest request)
         {
@@ -403,7 +419,7 @@
         }
 
         [HttpGet]
-        [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial")]
+        [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial,ContactPerson")]
         public JsonResult EmployeesCompany_Read([DataSourceRequest] DataSourceRequest request, int companyId)
         {
             var data = AutoMapper.Mapper.Map<List<UserViewModel>>(Service.GetEmployeesByCompany(companyId));
@@ -532,7 +548,7 @@
         }
 
         [HttpGet]
-        [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial")]
+        [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial,ContactPerson")]
         public JsonResult ContactPersonsCompany_Read([DataSourceRequest] DataSourceRequest request, int companyId)
         {
             var data = AutoMapper.Mapper.Map<List<UserViewModel>>(Service.GetContactPersonsByCompany(companyId));
@@ -654,7 +670,7 @@
         }
 
         [HttpGet]
-        [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial")]
+        [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial,ContactPerson")]
         public JsonResult ContractualsDocumentsCompany_Read([DataSourceRequest] DataSourceRequest request, int companyId)
         {
             var data = AutoMapper.Mapper.Map<List<ContractualDocumentCompanyViewModel>>(Service.GetContractualsDocuments(companyId));
@@ -728,11 +744,15 @@
         #endregion
 
         [HttpGet]
-        public ActionResult AddDocumentFirmed(int contractualDocumentId)
+        public ActionResult AddDocumentFirmed(int companyId, int contractualDocumentId)
         {
             var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
 
-            return PartialView("~/Views/CommercialTool/Companies/AddDocumentFirmed.cshtml", contractualDocument);
+            ViewBag.CompanyId = companyId;
+            ViewBag.ContractualDocumentId = contractualDocumentId;
+            ViewBag.Enrollment = contractualDocument.Enrollment;
+
+            return PartialView("~/Views/CommercialTool/Companies/AddDocumentFirmed.cshtml");
         }
 
         [HttpGet]
@@ -744,13 +764,13 @@
         }
 
         [HttpPost]
-        public ActionResult SaveDocumentFirmed(IEnumerable<HttpPostedFileBase> fileDocumentFirmed, int contractualDocumentId)
+        public ActionResult SaveDocumentFirmed(IEnumerable<HttpPostedFileBase> fileDocumentFirmed, int companyId, int contractualDocumentId)
         {
             if (fileDocumentFirmed == null || !fileDocumentFirmed.Any())
                 return Json(new Result { Status = Status.Error }, JsonRequestBehavior.AllowGet);
 
             var result =
-                Service.SaveContractualDocumentFirmed(fileDocumentFirmed.FirstOrDefault(), contractualDocumentId);
+                Service.SaveContractualDocumentFirmed(fileDocumentFirmed.FirstOrDefault(), companyId, contractualDocumentId);
 
             if (result.Status == Status.Error)
             {
@@ -976,7 +996,7 @@
         }
 
         [HttpGet]
-        [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial")]
+        [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial,ContactPerson")]
         public JsonResult WorkCentersCompany_Read([DataSourceRequest] DataSourceRequest request, int companyId)
         {
             var data = AutoMapper.Mapper.Map<List<WorkCenterViewModel>>(Service.GetWorkCentersByCompany(companyId));

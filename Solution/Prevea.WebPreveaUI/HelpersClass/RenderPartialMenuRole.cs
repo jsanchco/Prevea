@@ -35,6 +35,14 @@
                         html.RenderPartial("MenuPreveaCommercial");
                         break;
 
+                    case (int)EnRole.ContactPerson:
+                        html.RenderPartial("MenuContactPerson");
+                        break;
+
+                    case (int)EnRole.Employee:
+                        html.RenderPartial("MenuEmployee");
+                        break;
+
                     default:
                         return null;                     
                 }

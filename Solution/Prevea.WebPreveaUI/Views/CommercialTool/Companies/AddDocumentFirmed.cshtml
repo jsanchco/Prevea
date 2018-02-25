@@ -1,6 +1,4 @@
-﻿@model ContractualDocumentCompany
-
-<style>
+﻿<style>
     .k-window-titlebar {
         height: 30px;
     }
@@ -15,14 +13,14 @@
 </style>
 
 <script>
-    AddDocumentFirmed.init(@Model.Id);
+    AddDocumentFirmed.init(@ViewBag.CompanyId, @ViewBag.ContractualDocumentId);
 </script>
 
 <div id="addDocumentFirmedContainer">
     <br />
 
-    <p @*style="color: #BBBBBB; font-size: x-small"*@>
-        Documento: <strong>@Model.Enrollment</strong>
+    <p>
+        Documento: <strong>@ViewBag.Enrollment</strong>
     </p>
 
     <p style="">
