@@ -55,6 +55,10 @@
         public DbSet<Configuration> Configurations { get; set; }
         public DbSet<StretchAgency> StretchesAgencies { get; set; }
         public DbSet<EngagementType> EngagementTypes { get; set; }
+        public DbSet<RequestMedicalExaminations> RequestMedicalExaminations { get; set; }
+        public DbSet<RequestMedicalExaminationState> RequestMedicalExaminationStates { get; set; }
+        public DbSet<RequestMedicalExaminationEmployee> RequestMedicalExaminationsEmployees { get; set; }
+
         #endregion
 
         #region Constructor

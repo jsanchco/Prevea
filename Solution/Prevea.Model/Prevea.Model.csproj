@@ -79,6 +79,9 @@
     <Compile Include="Model\NotificationState.cs" />
     <Compile Include="Model\NotificationType.cs" />
     <Compile Include="Model\PaymentMethod.cs" />
+    <Compile Include="Model\RequestMedicalExaminationEmployee.cs" />
+    <Compile Include="Model\RequestMedicalExaminations.cs" />
+    <Compile Include="Model\RequestMedicalExaminationState.cs" />
     <Compile Include="Model\Simulation.cs" />
     <Compile Include="Model\SimulationCompany.cs" />
     <Compile Include="Model\SimulationState.cs" />

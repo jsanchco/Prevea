@@ -145,7 +145,9 @@
                     return "Baja de Contrato";
                 case "OtherDocuments":
                     return "Otros Documentos";
-                    
+                case "Pending":
+                    return "Pendiente";
+
                 default:
                     return name;
             }
