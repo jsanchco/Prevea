@@ -889,6 +889,326 @@
         }
 
         [HttpGet]
+        public ActionResult ContractSPAReport(int contractualDocumentId, bool isPartialView = false)
+        {
+            ViewBag.IsPartialView = isPartialView;
+
+            var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
+
+            ViewBag.ContractualDocumentId = contractualDocumentId;
+            ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
+            ViewBag.IVA = Service.GetTagValue("IVA");
+
+            var workCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
+            ViewBag.NumberWorkCenters = workCenters.Count;
+
+            var provincesWorkCenters = string.Empty;
+            if (workCenters.Count > 0)
+            {
+                var distinctWorkCenters = workCenters
+                    .GroupBy(x => x.Province.Trim())
+                    .Select(g => new
+                    {
+                        Field = g.Key,
+                        Count = g.Count()
+                    }).ToList();
+
+
+                if (distinctWorkCenters.Count == 1)
+                {
+                    provincesWorkCenters = distinctWorkCenters[0].Count == 1 ?
+                        $"{distinctWorkCenters[0].Field.Trim()}." :
+                        $"{distinctWorkCenters[0].Field.Trim()}({distinctWorkCenters[0].Count}).";
+                }
+                else
+                {
+                    for (var i = 0; i < distinctWorkCenters.Count; i++)
+                    {
+                        var workCenter = distinctWorkCenters[i];
+                        var newWorkCenter = workCenter.Field.Trim();
+                        if (newWorkCenter != string.Empty)
+                        {
+                            if (i == distinctWorkCenters.Count - 1)
+                            {
+                                provincesWorkCenters += distinctWorkCenters[i].Count == 1 ?
+                                    $"{newWorkCenter}." :
+                                    $"{newWorkCenter}({distinctWorkCenters[i].Count}).";
+                            }
+                            else
+                            {
+                                provincesWorkCenters += distinctWorkCenters[i].Count == 1 ?
+                                    $"{newWorkCenter}, " :
+                                    $"{newWorkCenter}({distinctWorkCenters[i].Count}), ";
+                            }
+                        }
+                    }
+                }
+            }
+            ViewBag.ProvincesWorkCenters = provincesWorkCenters;
+
+            if (isPartialView)
+                return PartialView("~/Views/CommercialTool/Companies/Reports/ContractSPAReport.cshtml", contractualDocument.Company);
+
+            return View("~/Views/CommercialTool/Companies/Reports/ContractSPAReport.cshtml", contractualDocument.Company);
+        }
+
+        [HttpGet]
+        public ActionResult OfferAgencyReport(int contractualDocumentId, bool isPartialView = false)
+        {
+            ViewBag.IsPartialView = isPartialView;
+
+            var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
+
+            ViewBag.ContractualDocumentId = contractualDocumentId;
+            ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
+            ViewBag.IVA = Service.GetTagValue("IVA");
+
+            var workCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
+            ViewBag.NumberWorkCenters = workCenters.Count;
+
+            var provincesWorkCenters = string.Empty;
+            if (workCenters.Count > 0)
+            {
+                var distinctWorkCenters = workCenters
+                    .GroupBy(x => x.Province.Trim())
+                    .Select(g => new
+                    {
+                        Field = g.Key,
+                        Count = g.Count()
+                    }).ToList();
+
+
+                if (distinctWorkCenters.Count == 1)
+                {
+                    provincesWorkCenters = distinctWorkCenters[0].Count == 1 ?
+                        $"{distinctWorkCenters[0].Field.Trim()}." :
+                        $"{distinctWorkCenters[0].Field.Trim()}({distinctWorkCenters[0].Count}).";
+                }
+                else
+                {
+                    for (var i = 0; i < distinctWorkCenters.Count; i++)
+                    {
+                        var workCenter = distinctWorkCenters[i];
+                        var newWorkCenter = workCenter.Field.Trim();
+                        if (newWorkCenter != string.Empty)
+                        {
+                            if (i == distinctWorkCenters.Count - 1)
+                            {
+                                provincesWorkCenters += distinctWorkCenters[i].Count == 1 ?
+                                    $"{newWorkCenter}." :
+                                    $"{newWorkCenter}({distinctWorkCenters[i].Count}).";
+                            }
+                            else
+                            {
+                                provincesWorkCenters += distinctWorkCenters[i].Count == 1 ?
+                                    $"{newWorkCenter}, " :
+                                    $"{newWorkCenter}({distinctWorkCenters[i].Count}), ";
+                            }
+                        }
+                    }
+                }
+            }
+            ViewBag.ProvincesWorkCenters = provincesWorkCenters;
+
+            if (isPartialView)
+                return PartialView("~/Views/CommercialTool/Companies/Reports/OfferAgencyReport.cshtml", contractualDocument.Company);
+
+            return View("~/Views/CommercialTool/Companies/Reports/OfferAgencyReport.cshtml", contractualDocument.Company);
+        }
+
+        [HttpGet]
+        public ActionResult ContractAgencyReport(int contractualDocumentId, bool isPartialView = false)
+        {
+            ViewBag.IsPartialView = isPartialView;
+
+            var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
+
+            ViewBag.ContractualDocumentId = contractualDocumentId;
+            ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
+            ViewBag.IVA = Service.GetTagValue("IVA");
+
+            var workCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
+            ViewBag.NumberWorkCenters = workCenters.Count;
+
+            var provincesWorkCenters = string.Empty;
+            if (workCenters.Count > 0)
+            {
+                var distinctWorkCenters = workCenters
+                    .GroupBy(x => x.Province.Trim())
+                    .Select(g => new
+                    {
+                        Field = g.Key,
+                        Count = g.Count()
+                    }).ToList();
+
+
+                if (distinctWorkCenters.Count == 1)
+                {
+                    provincesWorkCenters = distinctWorkCenters[0].Count == 1 ?
+                        $"{distinctWorkCenters[0].Field.Trim()}." :
+                        $"{distinctWorkCenters[0].Field.Trim()}({distinctWorkCenters[0].Count}).";
+                }
+                else
+                {
+                    for (var i = 0; i < distinctWorkCenters.Count; i++)
+                    {
+                        var workCenter = distinctWorkCenters[i];
+                        var newWorkCenter = workCenter.Field.Trim();
+                        if (newWorkCenter != string.Empty)
+                        {
+                            if (i == distinctWorkCenters.Count - 1)
+                            {
+                                provincesWorkCenters += distinctWorkCenters[i].Count == 1 ?
+                                    $"{newWorkCenter}." :
+                                    $"{newWorkCenter}({distinctWorkCenters[i].Count}).";
+                            }
+                            else
+                            {
+                                provincesWorkCenters += distinctWorkCenters[i].Count == 1 ?
+                                    $"{newWorkCenter}, " :
+                                    $"{newWorkCenter}({distinctWorkCenters[i].Count}), ";
+                            }
+                        }
+                    }
+                }
+            }
+            ViewBag.ProvincesWorkCenters = provincesWorkCenters;
+
+            if (isPartialView)
+                return PartialView("~/Views/CommercialTool/Companies/Reports/ContractAgencyReport.cshtml", contractualDocument.Company);
+
+            return View("~/Views/CommercialTool/Companies/Reports/ContractAgencyReport.cshtml", contractualDocument.Company);
+        }
+
+        [HttpGet]
+        public ActionResult OfferTrainingReport(int contractualDocumentId, bool isPartialView = false)
+        {
+            ViewBag.IsPartialView = isPartialView;
+
+            var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
+
+            ViewBag.ContractualDocumentId = contractualDocumentId;
+            ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
+            ViewBag.IVA = Service.GetTagValue("IVA");
+
+            var workCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
+            ViewBag.NumberWorkCenters = workCenters.Count;
+
+            var provincesWorkCenters = string.Empty;
+            if (workCenters.Count > 0)
+            {
+                var distinctWorkCenters = workCenters
+                    .GroupBy(x => x.Province.Trim())
+                    .Select(g => new
+                    {
+                        Field = g.Key,
+                        Count = g.Count()
+                    }).ToList();
+
+
+                if (distinctWorkCenters.Count == 1)
+                {
+                    provincesWorkCenters = distinctWorkCenters[0].Count == 1 ?
+                        $"{distinctWorkCenters[0].Field.Trim()}." :
+                        $"{distinctWorkCenters[0].Field.Trim()}({distinctWorkCenters[0].Count}).";
+                }
+                else
+                {
+                    for (var i = 0; i < distinctWorkCenters.Count; i++)
+                    {
+                        var workCenter = distinctWorkCenters[i];
+                        var newWorkCenter = workCenter.Field.Trim();
+                        if (newWorkCenter != string.Empty)
+                        {
+                            if (i == distinctWorkCenters.Count - 1)
+                            {
+                                provincesWorkCenters += distinctWorkCenters[i].Count == 1 ?
+                                    $"{newWorkCenter}." :
+                                    $"{newWorkCenter}({distinctWorkCenters[i].Count}).";
+                            }
+                            else
+                            {
+                                provincesWorkCenters += distinctWorkCenters[i].Count == 1 ?
+                                    $"{newWorkCenter}, " :
+                                    $"{newWorkCenter}({distinctWorkCenters[i].Count}), ";
+                            }
+                        }
+                    }
+                }
+            }
+            ViewBag.ProvincesWorkCenters = provincesWorkCenters;
+
+            if (isPartialView)
+                return PartialView("~/Views/CommercialTool/Companies/Reports/OfferTrainingReport.cshtml", contractualDocument.Company);
+
+            return View("~/Views/CommercialTool/Companies/Reports/OfferTrainingReport.cshtml", contractualDocument.Company);
+        }
+
+        [HttpGet]
+        public ActionResult ContractTrainingReport(int contractualDocumentId, bool isPartialView = false)
+        {
+            ViewBag.IsPartialView = isPartialView;
+
+            var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
+
+            ViewBag.ContractualDocumentId = contractualDocumentId;
+            ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
+            ViewBag.IVA = Service.GetTagValue("IVA");
+
+            var workCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
+            ViewBag.NumberWorkCenters = workCenters.Count;
+
+            var provincesWorkCenters = string.Empty;
+            if (workCenters.Count > 0)
+            {
+                var distinctWorkCenters = workCenters
+                    .GroupBy(x => x.Province.Trim())
+                    .Select(g => new
+                    {
+                        Field = g.Key,
+                        Count = g.Count()
+                    }).ToList();
+
+
+                if (distinctWorkCenters.Count == 1)
+                {
+                    provincesWorkCenters = distinctWorkCenters[0].Count == 1 ?
+                        $"{distinctWorkCenters[0].Field.Trim()}." :
+                        $"{distinctWorkCenters[0].Field.Trim()}({distinctWorkCenters[0].Count}).";
+                }
+                else
+                {
+                    for (var i = 0; i < distinctWorkCenters.Count; i++)
+                    {
+                        var workCenter = distinctWorkCenters[i];
+                        var newWorkCenter = workCenter.Field.Trim();
+                        if (newWorkCenter != string.Empty)
+                        {
+                            if (i == distinctWorkCenters.Count - 1)
+                            {
+                                provincesWorkCenters += distinctWorkCenters[i].Count == 1 ?
+                                    $"{newWorkCenter}." :
+                                    $"{newWorkCenter}({distinctWorkCenters[i].Count}).";
+                            }
+                            else
+                            {
+                                provincesWorkCenters += distinctWorkCenters[i].Count == 1 ?
+                                    $"{newWorkCenter}, " :
+                                    $"{newWorkCenter}({distinctWorkCenters[i].Count}), ";
+                            }
+                        }
+                    }
+                }
+            }
+            ViewBag.ProvincesWorkCenters = provincesWorkCenters;
+
+            if (isPartialView)
+                return PartialView("~/Views/CommercialTool/Companies/Reports/ContractTrainingReport.cshtml", contractualDocument.Company);
+
+            return View("~/Views/CommercialTool/Companies/Reports/ContractTrainingReport.cshtml", contractualDocument.Company);
+        }
+
+        [HttpGet]
         public ActionResult DefaultReport(int contractualDocumentId)
         {
             var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
@@ -978,6 +1298,22 @@
                 case (int)EnContractualDocumentType.OfferSPA:
                     actionResult = "OfferSPAReport";
                     break;
+                case (int)EnContractualDocumentType.ContractSPA:
+                    actionResult = "ContractSPAReport";
+                    break;
+                case (int)EnContractualDocumentType.OfferGES:
+                    actionResult = "OfferAgencyReport";
+                    break;
+                case (int)EnContractualDocumentType.ContractGES:
+                    actionResult = "ContractAgencyReport";
+                    break;
+                case (int)EnContractualDocumentType.OfferFOR:
+                    actionResult = "OfferTrainingReport";
+                    break;
+                case (int)EnContractualDocumentType.ContractFOR:
+                    actionResult = "ContractTrainingReport";
+                    break;
+
                 default:
                     actionResult = "DefaultReport";
                     break;

@@ -1141,6 +1141,11 @@
     <Content Include="Views\Profile\ChangePassword.cshtml" />
     <Content Include="Views\Shared\MenuContactPerson.cshtml" />
     <Content Include="Views\Shared\MenuEmployee.cshtml" />
+    <Content Include="Views\CommercialTool\Companies\Reports\ContractSPAReport.cshtml" />
+    <Content Include="Views\CommercialTool\Companies\Reports\OfferAgencyReport.cshtml" />
+    <Content Include="Views\CommercialTool\Companies\Reports\OfferTrainingReport.cshtml" />
+    <Content Include="Views\CommercialTool\Companies\Reports\ContractAgencyReport.cshtml" />
+    <Content Include="Views\CommercialTool\Companies\Reports\ContractTrainingReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
