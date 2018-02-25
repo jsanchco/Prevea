@@ -2,6 +2,8 @@
 
     choosePhotoId: "choosePhoto",
     tabStripDetailProfileId: "tabStripDetailProfile",
+    simulationsAssignedId: "simulationsAssigned",
+    companiesAssignedId: "companiesAssigned",
 
     choosePhotoWindow: null,
 
@@ -52,6 +54,12 @@
         } else {
             $("#" + this.spanNotificationId).hide();
         }
+
+        if (GeneralData.userRoleId === Constants.role.ContactPerson ||
+            GeneralData.userRoleId === Constants.role.Employee) {
+            $("#" + this.simulationsAssignedId).hide();
+            $("#" + this.companiesAssignedId).hide();
+        }
     },
 
     createTabStripProfile: function () {
@@ -60,14 +68,19 @@
             text: "DATOS PERSONALES",
             contentUrl: "/Profile/PersonalDataProfile"
         });
+
+        if (GeneralData.userRoleId !== Constants.role.ContactPerson &&
+            GeneralData.userRoleId !== Constants.role.Employee) {
+            tabStrip.append({
+                text: "SEGUIMIENTO ECONÓMICO",
+                contentUrl: "/Profile/EconomicTrackingProfile"
+            });
+        }
+
         tabStrip.append({
-            text: "SEGUIMIENTO ECONÓMICO",
-            contentUrl: "/Profile/EconomicTrackingProfile"
-        });
-        tabStrip.append({
-            text: "DOCUMENTOS",
-            contentUrl: "/Profile/DocumentsProfile"
-        });
+                text: "DOCUMENTOS",
+                contentUrl: "/Profile/DocumentsProfile"
+            });
 
         tabStrip = $("#" + this.tabStripDetailProfileId).data("kendoTabStrip");
 
