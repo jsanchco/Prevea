@@ -178,6 +178,7 @@
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\MedicalExamination\HistoricMedicalExaminationController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\StartController.cs" />
@@ -673,6 +674,7 @@
     <Content Include="js\CommercialTool\ManagementCompanies\EmployeesCompany.js" />
     <Content Include="js\CommercialTool\Simulations\TrainingService.js" />
     <Content Include="js\Courses\ManagementCourses\ManagementCourses.js" />
+    <Content Include="js\MedicalExamination\Historic\HistoricMedicalExaminationController.js" />
     <Content Include="js\Notifications\Notifications.js" />
     <Content Include="js\Profile\ChangePassword.js" />
     <Content Include="js\Profile\ChoosePhoto.js" />
@@ -1146,9 +1148,12 @@
     <Content Include="Views\CommercialTool\Companies\Reports\OfferTrainingReport.cshtml" />
     <Content Include="Views\CommercialTool\Companies\Reports\ContractAgencyReport.cshtml" />
     <Content Include="Views\CommercialTool\Companies\Reports\ContractTrainingReport.cshtml" />
+    <Content Include="Views\MedicalExamination\Historic\HistoricMedicalExamination.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\HistoricMedicalExamination\" />
+    <Folder Include="Views\Historic\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
