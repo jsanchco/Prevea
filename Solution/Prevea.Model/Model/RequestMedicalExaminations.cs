@@ -4,6 +4,7 @@
 
     using System.ComponentModel.DataAnnotations;
     using System;
+    using System.Collections.Generic;
 
     #endregion
 
@@ -18,5 +19,7 @@
 
         public int RequestMedicalExaminationStateId { get; set; }
         public RequestMedicalExaminationState RequestMedicalExaminationState { get; set; }
+
+        public virtual ICollection<RequestMedicalExaminationEmployee> RequestMedicalExaminationEmployees { get; set; }
     }
 }

@@ -14,7 +14,10 @@
         public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
 
-        public int RequestMedicalExaminationId { get; set; }
+        public int RequestMedicalExaminationsId { get; set; }
         public RequestMedicalExaminations RequestMedicalExaminations { get; set; }
+
+        public int ContactPersonId { get; set; }
+        public User ContactPerson { get; set; }
     }
 }

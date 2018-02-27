@@ -21,5 +21,7 @@
         public virtual User User { get; set; }
 
         public virtual ICollection<EmployeeDoctorWorkSheet> EmployeesDoctorWorkSheets { get; set; }
+
+        public virtual ICollection<RequestMedicalExaminationEmployee> RequestMedicalExaminationEmployees { get; set; }
     }
 }

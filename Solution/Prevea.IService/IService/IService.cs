@@ -288,5 +288,32 @@
         List<ContractualDocumentType> GetContractualDocumentTypesBySimulation(int companyId, int simulationId);
 
         #endregion
+
+        #region RequestMedicalExamination State
+
+        List<RequestMedicalExaminationState> GetRequestMedicalExaminationStates();
+        RequestMedicalExaminationState GetRequestMedicalExaminationState(int id);
+
+        #endregion
+
+        #region RequestMedicalExamination Employee
+
+        RequestMedicalExaminationEmployee GetRequestMedicalExaminationEmployeeById(int id);
+        List<RequestMedicalExaminationEmployee> GetRequestMedicalExaminationEmployees();
+        List<Employee> GetEmployeesByRequestMedicalExamination(int requestMedicalExaminationId);
+        List<RequestMedicalExaminations> GetRequestMedicalExaminationsByContactPerson(int contactPersonId);
+        Result SaveRequestMedicalExaminationEmployee(RequestMedicalExaminationEmployee requestMedicalExaminationEmployee);
+        Result DeleteRequestMedicalExaminationEmployee(int id);
+
+        #endregion
+
+        #region RequestMedicalExaminations
+
+        RequestMedicalExaminations GetRequestMedicalExaminationById(int id);
+        List<RequestMedicalExaminations> GetRequestMedicalExaminations();
+        Result SaveRequestMedicalExaminations(RequestMedicalExaminations requestMedicalExamination);
+        Result DeleteRequestMedicalExamination(int id);
+
+        #endregion
     }
 }

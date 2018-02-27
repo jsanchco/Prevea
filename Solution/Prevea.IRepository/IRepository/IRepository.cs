@@ -311,5 +311,32 @@
         ContractualDocumentType GetContractualDocumentType(int id);
 
         #endregion
+
+        #region RequestMedicalExamination State
+
+        List<RequestMedicalExaminationState> GetRequestMedicalExaminationStates();
+        RequestMedicalExaminationState GetRequestMedicalExaminationState(int id);
+
+        #endregion
+
+        #region RequestMedicalExamination Employee
+
+        RequestMedicalExaminationEmployee GetRequestMedicalExaminationEmployeeById(int id);
+        List<RequestMedicalExaminationEmployee> GetRequestMedicalExaminationEmployees();
+        List<Employee> GetEmployeesByRequestMedicalExamination(int requestMedicalExaminationId);
+        List<RequestMedicalExaminations> GetRequestMedicalExaminationsByContactPerson(int contactPersonId);
+        RequestMedicalExaminationEmployee SaveRequestMedicalExaminationEmployee(RequestMedicalExaminationEmployee requestMedicalExaminationEmployee);
+        bool DeleteRequestMedicalExaminationEmployee(int id);
+
+        #endregion
+
+        #region RequestMedicalExaminations
+
+        RequestMedicalExaminations GetRequestMedicalExaminationById(int id);
+        List<RequestMedicalExaminations> GetRequestMedicalExaminations();
+        RequestMedicalExaminations SaveRequestMedicalExaminations(RequestMedicalExaminations requestMedicalExamination);
+        bool DeleteRequestMedicalExamination(int id);
+
+        #endregion
     }
 }

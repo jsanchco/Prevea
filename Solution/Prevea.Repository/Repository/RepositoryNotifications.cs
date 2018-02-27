@@ -81,7 +81,7 @@
                     dbContextTransaction.Rollback();
 
                     System.Diagnostics.Debug.WriteLine(ex.Message);
-                    return true;
+                    return false;
                 }
             }
         }

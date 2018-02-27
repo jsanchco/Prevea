@@ -73,6 +73,8 @@
     <Compile Include="Repository\RepositoryNotifications.cs" />
     <Compile Include="Repository\RepositoryNotificationTypes.cs" />
     <Compile Include="Repository\RepositoryPaymentMethods.cs" />
+    <Compile Include="Repository\RepositoryRequestMedicalExaminationEmployees.cs" />
+    <Compile Include="Repository\RepositoryRequestMedicalExaminationStates.cs" />
     <Compile Include="Repository\RepositorySimulationCompanies.cs" />
     <Compile Include="Repository\RepositorySimulations.cs" />
     <Compile Include="Repository\RepositoryStretchesAgencies.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="Repository\RepositoryUsers.cs" />
     <Compile Include="Repository\RepositoryWorkCenters.cs" />
     <Compile Include="Repository\RepositoryWorkCentersCompany.cs" />
+    <Compile Include="Repository\RespositoryRequestMedicalExaminations.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
