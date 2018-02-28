@@ -58,5 +58,10 @@
         Annex: 7, 
         UnSubscribeContract: 8, 
         Firmed: 9
+    },
+
+    requestMedicalExaminationState: {
+        Pending: 1,
+        Validated: 2
     }
 });

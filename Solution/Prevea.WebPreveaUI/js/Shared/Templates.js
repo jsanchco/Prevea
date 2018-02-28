@@ -55,6 +55,17 @@
         return html;
     },
 
+    getColumnTemplateDateIncrease: function (date) {
+        if (date === null) {
+            return "";
+        }
+
+        var html = kendo.format("<div align='center' style='font-size: 15px; font-weight: bold'>{0}</div>",
+            kendo.toString(date, "dd/MM/yyyy"));
+
+        return html;
+    },
+
     getColumnTemplateDateWithHour: function (date) {
         if (date === null) {
             return "";

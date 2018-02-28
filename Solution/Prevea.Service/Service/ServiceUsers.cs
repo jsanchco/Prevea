@@ -1,6 +1,4 @@
-﻿using Prevea.Model.CustomModel;
-
-namespace Prevea.Service.Service
+﻿namespace Prevea.Service.Service
 {
     #region Using
 
@@ -9,6 +7,7 @@ namespace Prevea.Service.Service
     using System.Linq;
     using System;
     using IService.IService;
+    using Model.CustomModel;
 
     #endregion
 
@@ -32,6 +31,17 @@ namespace Prevea.Service.Service
         public List<User> GetUsers()
         {
             return Repository.GetUsers();
+        }
+
+        public ContactPerson GetContactPersonById(int contactPersonId)
+        {
+            return Repository.GetContactPersonById(contactPersonId);
+        }
+
+        public ContactPerson GetContactPersonByUserId(int userId)
+        {
+            return Repository.GetContactPersons()
+                .FirstOrDefault(x => x.UserId == userId);
         }
 
         public List<User> GetContactPersonsByCompany(int companyId)

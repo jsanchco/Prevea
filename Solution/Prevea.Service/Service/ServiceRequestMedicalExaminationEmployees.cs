@@ -24,12 +24,7 @@
         public List<Employee> GetEmployeesByRequestMedicalExamination(int requestMedicalExaminationId)
         {
             return Repository.GetEmployeesByRequestMedicalExamination(requestMedicalExaminationId);
-        }
-
-        public List<RequestMedicalExaminations> GetRequestMedicalExaminationsByContactPerson(int contactPersonId)
-        {
-            return Repository.GetRequestMedicalExaminationsByContactPerson(contactPersonId);
-        }
+        } 
 
         public Result SaveRequestMedicalExaminationEmployee(RequestMedicalExaminationEmployee requestMedicalExaminationEmployee)
         {

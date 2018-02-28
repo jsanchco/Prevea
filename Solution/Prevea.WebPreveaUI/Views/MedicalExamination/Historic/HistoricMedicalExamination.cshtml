@@ -1,6 +1,44 @@
 ﻿<script>
-    HistoricMedicalExaminationController.init(@ViewBag.CompanyId);
+    HistoricMedicalExamination.init(@ViewBag.ContactPersonId);
 </script>
+
+<style>
+    #circleError {
+        width: 20px;
+        height: 20px;
+        -webkit-border-radius: 25px;
+        -moz-border-radius: 25px;
+        border-radius: 25px;
+        background: #CC2424;
+    }
+
+    #circleWarning {
+        width: 20px;
+        height: 20px;
+        -webkit-border-radius: 25px;
+        -moz-border-radius: 25px;
+        border-radius: 25px;
+        background: #F89406;
+    }
+
+    #circleSuccess {
+        width: 20px;
+        height: 20px;
+        -webkit-border-radius: 25px;
+        -moz-border-radius: 25px;
+        border-radius: 25px;
+        background: #00A651;
+    }
+
+    #circleDeleted {
+        width: 20px;
+        height: 20px;
+        -webkit-border-radius: 25px;
+        -moz-border-radius: 25px;
+        border-radius: 25px;
+        background: black;
+    }
+</style>
 
 <div class="row" id="pageRequestMedicalExaminationHistoric" style="margin: 8px">
 
@@ -10,7 +48,7 @@
             <div class="col-sm-12">
                 <ol class="breadcrumb bc-2">
                     <li class="active">
-                        <a id="br-companies" onclick="HistoricMedicalExaminationController.goToHistoric()" style="cursor: pointer;">
+                        <a id="br-companies" onclick="HistoricMedicalExamination.goToHistoric()" style="cursor: pointer;">
                             <strong>Histórico</strong>
                         </a>
                     </li>
@@ -24,7 +62,7 @@
     <div id="contentPartialView">
         <div class="row">
             <div class="col-sm-12">
-                <div id="gridHistoricMedicalExaminatio" style="height: 77vh;"></div>
+                <div id="gridRequestHistoricMedicalExaminations" style="height: 77vh;"></div>
             </div>
         </div>
     </div>

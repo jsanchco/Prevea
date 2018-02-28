@@ -105,6 +105,10 @@
 
             AutoMapper.Mapper.CreateMap<ContractualDocumentTypeViewModel, ContractualDocumentType>();
             AutoMapper.Mapper.CreateMap<ContractualDocumentType, ContractualDocumentTypeViewModel>();
+
+            AutoMapper.Mapper.CreateMap<RequestMedicalExaminations, RequestMedicalExaminationsViewModel>()
+                .ForMember(x => x.RequestMedicalExaminationStateDescription, x => x.MapFrom(y => y.RequestMedicalExaminationState.Description));
+            AutoMapper.Mapper.CreateMap<RequestMedicalExaminationsViewModel, RequestMedicalExaminations>();
         }
     }
 }

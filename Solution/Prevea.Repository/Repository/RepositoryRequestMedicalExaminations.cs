@@ -18,6 +18,7 @@
             return Context.RequestMedicalExaminations                
                 .Include(x => x.RequestMedicalExaminationEmployees)
                 .Include(x => x.RequestMedicalExaminationState)
+                .Include(x => x.ContactPerson)
                 .FirstOrDefault(x => x.Id == id);
         }
 
@@ -26,8 +27,20 @@
             return Context.RequestMedicalExaminations
                 .Include(x => x.RequestMedicalExaminationEmployees)
                 .Include(x => x.RequestMedicalExaminationState)
+                .Include(x => x.ContactPerson)
                 .ToList();
         }
+
+        public List<RequestMedicalExaminations> GetRequestMedicalExaminationsByContactPerson(int contactPersonId)
+        {
+            return Context.RequestMedicalExaminations
+                .Include(x => x.RequestMedicalExaminationEmployees)
+                .Include(x => x.RequestMedicalExaminationState)
+                .Include(x => x.ContactPerson)
+                .Where(x => x.ContactPersonId == contactPersonId)
+                .ToList();
+        }
+
 
         public RequestMedicalExaminations SaveRequestMedicalExaminations(RequestMedicalExaminations requestMedicalExamination)
         {

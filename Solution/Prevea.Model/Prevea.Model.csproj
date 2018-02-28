@@ -115,6 +115,7 @@
     <Compile Include="ViewModel\NotificationViewModel.cs" />
     <Compile Include="ViewModel\PaymentMethodViewModel.cs" />
     <Compile Include="ViewModel\PaymentModeViewModel.cs" />
+    <Compile Include="ViewModel\RequestMedicalExaminationsViewModel.cs" />
     <Compile Include="ViewModel\SimulationViewModel.cs" />
     <Compile Include="ViewModel\TrainingCourseTrainingServiceViewModel.cs" />
     <Compile Include="ViewModel\TrainingCourseViewModel.cs" />

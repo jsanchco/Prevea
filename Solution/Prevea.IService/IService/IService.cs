@@ -41,7 +41,9 @@
         User ValidateUser(string user, string password);
         List<string> GetRolesByUser(int userId);
         User GetUser(int userId);
-        List<User> GetUsers();
+        List<User> GetUsers();        
+        ContactPerson GetContactPersonById(int contactPersonId);
+        ContactPerson GetContactPersonByUserId(int userId);
         List<User> GetContactPersonsByCompany(int companyId);
         List<User> GetEmployeesByCompany(int companyId);
         List<User> GetUsersByUser(int id);
@@ -300,8 +302,7 @@
 
         RequestMedicalExaminationEmployee GetRequestMedicalExaminationEmployeeById(int id);
         List<RequestMedicalExaminationEmployee> GetRequestMedicalExaminationEmployees();
-        List<Employee> GetEmployeesByRequestMedicalExamination(int requestMedicalExaminationId);
-        List<RequestMedicalExaminations> GetRequestMedicalExaminationsByContactPerson(int contactPersonId);
+        List<Employee> GetEmployeesByRequestMedicalExamination(int requestMedicalExaminationId);        
         Result SaveRequestMedicalExaminationEmployee(RequestMedicalExaminationEmployee requestMedicalExaminationEmployee);
         Result DeleteRequestMedicalExaminationEmployee(int id);
 
@@ -311,6 +312,7 @@
 
         RequestMedicalExaminations GetRequestMedicalExaminationById(int id);
         List<RequestMedicalExaminations> GetRequestMedicalExaminations();
+        List<RequestMedicalExaminations> GetRequestMedicalExaminationsByContactPerson(int contactPersonId);
         Result SaveRequestMedicalExaminations(RequestMedicalExaminations requestMedicalExamination);
         Result DeleteRequestMedicalExamination(int id);
 

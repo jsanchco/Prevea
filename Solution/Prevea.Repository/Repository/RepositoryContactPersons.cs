@@ -5,11 +5,29 @@
     using Model.Model;
     using System;
     using System.Linq;
+    using System.Data.Entity;
+    using System.Collections.Generic;
 
     #endregion
 
     public partial class Repository
     {
+        public List<ContactPerson> GetContactPersons()
+        {
+            return Context.ContactPersons
+                .Include(x => x.Company)
+                .Include(x => x.User)
+                .ToList();                ;
+        }
+
+        public ContactPerson GetContactPersonById(int contactPersonId)
+        {
+            return Context.ContactPersons
+                .Include(x => x.Company)
+                .Include(x => x.User)
+                .FirstOrDefault(x => x.Id == contactPersonId);
+        }
+
         public ContactPerson SaveContactPerson(ContactPerson contactPerson)
         {
             using (var dbContextTransaction = Context.Database.BeginTransaction())

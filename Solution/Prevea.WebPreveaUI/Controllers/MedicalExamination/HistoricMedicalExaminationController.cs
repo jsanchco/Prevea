@@ -5,7 +5,13 @@
     using System.Web.Mvc;
     using HelpersClass;
     using IService.IService;
-    using System.Linq;
+    using Model.Model;
+    using System.Collections.Generic;
+    using Kendo.Mvc.UI;
+    using Model.ViewModel;
+    using Common;
+    using System;
+    using System.Diagnostics;
 
     #endregion
 
@@ -21,17 +27,66 @@
         [AppAuthorize(Roles = "ContactPerson")]
         public ActionResult HistoricMedicalExamination()
         {
-            var companies = Service.GetCompanies();
-            foreach (var company in companies)
+            var contactPerson = Service.GetContactPersonByUserId(User.Id);
+            if (contactPerson != null)
             {
-                if (company.ContactPersons?.FirstOrDefault(x => x.UserId == User.Id) != null)
-                {
-                    ViewBag.CompanyId = company.Id;
-                    return PartialView("~/Views/MedicalExamination/Historic/HistoricMedicalExamination.cshtml");
-                }
+                ViewBag.ContactPersonId = contactPerson.Id;
+                return PartialView("~/Views/MedicalExamination/Historic/HistoricMedicalExamination.cshtml");
             }
 
             return PartialView("~/Views/Error/AccessDenied.cshtml");
+        }
+
+        [HttpGet]
+        public JsonResult RequestMedicalExaminations_Read([DataSourceRequest] DataSourceRequest request)
+        {
+            var contactPerson = Service.GetContactPersonByUserId(User.Id);
+
+            var data = AutoMapper.Mapper.Map<List<RequestMedicalExaminationsViewModel>>(Service.GetRequestMedicalExaminationsByContactPerson(contactPerson.Id));
+
+            return this.Jsonp(data);
+        }
+
+        public JsonResult RequestMedicalExaminations_Create()
+        {
+            const string errorRequestMedicalExamination = "Se ha producido un error en la Grabación de RequestMedicalExamination";
+
+            try
+            {
+                var requestMedicalExamination = this.DeserializeObject<RequestMedicalExaminationsViewModel>("requestMedicalExamination");
+                if (requestMedicalExamination == null)
+                {
+                    return this.Jsonp(new { Errors = errorRequestMedicalExamination });
+                }
+
+                var data = AutoMapper.Mapper.Map<RequestMedicalExaminations>(requestMedicalExamination);
+                var result = Service.SaveRequestMedicalExaminations(data);
+
+                if (result.Status == Status.Error)
+                    return this.Jsonp(new { Errors = errorRequestMedicalExamination });
+
+                var contactPerson = Service.GetContactPersonById(requestMedicalExamination.ContactPersonId);
+                var notification = new Model.Model.Notification
+                {
+                    DateCreation = DateTime.Now,
+                    NotificationTypeId = (int)EnNotificationType.FromRequestMedicalExamination,
+                    NotificationStateId = (int)EnNotificationState.Assigned,
+                    ToUserId = contactPerson.Company.SimulationCompanyActive.Simulation.UserAssignedId,
+                    Observations =
+                        $"{Service.GetUser(User.Id).Initials} - Alta de la Petición de Reconocimiento Médico [{contactPerson.Company.Name}]"
+                };
+                var resultNotification = Service.SaveNotification(notification);
+                if (resultNotification.Status == Status.Error)
+                    return this.Jsonp(new { Errors = resultNotification });
+
+                return this.Jsonp(requestMedicalExamination);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+                return this.Jsonp(new { Errors = errorRequestMedicalExamination });
+            }
         }
     }
 }

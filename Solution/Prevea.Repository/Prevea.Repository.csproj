@@ -85,7 +85,7 @@
     <Compile Include="Repository\RepositoryUsers.cs" />
     <Compile Include="Repository\RepositoryWorkCenters.cs" />
     <Compile Include="Repository\RepositoryWorkCentersCompany.cs" />
-    <Compile Include="Repository\RespositoryRequestMedicalExaminations.cs" />
+    <Compile Include="Repository\RepositoryRequestMedicalExaminations.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -21,6 +21,11 @@
             return Repository.GetRequestMedicalExaminations();
         }
 
+        public List<RequestMedicalExaminations> GetRequestMedicalExaminationsByContactPerson(int contactPersonId)
+        {
+            return Repository.GetRequestMedicalExaminationsByContactPerson(contactPersonId);
+        }
+
         public Result SaveRequestMedicalExaminations(RequestMedicalExaminations requestMedicalExamination)
         {
             try
