@@ -89,6 +89,8 @@
                     return "Desde Usuario";
                 case "FromRole":
                     return "Desde Rol";
+                case "FromRequestMedicalExamination":
+                    return "Petición de Reconocimiento Médico";                    
                 case "Issued":
                     return "Emitida";
                 case "Assigned":
