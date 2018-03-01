@@ -37,7 +37,7 @@
 
     simulationState: {
         ValidationPending: 1,
-        Modificated: 2,
+        Modified: 2,
         Validated: 3,
         SendToCompany: 4,
         Deleted: 5
@@ -63,5 +63,11 @@
     requestMedicalExaminationState: {
         Pending: 1,
         Validated: 2
+    },
+
+    requestMedicalExaminationEmployeeState: {
+        Pending: 1,
+        Validated: 2,
+        Modified: 3
     }
 });

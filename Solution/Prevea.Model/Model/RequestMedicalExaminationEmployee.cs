@@ -3,6 +3,7 @@
     #region Using
 
     using System.ComponentModel.DataAnnotations;
+    using System;
 
     #endregion
 
@@ -16,5 +17,10 @@
 
         public int RequestMedicalExaminationsId { get; set; }
         public RequestMedicalExaminations RequestMedicalExaminations { get; set; }
-    }
+
+        public DateTime Date { get; set; }
+
+        public int RequestMedicalExaminationEmployeeStateId { get; set; }
+        public RequestMedicalExaminationEmployeeState RequestMedicalExaminationEmployeeState { get; set; }
+    }    
 }

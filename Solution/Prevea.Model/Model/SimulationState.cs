@@ -23,5 +23,5 @@
         public virtual ICollection<Simulation> Simulations { get; set; }
     }
 
-    public enum EnSimulationState { ValidationPending = 1, Modificated, Validated, SendToCompany, Deleted }
+    public enum EnSimulationState { ValidationPending = 1, Modified, Validated, SendToCompany, Deleted }
 }

@@ -25,7 +25,7 @@
         if (this.simulationStateId === Constants.simulationState.ValidationPending) {
             html = "<div id='circleError' class='pull-right'></div>";
         }
-        if (this.simulationStateId === Constants.simulationState.Modificated) {
+        if (this.simulationStateId === Constants.simulationState.Modified) {
             html = "<div id='circleWarning' class='pull-right'></div>";
         }
         if (this.simulationStateId === Constants.simulationState.Validated) {
@@ -186,7 +186,7 @@
             GeneralData.userRoleId === Constants.role.PreveaPersonal) {
 
             if (fromServices === true) {
-                DetailSimulation.simulationStateId = Constants.simulationState.Modificated;
+                DetailSimulation.simulationStateId = Constants.simulationState.Modified;
             }
            
             $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
@@ -218,7 +218,7 @@
                     $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
                     $("#" + this.btnSendToCompaniesId).prop("disabled", true);
                     break;
-                case Constants.simulationState.Modificated:
+                case Constants.simulationState.Modified:
                 case Constants.simulationState.Validated:                    
                     $("#" + this.btnSendToCompaniesId).removeAttr("disabled");
                     $("#" + this.btnSendToCompaniesId).prop("disabled", false);

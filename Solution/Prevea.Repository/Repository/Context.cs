@@ -58,6 +58,7 @@
         public DbSet<RequestMedicalExaminations> RequestMedicalExaminations { get; set; }
         public DbSet<RequestMedicalExaminationState> RequestMedicalExaminationStates { get; set; }
         public DbSet<RequestMedicalExaminationEmployee> RequestMedicalExaminationsEmployees { get; set; }
+        public DbSet<RequestMedicalExaminationEmployeeState> RequestMedicalExaminationEmployeeStates { get; set; }
 
         #endregion
 

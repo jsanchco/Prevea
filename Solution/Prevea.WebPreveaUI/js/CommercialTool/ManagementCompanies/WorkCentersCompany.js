@@ -265,15 +265,15 @@
         return html;
     },
 
-    goToEditWorkCentersCompany: function (userId) {
+    goToEditWorkCentersCompany: function (id) {
         var grid = $("#" + WorkCentersCompany.gridWorkCentersCompanyId).data("kendoGrid");
-        var item = grid.dataSource.get(userId);
+        var item = grid.dataSource.get(id);
         var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
 
         grid.editRow(tr);
     },
 
-    goToDeleteWorkCentersCompany: function (userId) {
+    goToDeleteWorkCentersCompany: function (id) {
         var that = this;
 
         var dialog = $("#" + this.confirmId);
@@ -289,14 +289,14 @@
                 },
                 {
                     text: "Dar de Baja", action: function () {
-                        that.goToSubscribeWorkCentersCompany(userId, false);
+                        that.goToSubscribeWorkCentersCompany(id, false);
                     }
                 },
                 {
                     text: "Borrar", action: function ()
                     {
                         var grid = $("#" + that.gridWorkCentersCompanyId).data("kendoGrid");
-                        var item = grid.dataSource.get(userId);
+                        var item = grid.dataSource.get(id);
                         var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
 
                         grid.removeRow(tr);

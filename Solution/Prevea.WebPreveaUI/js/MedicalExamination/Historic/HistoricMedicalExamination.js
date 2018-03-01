@@ -1,6 +1,7 @@
 ﻿var HistoricMedicalExamination = kendo.observable({
 
     gridRequestHistoricMedicalExaminationsId: "gridRequestHistoricMedicalExaminations",
+    confirmId: "confirm",
 
     contactPersonId: null,
 
@@ -183,8 +184,8 @@
 
     getColumnTemplateCommands: function (data) {
         var html = "<div align='center'>";
-        html += kendo.format("<a toggle='tooltip' title='Editar' onclick='WorkCentersCompany.goToEditWorkCentersCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
-        html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='WorkCentersCompany.goToDeleteWorkCentersCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+        html += kendo.format("<a toggle='tooltip' title='Editar' onclick='HistoricMedicalExamination.goToEditRequestMedicalExamination(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+        html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='HistoricMedicalExamination.goToDeleteRequestMedicalExamination(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
         html += kendo.format("</div>");
 
         return html;
@@ -205,5 +206,42 @@
             data: {}
         };
         GeneralData.goToActionController(params);
+    },
+
+    goToEditRequestMedicalExamination: function (id) {
+        var grid = $("#" + HistoricMedicalExamination.gridRequestHistoricMedicalExaminationsId).data("kendoGrid");
+        var item = grid.dataSource.get(id);
+        var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
+
+        grid.editRow(tr);
+    },
+
+    goToDeleteRequestMedicalExamination: function (id) {
+        var that = this;
+
+        var dialog = $("#" + this.confirmId);
+        dialog.kendoDialog({
+            width: "400px",
+            title: "<strong>Medicina de la Salud</strong>",
+            closable: false,
+            modal: true,
+            content: "¿Quieres <strong>Borrar</strong> la Petición de Reconocimientos Médicos?",
+            actions: [
+                {
+                    text: "Cancelar", primary: true
+                },
+                {
+                    text: "Borrar", action: function ()
+                    {
+                        var grid = $("#" + that.gridRequestHistoricMedicalExaminationsId).data("kendoGrid");
+                        var item = grid.dataSource.get(id);
+                        var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
+
+                        grid.removeRow(tr);
+                    }
+                }
+            ]
+        });
+        dialog.data("kendoDialog").open();
     }
 });

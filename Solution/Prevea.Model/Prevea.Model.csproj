@@ -80,6 +80,7 @@
     <Compile Include="Model\NotificationType.cs" />
     <Compile Include="Model\PaymentMethod.cs" />
     <Compile Include="Model\RequestMedicalExaminationEmployee.cs" />
+    <Compile Include="Model\RequestMedicalExaminationEmployeeState.cs" />
     <Compile Include="Model\RequestMedicalExaminations.cs" />
     <Compile Include="Model\RequestMedicalExaminationState.cs" />
     <Compile Include="Model\Simulation.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="ViewModel\NotificationViewModel.cs" />
     <Compile Include="ViewModel\PaymentMethodViewModel.cs" />
     <Compile Include="ViewModel\PaymentModeViewModel.cs" />
+    <Compile Include="ViewModel\RequestMedicalExaminationEmployeeViewModel.cs" />
     <Compile Include="ViewModel\RequestMedicalExaminationsViewModel.cs" />
     <Compile Include="ViewModel\SimulationViewModel.cs" />
     <Compile Include="ViewModel\TrainingCourseTrainingServiceViewModel.cs" />

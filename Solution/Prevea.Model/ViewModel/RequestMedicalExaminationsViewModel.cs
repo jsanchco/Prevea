@@ -14,5 +14,6 @@
         public int RequestMedicalExaminationStateId { get; set; }
         public string RequestMedicalExaminationStateDescription { get; set; }
         public int ContactPersonId { get; set; }
+        public string ListEmployees { get; set; }
     }
 }

@@ -203,7 +203,7 @@
                 grid.tbody.find(">tr").each(function() {
                     var dataItem = grid.dataItem(this);
                     if (dataItem.SimulationStateId === Constants.simulationState.ValidationPending ||
-                        dataItem.SimulationStateId === Constants.simulationState.Modificated ||
+                        dataItem.SimulationStateId === Constants.simulationState.Modified ||
                         dataItem.SimulationStateId === Constants.simulationState.Validated) {
                         $(this).find(".k-hierarchy-cell a").removeClass("k-icon");
                     }
@@ -254,7 +254,7 @@
         if (data.SimulationStateId === Constants.simulationState.ValidationPending) {
             html += kendo.format("<div id='circleError' style='float: right; text-align: right;'></div></div>");
         }
-        if (data.SimulationStateId === Constants.simulationState.Modificated) {
+        if (data.SimulationStateId === Constants.simulationState.Modified) {
             html += kendo.format("<div id='circleWarning' style='float: right; text-align: right;'></div></div>");
         }
         if (data.SimulationStateId === Constants.simulationState.Validated) {

@@ -423,7 +423,7 @@
             {
                 case (int) EnRole.Super:
                 case (int) EnRole.PreveaPersonal:
-                    simulation.SimulationStateId = (int) EnSimulationState.Modificated;
+                    simulation.SimulationStateId = (int) EnSimulationState.Modified;
                     resultSimulation = Service.UpdateSimulation(simulation.Id, simulation);
 
                     if (resultSimulation.Status == Status.Error)

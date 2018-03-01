@@ -18,7 +18,7 @@
         public string Name { get; set; }
 
         [NotMapped]
-        public string Description => Helpers.HelperClass.GetDescription(Enum.GetName(typeof(EnSimulationState), Id));
+        public string Description => Helpers.HelperClass.GetDescription(Enum.GetName(typeof(EnRequestMedicalExaminationState), Id));
 
         public virtual ICollection<RequestMedicalExaminations> RequestMedicalExaminations { get; set; }
     }

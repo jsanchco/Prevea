@@ -317,5 +317,12 @@
         Result DeleteRequestMedicalExamination(int id);
 
         #endregion
+
+        #region RequestMedicalExaminationEmployee State
+
+        List<RequestMedicalExaminationEmployeeState> GetRequestMedicalExaminationEmployeeStates();
+        RequestMedicalExaminationEmployeeState GetRequestMedicalExaminationEmployeeState(int id);
+
+        #endregion
     }
 }

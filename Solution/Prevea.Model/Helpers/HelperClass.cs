@@ -101,7 +101,7 @@
                     return "Validada";
                 case "ValidationPending":
                     return "Pendiente de Validación";
-                case "Modificated":
+                case "Modified":
                     return "Modificada";
                 case "SendToCompany":
                     return "Enviada a Empresa";                    
