@@ -12,6 +12,7 @@
     using Common;
     using System;
     using System.Diagnostics;
+    using System.Linq;
 
     #endregion
 
@@ -31,6 +32,8 @@
             if (contactPerson != null)
             {
                 ViewBag.ContactPersonId = contactPerson.Id;
+                ViewBag.CompanyId = contactPerson.CompanyId;
+
                 return PartialView("~/Views/MedicalExamination/Historic/HistoricMedicalExamination.cshtml");
             }
 
@@ -38,11 +41,9 @@
         }
 
         [HttpGet]
-        public JsonResult RequestMedicalExaminations_Read([DataSourceRequest] DataSourceRequest request)
+        public JsonResult RequestMedicalExaminations_Read([DataSourceRequest] DataSourceRequest request, int companyId)
         {
-            var contactPerson = Service.GetContactPersonByUserId(User.Id);
-
-            var data = AutoMapper.Mapper.Map<List<RequestMedicalExaminationsViewModel>>(Service.GetRequestMedicalExaminationsByContactPerson(contactPerson.Id));
+            var data = AutoMapper.Mapper.Map<List<RequestMedicalExaminationsViewModel>>(Service.GetRequestMedicalExaminationsByCompany(companyId));
 
             return this.Jsonp(data);
         }
@@ -66,7 +67,7 @@
                 if (result.Status == Status.Error)
                     return this.Jsonp(new { Errors = errorRequestMedicalExamination });
 
-                var contactPerson = Service.GetContactPersonById(requestMedicalExamination.ContactPersonId);
+                var contactPerson = Service.GetContactPersonByUserId(User.Id);
                 var notification = new Model.Model.Notification
                 {
                     DateCreation = DateTime.Now,
@@ -109,7 +110,7 @@
                 if (result.Status == Status.Error)
                     return this.Jsonp(new { Errors = errorRequestMedicalExamination });
 
-                var contactPerson = Service.GetContactPersonById(requestMedicalExamination.ContactPersonId);
+                var contactPerson = Service.GetContactPersonById(User.Id);
                 var notification = new Model.Model.Notification
                 {
                     DateCreation = DateTime.Now,
@@ -151,7 +152,7 @@
                 if (result.Status == Status.Error)
                     return this.Jsonp(new { Errors = errorRequestMedicalExamination });
 
-                var contactPerson = Service.GetContactPersonById(requestMedicalExamination.ContactPersonId);
+                var contactPerson = Service.GetContactPersonById(User.Id);
                 var notification = new Model.Model.Notification
                 {
                     DateCreation = DateTime.Now,
@@ -174,5 +175,28 @@
                 return this.Jsonp(new { Errors = errorRequestMedicalExamination });
             }
         }
+
+        [HttpGet]
+        public JsonResult RequestMedicalExaminationEmployees_Read([DataSourceRequest] DataSourceRequest request, int requestMedicalExaminationId, int companyId)
+        {
+            var requestMedicalExamination = Service.GetRequestMedicalExaminationById(requestMedicalExaminationId);
+            var employees = Service.GetEmployeesByCompany(companyId).Where(x => x.UserStateId == (int)EnUserState.Alta).ToList();
+
+            var listEmployees = new List<RequestMedicalExaminationEmployeeViewModel>();            
+            foreach(var employee in employees)
+            {
+                listEmployees.Add(new RequestMedicalExaminationEmployeeViewModel
+                {
+                    Date = requestMedicalExamination.Date,
+                    EmployeeId = employee.Id,
+                    EmployeeName = $"{employee.FirstName} {employee.LastName}",
+                    EmployeeDNI = employee.DNI,
+                    Included = false,
+                    RequestMedicalExaminationsId = requestMedicalExaminationId
+                });
+            }            
+
+            return this.Jsonp(listEmployees);
+        }        
     }
 }

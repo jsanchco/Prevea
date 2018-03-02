@@ -75,5 +75,7 @@ namespace Prevea.Model.Model
         [Required]
         public int CompanyStateId { get; set; }
         public virtual CompanyState CompanyState { get; set; }
+
+        public virtual ICollection<RequestMedicalExaminations> RequestMedicalExaminations { get; set; }
     }
 }

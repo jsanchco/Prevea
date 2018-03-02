@@ -21,9 +21,9 @@
             return Repository.GetRequestMedicalExaminations();
         }
 
-        public List<RequestMedicalExaminations> GetRequestMedicalExaminationsByContactPerson(int contactPersonId)
+        public List<RequestMedicalExaminations> GetRequestMedicalExaminationsByCompany(int companyId)
         {
-            return Repository.GetRequestMedicalExaminationsByContactPerson(contactPersonId);
+            return Repository.GetRequestMedicalExaminationsByCompany(companyId);
         }
 
         public Result SaveRequestMedicalExaminations(RequestMedicalExaminations requestMedicalExamination)

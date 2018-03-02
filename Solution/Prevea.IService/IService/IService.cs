@@ -312,7 +312,7 @@
 
         RequestMedicalExaminations GetRequestMedicalExaminationById(int id);
         List<RequestMedicalExaminations> GetRequestMedicalExaminations();
-        List<RequestMedicalExaminations> GetRequestMedicalExaminationsByContactPerson(int contactPersonId);
+        List<RequestMedicalExaminations> GetRequestMedicalExaminationsByCompany(int companyId);
         Result SaveRequestMedicalExaminations(RequestMedicalExaminations requestMedicalExamination);
         Result DeleteRequestMedicalExamination(int id);
 

@@ -335,7 +335,7 @@
 
         RequestMedicalExaminations GetRequestMedicalExaminationById(int id);
         List<RequestMedicalExaminations> GetRequestMedicalExaminations();
-        List<RequestMedicalExaminations> GetRequestMedicalExaminationsByContactPerson(int contactPersonId);
+        List<RequestMedicalExaminations> GetRequestMedicalExaminationsByCompany(int companyId);
         RequestMedicalExaminations SaveRequestMedicalExaminations(RequestMedicalExaminations requestMedicalExamination);
         bool DeleteRequestMedicalExamination(int id);
 

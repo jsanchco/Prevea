@@ -20,8 +20,8 @@
         public int RequestMedicalExaminationStateId { get; set; }
         public RequestMedicalExaminationState RequestMedicalExaminationState { get; set; }
 
-        public int ContactPersonId { get; set; }
-        public User ContactPerson { get; set; }
+        public int CompanyId { get; set; }
+        public Company Company { get; set; }
 
         public virtual ICollection<RequestMedicalExaminationEmployee> RequestMedicalExaminationEmployees { get; set; }
     }

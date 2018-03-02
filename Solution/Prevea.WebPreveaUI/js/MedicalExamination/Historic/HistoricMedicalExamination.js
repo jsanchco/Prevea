@@ -4,13 +4,15 @@
     confirmId: "confirm",
 
     contactPersonId: null,
+    companyId: null,
 
     historicRequestMedicalExaminationsDataSource: null,
 
-    init: function (contactPersonId) {
+    init: function (contactPersonId, companyId) {
         kendo.culture("es-ES");
 
         this.contactPersonId = contactPersonId;
+        this.companyId = companyId;
 
         this.createHistoricRequestMedicalExaminationsDataSource();
         this.createHistoricRequestMedicalExaminationsGrid();
@@ -26,7 +28,7 @@
                         Date: { type: "date", format: "{0:dd/MM/yyyy}", defaultValue: new Date() },
                         RequestMedicalExaminationStateId: { type: "number", defaultValue: Constants.requestMedicalExaminationState.Pending },
                         RequestMedicalExaminationStateDescription: { type: "string", defaultValue: "Pendiente" },
-                        ContactPersonId: { type: "number", defaultValue: HistoricMedicalExamination.contactPersonId }
+                        CompanyId: { type: "number", defaultValue: HistoricMedicalExamination.companyId }
                     }
                 }
             },
@@ -49,6 +51,9 @@
                     dataType: "jsonp"
                 },
                 parameterMap: function (options, operation) {
+                    if (operation === "read") {
+                        return { companyId: options.companyId };
+                    }
                     if (operation !== "read" && options) {
                         return { requestMedicalExamination: kendo.stringify(options) };
                     }
@@ -143,6 +148,8 @@
                 mode: "inline",
                 confirmation: false
             },
+            detailTemplate: this.getTemplateChildren(),
+            detailInit: this.childrenEmployees,
             resizable: true,
             autoScroll: true,
             selectable: true,
@@ -200,6 +207,15 @@
         return html;
     },
 
+    getTemplateChildren: function () {
+        var html = "<div id='templateGridEmployeesMedicalExamination' style='border: 1px solid; border-radius: 16px;'>";
+        html += "<H2 style='text-align: center;'>Trabajadores</H2><br />";
+        html += "<div id='gridEmployeesMedicalExamination' class='gridEmployeesMedicalExamination' style='margin: 5px;'></div><br /><br />";
+        html += "</div>";
+
+        return html;
+    },
+
     goToHistoric: function() {
         var params = {
             url: "/HistoricMedicalExamination/HistoricMedicalExamination",
@@ -243,5 +259,130 @@
             ]
         });
         dialog.data("kendoDialog").open();
+    },
+
+    childrenEmployees: function (e) {
+        var dataSourceChildren = new kendo.data.DataSource({
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: { type: "number", defaultValue: 0 },
+                        EmployeeId: { type: "number" },
+                        EmployyeName: { type: "string", editable: false },
+                        Date: { type: "date", format: "{0:dd/MM/yyyy}" },                        
+                        Included: { type: "boolean", defaultValue: false },
+                        RequestMedicalExaminationsId: { type: "number" },
+                        ContactPersonId: { type: "number" },
+                        NIF: { type: "string", editable: false }
+                    }
+                }
+            },
+            transport: {
+                read: {
+                    url: "/HistoricMedicalExamination/RequestMedicalExaminationEmployees_Read",
+                    dataType: "jsonp",
+                    data: {
+                        requestMedicalExaminationId: e.data.Id,
+                        companyId: HistoricMedicalExamination.companyId
+                    }
+                },
+                parameterMap: function (options, operation) {
+                    if (operation === "read") {
+                        return { requestMedicalExaminationId: options.requestMedicalExaminationId, companyId: options.companyId };
+                    }
+
+                    return null;
+                }
+            },
+            pageSize: 20
+        });
+
+        var detailRow = e.detailRow;
+        detailRow.find(".gridEmployeesMedicalExamination").kendoGrid({
+            columns: [
+                {
+                    field: "EmployeeName",
+                    title: "Nombre",
+                    width: 400
+                }, {
+                    field: "EmployeeDNI",
+                    title: "DNI",
+                    width: 400
+                }, {
+                    field: "Date",
+                    title: "Día",
+                    width: 100,
+                    template: "#= Templates.getColumnTemplateDate(data.Date) #"
+                }, {
+                    field: "Date",
+                    title: "Hora",
+                    groupable: "false",
+                    template: "#= Templates.getColumnTemplateDate(data.Date) #"
+                }, {
+                    title: "Incluido",
+                    field: "Included",
+                    width: 100
+                }],
+            pageable: {
+                buttonCount: 2,
+                pageSizes: [20, 40, "all"],
+                refresh: true,
+                messages: {
+                    display: "Elementos mostrados {0} - {1} de {2}",
+                    itemsPerPage: "Elementos por página",
+                    allPages: "Todos",
+                    empty: "No existen registros para mostrar"
+                }
+            },
+            filterable: {
+                messages: {
+                    info: "Filtrar por: ",
+                    and: "Y",
+                    or: "O",
+                    filter: "Aplicar",
+                    clear: "Limpiar"
+                },
+                operators: {
+                    string: {
+                        contains: "Contiene",
+                        eq: "Igual a",
+                        neq: "No igual a",
+                        startswith: "Empieza con",
+                        endswith: "Termina con",
+                        doesnotcontain: "No contiene",
+                        isempty: "Está vacio",
+                        isnotnull: "No está vacio"
+                    },
+                    number: {
+                        eq: "Igual a",
+                        gt: "Más grande que",
+                        lt: "Más pequeño que"
+                    },
+                    date: {
+                        eq: "Igual a",
+                        gt: "Antes que",
+                        lt: "Después que",
+                        isnull: "Está vacio"
+                    }
+                }
+            },
+            editable: {
+                mode: "inline",
+                confirmation: false
+            },
+            resizable: true,
+            autoScroll: true,
+            selectable: true,
+            sortable: {
+                mode: "single",
+                allowUnsort: false
+            },
+            groupable: false
+        });
+        var grid = detailRow.find(".gridEmployeesMedicalExamination").data("kendoGrid");
+        grid.setDataSource(dataSourceChildren);        
+
+        $("#templateGridEmployeesMedicalExamination").css("border-color","#BFBFBF");
     }
 });
