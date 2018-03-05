@@ -207,8 +207,16 @@
         return html;
     },
 
+    getTemplateChildrenToolBar: function () {
+        var html = "<div class='toolbar'>";
+        html += "<a class='btn btn-prevea' role='button' onclick='HistoricMedicalExamination.validateRequestHistoricMedicalExaminationEmployees()'> Validar</a>";
+        html += "</span></div>";
+
+        return html;
+    },
+
     getTemplateChildren: function () {
-        var html = "<div id='templateGridEmployeesMedicalExamination' style='border: 1px solid; border-radius: 16px;'>";
+        var html = "<div id='templateGridEmployeesMedicalExamination' style='border: 1px solid; border-radius: 10px;'>";
         html += "<H2 style='text-align: center;'>Trabajadores</H2><br />";
         html += "<div id='gridEmployeesMedicalExamination' class='gridEmployeesMedicalExamination' style='margin: 5px;'></div><br /><br />";
         html += "</div>";
@@ -270,7 +278,7 @@
                         Id: { type: "number", defaultValue: 0 },
                         EmployeeId: { type: "number" },
                         EmployyeName: { type: "string", editable: false },
-                        Date: { type: "date", format: "{0:dd/MM/yyyy}" },                        
+                        Date: { type: "date", format: "{0:dd/MM/yyyy hh:mm}" },
                         Included: { type: "boolean", defaultValue: false },
                         RequestMedicalExaminationsId: { type: "number" },
                         ContactPersonId: { type: "number" },
@@ -295,6 +303,7 @@
                     return null;
                 }
             },
+            batch: true,
             pageSize: 20
         });
 
@@ -304,25 +313,25 @@
                 {
                     field: "EmployeeName",
                     title: "Nombre",
-                    width: 400
+                    width: 400,
+                    editor: HistoricMedicalExamination.editorSimple
                 }, {
                     field: "EmployeeDNI",
                     title: "DNI",
-                    width: 400
+                    width: 400,
+                    editor: HistoricMedicalExamination.editorSimple
                 }, {
                     field: "Date",
                     title: "Día",
-                    width: 100,
-                    template: "#= Templates.getColumnTemplateDate(data.Date) #"
-                }, {
-                    field: "Date",
-                    title: "Hora",
-                    groupable: "false",
-                    template: "#= Templates.getColumnTemplateDate(data.Date) #"
+                    width: 200,
+                    template: "#= Templates.getColumnTemplateDateWithHourBold(data.Date) #",
+                    editor: HistoricMedicalExamination.editorDate
                 }, {
                     title: "Incluido",
                     field: "Included",
-                    width: 100
+                    width: 100,
+                    template: "#= Templates.getColumnTemplateBooleanIncrease(data.Included) #",
+                    editor: HistoricMedicalExamination.editorIncluded
                 }],
             pageable: {
                 buttonCount: 2,
@@ -367,10 +376,8 @@
                     }
                 }
             },
-            editable: {
-                mode: "inline",
-                confirmation: false
-            },
+            toolbar: HistoricMedicalExamination.getTemplateChildrenToolBar(),
+            editable: true,
             resizable: true,
             autoScroll: true,
             selectable: true,
@@ -384,5 +391,70 @@
         grid.setDataSource(dataSourceChildren);        
 
         $("#templateGridEmployeesMedicalExamination").css("border-color","#BFBFBF");
+    },
+
+    editorSimple: function (container, options) {
+        var grid = $("#gridEmployeesMedicalExamination").data("kendoGrid");
+        var selectedItem = grid.dataItem(grid.select());
+        container.text(selectedItem.get(options.field));
+        container.css("text-align", "left");
+    },
+
+
+    editorIncluded: function (container, options) {        
+        var $input = $("<input name='Included'/>").appendTo(container);
+        $input.kendoMobileSwitch({
+            onLabel: "Si",
+            offLabel: "No",
+            checked: options.model.Included
+        });
+   
+        //var guid = kendo.guid();
+        //$('<input class="k-checkbox" id="' + guid + '" type="checkbox" name="Included" data-type="boolean" data-bind="checked:Included">').appendTo(container);
+        //$('<label class="k-checkbox-label" for="' + guid + '">&#8203;</label>').appendTo(container);
+    },
+
+    editorDate: function(container, options) {
+        var dateString = kendo.toString(options.model.Date, "dd/MM/yyyy hh:mm");
+        var $input = $("<input name='Date' value=" + dateString + " />").appendTo(container);
+        $input.kendoDateTimePicker({
+            dateInput: true
+        });
+    },
+
+    validateRequestHistoricMedicalExaminationEmployees: function () {
+        var grid = $("#gridEmployeesMedicalExamination").data("kendoGrid");
+        var changes = $.map(grid.dataSource.data(), function (item) {
+            if (item.dirty === true) {
+                var employee = {
+                    RequestMedicalExaminationsId: item.RequestMedicalExaminationsId,
+                    EmployeeId: item.EmployeeId,
+                    Date: item.Date,
+                    Included: item.Included
+                }
+                return employee;
+            }
+        });
+
+        if (changes === null || changes.length === 0) {
+            GeneralData.showNotification("No has hecho ningún cambio", "", "error");
+            return;
+        }
+
+        $.ajax({
+            url: "/HistoricMedicalExamination/UpdateRequestHistoricMedicalExaminationEmployees",
+            data: JSON.stringify({ "listEmployees": changes }),
+            type: "post",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                if (response.resultStatus === Constants.resultStatus.Ok) {
+                    grid.read();
+                    GeneralData.showNotification(Constants.ok, "", "success");
+                } else {
+                    GeneralData.showNotification(Constants.ko, "", "error");
+                }
+            }
+        });
     }
 });

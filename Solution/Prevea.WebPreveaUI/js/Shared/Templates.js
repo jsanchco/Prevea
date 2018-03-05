@@ -55,6 +55,28 @@
         return html;
     },
 
+    getColumnTemplateBoolean: function (checked) {
+        var html = "";
+        if (checked === true) {
+            html = "<div align='center'>Si</div>";
+        } else {
+            html = "<div align='center'>No</div>";
+        }
+
+        return html;
+    },
+
+    getColumnTemplateTime: function (date) {
+        if (date === null) {
+            return "";
+        }
+
+        var html = kendo.format("<div align='center'>{0}</div>",
+            kendo.toString(date, "mm:ss"));
+
+        return html;
+    },
+
     getColumnTemplateDateIncrease: function (date) {
         if (date === null) {
             return "";
@@ -73,6 +95,17 @@
 
         var html = kendo.format("<div align='center'>{0}</div>",
             kendo.toString(date, "dd/MM/yy HH:mm"));
+
+        return html;
+    },
+
+    getColumnTemplateDateWithHourBold: function (date) {
+        if (date === null) {
+            return "";
+        }
+
+        var html = kendo.format("<div align='center' style='font-weight: bold;'>{0}</div>",
+            kendo.toString(date, "dd/MM/yyyy HH:mm"));
 
         return html;
     },

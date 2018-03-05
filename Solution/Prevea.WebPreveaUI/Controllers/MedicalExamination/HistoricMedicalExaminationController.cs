@@ -110,7 +110,7 @@
                 if (result.Status == Status.Error)
                     return this.Jsonp(new { Errors = errorRequestMedicalExamination });
 
-                var contactPerson = Service.GetContactPersonById(User.Id);
+                var contactPerson = Service.GetContactPersonByUserId(User.Id);
                 var notification = new Model.Model.Notification
                 {
                     DateCreation = DateTime.Now,
@@ -123,6 +123,12 @@
                 var resultNotification = Service.SaveNotification(notification);
                 if (resultNotification.Status == Status.Error)
                     return this.Jsonp(new { Errors = resultNotification });
+
+                var requestMedicalExaminationsViewModel = result.Object as RequestMedicalExaminations;
+                if (requestMedicalExaminationsViewModel != null)
+                    requestMedicalExamination.Id = requestMedicalExaminationsViewModel.Id;
+                else
+                    return this.Jsonp(new { Errors = "RequestMedicalExamination in NULL" });
 
                 return this.Jsonp(requestMedicalExamination);
             }
@@ -152,7 +158,7 @@
                 if (result.Status == Status.Error)
                     return this.Jsonp(new { Errors = errorRequestMedicalExamination });
 
-                var contactPerson = Service.GetContactPersonById(User.Id);
+                var contactPerson = Service.GetContactPersonByUserId(User.Id);
                 var notification = new Model.Model.Notification
                 {
                     DateCreation = DateTime.Now,
@@ -185,11 +191,17 @@
             var listEmployees = new List<RequestMedicalExaminationEmployeeViewModel>();            
             foreach(var employee in employees)
             {
+                var name = string.Empty;
+                if (employee.FirstName != null)
+                    name += $"{employee.FirstName} ";
+                if (employee.LastName != null)
+                    name += employee.LastName;
+
                 listEmployees.Add(new RequestMedicalExaminationEmployeeViewModel
                 {
-                    Date = requestMedicalExamination.Date,
+                    Date = new DateTime(requestMedicalExamination.Date.Year, requestMedicalExamination.Date.Month, requestMedicalExamination.Date.Day, 0, 0, 0),
                     EmployeeId = employee.Id,
-                    EmployeeName = $"{employee.FirstName} {employee.LastName}",
+                    EmployeeName = name,
                     EmployeeDNI = employee.DNI,
                     Included = false,
                     RequestMedicalExaminationsId = requestMedicalExaminationId
@@ -197,6 +209,38 @@
             }            
 
             return this.Jsonp(listEmployees);
-        }        
+        }
+        
+        public JsonResult UpdateRequestHistoricMedicalExaminationEmployees(List<RequestMedicalExaminationEmployeeViewModel> listEmployees)
+        {
+            if (listEmployees == null || listEmployees.Count == 0)
+                return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
+
+            var requestMedicalExaminationsId = listEmployees[0].RequestMedicalExaminationsId;
+            var requestMedicalExaminationEmployees =
+                Service.GetEmployeesByRequestMedicalExamination(requestMedicalExaminationsId);
+            foreach (var requestMedicalExaminationEmployee in requestMedicalExaminationEmployees)
+            {
+                var removeEmployee =
+                    Service.DeleteRequestMedicalExaminationEmployee(requestMedicalExaminationEmployee.Id);
+                if (removeEmployee.Status == Status.Error)
+                    return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
+            }
+            foreach (var employee in listEmployees)
+            {
+                var requestMedicalExaminationEmployee = new RequestMedicalExaminationEmployee
+                {
+                    Date = employee.Date,
+                    EmployeeId = employee.Id,
+                    RequestMedicalExaminationEmployeeStateId = (int) EnRequestMedicalExaminationEmployeeState.Pending,
+                    RequestMedicalExaminationsId = requestMedicalExaminationsId
+                };
+                var saveEmployee = Service.SaveRequestMedicalExaminationEmployee(requestMedicalExaminationEmployee);
+                if (saveEmployee.Status == Status.Error)
+                    return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { resultStatus = Status.Ok }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
