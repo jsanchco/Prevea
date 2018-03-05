@@ -192,7 +192,11 @@
     getColumnTemplateCommands: function (data) {
         var html = "<div align='center'>";
         html += kendo.format("<a toggle='tooltip' title='Editar' onclick='HistoricMedicalExamination.goToEditRequestMedicalExamination(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
-        html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='HistoricMedicalExamination.goToDeleteRequestMedicalExamination(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+
+        if (GeneralData.userRoleId === Constants.role.ContactPerson) {
+            html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='HistoricMedicalExamination.goToDeleteRequestMedicalExamination(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+        }
+        
         html += kendo.format("</div>");
 
         return html;
@@ -201,7 +205,13 @@
     getTemplateToolBar: function () {
         var html = "<div class='toolbar'>";
         html += "<span name='create' class='k-grid-add' id='createRequestHistoricMedicalExamination'>";
-        html += "<a class='btn btn-prevea k-grid-add' role='button'> Agregar nuevo</a>";
+
+        if (GeneralData.userRoleId === Constants.role.ContactPerson) {
+            html += "<a class='btn btn-prevea k-grid-add' role='button'> Agregar nuevo</a>";
+        } else {
+            html += "<a class='btn btn-prevea k-grid-add' role='button' disabled> Agregar nuevo</a>";
+        }
+
         html += "</span></div>";
 
         return html;
@@ -270,6 +280,14 @@
     },
 
     childrenEmployees: function (e) {
+        var includedEditableValue = true;
+        var dateEditableValue = true;
+        if (GeneralData.userRoleId === Constants.role.ContactPerson) {
+            dateEditableValue = false;
+        } else {
+            includedEditableValue = false;
+        }
+
         var dataSourceChildren = new kendo.data.DataSource({
             schema: {
                 model: {
@@ -278,8 +296,8 @@
                         Id: { type: "number", defaultValue: 0 },
                         EmployeeId: { type: "number" },
                         EmployyeName: { type: "string", editable: false },
-                        Date: { type: "date", format: "{0:dd/MM/yyyy hh:mm}" },
-                        Included: { type: "boolean", defaultValue: false },
+                        Date: { type: "date", format: "{0:dd/MM/yyyy hh:mm}", editable: dateEditableValue },
+                        Included: { type: "boolean", defaultValue: false, editable: includedEditableValue },
                         RequestMedicalExaminationsId: { type: "number" },
                         ContactPersonId: { type: "number" },
                         NIF: { type: "string", editable: false }
@@ -292,7 +310,7 @@
                     dataType: "jsonp",
                     data: {
                         requestMedicalExaminationId: e.data.Id,
-                        companyId: HistoricMedicalExamination.companyId
+                        companyId: e.data.CompanyId
                     }
                 },
                 parameterMap: function (options, operation) {
@@ -407,11 +425,7 @@
             onLabel: "Si",
             offLabel: "No",
             checked: options.model.Included
-        });
-   
-        //var guid = kendo.guid();
-        //$('<input class="k-checkbox" id="' + guid + '" type="checkbox" name="Included" data-type="boolean" data-bind="checked:Included">').appendTo(container);
-        //$('<label class="k-checkbox-label" for="' + guid + '">&#8203;</label>').appendTo(container);
+        });   
     },
 
     editorDate: function(container, options) {

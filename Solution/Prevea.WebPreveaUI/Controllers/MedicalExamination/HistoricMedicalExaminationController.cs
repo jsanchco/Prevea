@@ -25,7 +25,7 @@
         #endregion
 
         [HttpGet]
-        [AppAuthorize(Roles = "ContactPerson")]
+        [AppAuthorize(Roles = "ContactPerson,PreveaPersonal")]
         public ActionResult HistoricMedicalExamination()
         {
             var contactPerson = Service.GetContactPersonByUserId(User.Id);
@@ -33,19 +33,29 @@
             {
                 ViewBag.ContactPersonId = contactPerson.Id;
                 ViewBag.CompanyId = contactPerson.CompanyId;
-
-                return PartialView("~/Views/MedicalExamination/Historic/HistoricMedicalExamination.cshtml");
+            }
+            else
+            {
+                ViewBag.ContactPersonId = 0;
+                ViewBag.CompanyId = 0;
             }
 
-            return PartialView("~/Views/Error/AccessDenied.cshtml");
+            return PartialView("~/Views/MedicalExamination/Historic/HistoricMedicalExamination.cshtml");
         }
 
         [HttpGet]
         public JsonResult RequestMedicalExaminations_Read([DataSourceRequest] DataSourceRequest request, int companyId)
         {
-            var data = AutoMapper.Mapper.Map<List<RequestMedicalExaminationsViewModel>>(Service.GetRequestMedicalExaminationsByCompany(companyId));
-
-            return this.Jsonp(data);
+            if (companyId != 0)
+            {
+                var data = AutoMapper.Mapper.Map<List<RequestMedicalExaminationsViewModel>>(Service.GetRequestMedicalExaminationsByCompany(companyId));
+                return this.Jsonp(data);
+            }
+            else
+            {
+                var data = AutoMapper.Mapper.Map<List<RequestMedicalExaminationsViewModel>>(Service.GetRequestMedicalExaminations());
+                return this.Jsonp(data);
+            }
         }
 
         [HttpGet]
