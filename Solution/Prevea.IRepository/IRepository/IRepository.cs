@@ -30,8 +30,7 @@
         User ValidateUser(string user, string password);
         Task<User> ValidateUserAsync(string user, string password);
         List<User> GetUsersInRoles(List<string> roles);
-        List<User> GetContatcPersonsByCompany(int companyId);
-        List<User> GetEmployeesByCompany(int companyId);
+        List<User> GetContatcPersonsByCompany(int companyId);        
         List<User> GetUsersByUser(int id);
         List<CustomRole> GetCustomRoles(List<int> listRoles);
 
@@ -129,6 +128,7 @@
         #endregion
 
         #region Employee
+        List<Employee> GetEmployeesByCompany(int companyId);
         Employee SaveEmployee(Employee employee);
         bool DeleteEmployee(Employee employee);
         #endregion

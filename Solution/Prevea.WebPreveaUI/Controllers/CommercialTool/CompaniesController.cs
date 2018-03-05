@@ -423,7 +423,7 @@
         [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial,ContactPerson")]
         public JsonResult EmployeesCompany_Read([DataSourceRequest] DataSourceRequest request, int companyId)
         {
-            var data = AutoMapper.Mapper.Map<List<UserViewModel>>(Service.GetEmployeesByCompany(companyId));
+            var data = AutoMapper.Mapper.Map<List<UserViewModel>>(Service.GetEmployeesByCompany(companyId).Select(x => x.User));
             foreach (var employee in data)
             {
                 employee.CompanyId = companyId;

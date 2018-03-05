@@ -324,17 +324,6 @@
             return users.ToList();
         }
 
-        public List<User> GetEmployeesByCompany(int companyId)
-        {
-            var users = from cp in Context.Employees
-                join c in Context.Companies on cp.CompanyId equals c.Id
-                join u in Context.Users on cp.UserId equals u.Id
-                where c.Id == companyId
-                select u;
-
-            return users.ToList();
-        }
-
         private string GetNick(int roleId, string dni)
         {
             switch (roleId)

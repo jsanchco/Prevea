@@ -27,7 +27,7 @@
                         Id: { type: "number", defaultValue: 0 },
                         Date: { type: "date", format: "{0:dd/MM/yyyy}", defaultValue: new Date() },
                         RequestMedicalExaminationStateId: { type: "number", defaultValue: Constants.requestMedicalExaminationState.Pending },
-                        RequestMedicalExaminationStateDescription: { type: "string", defaultValue: "Pendiente" },
+                        RequestMedicalExaminationStateDescription: { type: "string", defaultValue: "Pendiente" },                        
                         CompanyId: { type: "number", defaultValue: HistoricMedicalExamination.companyId }
                     }
                 }
@@ -425,15 +425,13 @@
     validateRequestHistoricMedicalExaminationEmployees: function () {
         var grid = $("#gridEmployeesMedicalExamination").data("kendoGrid");
         var changes = $.map(grid.dataSource.data(), function (item) {
-            if (item.dirty === true) {
-                var employee = {
-                    RequestMedicalExaminationsId: item.RequestMedicalExaminationsId,
-                    EmployeeId: item.EmployeeId,
-                    Date: item.Date,
-                    Included: item.Included
-                }
-                return employee;
+            var employee = {
+                RequestMedicalExaminationsId: item.RequestMedicalExaminationsId,
+                EmployeeId: item.EmployeeId,
+                Date: item.Date,
+                Included: item.Included
             }
+            return employee;
         });
 
         if (changes === null || changes.length === 0) {
@@ -449,7 +447,7 @@
             contentType: "application/json; charset=utf-8",
             success: function (response) {
                 if (response.resultStatus === Constants.resultStatus.Ok) {
-                    grid.read();
+                    grid.dataSource.read();
                     GeneralData.showNotification(Constants.ok, "", "success");
                 } else {
                     GeneralData.showNotification(Constants.ko, "", "error");

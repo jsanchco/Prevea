@@ -49,7 +49,7 @@
             return Repository.GetContatcPersonsByCompany(companyId);
         }
 
-        public List<User> GetEmployeesByCompany(int companyId)
+        public List<Employee> GetEmployeesByCompany(int companyId)
         {
             return Repository.GetEmployeesByCompany(companyId);
         }

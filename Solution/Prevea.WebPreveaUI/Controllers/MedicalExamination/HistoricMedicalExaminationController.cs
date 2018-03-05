@@ -186,26 +186,49 @@
         public JsonResult RequestMedicalExaminationEmployees_Read([DataSourceRequest] DataSourceRequest request, int requestMedicalExaminationId, int companyId)
         {
             var requestMedicalExamination = Service.GetRequestMedicalExaminationById(requestMedicalExaminationId);
-            var employees = Service.GetEmployeesByCompany(companyId).Where(x => x.UserStateId == (int)EnUserState.Alta).ToList();
+            var requestMedicalExaminationEmployeesByRequestMedicalExamination =
+                    Service.GetRequestMedicalExaminationEmployees()
+                    .Where(x => x.RequestMedicalExaminationsId == requestMedicalExaminationId)
+                    .ToList();
+
+            var employeesByCompany = Service.GetEmployeesByCompany(companyId)
+                .Where(x => x.User.UserStateId == (int)EnUserState.Alta).ToList();
 
             var listEmployees = new List<RequestMedicalExaminationEmployeeViewModel>();            
-            foreach(var employee in employees)
+            foreach(var employee in employeesByCompany)
             {
                 var name = string.Empty;
-                if (employee.FirstName != null)
-                    name += $"{employee.FirstName} ";
-                if (employee.LastName != null)
-                    name += employee.LastName;
+                if (employee.User.FirstName != null)
+                    name += $"{employee.User.FirstName} ";
+                if (employee.User.LastName != null)
+                    name += employee.User.LastName;
 
-                listEmployees.Add(new RequestMedicalExaminationEmployeeViewModel
+                var findEmployeesByRequestMedicalExamination = requestMedicalExaminationEmployeesByRequestMedicalExamination.Find(x => x.EmployeeId == employee.Id);
+                if (findEmployeesByRequestMedicalExamination == null)
                 {
-                    Date = new DateTime(requestMedicalExamination.Date.Year, requestMedicalExamination.Date.Month, requestMedicalExamination.Date.Day, 0, 0, 0),
-                    EmployeeId = employee.Id,
-                    EmployeeName = name,
-                    EmployeeDNI = employee.DNI,
-                    Included = false,
-                    RequestMedicalExaminationsId = requestMedicalExaminationId
-                });
+                    listEmployees.Add(new RequestMedicalExaminationEmployeeViewModel
+                    {
+                        Date = new DateTime(requestMedicalExamination.Date.Year, requestMedicalExamination.Date.Month, requestMedicalExamination.Date.Day, 0, 0, 0),
+                        EmployeeId = employee.Id,
+                        EmployeeName = name,
+                        EmployeeDNI = employee.User.DNI,
+                        Included = false,
+                        RequestMedicalExaminationsId = requestMedicalExaminationId
+                    });
+                }
+                else
+                {
+                    var requestMedicalExaminationEmployee = Service.GetRequestMedicalExaminationEmployeeById(findEmployeesByRequestMedicalExamination.Id);
+                    listEmployees.Add(new RequestMedicalExaminationEmployeeViewModel
+                    {
+                        Date = requestMedicalExaminationEmployee.Date,
+                        EmployeeId = employee.Id,
+                        EmployeeName = name,
+                        EmployeeDNI = employee.User.DNI,
+                        Included = true,
+                        RequestMedicalExaminationsId = requestMedicalExaminationId
+                    });
+                }
             }            
 
             return this.Jsonp(listEmployees);
@@ -217,9 +240,11 @@
                 return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
 
             var requestMedicalExaminationsId = listEmployees[0].RequestMedicalExaminationsId;
-            var requestMedicalExaminationEmployees =
-                Service.GetEmployeesByRequestMedicalExamination(requestMedicalExaminationsId);
-            foreach (var requestMedicalExaminationEmployee in requestMedicalExaminationEmployees)
+            var requestMedicalExaminationEmployeesByRequestMedicalExamination =
+                    Service.GetRequestMedicalExaminationEmployees()
+                    .Where(x => x.RequestMedicalExaminationsId == requestMedicalExaminationsId)
+                    .ToList();
+            foreach (var requestMedicalExaminationEmployee in requestMedicalExaminationEmployeesByRequestMedicalExamination)
             {
                 var removeEmployee =
                     Service.DeleteRequestMedicalExaminationEmployee(requestMedicalExaminationEmployee.Id);
@@ -228,10 +253,13 @@
             }
             foreach (var employee in listEmployees)
             {
+                if (!employee.Included)
+                    continue;
+
                 var requestMedicalExaminationEmployee = new RequestMedicalExaminationEmployee
                 {
                     Date = employee.Date,
-                    EmployeeId = employee.Id,
+                    EmployeeId = employee.EmployeeId,
                     RequestMedicalExaminationEmployeeStateId = (int) EnRequestMedicalExaminationEmployeeState.Pending,
                     RequestMedicalExaminationsId = requestMedicalExaminationsId
                 };

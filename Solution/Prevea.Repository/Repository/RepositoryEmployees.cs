@@ -4,12 +4,19 @@
 
     using Model.Model;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     #endregion
 
     public partial class Repository
     {
+        public List<Employee> GetEmployeesByCompany(int companyId)
+        {
+            return Context.Employees.Where(x => x.CompanyId == companyId)
+                .ToList();
+        }
+
         public Employee SaveEmployee(Employee employee)
         {
             using (var dbContextTransaction = Context.Database.BeginTransaction())

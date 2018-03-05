@@ -167,7 +167,7 @@
     },
 
     getTemplateChildren: function () {
-        var html = "<div style='border: 1px solid; border-radius: 16px; border-color: grey;'>";
+        var html = "<div id='templateEconomicDataSimulation' style='border: 1px solid; border-radius: 10px;'>";
         html += "<H2 style='text-align: center;'><strong>Datos Económicos</strong></H2><br />";
         html += "<div class='economicDataView'></div><br /><br />";
         html += "</div>";
@@ -203,6 +203,8 @@
                 var detailRow = e.detailRow;
                 var economicDataView = detailRow.find(".economicDataView");
                 economicDataView.html(result);
+
+                $("#templateEconomicDataSimulation").css("border-color", "#BFBFBF");
             }
         });
     }
