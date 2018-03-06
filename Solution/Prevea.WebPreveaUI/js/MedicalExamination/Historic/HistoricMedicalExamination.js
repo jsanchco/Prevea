@@ -406,7 +406,17 @@
             groupable: false
         });
         var grid = detailRow.find(".gridEmployeesMedicalExamination").data("kendoGrid");
-        grid.setDataSource(dataSourceChildren);        
+        grid.setDataSource(dataSourceChildren);
+
+        if (GeneralData.userRoleId !== Constants.role.ContactPerson) {
+            var filter = {
+                field: "Included",
+                operator: "eq",
+                value: true
+            };
+            grid.dataSource.filter(filter);
+            grid.hideColumn("Included");
+        } 
 
         $("#templateGridEmployeesMedicalExamination").css("border-color","#BFBFBF");
     },
@@ -462,6 +472,11 @@
             success: function (response) {
                 if (response.resultStatus === Constants.resultStatus.Ok) {
                     grid.dataSource.read();
+
+                    var dataItem = HistoricMedicalExamination.historicRequestMedicalExaminationsDataSource.get(response.requestMedicalExamination.Id);
+                    dataItem.set("RequestMedicalExaminationStateId", response.requestMedicalExamination.RequestMedicalExaminationStateId);
+                    dataItem.set("RequestMedicalExaminationStateDescription", response.requestMedicalExamination.RequestMedicalExaminationStateDescription);
+
                     GeneralData.showNotification(Constants.ok, "", "success");
                 } else {
                     GeneralData.showNotification(Constants.ko, "", "error");

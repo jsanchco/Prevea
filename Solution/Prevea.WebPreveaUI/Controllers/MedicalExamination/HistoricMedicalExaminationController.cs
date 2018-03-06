@@ -278,7 +278,30 @@
                     return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { resultStatus = Status.Ok }, JsonRequestBehavior.AllowGet);
+            var user = Service.GetUser(User.Id);
+            var requestMedicalExamination = Service.GetRequestMedicalExaminationById(requestMedicalExaminationsId);
+            if (user.UserRoles.First().RoleId == (int) EnRole.ContactPerson)
+            {
+                requestMedicalExamination.RequestMedicalExaminationStateId =
+                    (int) EnRequestMedicalExaminationState.Pending;
+                var resultSaveRequestMedicalExaminations =
+                    Service.SaveRequestMedicalExaminations(requestMedicalExamination);
+                if (resultSaveRequestMedicalExaminations.Status == Status.Error)
+                    return Json(new {resultStatus = Status.Error}, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                requestMedicalExamination.RequestMedicalExaminationStateId =
+                    (int)EnRequestMedicalExaminationState.Validated;
+                var resultSaveRequestMedicalExaminations =
+                    Service.SaveRequestMedicalExaminations(requestMedicalExamination);
+                if (resultSaveRequestMedicalExaminations.Status == Status.Error)
+                    return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
+            }
+
+            requestMedicalExamination = Service.GetRequestMedicalExaminationById(requestMedicalExaminationsId);
+            var data = AutoMapper.Mapper.Map<RequestMedicalExaminationsViewModel>(requestMedicalExamination);
+            return Json(new { resultStatus = Status.Ok, requestMedicalExamination = data }, JsonRequestBehavior.AllowGet);
         }
     }
 }

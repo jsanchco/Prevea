@@ -578,12 +578,14 @@
             $("#btnCreateChildrenSimulation").removeAttr("disabled");
             $("#btnCreateChildrenSimulation").prop("disabled", true);
         }
+
+        $("#templateGridSimulationsChildren").css("border-color", "#BFBFBF");
     },
 
     getTemplateChildren: function () {
-        var html = "<div>";
+        var html = "<div id='templateGridSimulationsChildren' style='border: 1px solid; border-radius: 10px;'>";
         html += "<H2 style='text-align: center;'>Simulaciones Dependientes</H2><br />";
-        html += "<div id='gridSimulationsChildren' class='gridSimulationsChildren'></div><br /><br />";
+        html += "<div id='gridSimulationsChildren' class='gridSimulationsChildren' style='margin: 5px;'></div><br /><br />";
         html += "</div>";
 
         return html;
