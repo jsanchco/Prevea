@@ -471,11 +471,22 @@
             contentType: "application/json; charset=utf-8",
             success: function (response) {
                 if (response.resultStatus === Constants.resultStatus.Ok) {
-                    grid.dataSource.read();
-
                     var dataItem = HistoricMedicalExamination.historicRequestMedicalExaminationsDataSource.get(response.requestMedicalExamination.Id);
-                    dataItem.set("RequestMedicalExaminationStateId", response.requestMedicalExamination.RequestMedicalExaminationStateId);
-                    dataItem.set("RequestMedicalExaminationStateDescription", response.requestMedicalExamination.RequestMedicalExaminationStateDescription);
+                    dataItem.RequestMedicalExaminationStateId = response.requestMedicalExamination.RequestMedicalExaminationStateId;
+                    dataItem.RequestMedicalExaminationStateDescription = response.requestMedicalExamination.RequestMedicalExaminationStateDescription;
+
+                    var gridRequestHistoricMedicalExaminations =
+                        $("#" + HistoricMedicalExamination.gridRequestHistoricMedicalExaminationsId).data("kendoGrid");
+                    var expanded = $.map(gridRequestHistoricMedicalExaminations.tbody.children(":has(> .k-hierarchy-cell .k-i-collapse)"), function (row) {
+                        return $(row).data("uid");
+                    });
+
+                    gridRequestHistoricMedicalExaminations.one("dataBound", function () {
+                        gridRequestHistoricMedicalExaminations.expandRow(gridRequestHistoricMedicalExaminations.tbody.children().filter(function (idx, row) {
+                            return $.inArray($(row).data("uid"), expanded) >= 0;
+                        }));
+                    });
+                    gridRequestHistoricMedicalExaminations.refresh();
 
                     GeneralData.showNotification(Constants.ok, "", "success");
                 } else {
