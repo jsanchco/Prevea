@@ -249,6 +249,8 @@
             if (listEmployees == null || listEmployees.Count == 0)
                 return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
 
+            var user = Service.GetUser(User.Id);
+
             var requestMedicalExaminationsId = listEmployees[0].RequestMedicalExaminationsId;
             var requestMedicalExaminationEmployeesByRequestMedicalExamination =
                     Service.GetRequestMedicalExaminationEmployees()
@@ -273,12 +275,16 @@
                     RequestMedicalExaminationEmployeeStateId = (int) EnRequestMedicalExaminationEmployeeState.Pending,
                     RequestMedicalExaminationsId = requestMedicalExaminationsId
                 };
+                if (user.UserRoles.First().RoleId != (int) EnRole.ContactPerson)
+                {
+                    requestMedicalExaminationEmployee.ChangeDate = true;
+                }
+
                 var saveEmployee = Service.SaveRequestMedicalExaminationEmployee(requestMedicalExaminationEmployee);
                 if (saveEmployee.Status == Status.Error)
                     return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
             }
 
-            var user = Service.GetUser(User.Id);
             var requestMedicalExamination = Service.GetRequestMedicalExaminationById(requestMedicalExaminationsId);
             if (user.UserRoles.First().RoleId == (int) EnRole.ContactPerson)
             {

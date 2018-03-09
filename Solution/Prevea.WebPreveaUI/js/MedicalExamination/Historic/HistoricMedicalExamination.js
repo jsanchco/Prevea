@@ -234,6 +234,37 @@
         return html;
     },
 
+    getColumnTemplateDate: function(data) {
+        if (data.Date === null) {
+            return "";
+        }
+
+        var html;
+        if (data.ChangeDate === true) {
+            html = "<div style='text-align: center'>";
+            if (data.Included === true) {
+                html += "<div style='text-align: left'>";
+                html += "<div id='circleFirmValidated' toggle='tooltip' title='Validada' style='float: left; text-align: left;'>";
+                html += "</div>";
+            }
+            html += "</div>";
+            html += kendo.format("<div style='font-weight: bold;'>{0}", kendo.toString(data.Date, "dd/MM/yyyy HH:mm"));
+            html += "</div></div>";
+        } else {
+            html = "<div style='text-align: center'>";
+            if (data.Included === true) {
+                html += "<div style='text-align: left'>";
+                html += "<div id='circleFirmPending' toggle='tooltip' title='Pendiente de Validar' style='float: left; text-align: left;'>";
+                html += "</div>";
+            }
+            html += "</div>";
+            html += kendo.format("<div style='font-weight: bold;'>{0}", kendo.toString(data.Date, "dd/MM/yyyy"));
+            html += "</div></div>";
+        }
+
+        return html;
+    },
+
     goToHistoric: function() {
         var params = {
             url: "/HistoricMedicalExamination/HistoricMedicalExamination",
@@ -297,6 +328,7 @@
                         EmployeeId: { type: "number" },
                         EmployyeName: { type: "string", editable: false },
                         Date: { type: "date", format: "{0:dd/MM/yyyy hh:mm}", editable: dateEditableValue },
+                        ChangeDate: { type: "boolean" },
                         Included: { type: "boolean", defaultValue: false, editable: includedEditableValue },
                         RequestMedicalExaminationsId: { type: "number" },
                         ContactPersonId: { type: "number" },
@@ -342,7 +374,7 @@
                     field: "Date",
                     title: "Día",
                     width: 200,
-                    template: "#= Templates.getColumnTemplateDateWithHourBold(data.Date) #",
+                    template: "#= HistoricMedicalExamination.getColumnTemplateDate(data) #",
                     editor: HistoricMedicalExamination.editorDate
                 }, {
                     title: "Incluido",

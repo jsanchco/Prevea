@@ -20,6 +20,8 @@
 
         public DateTime Date { get; set; }
 
+        public bool ChangeDate { get; set; }
+
         public int RequestMedicalExaminationEmployeeStateId { get; set; }
         public RequestMedicalExaminationEmployeeState RequestMedicalExaminationEmployeeState { get; set; }
     }    
