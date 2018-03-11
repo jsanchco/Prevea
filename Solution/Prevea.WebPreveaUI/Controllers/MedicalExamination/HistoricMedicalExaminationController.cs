@@ -90,8 +90,8 @@
                 var resultNotification = Service.SaveNotification(notification);
                 if (resultNotification.Status == Status.Error)
                     return this.Jsonp(new { Errors = resultNotification });
-
-                return this.Jsonp(requestMedicalExamination);
+                
+                return this.Jsonp(AutoMapper.Mapper.Map<RequestMedicalExaminationsViewModel>(result.Object));
             }
             catch (Exception e)
             {
@@ -223,7 +223,8 @@
                         EmployeeName = name,
                         EmployeeDNI = employee.User.DNI,
                         Included = false,
-                        RequestMedicalExaminationsId = requestMedicalExaminationId
+                        RequestMedicalExaminationsId = requestMedicalExaminationId,
+                        ChangeDate = false
                     });
                 }
                 else
@@ -236,7 +237,8 @@
                         EmployeeName = name,
                         EmployeeDNI = employee.User.DNI,
                         Included = true,
-                        RequestMedicalExaminationsId = requestMedicalExaminationId
+                        RequestMedicalExaminationsId = requestMedicalExaminationId,
+                        ChangeDate = requestMedicalExaminationEmployee.ChangeDate
                     });
                 }
             }            
@@ -263,6 +265,8 @@
                 if (removeEmployee.Status == Status.Error)
                     return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
             }
+
+            var allValidated = true;
             foreach (var employee in listEmployees)
             {
                 if (!employee.Included)
@@ -273,12 +277,11 @@
                     Date = employee.Date,
                     EmployeeId = employee.EmployeeId,
                     RequestMedicalExaminationEmployeeStateId = (int) EnRequestMedicalExaminationEmployeeState.Pending,
-                    RequestMedicalExaminationsId = requestMedicalExaminationsId
+                    RequestMedicalExaminationsId = requestMedicalExaminationsId,
+                    ChangeDate = employee.ChangeDate
                 };
-                if (user.UserRoles.First().RoleId != (int) EnRole.ContactPerson)
-                {
-                    requestMedicalExaminationEmployee.ChangeDate = true;
-                }
+                if (requestMedicalExaminationEmployee.ChangeDate == false)
+                    allValidated = false;
 
                 var saveEmployee = Service.SaveRequestMedicalExaminationEmployee(requestMedicalExaminationEmployee);
                 if (saveEmployee.Status == Status.Error)
@@ -289,7 +292,8 @@
             if (user.UserRoles.First().RoleId == (int) EnRole.ContactPerson)
             {
                 requestMedicalExamination.RequestMedicalExaminationStateId =
-                    (int) EnRequestMedicalExaminationState.Pending;
+                    (int)EnRequestMedicalExaminationState.Pending;
+
                 var resultSaveRequestMedicalExaminations =
                     Service.SaveRequestMedicalExaminations(requestMedicalExamination);
                 if (resultSaveRequestMedicalExaminations.Status == Status.Error)
@@ -297,8 +301,17 @@
             }
             else
             {
-                requestMedicalExamination.RequestMedicalExaminationStateId =
-                    (int)EnRequestMedicalExaminationState.Validated;
+                if (allValidated)
+                {
+                    requestMedicalExamination.RequestMedicalExaminationStateId =
+                        (int)EnRequestMedicalExaminationState.Validated;
+                }
+                else
+                {
+                    requestMedicalExamination.RequestMedicalExaminationStateId =
+                        (int)EnRequestMedicalExaminationState.Pending;
+                }
+
                 var resultSaveRequestMedicalExaminations =
                     Service.SaveRequestMedicalExaminations(requestMedicalExamination);
                 if (resultSaveRequestMedicalExaminations.Status == Status.Error)

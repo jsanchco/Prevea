@@ -35,7 +35,8 @@
                         UserStateId: { type: "number", defaultValue: 1 },
                         UserParentId: { type: "number", defaultValue: GeneralData.userId },
                         UserParentInitials: { type: "string", editable: false, defaultValue: GeneralData.userInitials },
-                        BirthDate: { type: "date", defaultValue:  new Date() }
+                        BirthDate: { type: "date", defaultValue:  new Date() },
+                        ChargeDate: { type: "date", defaultValue:  new Date() }
                     }
                 }
             },

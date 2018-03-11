@@ -60,14 +60,35 @@
         </ul>
     </li>
     <li class="has-sub">
-        <a id="medicalHealth">
+        <a id="healthSurveillance">
             <i class="fa fa-medkit"></i>
-            <span class="title">Reconocimientos Médicos</span>
+            <span class="title">Vigilancia de la Salud</span>
         </a>
         <ul>
             <li>
-                <a id="medicalHealth|historic" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
-                    <span class="title">Histórico</span>
+                <a id="healthSurveillance|medicalHealth">
+                    <i class="fa fa-building-o"></i>
+                    <span class="title">Reconocimientos Médicos</span>
+                </a>
+                <ul>
+                    <li>
+                        <a id="healthSurveillance|medicalHealth|historic" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                            <i class="fa fa-sort-amount-asc"></i>
+                            <span class="title">Histórico</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a id="healthSurveillance|clinics" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                    <i class="fa fa-h-square"></i>
+                    <span class="title">Clínicas</span>
+                </a>
+            </li>
+            <li>
+                <a id="healthSurveillance|doctors" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                    <i class="fa fa-user-md"></i>
+                    <span class="title">Médicos</span>
                 </a>
             </li>
         </ul>

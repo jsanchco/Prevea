@@ -353,6 +353,14 @@
                     return null;
                 }
             },
+            change: function(e) {
+                if (e.action != null && e.action === "itemchange") {
+                    if (e.field === "Date") {
+                        var dataItem = e.items[0];
+                        dataItem.set("ChangeDate", true);
+                    }
+                }
+            },
             batch: true,
             pageSize: 20
         });
@@ -485,7 +493,8 @@
                 RequestMedicalExaminationsId: item.RequestMedicalExaminationsId,
                 EmployeeId: item.EmployeeId,
                 Date: item.Date,
-                Included: item.Included
+                Included: item.Included,
+                ChangeDate: item.ChangeDate
             }
             return employee;
         });

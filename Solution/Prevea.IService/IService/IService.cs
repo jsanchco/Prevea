@@ -324,5 +324,14 @@
         RequestMedicalExaminationEmployeeState GetRequestMedicalExaminationEmployeeState(int id);
 
         #endregion
+
+        #region Clinic
+
+        List<Clinic> GetClincs();
+        Clinic GetClinic(int id);
+        Result SaveClinic(Clinic clinic);
+        Result DeleteClinic(int id);
+
+        #endregion
     }
 }

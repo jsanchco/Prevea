@@ -24,5 +24,8 @@
 
         public int RequestMedicalExaminationEmployeeStateId { get; set; }
         public RequestMedicalExaminationEmployeeState RequestMedicalExaminationEmployeeState { get; set; }
+
+        public int ClinicId { get; set; }
+        public Clinic Clinic { get; set; }
     }    
 }

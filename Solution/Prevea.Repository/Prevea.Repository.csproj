@@ -55,6 +55,7 @@
     <Compile Include="Repository\RepositoryAgencyServices.cs" />
     <Compile Include="Repository\RepositoryAreas.cs" />
     <Compile Include="Repository\RepositoryBase.cs" />
+    <Compile Include="Repository\RepositoryClinics.cs" />
     <Compile Include="Repository\RepositoryCnaes.cs" />
     <Compile Include="Repository\RepositoryCompanies.cs" />
     <Compile Include="Repository\RepositoryConfigurations.cs" />

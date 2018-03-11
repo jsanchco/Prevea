@@ -14,6 +14,7 @@
         public string EmployeeDNI { get; set; }
         public int RequestMedicalExaminationsId { get; set; }
         public DateTime Date { get; set; }
+        public bool ChangeDate { get; set; }
         public int RequestMedicalExaminationEmployeeStateId { get; set; }
         public string RequestMedicalExaminationEmployeeStateDescription { get; set; }
         public bool Included { get; set; }

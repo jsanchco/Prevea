@@ -75,8 +75,16 @@
                 url = "/Companies/DetailCompanyByContactPerson";
                 break;
 
-            case "medicalHealth|historic":
+            case "healthSurveillance|medicalHealth|historic":
                 url = "/HistoricMedicalExamination/HistoricMedicalExamination";
+                break;
+
+            case "healthSurveillance|clinics":
+                url = "/Clinics/Clinics";
+                break;
+
+            case "healthSurveillance|doctors":
+                url = "/Doctors/Doctors";
                 break;
                 
             default:

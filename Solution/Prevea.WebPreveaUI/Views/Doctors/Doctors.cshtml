@@ -1,0 +1,41 @@
+﻿<style>
+    /*.k-window-titlebar {
+        height: 30px;
+    }*/
+</style>
+
+<script>
+    Doctors.init();
+</script>
+
+<div class="row" id="pageDoctors" style="margin: 8px">
+
+    <div id="headerPartialView">
+        <div class="row"><H1>Médicos</H1></div><br />
+        <div class="row">
+            <div class="col-sm-12">
+                <ol class="breadcrumb bc-2">
+                    <li class="active">
+                        <a id="br-companies" onclick="Doctors.goToDoctors()" style="cursor: pointer;">
+                            <strong>Médicos</strong>
+                        </a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirm"></div>
+
+    <div id="contentPartialView">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="gridDoctors" style="height: 77vh;"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+

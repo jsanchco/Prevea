@@ -114,6 +114,9 @@
                 .ForMember(x => x.RequestMedicalExaminationEmployeeStateDescription, x => x.MapFrom(y => y.RequestMedicalExaminationEmployeeState.Description))
                 .ForMember(x => x.EmployeeDNI, x => x.MapFrom(y => y.Employee.User.DNI));
             AutoMapper.Mapper.CreateMap<RequestMedicalExaminationEmployeeViewModel, RequestMedicalExaminationEmployee>();
+
+            AutoMapper.Mapper.CreateMap<ClinicViewModel, Clinic>();
+            AutoMapper.Mapper.CreateMap<Clinic, ClinicViewModel>();
         }
     }
 }

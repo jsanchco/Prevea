@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Clinic.cs" />
     <Compile Include="CustomModel\CustomRole.cs" />
     <Compile Include="Helpers\HelperClass.cs" />
     <Compile Include="Model\Agency.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="ViewModel\AgencyServiceViewModel.cs" />
     <Compile Include="ViewModel\AgencyViewModel.cs" />
     <Compile Include="ViewModel\ChangePassword.cs" />
+    <Compile Include="ViewModel\ClinicViewModel.cs" />
     <Compile Include="ViewModel\CompanyViewModel.cs" />
     <Compile Include="ViewModel\ContractualDocumentCompanyViewModel.cs" />
     <Compile Include="ViewModel\ContractualDocumentTypeViewModel.cs" />

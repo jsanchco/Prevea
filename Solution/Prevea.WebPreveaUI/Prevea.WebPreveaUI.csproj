@@ -171,10 +171,12 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\JsonpResult.cs" />
+    <Compile Include="Controllers\ClinicsController.cs" />
     <Compile Include="Controllers\CommercialTool\CompaniesController.cs" />
     <Compile Include="Controllers\CommercialTool\SimulationsController.cs" />
     <Compile Include="Controllers\Courses\ManagementCoursesController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\DoctorsController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -652,6 +654,7 @@
     <Content Include="Images\unknown_opt.png" />
     <Content Include="Images\user_1.png" />
     <Content Include="Images\xls_opt.png" />
+    <Content Include="js\Clinics\Clinics.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\AddOtherDocument.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\AddDocumentFirmed.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\AgencyCompany.js" />
@@ -674,6 +677,7 @@
     <Content Include="js\CommercialTool\ManagementCompanies\EmployeesCompany.js" />
     <Content Include="js\CommercialTool\Simulations\TrainingService.js" />
     <Content Include="js\Courses\ManagementCourses\ManagementCourses.js" />
+    <Content Include="js\Doctors\Doctors.js" />
     <Content Include="js\MedicalExamination\Historic\HistoricMedicalExamination.js" />
     <Content Include="js\Notifications\Notifications.js" />
     <Content Include="js\Profile\ChangePassword.js" />
@@ -1149,6 +1153,8 @@
     <Content Include="Views\CommercialTool\Companies\Reports\ContractAgencyReport.cshtml" />
     <Content Include="Views\CommercialTool\Companies\Reports\ContractTrainingReport.cshtml" />
     <Content Include="Views\MedicalExamination\Historic\HistoricMedicalExamination.cshtml" />
+    <Content Include="Views\Clinics\Clinics.cshtml" />
+    <Content Include="Views\Doctors\Doctors.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
