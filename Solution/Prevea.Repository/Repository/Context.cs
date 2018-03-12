@@ -82,16 +82,11 @@
             modelBuilder.Entity<HistoricDownloadDocument>().HasRequired(x => x.User).WithMany(y => y.HistoricDownloadDocuments).WillCascadeOnDelete(false);
             modelBuilder.Entity<ContactPerson>().HasRequired(x => x.Company).WithMany(y => y.ContactPersons).WillCascadeOnDelete(false);
             modelBuilder.Entity<Employee>().HasRequired(x => x.Company).WithMany(y => y.Employees).WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Simulation>().HasOptional(x => x.SimulationCompanyActive).WithOptionalDependent().WillCascadeOnDelete(false);
-            //modelBuilder.Entity<Company>().HasOptional(x => x.SimulationCompanyActive).WithOptionalDependent().WillCascadeOnDelete(false);
-
             modelBuilder.Entity<Simulation>().HasOptional(x => x.UserAssigned).WithMany(y => y.SimulationsAssigned);
-
             modelBuilder.Entity<ContractualDocumentCompany>().HasOptional(x => x.ContractualDocumentCompanyFirmed).WithMany().HasForeignKey(y => y.ContractualDocumentCompanyFirmedId);
             modelBuilder.Entity<ContractualDocumentCompany>().HasRequired(x => x.Simulation).WithMany(y => y.ContractualsDocumentsCompany).WillCascadeOnDelete(false);
-
             modelBuilder.Entity<Employee>().HasRequired(x => x.User).WithMany().WillCascadeOnDelete(false);
+            modelBuilder.Entity<RequestMedicalExaminations>().HasRequired(x => x.Company).WithMany().WillCascadeOnDelete(false);
         }
     }
 }

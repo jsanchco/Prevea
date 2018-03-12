@@ -4,6 +4,7 @@
 
     using System.ComponentModel.DataAnnotations;
     using System;
+    using System.Collections.Generic;
 
     #endregion
 
@@ -27,5 +28,7 @@
 
         public int ClinicId { get; set; }
         public Clinic Clinic { get; set; }
+
+        public virtual ICollection<DoctorMedicalExaminationEmployee> DoctorsMedicalExaminationEmployee { get; set; }
     }    
 }
