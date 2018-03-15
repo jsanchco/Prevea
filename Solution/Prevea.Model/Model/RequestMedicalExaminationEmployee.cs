@@ -23,6 +23,9 @@
 
         public bool ChangeDate { get; set; }
 
+        public string Observations { get; set; }
+        public string SamplerNumber { get; set; }
+
         public int RequestMedicalExaminationEmployeeStateId { get; set; }
         public RequestMedicalExaminationEmployeeState RequestMedicalExaminationEmployeeState { get; set; }
 

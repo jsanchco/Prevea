@@ -81,7 +81,7 @@
             columns: [
                 {
                     field: "Enrollment",
-                    title: "Matrícula",
+                    title: "Nº de Empresa",
                     width: 250,
                     groupable: "false",
                     template: "#= Companies.getColumnTemplateEnrollment(data) #"

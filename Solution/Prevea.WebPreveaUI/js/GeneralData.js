@@ -79,6 +79,10 @@
                 url = "/HistoricMedicalExamination/HistoricMedicalExamination";
                 break;
 
+            case "medicalHealth|historic":
+                url = "/HistoricMedicalExamination/HistoricMedicalExamination";
+                break;
+
             case "healthSurveillance|clinics":
                 url = "/Clinics/Clinics";
                 break;

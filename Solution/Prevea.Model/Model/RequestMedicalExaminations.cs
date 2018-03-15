@@ -17,6 +17,8 @@
         public DateTime Date { get; set; }
         public string Name { get; set; }
 
+        public string Observations { get; set; }
+
         public int RequestMedicalExaminationStateId { get; set; }
         public RequestMedicalExaminationState RequestMedicalExaminationState { get; set; }
 

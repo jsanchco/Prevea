@@ -163,7 +163,7 @@
     createTabStripCompany: function () {
         var tabStrip = $("#" + this.tabStripDetailCompanyId).kendoTabStrip().data("kendoTabStrip");
         tabStrip.append({
-            text: "SIMULACIONES",
+            text: "OFERTAS",
             contentUrl: kendo.format("/Companies/SimulationsCompany?companyId={0}", this.id)
         });
         tabStrip.append({
@@ -187,7 +187,7 @@
             contentUrl: kendo.format("/Companies/EmployeesCompany?companyId={0}", this.id)
         });
         tabStrip.append({
-            text: "DATOS ECONÓMICOS",
+            text: "CONTRATACIÓN",
             contentUrl: kendo.format("/Companies/EconomicDataCompany?companyId={0}", this.id)
         });
         tabStrip.append({

@@ -60,6 +60,7 @@
         public DbSet<RequestMedicalExaminationEmployee> RequestMedicalExaminationsEmployees { get; set; }
         public DbSet<RequestMedicalExaminationEmployeeState> RequestMedicalExaminationEmployeeStates { get; set; }
         public DbSet<Clinic> Clinics { get; set; }
+        public DbSet<DoctorMedicalExaminationEmployee> DoctorMedicalExaminationEmployees { get; set; }
 
         #endregion
 

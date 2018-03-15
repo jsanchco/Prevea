@@ -149,9 +149,14 @@
         if (data.Active === false)
             active = "No Activa";
 
-        var html = kendo.format("<div style='font-size: 15px;'>{0} <strong>[{1}]</strong></div>",
-            data.SimulationStateDescription,
-            active);
+        var html;
+        if (data.Active) {
+            html = kendo.format("<div align='center'><strong>{0}</strong></div>",
+                active);
+        } else {
+            html = kendo.format("<div align='center'>{0}</div>",
+                data.SimulationStateDescription);
+        }
 
         return html;
     },

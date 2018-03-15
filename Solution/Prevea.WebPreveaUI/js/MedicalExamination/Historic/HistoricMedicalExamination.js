@@ -347,7 +347,10 @@
                 },
                 parameterMap: function (options, operation) {
                     if (operation === "read") {
-                        return { requestMedicalExaminationId: options.requestMedicalExaminationId, companyId: options.companyId };
+                        return {
+                            requestMedicalExaminationId: options.requestMedicalExaminationId,
+                            companyId: options.companyId
+                        };
                     }
 
                     return null;
