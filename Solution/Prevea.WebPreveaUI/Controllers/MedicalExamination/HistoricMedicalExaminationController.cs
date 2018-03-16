@@ -91,7 +91,7 @@
                 if (resultNotification.Status == Status.Error)
                     return this.Jsonp(new { Errors = resultNotification });
                 
-                return this.Jsonp(AutoMapper.Mapper.Map<RequestMedicalExaminationsViewModel>(result.Object));
+                return this.Jsonp(AutoMapper.Mapper.Map<RequestMedicalExaminationsViewModel>(Service.GetRequestMedicalExaminationById(((RequestMedicalExaminations)result.Object).Id)));
             }
             catch (Exception e)
             {
@@ -224,7 +224,8 @@
                         EmployeeDNI = employee.User.DNI,
                         Included = false,
                         RequestMedicalExaminationsId = requestMedicalExaminationId,
-                        ChangeDate = false
+                        ChangeDate = false,
+                        ClinicName = string.Empty                                                
                     });
                 }
                 else
@@ -238,7 +239,8 @@
                         EmployeeDNI = employee.User.DNI,
                         Included = true,
                         RequestMedicalExaminationsId = requestMedicalExaminationId,
-                        ChangeDate = requestMedicalExaminationEmployee.ChangeDate
+                        ChangeDate = requestMedicalExaminationEmployee.ChangeDate,
+                        ClinicId = requestMedicalExaminationEmployee.ClinicId                    
                     });
                 }
             }            
@@ -276,9 +278,12 @@
                 {
                     Date = employee.Date,
                     EmployeeId = employee.EmployeeId,
+                    Observations = employee.Observations,
+                    SamplerNumber = employee.SamplerNumber,
                     RequestMedicalExaminationEmployeeStateId = (int) EnRequestMedicalExaminationEmployeeState.Pending,
                     RequestMedicalExaminationsId = requestMedicalExaminationsId,
-                    ChangeDate = employee.ChangeDate
+                    ChangeDate = employee.ChangeDate,
+                    ClinicId = employee.ClinicId
                 };
                 if (requestMedicalExaminationEmployee.ChangeDate == false)
                     allValidated = false;
@@ -321,6 +326,13 @@
             requestMedicalExamination = Service.GetRequestMedicalExaminationById(requestMedicalExaminationsId);
             var data = AutoMapper.Mapper.Map<RequestMedicalExaminationsViewModel>(requestMedicalExamination);
             return Json(new { resultStatus = Status.Ok, requestMedicalExamination = data }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetClinics([DataSourceRequest] DataSourceRequest request)
+        {
+            var data = AutoMapper.Mapper.Map<List<ClinicViewModel>>(Service.GetClincs());
+
+            return this.Jsonp(data);
         }
     }
 }

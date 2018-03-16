@@ -112,7 +112,8 @@
 
             AutoMapper.Mapper.CreateMap<RequestMedicalExaminationEmployee, RequestMedicalExaminationEmployeeViewModel>()
                 .ForMember(x => x.RequestMedicalExaminationEmployeeStateDescription, x => x.MapFrom(y => y.RequestMedicalExaminationEmployeeState.Description))
-                .ForMember(x => x.EmployeeDNI, x => x.MapFrom(y => y.Employee.User.DNI));
+                .ForMember(x => x.EmployeeDNI, x => x.MapFrom(y => y.Employee.User.DNI))
+                .ForMember(x => x.ClinicName, x => x.MapFrom(y => y.Clinic.Name));
             AutoMapper.Mapper.CreateMap<RequestMedicalExaminationEmployeeViewModel, RequestMedicalExaminationEmployee>();
 
             AutoMapper.Mapper.CreateMap<ClinicViewModel, Clinic>();

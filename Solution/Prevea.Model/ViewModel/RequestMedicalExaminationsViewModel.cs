@@ -11,6 +11,7 @@
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public string Name { get; set; }
+        public string Observations { get; set; }
         public int RequestMedicalExaminationStateId { get; set; }
         public string RequestMedicalExaminationStateDescription { get; set; }
         public int CompanyId { get; set; }
