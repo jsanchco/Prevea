@@ -1,4 +1,6 @@
-﻿namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
+﻿using Prevea.Model.CustomModel;
+
+namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
 {
     #region Using
 
@@ -225,12 +227,14 @@
                         Included = false,
                         RequestMedicalExaminationsId = requestMedicalExaminationId,
                         ChangeDate = false,
-                        ClinicName = string.Empty                                                
+                        ClinicId = null                                         
                     });
                 }
                 else
                 {
                     var requestMedicalExaminationEmployee = Service.GetRequestMedicalExaminationEmployeeById(findEmployeesByRequestMedicalExamination.Id);
+                    if (requestMedicalExaminationEmployee.ClinicId == null)
+                        requestMedicalExaminationEmployee.ClinicId = 0;
                     listEmployees.Add(new RequestMedicalExaminationEmployeeViewModel
                     {
                         Date = requestMedicalExaminationEmployee.Date,
@@ -240,7 +244,7 @@
                         Included = true,
                         RequestMedicalExaminationsId = requestMedicalExaminationId,
                         ChangeDate = requestMedicalExaminationEmployee.ChangeDate,
-                        ClinicId = requestMedicalExaminationEmployee.ClinicId                    
+                        ClinicId = requestMedicalExaminationEmployee.ClinicId                 
                     });
                 }
             }            
@@ -248,7 +252,7 @@
             return this.Jsonp(listEmployees);
         }
         
-        public JsonResult UpdateRequestHistoricMedicalExaminationEmployees(List<RequestMedicalExaminationEmployeeViewModel> listEmployees)
+        public JsonResult UpdateRequestHistoricMedicalExaminationEmployees_old(List<RequestMedicalExaminationEmployeeViewModel> listEmployees)
         {
             if (listEmployees == null || listEmployees.Count == 0)
                 return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
@@ -328,9 +332,23 @@
             return Json(new { resultStatus = Status.Ok, requestMedicalExamination = data }, JsonRequestBehavior.AllowGet);
         }
 
+        //////public JsonResult UpdateRequestHistoricMedicalExaminationEmployees(List<RequestMedicalExaminationEmployeeViewModel> listEmployees)
+        //////{
+        //////    var requestMedicalExamination = Service.UpdateRequestHistoricMedicalExaminationEmployees(listEmployees, User.Id, listEmployees);
+        //////    var data = AutoMapper.Mapper.Map<RequestMedicalExaminationsViewModel>(requestMedicalExamination);
+        //////    return Json(new { resultStatus = Status.Ok, requestMedicalExamination = data }, JsonRequestBehavior.AllowGet);
+        //////}
+
         public JsonResult GetClinics([DataSourceRequest] DataSourceRequest request)
         {
             var data = AutoMapper.Mapper.Map<List<ClinicViewModel>>(Service.GetClincs());
+
+            return this.Jsonp(data);
+        }
+
+        public JsonResult GetDoctors([DataSourceRequest] DataSourceRequest request)
+        {
+            var data = AutoMapper.Mapper.Map<List<DoctorViewModel>>(Service.GetUsersInRoles(new List<string> { "Doctor" }));
 
             return this.Jsonp(data);
         }

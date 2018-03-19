@@ -305,6 +305,7 @@
         List<Employee> GetEmployeesByRequestMedicalExamination(int requestMedicalExaminationId);        
         Result SaveRequestMedicalExaminationEmployee(RequestMedicalExaminationEmployee requestMedicalExaminationEmployee);
         Result DeleteRequestMedicalExaminationEmployee(int id);
+        //Result UpdateRequestHistoricMedicalExaminationEmployees(List<RequestMedicalExaminationEmployee> listEmployees, int userId, string doctors);
 
         #endregion
 
@@ -325,12 +326,21 @@
 
         #endregion
 
-        #region Clinic
+        #region Clinics
 
         List<Clinic> GetClincs();
         Clinic GetClinic(int id);
         Result SaveClinic(Clinic clinic);
         Result DeleteClinic(int id);
+
+        #endregion
+
+        #region Doctors
+
+        List<DoctorMedicalExaminationEmployee> GetDoctorsMedicalExaminationEmployees();
+        DoctorMedicalExaminationEmployee GetDoctorMedicalExaminationEmployeeById(int id);
+        Result SaveDoctorMedicalExaminationEmployee(DoctorMedicalExaminationEmployee doctorMedicalExaminationEmployee);
+        Result DeleteDoctorMedicalExaminationEmployee(int id);
 
         #endregion
     }

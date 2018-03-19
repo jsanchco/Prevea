@@ -8,6 +8,7 @@
 
     historicRequestMedicalExaminationsDataSource: null,
     clinicsDataSorce: null,
+    doctorsDataSorce: null,
 
     init: function (contactPersonId, companyId) {
         kendo.culture("es-ES");
@@ -17,6 +18,7 @@
 
         this.createHistoricRequestMedicalExaminationsDataSource();
         this.createClinicsDataSource();
+        this.createDoctorsDataSource();
         this.createHistoricRequestMedicalExaminationsGrid();
     },
 
@@ -330,9 +332,11 @@
         var includedEditableValue = true;
         var dateEditableValue = true;
         var clinicEditableValue = true;
+        var doctorsEditableValue = true;
         if (GeneralData.userRoleId === Constants.role.ContactPerson) {
             dateEditableValue = false;
             clinicEditableValue = false;
+            doctorsEditableValue = false;
         } else {
             includedEditableValue = false;
         }
@@ -349,7 +353,7 @@
                     fields: {
                         Id: { type: "number", defaultValue: 0 },
                         EmployeeId: { type: "number" },
-                        EmployyeName: { type: "string", editable: false },
+                        EmployeeName: { type: "string", editable: false },
                         Observations: { type: "string" },
                         SamplerNumber: { type: "string", editable: samplerNumberEditableValue },
                         Date: { type: "date", format: "{0:dd/MM/yyyy hh:mm}", editable: dateEditableValue },
@@ -359,7 +363,8 @@
                         ContactPersonId: { type: "number" },
                         NIF: { type: "string", editable: false },
                         ClinicId: { type: "number", editable: clinicEditableValue },
-                        ClinicName: { type: "string", editable: clinicEditableValue }
+                        ClinicName: { type: "string", editable: clinicEditableValue },
+                        Doctors: { type: "string", editable: doctorsEditableValue }
                     }
                 }
             },
@@ -406,14 +411,20 @@
                 }, {
                     field: "EmployeeDNI",
                     title: "DNI",
-                    width: 200,
+                    width: 100,
                     editor: HistoricMedicalExamination.editorSimple
                 }, {
                     field: "ClinicId",
                     title: "Clínica",
-                    width: 120,
+                    width: 150,
                     editor: HistoricMedicalExamination.clinicsDropDownEditor,
                     template: "#= HistoricMedicalExamination.getClinicName(data.ClinicId) #"
+                }, {
+                    field: "Doctors",
+                    title: "Médicos",
+                    width: 200,
+                    editor: HistoricMedicalExamination.doctorsDropDownEditor,
+                    template: "#= HistoricMedicalExamination.getDoctorsName(data.Doctors) #"
                 }, {
                     field: "Observations",
                     title: "Observaciones"                    
@@ -535,19 +546,36 @@
             var employee = {
                 RequestMedicalExaminationsId: item.RequestMedicalExaminationsId,
                 EmployeeId: item.EmployeeId,
+                EmployeeName: item.EmployeeName,
                 Observations: item.Observations,
                 SamplerNumber: item.SamplerNumber,
                 Date: item.Date,
                 Included: item.Included,
                 ChangeDate: item.ChangeDate,
-                ClinicId: item.ClinicId
+                ClinicId: item.ClinicId,
+                Doctors: item.Doctors
             }
             return employee;
         });
 
-        if (changes === null || changes.length === 0) {
-            GeneralData.showNotification("No has hecho ningún cambio", "", "error");
-            return;
+        if (GeneralData.userRoleId !== Constants.role.ContactPerson) {
+            var error = "<ul>";
+            for (var i = 0; i < changes.length; i++) {
+                if (changes[i].Included === true) {
+                    if (changes[i].ChangeDate === false) {
+                        error += kendo.format("<li>{0}: Tienes que elegir un Día (Fecha/Hora)</li>",
+                            changes[i].EmployeeName);
+                    }
+                    if (changes[i].ClinicId === 0) {
+                        error += kendo.format("<li>{0}: Tienes que elegir una Clínica</li>", changes[i].EmployeeName);
+                    }
+                }
+            }
+            if (error !== "<ul>") {
+                error += "</ul>";
+                GeneralData.showNotification(error, "", "error");
+                return;
+            }
         }
 
         $.ajax({
@@ -605,6 +633,28 @@
         HistoricMedicalExamination.clinicsDataSorce.read();
     },
 
+    createDoctorsDataSource: function () {
+        HistoricMedicalExamination.doctorsDataSorce = new kendo.data.DataSource({
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: { type: "number" },
+                        Name: { type: "string" }
+                    }
+                }
+            },
+            transport: {
+                read: {
+                    url: "/HistoricMedicalExamination/GetDoctors",
+                    dataType: "jsonp"
+                }
+            }
+        });
+
+        HistoricMedicalExamination.doctorsDataSorce.read();
+    },
+
     clinicsDropDownEditor: function (container, options) {
         $("<input required name='" + options.field + "'/>")
             .appendTo(container)
@@ -612,7 +662,39 @@
                 dataTextField: "Name",
                 optionLabel: "Selecciona ...",
                 dataValueField: "Id",
-                dataSource: HistoricMedicalExamination.clinicsDataSorce
+                dataSource: HistoricMedicalExamination.clinicsDataSorce,
+                dataBound: function (e) {
+                    e.sender.list.width("auto").find("li").css({ "white-space": "nowrap", "padding-right": "25px" });
+                }
+            });
+    },
+
+    doctorsDropDownEditor: function (container, options) {
+        //$("<input required name='" + options.field + "'/>")
+        $("<input name='" + options.field + "'/>")
+            .appendTo(container)
+            .kendoMultiSelect({
+                dataTextField: "Name",
+                optionLabel: "Selecciona ...",
+                dataValueField: "Id",
+                dataSource: HistoricMedicalExamination.doctorsDataSorce,
+                dataBound: function (e) {
+                    e.sender.list.width("auto").find("li").css({ "white-space": "nowrap", "padding-right": "25px" });
+                },
+                change: function (e) {
+                    var grid = $("#gridEmployeesMedicalExamination").data("kendoGrid");
+                    var selectedItem = grid.dataItem(grid.select());
+
+                    var doctors = "";
+                    for (var i = 0; i < this.dataItems().length; i++) {
+                        doctors += this.dataItems()[i].Id + ",";
+                    }
+                    if (doctors.match(",$")) {
+                        doctors = doctors.slice(0, -1);
+                    }
+                    selectedItem.Doctors = doctors;
+                    //selectedItem.set("Doctors", doctors);
+                }
             });
     },
 
@@ -626,5 +708,29 @@
             }
         }
         return "";
+    },
+
+    getDoctorsName: function (doctors) {
+        if (doctors === null)
+            return "";
+
+        var splitDoctors = doctors.split(",");
+        if (HistoricMedicalExamination.doctorsDataSorce.data().length === 0) {
+            HistoricMedicalExamination.doctorsDataSorce.read();
+        }
+
+        var doctorsName = "";
+        for (var indexDoctor = 0; indexDoctor < HistoricMedicalExamination.doctorsDataSorce.data().length; indexDoctor++) {
+            for (var index = 0; index < splitDoctors.length; index++) {
+                if (HistoricMedicalExamination.doctorsDataSorce.data()[indexDoctor].Id === parseInt(splitDoctors[index])) {
+                    doctorsName += HistoricMedicalExamination.doctorsDataSorce.data()[indexDoctor].Name + ", ";
+                }
+            }
+        }
+        if (doctorsName.match(", $")) {
+            doctorsName = doctorsName.slice(0, -2);
+        }
+
+        return doctorsName;
     }
 });

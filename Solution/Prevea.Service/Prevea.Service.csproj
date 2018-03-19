@@ -53,6 +53,7 @@
     <Compile Include="Service\ServiceConfiguration.cs" />
     <Compile Include="Service\ServiceContractualDocumentTypes.cs" />
     <Compile Include="Service\ServiceContractualsDocuments.cs" />
+    <Compile Include="Service\ServiceDoctorsMedicalExaminationEmployee.cs" />
     <Compile Include="Service\ServiceDocuments.cs" />
     <Compile Include="Service\ServiceEngagementTypes.cs" />
     <Compile Include="Service\ServiceEstablishmentTypes.cs" />

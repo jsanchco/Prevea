@@ -22,5 +22,7 @@
         public bool Included { get; set; }
         public int? ClinicId { get; set; }
         public string ClinicName { get; set; }
+        public string Doctors { get; set; }
+        public int[] SplitDoctors { get; set; }
     }
 }

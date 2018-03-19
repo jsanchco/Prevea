@@ -28,7 +28,6 @@
         public string MonthsSplitPayment { get; set; }
 
         [NotMapped]
-        //public int[] SplitPayment { get; set; }
         public int[] SplitPayment
         {
             get

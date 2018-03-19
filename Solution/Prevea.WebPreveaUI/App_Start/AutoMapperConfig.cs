@@ -118,6 +118,9 @@
 
             AutoMapper.Mapper.CreateMap<ClinicViewModel, Clinic>();
             AutoMapper.Mapper.CreateMap<Clinic, ClinicViewModel>();
+
+            AutoMapper.Mapper.CreateMap<User, DoctorViewModel>()
+                .ForMember(x => x.Name, x => x.MapFrom(y => y.FirstName + " " + y.LastName));
         }
     }
 }

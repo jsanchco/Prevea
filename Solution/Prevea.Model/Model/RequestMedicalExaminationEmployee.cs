@@ -1,10 +1,13 @@
-﻿namespace Prevea.Model.Model
+﻿using System.Linq;
+
+namespace Prevea.Model.Model
 {
     #region Using
 
     using System.ComponentModel.DataAnnotations;
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     #endregion
 
@@ -33,5 +36,19 @@
         public Clinic Clinic { get; set; }
 
         public virtual ICollection<DoctorMedicalExaminationEmployee> DoctorsMedicalExaminationEmployee { get; set; }
+
+        [NotMapped]
+        public int[] SplitDoctors
+        {
+            get
+            {
+                if (DoctorsMedicalExaminationEmployee != null && DoctorsMedicalExaminationEmployee.Count > 0)
+                {
+                    return DoctorsMedicalExaminationEmployee.Select(x => x.Id).ToArray();
+                }
+
+                return null;
+            }
+        }
     }    
 }

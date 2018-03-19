@@ -348,12 +348,21 @@
 
         #endregion
 
-        #region Clinic
+        #region Clinics
 
         List<Clinic> GetClincs();
         Clinic GetClinic(int id);
         Clinic SaveClinic(Clinic clinic);
         bool DeleteClinic(int id);
+
+        #endregion
+
+        #region Doctors
+
+        List<DoctorMedicalExaminationEmployee> GetDoctorsMedicalExaminationEmployees();
+        DoctorMedicalExaminationEmployee GetDoctorMedicalExaminationEmployeeById(int id);
+        DoctorMedicalExaminationEmployee SaveDoctorMedicalExaminationEmployee(DoctorMedicalExaminationEmployee doctorMedicalExaminationEmployee);
+        bool DeleteDoctorMedicalExaminationEmployee(int id);
 
         #endregion
     }
