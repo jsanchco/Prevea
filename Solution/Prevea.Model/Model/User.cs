@@ -31,7 +31,7 @@
         public Guid Guid { get; set; }
 
         [Required]
-        public string Dni { get; set; }
+        public string DNI { get; set; }
 
         [Required]
         public string FirstName { get; set; }
