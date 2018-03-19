@@ -7,6 +7,7 @@
     companyId: null,
 
     historicRequestMedicalExaminationsDataSource: null,
+    clinicsDataSorce: null,
 
     init: function (contactPersonId, companyId) {
         kendo.culture("es-ES");
@@ -15,6 +16,7 @@
         this.companyId = companyId;
 
         this.createHistoricRequestMedicalExaminationsDataSource();
+        this.createClinicsDataSource();
         this.createHistoricRequestMedicalExaminationsGrid();
     },
 
@@ -26,6 +28,7 @@
                     fields: {
                         Id: { type: "number", defaultValue: 0 },
                         Date: { type: "date", format: "{0:dd/MM/yyyy}", defaultValue: new Date() },
+                        Observations: { type: "string" },
                         RequestMedicalExaminationStateId: { type: "number", defaultValue: Constants.requestMedicalExaminationState.Pending },
                         RequestMedicalExaminationStateDescription: { type: "string", defaultValue: "Pendiente" },                        
                         CompanyId: { type: "number", defaultValue: HistoricMedicalExamination.companyId }
@@ -85,7 +88,11 @@
             columns: [{
                 field: "Date",
                 title: "Fecha Posible",
+                width: 150,
                 template: "#= Templates.getColumnTemplateDateIncrease(data.Date) #"
+            }, {
+                field: "Observations",
+                title: "Observaciones"
             }, {
                 field: "RequestMedicalExaminationStateDescription",
                 title: "Estado de la Petición",
@@ -170,6 +177,15 @@
                 html += "</div>";
 
                 commandCell.html(html);
+            },
+            dataBound: function() {
+                var grid = this;
+                grid.tbody.find(">tr").each(function() {
+                    var dataItem = grid.dataItem(this);
+                    if (dataItem.Id === 0) {
+                        $(this).find(".k-hierarchy-cell a").removeClass("k-icon");
+                    }
+                });
             }
         });
         kendo.bind($("#" + this.gridRequestHistoricMedicalExaminationsId), this);
@@ -313,10 +329,17 @@
     childrenEmployees: function (e) {
         var includedEditableValue = true;
         var dateEditableValue = true;
+        var clinicEditableValue = true;
         if (GeneralData.userRoleId === Constants.role.ContactPerson) {
             dateEditableValue = false;
+            clinicEditableValue = false;
         } else {
             includedEditableValue = false;
+        }
+
+        var samplerNumberEditableValue = false;
+        if (GeneralData.userRoleId === Constants.role.Doctor) {
+            samplerNumberEditableValue = true;
         }
 
         var dataSourceChildren = new kendo.data.DataSource({
@@ -327,12 +350,16 @@
                         Id: { type: "number", defaultValue: 0 },
                         EmployeeId: { type: "number" },
                         EmployyeName: { type: "string", editable: false },
+                        Observations: { type: "string" },
+                        SamplerNumber: { type: "string", editable: samplerNumberEditableValue },
                         Date: { type: "date", format: "{0:dd/MM/yyyy hh:mm}", editable: dateEditableValue },
                         ChangeDate: { type: "boolean" },
                         Included: { type: "boolean", defaultValue: false, editable: includedEditableValue },
                         RequestMedicalExaminationsId: { type: "number" },
                         ContactPersonId: { type: "number" },
-                        NIF: { type: "string", editable: false }
+                        NIF: { type: "string", editable: false },
+                        ClinicId: { type: "number", editable: clinicEditableValue },
+                        ClinicName: { type: "string", editable: clinicEditableValue }
                     }
                 }
             },
@@ -374,13 +401,26 @@
                 {
                     field: "EmployeeName",
                     title: "Nombre",
-                    width: 400,
+                    width: 200,
                     editor: HistoricMedicalExamination.editorSimple
                 }, {
                     field: "EmployeeDNI",
                     title: "DNI",
-                    width: 400,
+                    width: 200,
                     editor: HistoricMedicalExamination.editorSimple
+                }, {
+                    field: "ClinicId",
+                    title: "Clínica",
+                    width: 120,
+                    editor: HistoricMedicalExamination.clinicsDropDownEditor,
+                    template: "#= HistoricMedicalExamination.getClinicName(data.ClinicId) #"
+                }, {
+                    field: "Observations",
+                    title: "Observaciones"                    
+                }, {
+                    field: "SamplerNumber",
+                    title: "Nº Muestra",
+                    width: 150
                 }, {
                     field: "Date",
                     title: "Día",
@@ -495,9 +535,12 @@
             var employee = {
                 RequestMedicalExaminationsId: item.RequestMedicalExaminationsId,
                 EmployeeId: item.EmployeeId,
+                Observations: item.Observations,
+                SamplerNumber: item.SamplerNumber,
                 Date: item.Date,
                 Included: item.Included,
-                ChangeDate: item.ChangeDate
+                ChangeDate: item.ChangeDate,
+                ClinicId: item.ClinicId
             }
             return employee;
         });
@@ -538,5 +581,50 @@
                 }
             }
         });
+    },
+
+    createClinicsDataSource: function () {
+        HistoricMedicalExamination.clinicsDataSorce = new kendo.data.DataSource({
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: { type: "number" },
+                        Name: { type: "string" }
+                    }
+                }
+            },
+            transport: {
+                read: {
+                    url: "/HistoricMedicalExamination/GetClinics",
+                    dataType: "jsonp"
+                }
+            }
+        });
+
+        HistoricMedicalExamination.clinicsDataSorce.read();
+    },
+
+    clinicsDropDownEditor: function (container, options) {
+        $("<input required name='" + options.field + "'/>")
+            .appendTo(container)
+            .kendoDropDownList({
+                dataTextField: "Name",
+                optionLabel: "Selecciona ...",
+                dataValueField: "Id",
+                dataSource: HistoricMedicalExamination.clinicsDataSorce
+            });
+    },
+
+    getClinicName: function (clinicId) {
+        if (HistoricMedicalExamination.clinicsDataSorce.data().length === 0) {
+            HistoricMedicalExamination.clinicsDataSorce.read();
+        }
+        for (var index = 0; index < HistoricMedicalExamination.clinicsDataSorce.data().length; index++) {
+            if (HistoricMedicalExamination.clinicsDataSorce.data()[index].Id === clinicId) {
+                return HistoricMedicalExamination.clinicsDataSorce.data()[index].Name;
+            }
+        }
+        return "";
     }
 });
