@@ -1,13 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-
-namespace Prevea.Model.Model
+﻿namespace Prevea.Model.Model
 {
     #region Using
 
     using System.ComponentModel.DataAnnotations;
     using System.Collections.Generic;
     using System;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
 
     #endregion
 

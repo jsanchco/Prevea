@@ -243,6 +243,5 @@ ModelManifest.xml
 /Solution/lib/KENDOUIMVC/2016.3.1118.545
 
 # ignore a single file
-/Solution/Prevea.ConsoleTestModel/App.config
-/Solution/Prevea.WebPreveaUI/Web.config
-/Solution/Prevea.WebPreveaUI/Web.Debug.config
+Solution/Prevea.ConsoleTestModel/App.config
+Solution/Prevea.WebPreveaUI/Web.config

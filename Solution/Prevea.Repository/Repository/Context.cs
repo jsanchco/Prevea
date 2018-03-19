@@ -87,7 +87,7 @@
             modelBuilder.Entity<ContractualDocumentCompany>().HasOptional(x => x.ContractualDocumentCompanyFirmed).WithMany().HasForeignKey(y => y.ContractualDocumentCompanyFirmedId);
             modelBuilder.Entity<ContractualDocumentCompany>().HasRequired(x => x.Simulation).WithMany(y => y.ContractualsDocumentsCompany).WillCascadeOnDelete(false);
             modelBuilder.Entity<Employee>().HasRequired(x => x.User).WithMany().WillCascadeOnDelete(false);
-            modelBuilder.Entity<RequestMedicalExaminations>().HasRequired(x => x.Company).WithMany().WillCascadeOnDelete(false);
+            modelBuilder.Entity<RequestMedicalExaminations>().HasRequired(x => x.Company).WithMany(y => y.RequestMedicalExaminations).WillCascadeOnDelete(false);
         }
     }
 }

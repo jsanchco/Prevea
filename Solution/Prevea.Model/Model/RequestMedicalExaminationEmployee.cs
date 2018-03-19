@@ -17,10 +17,10 @@ namespace Prevea.Model.Model
         public int Id { get; set; }
 
         public int EmployeeId { get; set; }
-        public Employee Employee { get; set; }
+        public virtual Employee Employee { get; set; }
 
         public int RequestMedicalExaminationsId { get; set; }
-        public RequestMedicalExaminations RequestMedicalExaminations { get; set; }
+        public virtual RequestMedicalExaminations RequestMedicalExaminations { get; set; }
 
         public DateTime Date { get; set; }
 
@@ -30,10 +30,10 @@ namespace Prevea.Model.Model
         public string SamplerNumber { get; set; }
 
         public int RequestMedicalExaminationEmployeeStateId { get; set; }
-        public RequestMedicalExaminationEmployeeState RequestMedicalExaminationEmployeeState { get; set; }
+        public virtual RequestMedicalExaminationEmployeeState RequestMedicalExaminationEmployeeState { get; set; }
 
         public int? ClinicId { get; set; }
-        public Clinic Clinic { get; set; }
+        public virtual Clinic Clinic { get; set; }
 
         public virtual ICollection<DoctorMedicalExaminationEmployee> DoctorsMedicalExaminationEmployee { get; set; }
 
