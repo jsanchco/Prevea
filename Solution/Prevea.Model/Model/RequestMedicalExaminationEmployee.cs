@@ -29,7 +29,7 @@
         public int RequestMedicalExaminationEmployeeStateId { get; set; }
         public virtual RequestMedicalExaminationEmployeeState RequestMedicalExaminationEmployeeState { get; set; }
 
-        public int ClinicId { get; set; }
+        public int? ClinicId { get; set; }
         public virtual Clinic Clinic { get; set; }
 
         public virtual ICollection<DoctorMedicalExaminationEmployee> DoctorsMedicalExaminationEmployee { get; set; }
