@@ -20,10 +20,10 @@
         public string Observations { get; set; }
 
         public int RequestMedicalExaminationStateId { get; set; }
-        public RequestMedicalExaminationState RequestMedicalExaminationState { get; set; }
+        public virtual RequestMedicalExaminationState RequestMedicalExaminationState { get; set; }
 
         public int CompanyId { get; set; }
-        public Company Company { get; set; }
+        public virtual Company Company { get; set; }
 
         public virtual ICollection<RequestMedicalExaminationEmployee> RequestMedicalExaminationEmployees { get; set; }
     }

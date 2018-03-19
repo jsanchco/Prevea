@@ -30,7 +30,7 @@
         public string CompanyName { get; set; }
 
         [Required]
-        public string NIF { get; set; }
+        public string Nif { get; set; }
 
         [Required]
         public int NumberEmployees { get; set; }

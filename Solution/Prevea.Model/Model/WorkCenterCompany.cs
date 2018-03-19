@@ -17,6 +17,6 @@
 
         [Required]
         public int WorkCenterId { get; set; }
-        public WorkCenter WorkCenter { get; set; }
+        public virtual WorkCenter WorkCenter { get; set; }
     }
 }

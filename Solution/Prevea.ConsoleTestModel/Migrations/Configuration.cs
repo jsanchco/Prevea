@@ -28,12 +28,12 @@ namespace Prevea.ConsoleTestModel.Migrations
 
             var users = new List<User>
             {
-                new User { FirstName = "Jesús", LastName = "Sánchez Corzo", Email = "jsanchco@gmail.com", DNI = "50963841G", Nick = "SU-50963841G"},
-                new User { FirstName = "Juan Manuel", LastName = "Carrasco Martínez", Email = "jmcarrasco@preveaspa.com", DNI = "1899945P", Nick = "SU-1899945P"},
-                new User { FirstName = "Daniela", LastName = "Sánchez Aceituno", Email = "dsanchez@gmail.com", DNI = "11111111A", Nick = "PP-11111111A", UserParentId = 1},
-                new User { FirstName = "Virginia", LastName = "Pérez Prusiel", Email = "vprusiel@gmail.com", DNI = "22222222B", Nick = "CP-22222222B", UserParentId = 3},
-                new User { FirstName = "Rafael", LastName = "Fernández Sánchez", Email = "rfernandez@preveaspa.com", DNI = "33333333C", Nick = "PP-33333333C", UserParentId = 2},
-                new User { FirstName = "Ignacio", LastName = "González Muñoz", Email = "igonzalez@preveaspa.com", DNI = "44444444D", Nick = "CP-44444444D", UserParentId = 5}
+                new User { FirstName = "Jesús", LastName = "Sánchez Corzo", Email = "jsanchco@gmail.com", Dni = "50963841G", Nick = "SU-50963841G"},
+                new User { FirstName = "Juan Manuel", LastName = "Carrasco Martínez", Email = "jmcarrasco@preveaspa.com", Dni = "1899945P", Nick = "SU-1899945P"},
+                new User { FirstName = "Daniela", LastName = "Sánchez Aceituno", Email = "dsanchez@gmail.com", Dni = "11111111A", Nick = "PP-11111111A", UserParentId = 1},
+                new User { FirstName = "Virginia", LastName = "Pérez Prusiel", Email = "vprusiel@gmail.com", Dni = "22222222B", Nick = "CP-22222222B", UserParentId = 3},
+                new User { FirstName = "Rafael", LastName = "Fernández Sánchez", Email = "rfernandez@preveaspa.com", Dni = "33333333C", Nick = "PP-33333333C", UserParentId = 2},
+                new User { FirstName = "Ignacio", LastName = "González Muñoz", Email = "igonzalez@preveaspa.com", Dni = "44444444D", Nick = "CP-44444444D", UserParentId = 5}
             };
             users.ForEach(p => context.Users.AddOrUpdate(s => s.Id, p));
             context.SaveChanges();

@@ -17,9 +17,9 @@
         public string Description { get; set; }
 
         public int EstablishmentTypeId { get; set; }
-        public EstablishmentType EstablishmentType { get; set; }
+        public virtual EstablishmentType EstablishmentType { get; set; }
 
         public int WorkCenterStateId { get; set; }
-        public WorkCenterState WorkCenterState { get; set; }
+        public virtual WorkCenterState WorkCenterState { get; set; }
     }
 }

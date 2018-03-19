@@ -12,9 +12,9 @@
         public int Id { get; set; }
 
         public int DoctorId { get; set; }
-        public User Doctor { get; set; }
+        public virtual User Doctor { get; set; }
 
         public int MedicalExaminationEmployeeId { get; set; }
-        public RequestMedicalExaminationEmployee MedicalExaminationEmployee { get; set; }
+        public virtual RequestMedicalExaminationEmployee MedicalExaminationEmployee { get; set; }
     }
 }

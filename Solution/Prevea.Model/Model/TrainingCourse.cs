@@ -38,7 +38,7 @@
         public DateTime Date { get; set; }
 
         public int? TrainingCourseModalityId { get; set; }
-        public TrainingCourseModality TrainingCourseModality { get; set; }
+        public virtual TrainingCourseModality TrainingCourseModality { get; set; }
 
         public bool HasChildren { get; set; }
 
