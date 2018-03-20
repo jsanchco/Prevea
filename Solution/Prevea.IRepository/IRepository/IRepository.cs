@@ -324,6 +324,7 @@
         #region RequestMedicalExamination Employee
 
         RequestMedicalExaminationEmployee GetRequestMedicalExaminationEmployeeById(int id);
+        RequestMedicalExaminationEmployee GetRequestMedicalExaminationEmployeeByEmployeeId(int requestMedicalExaminationsId, int employeeId);
         List<RequestMedicalExaminationEmployee> GetRequestMedicalExaminationEmployees();
         List<Employee> GetEmployeesByRequestMedicalExamination(int requestMedicalExaminationId);        
         RequestMedicalExaminationEmployee SaveRequestMedicalExaminationEmployee(RequestMedicalExaminationEmployee requestMedicalExaminationEmployee);

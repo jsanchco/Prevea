@@ -106,16 +106,17 @@
                 }, {
                     field: "NIF",
                     title: "NIF",
-                    width: 150,
+                    width: 120,
                     groupable: "false"
                 }, {
                     field: "NumberEmployees",
-                    title: "Número de Empleados",
-                    width: 200,
+                    title: "Nº de Empleados",
+                    width: 160,
                     template: "#= Templates.getColumnTemplateIncreaseRight(data.NumberEmployees) #"
                 }, {
                     field: "Date",
                     title: "Fecha",
+                    width: 150,
                     groupable: "false",
                     template: "#= Templates.getColumnTemplateDate(data.Date) #"
                 }, {
@@ -224,9 +225,13 @@
         });
         kendo.bind($("#" + this.gridSimulationsId), this);
 
-        if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {
-            var grid = $("#" + this.gridSimulationsId).data("kendoGrid");
+        var grid = $("#" + this.gridSimulationsId).data("kendoGrid");
+        if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {            
             grid.hideColumn("UserInitials");
+        }
+
+        if (GeneralData.userRoleId === Constants.role.PreveaPersonal) {
+            grid.hideColumn("UserAssignedInitials");
         }
 
         if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {

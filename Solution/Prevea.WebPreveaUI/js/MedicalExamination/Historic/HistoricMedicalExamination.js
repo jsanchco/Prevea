@@ -32,7 +32,7 @@
                         Date: { type: "date", format: "{0:dd/MM/yyyy}", defaultValue: new Date() },
                         Observations: { type: "string" },
                         RequestMedicalExaminationStateId: { type: "number", defaultValue: Constants.requestMedicalExaminationState.Pending },
-                        RequestMedicalExaminationStateDescription: { type: "string", defaultValue: "Pendiente" },                        
+                        RequestMedicalExaminationStateDescription: { type: "string", editable: false, defaultValue: "Pendiente" },                        
                         CompanyId: { type: "number", defaultValue: HistoricMedicalExamination.companyId }
                     }
                 }
@@ -98,7 +98,7 @@
             }, {
                 field: "RequestMedicalExaminationStateDescription",
                 title: "Estado de la Petición",
-                width: 400,
+                width: 200,
                 template: "#= HistoricMedicalExamination.getColumnTemplateRequestMedicalState(data) #"
             }, {
                 title: "Comandos",
@@ -263,21 +263,19 @@
             if (data.Included === true) {
                 html += "<div style='text-align: left'>";
                 html += "<div id='circleFirmValidated' toggle='tooltip' title='Validada' style='float: left; text-align: left;'>";
-                html += "</div>";
+                html += "</div></div>";
             }
+            html += kendo.format("<div style='font-weight: bold;'>{0}</div>", kendo.toString(data.Date, "dd/MM/yyyy HH:mm"));
             html += "</div>";
-            html += kendo.format("<div style='font-weight: bold;'>{0}", kendo.toString(data.Date, "dd/MM/yyyy HH:mm"));
-            html += "</div></div>";
         } else {
             html = "<div style='text-align: center'>";
             if (data.Included === true) {
                 html += "<div style='text-align: left'>";
                 html += "<div id='circleFirmPending' toggle='tooltip' title='Pendiente de Validar' style='float: left; text-align: left;'>";
-                html += "</div>";
+                html += "</div></div>";
             }
+            html += kendo.format("<div style='font-weight: bold;'>{0}</div>", kendo.toString(data.Date, "dd/MM/yyyy"));
             html += "</div>";
-            html += kendo.format("<div style='font-weight: bold;'>{0}", kendo.toString(data.Date, "dd/MM/yyyy"));
-            html += "</div></div>";
         }
 
         return html;

@@ -332,12 +332,16 @@ namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
             return Json(new { resultStatus = Status.Ok, requestMedicalExamination = data }, JsonRequestBehavior.AllowGet);
         }
 
-        //////public JsonResult UpdateRequestHistoricMedicalExaminationEmployees(List<RequestMedicalExaminationEmployeeViewModel> listEmployees)
-        //////{
-        //////    var requestMedicalExamination = Service.UpdateRequestHistoricMedicalExaminationEmployees(listEmployees, User.Id, listEmployees);
-        //////    var data = AutoMapper.Mapper.Map<RequestMedicalExaminationsViewModel>(requestMedicalExamination);
-        //////    return Json(new { resultStatus = Status.Ok, requestMedicalExamination = data }, JsonRequestBehavior.AllowGet);
-        //////}
+        public JsonResult UpdateRequestHistoricMedicalExaminationEmployees(List<RequestMedicalExaminationEmployeeViewModel> listEmployees)
+        {
+            var updateRequestHistoricMedicalExaminationEmployees = Service.UpdateRequestHistoricMedicalExaminationEmployees(AutoMapper.Mapper.Map<List<RequestMedicalExaminationEmployee>>(listEmployees), User.Id);
+
+            if (updateRequestHistoricMedicalExaminationEmployees.Status == Status.Error)
+                return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
+
+            var data = AutoMapper.Mapper.Map<RequestMedicalExaminationsViewModel>(updateRequestHistoricMedicalExaminationEmployees.Object);
+            return Json(new { resultStatus = Status.Ok, requestMedicalExamination = data }, JsonRequestBehavior.AllowGet);
+        }
 
         public JsonResult GetClinics([DataSourceRequest] DataSourceRequest request)
         {

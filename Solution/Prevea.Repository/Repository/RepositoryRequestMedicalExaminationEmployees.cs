@@ -21,6 +21,15 @@
                 .FirstOrDefault(x => x.Id == id);
         }
 
+        public RequestMedicalExaminationEmployee GetRequestMedicalExaminationEmployeeByEmployeeId(int requestMedicalExaminationsId,
+            int employeeId)
+        {
+            return Context.RequestMedicalExaminationsEmployees
+                .Include(x => x.Employee)
+                .Include(x => x.RequestMedicalExaminations)
+                .FirstOrDefault(x => x.EmployeeId == employeeId && x.RequestMedicalExaminationsId == requestMedicalExaminationsId);
+        }
+
         public List<RequestMedicalExaminationEmployee> GetRequestMedicalExaminationEmployees()
         {
             return Context.RequestMedicalExaminationsEmployees

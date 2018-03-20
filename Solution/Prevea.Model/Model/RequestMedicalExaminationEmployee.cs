@@ -38,6 +38,9 @@ namespace Prevea.Model.Model
         public virtual ICollection<DoctorMedicalExaminationEmployee> DoctorsMedicalExaminationEmployee { get; set; }
 
         [NotMapped]
+        public bool Included { get; set; }
+
+        [NotMapped]
         public int[] SplitDoctors
         {
             get

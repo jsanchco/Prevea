@@ -301,11 +301,12 @@
         #region RequestMedicalExamination Employee
 
         RequestMedicalExaminationEmployee GetRequestMedicalExaminationEmployeeById(int id);
+        RequestMedicalExaminationEmployee GetRequestMedicalExaminationEmployeeByEmployeeId(int requestMedicalExaminationsId, int employeeId);
         List<RequestMedicalExaminationEmployee> GetRequestMedicalExaminationEmployees();
         List<Employee> GetEmployeesByRequestMedicalExamination(int requestMedicalExaminationId);        
         Result SaveRequestMedicalExaminationEmployee(RequestMedicalExaminationEmployee requestMedicalExaminationEmployee);
         Result DeleteRequestMedicalExaminationEmployee(int id);
-        //Result UpdateRequestHistoricMedicalExaminationEmployees(List<RequestMedicalExaminationEmployee> listEmployees, int userId, string doctors);
+        Result UpdateRequestHistoricMedicalExaminationEmployees(List<RequestMedicalExaminationEmployee> listEmployees, int userId);
 
         #endregion
 
