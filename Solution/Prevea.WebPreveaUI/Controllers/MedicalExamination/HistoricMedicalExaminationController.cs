@@ -249,7 +249,8 @@
                         ChangeDate = requestMedicalExaminationEmployee.ChangeDate,
                         ClinicId = requestMedicalExaminationEmployee.ClinicId,
                         SplitDoctors = requestMedicalExaminationEmployee.SplitDoctors,
-                        Doctors = requestMedicalExaminationEmployee.Doctors
+                        Doctors = requestMedicalExaminationEmployee.Doctors,
+                        Observations = requestMedicalExaminationEmployee.Observations
                     });
                 }
             }            

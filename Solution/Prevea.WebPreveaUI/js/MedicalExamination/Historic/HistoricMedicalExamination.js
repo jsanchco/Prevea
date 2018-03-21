@@ -362,7 +362,8 @@
                         NIF: { type: "string", editable: false },
                         ClinicId: { type: "number", editable: clinicEditableValue },
                         ClinicName: { type: "string", editable: clinicEditableValue },
-                        Doctors: { type: "string", editable: doctorsEditableValue }
+                        Doctors: { type: "string" },
+                        SplitDoctors: { editable: doctorsEditableValue }
                     }
                 }
             },
@@ -418,7 +419,7 @@
                     editor: HistoricMedicalExamination.clinicsDropDownEditor,
                     template: "#= HistoricMedicalExamination.getClinicName(data.ClinicId) #"
                 }, {
-                    field: "Doctors",
+                    field: "SplitDoctors",
                     title: "Médicos",
                     width: 200,
                     editor: HistoricMedicalExamination.doctorsDropDownEditor,
@@ -551,6 +552,7 @@
                 Included: item.Included,
                 ChangeDate: item.ChangeDate,
                 ClinicId: item.ClinicId,
+                SplitDoctors: item.SplitDoctors,
                 Doctors: item.Doctors
             }
             return employee;

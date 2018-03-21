@@ -173,12 +173,12 @@
                             allValidated = false;
 
                             var doctorsMedicalExaminationEmployees = GetDoctorsMedicalExaminationEmployees()
-                                .Where(x => x.MedicalExaminationEmployeeId == requestMedicalExaminationsId).ToList();
+                                .Where(x => x.MedicalExaminationEmployeeId == exist.Id).ToList();
 
                             foreach (var doctor in doctorsMedicalExaminationEmployees)
                             {
                                 var existDoctor = employee.SplitDoctors.ToList().IndexOf(doctor.DoctorId);
-                                if (existDoctor != -1)
+                                if (existDoctor == -1)
                                 {
                                     var delete = DeleteDoctorMedicalExaminationEmployee(doctor.Id);
                                     if (delete.Status == Status.Error)
