@@ -362,6 +362,7 @@
 
         List<DoctorMedicalExaminationEmployee> GetDoctorsMedicalExaminationEmployees();
         DoctorMedicalExaminationEmployee GetDoctorMedicalExaminationEmployeeById(int id);
+        DoctorMedicalExaminationEmployee GetDoctorMedicalExaminationEmployeeByDoctorId(int requestMedicalExaminationsId, int doctorId);
         DoctorMedicalExaminationEmployee SaveDoctorMedicalExaminationEmployee(DoctorMedicalExaminationEmployee doctorMedicalExaminationEmployee);
         bool DeleteDoctorMedicalExaminationEmployee(int id);
 

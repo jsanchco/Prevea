@@ -141,6 +141,9 @@
                 var allValidated = true;
                 foreach (var employee in listEmployees)
                 {
+                    if (!string.IsNullOrEmpty(employee.Doctors))
+                        employee.SplitDoctors = employee.Doctors.Split(',').Select(int.Parse).ToArray();
+
                     if (employee.Included)
                     {
                         var exist = GetRequestMedicalExaminationEmployeeByEmployeeId(
@@ -169,7 +172,6 @@
 
                             allValidated = false;
 
-                            //var listDoctors = employee.SplitDoctors;
                             var doctorsMedicalExaminationEmployees = GetDoctorsMedicalExaminationEmployees()
                                 .Where(x => x.MedicalExaminationEmployeeId == requestMedicalExaminationsId).ToList();
 
@@ -197,18 +199,15 @@
 
                             foreach (var doctor in employee.SplitDoctors)
                             {
-                                var findDoctor = GetDoctorsMedicalExaminationEmployees().FirstOrDefault(x =>
-                                    x.MedicalExaminationEmployeeId ==
-                                    ((RequestMedicalExaminations) saveExist.Object).Id &&
-                                    x.DoctorId == Convert.ToInt32(doctor));
+                                var findDoctor = GetDoctorMedicalExaminationEmployeeByDoctorId(((RequestMedicalExaminationEmployee)saveExist.Object).Id, doctor);
                                 if (findDoctor == null)
                                 {
                                     var saveDoctor = SaveDoctorMedicalExaminationEmployee(
                                         new DoctorMedicalExaminationEmployee
                                         {
                                             MedicalExaminationEmployeeId =
-                                                ((RequestMedicalExaminations) saveExist.Object).Id,
-                                            DoctorId = Convert.ToInt32(doctor)
+                                                ((RequestMedicalExaminationEmployee) saveExist.Object).Id,
+                                            DoctorId = doctor
                                         });
                                     if (saveDoctor.Status == Status.Error)
                                     {

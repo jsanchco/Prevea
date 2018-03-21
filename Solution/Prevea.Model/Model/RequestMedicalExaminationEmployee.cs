@@ -41,17 +41,20 @@ namespace Prevea.Model.Model
         public bool Included { get; set; }
 
         [NotMapped]
-        public int[] SplitDoctors
-        {
-            get
-            {
-                if (DoctorsMedicalExaminationEmployee != null && DoctorsMedicalExaminationEmployee.Count > 0)
-                {
-                    return DoctorsMedicalExaminationEmployee.Select(x => x.Id).ToArray();
-                }
+        public string Doctors { get; set; }
 
-                return null;
-            }
-        }
+        [NotMapped]
+        public int[] SplitDoctors { get; set; }
+        //{
+        //    get
+        //    {
+        //        if (DoctorsMedicalExaminationEmployee != null && DoctorsMedicalExaminationEmployee.Count > 0)
+        //        {
+        //            return DoctorsMedicalExaminationEmployee.Select(x => x.Id).ToArray();
+        //        }
+
+        //        return null;
+        //    }
+        //}
     }    
 }

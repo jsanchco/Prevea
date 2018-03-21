@@ -340,6 +340,7 @@
 
         List<DoctorMedicalExaminationEmployee> GetDoctorsMedicalExaminationEmployees();
         DoctorMedicalExaminationEmployee GetDoctorMedicalExaminationEmployeeById(int id);
+        DoctorMedicalExaminationEmployee GetDoctorMedicalExaminationEmployeeByDoctorId(int medicalExaminationEmployeeId, int doctorId);
         Result SaveDoctorMedicalExaminationEmployee(DoctorMedicalExaminationEmployee doctorMedicalExaminationEmployee);
         Result DeleteDoctorMedicalExaminationEmployee(int id);
 

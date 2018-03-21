@@ -21,6 +21,12 @@
             return Repository.GetDoctorMedicalExaminationEmployeeById(id);
         }
 
+        public DoctorMedicalExaminationEmployee GetDoctorMedicalExaminationEmployeeByDoctorId(int medicalExaminationEmployeeId,
+            int doctorId)
+        {
+            return Repository.GetDoctorMedicalExaminationEmployeeByDoctorId(medicalExaminationEmployeeId, doctorId);
+        }
+
         public Result SaveDoctorMedicalExaminationEmployee(DoctorMedicalExaminationEmployee doctorMedicalExaminationEmployee)
         {
             try

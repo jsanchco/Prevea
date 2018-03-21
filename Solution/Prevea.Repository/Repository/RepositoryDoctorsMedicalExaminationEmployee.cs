@@ -26,6 +26,14 @@
                 .FirstOrDefault(x => x.Id == id);
         }
 
+        public DoctorMedicalExaminationEmployee GetDoctorMedicalExaminationEmployeeByDoctorId(int medicalExaminationEmployeeId,
+            int doctorId)
+        {
+            return Context.DoctorMedicalExaminationEmployees
+                .Include(x => x.MedicalExaminationEmployee)
+                .FirstOrDefault(x => x.MedicalExaminationEmployeeId == medicalExaminationEmployeeId && x.DoctorId == doctorId);
+        }
+
         public DoctorMedicalExaminationEmployee SaveDoctorMedicalExaminationEmployee(DoctorMedicalExaminationEmployee doctorMedicalExaminationEmployee)
         {
             using (var dbContextTransaction = Context.Database.BeginTransaction())

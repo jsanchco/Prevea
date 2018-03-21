@@ -567,6 +567,9 @@
                     if (changes[i].ClinicId === 0) {
                         error += kendo.format("<li>{0}: Tienes que elegir una Clínica</li>", changes[i].EmployeeName);
                     }
+                    if (changes[i].Doctors === null || changes[i].Doctors === "") {
+                        error += kendo.format("<li>{0}: Tienes que elegir Médico/s</li>", changes[i].EmployeeName);
+                    }
                 }
             }
             if (error !== "<ul>") {

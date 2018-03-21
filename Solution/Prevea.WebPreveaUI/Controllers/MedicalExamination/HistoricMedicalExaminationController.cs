@@ -1,6 +1,4 @@
-﻿using Prevea.Model.CustomModel;
-
-namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
+﻿namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
 {
     #region Using
 
@@ -235,6 +233,11 @@ namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
                     var requestMedicalExaminationEmployee = Service.GetRequestMedicalExaminationEmployeeById(findEmployeesByRequestMedicalExamination.Id);
                     if (requestMedicalExaminationEmployee.ClinicId == null)
                         requestMedicalExaminationEmployee.ClinicId = 0;
+
+                    requestMedicalExaminationEmployee.SplitDoctors =
+                        requestMedicalExaminationEmployee.DoctorsMedicalExaminationEmployee.Select(x => x.DoctorId).ToArray();
+                    requestMedicalExaminationEmployee.Doctors = string.Join(",", requestMedicalExaminationEmployee.SplitDoctors);
+
                     listEmployees.Add(new RequestMedicalExaminationEmployeeViewModel
                     {
                         Date = requestMedicalExaminationEmployee.Date,
@@ -244,7 +247,9 @@ namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
                         Included = true,
                         RequestMedicalExaminationsId = requestMedicalExaminationId,
                         ChangeDate = requestMedicalExaminationEmployee.ChangeDate,
-                        ClinicId = requestMedicalExaminationEmployee.ClinicId                 
+                        ClinicId = requestMedicalExaminationEmployee.ClinicId,
+                        SplitDoctors = requestMedicalExaminationEmployee.SplitDoctors,
+                        Doctors = requestMedicalExaminationEmployee.Doctors
                     });
                 }
             }            
@@ -335,7 +340,7 @@ namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
         public JsonResult UpdateRequestHistoricMedicalExaminationEmployees(List<RequestMedicalExaminationEmployeeViewModel> listEmployees)
         {
             var updateRequestHistoricMedicalExaminationEmployees = Service.UpdateRequestHistoricMedicalExaminationEmployees(AutoMapper.Mapper.Map<List<RequestMedicalExaminationEmployee>>(listEmployees), User.Id);
-
+            
             if (updateRequestHistoricMedicalExaminationEmployees.Status == Status.Error)
                 return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
 
