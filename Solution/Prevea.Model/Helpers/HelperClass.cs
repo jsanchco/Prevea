@@ -149,6 +149,10 @@
                     return "Otros Documentos";
                 case "Pending":
                     return "Pendiente";
+                case "InProcess":
+                    return "En Proceso";
+                case "Finished":
+                    return "Finalizado";
 
                 default:
                     return name;

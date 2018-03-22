@@ -65,12 +65,12 @@
     <Compile Include="Model\ContactPerson.cs" />
     <Compile Include="Model\ContractualDocumentType.cs" />
     <Compile Include="Model\DoctorMedicalExaminationEmployee.cs" />
-    <Compile Include="Model\DoctorWorkSheet.cs" />
+    <Compile Include="Model\MedicalExamination.cs" />
+    <Compile Include="Model\MedicalExaminationState.cs" />
     <Compile Include="Model\Document.cs" />
     <Compile Include="Model\ContractualDocumentCompany.cs" />
     <Compile Include="Model\DocumentUserCreator.cs" />
     <Compile Include="Model\DocumentUserOwner.cs" />
-    <Compile Include="Model\EmployeeDoctorWorkSheet.cs" />
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Model\EstablishmentType.cs" />
     <Compile Include="Model\ForeignPreventionService.cs" />

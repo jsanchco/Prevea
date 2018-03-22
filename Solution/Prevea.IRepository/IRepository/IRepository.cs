@@ -365,6 +365,7 @@
         DoctorMedicalExaminationEmployee GetDoctorMedicalExaminationEmployeeByDoctorId(int requestMedicalExaminationsId, int doctorId);
         DoctorMedicalExaminationEmployee SaveDoctorMedicalExaminationEmployee(DoctorMedicalExaminationEmployee doctorMedicalExaminationEmployee);
         bool DeleteDoctorMedicalExaminationEmployee(int id);
+        List<DateTime> GetDatesByWorkSheet(int doctorId);
 
         #endregion
     }

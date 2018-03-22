@@ -254,6 +254,13 @@ namespace Prevea.ConsoleTestModel.Migrations
             }
             context.SaveChanges();
 
+            var medicalExaminationStates = (EnMedicalExaminationState[])Enum.GetValues(typeof(EnMedicalExaminationState));
+            foreach (var dState in medicalExaminationStates)
+            {
+                context.MedicalExaminationStates.AddOrUpdate(new MedicalExaminationState { Name = dState.ToString() });
+            }
+            context.SaveChanges();
+
             var establishmentTypes = (EnEstablishmentType[])Enum.GetValues(typeof(EnEstablishmentType));
             foreach (var dState in establishmentTypes)
             {

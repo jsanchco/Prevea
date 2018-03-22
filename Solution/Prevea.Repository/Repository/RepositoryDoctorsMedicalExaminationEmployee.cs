@@ -82,5 +82,14 @@
                 }
             }
         }
+
+        public List<DateTime> GetDatesByWorkSheet(int doctorId)
+        {
+            return Context.RequestMedicalExaminationsEmployees
+                .Where(x => x.DoctorsMedicalExaminationEmployee.Select(y => y.DoctorId).Contains(doctorId))
+                .Select(x => x.DateOnlyDay)
+                .Distinct()
+                .ToList();
+        }
     }
 }

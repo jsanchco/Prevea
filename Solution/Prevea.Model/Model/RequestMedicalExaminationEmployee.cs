@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Prevea.Model.Model
+﻿namespace Prevea.Model.Model
 {
     #region Using
 
@@ -13,6 +11,15 @@ namespace Prevea.Model.Model
 
     public class RequestMedicalExaminationEmployee
     {
+        #region Constructor
+
+        public RequestMedicalExaminationEmployee()
+        {
+            DateOnlyDay = new DateTime(Date.Year, Date.Month, Date.Day);
+        }
+
+        #endregion
+
         [Key, Required]
         public int Id { get; set; }
 
@@ -23,6 +30,8 @@ namespace Prevea.Model.Model
         public virtual RequestMedicalExaminations RequestMedicalExaminations { get; set; }
 
         public DateTime Date { get; set; }
+        
+        public DateTime DateOnlyDay { get; set; }
 
         public bool ChangeDate { get; set; }
 
@@ -35,6 +44,8 @@ namespace Prevea.Model.Model
         public int? ClinicId { get; set; }
         public virtual Clinic Clinic { get; set; }
 
+        public virtual MedicalExamination MedicalExamination { get; set; }
+
         public virtual ICollection<DoctorMedicalExaminationEmployee> DoctorsMedicalExaminationEmployee { get; set; }
 
         [NotMapped]
@@ -45,16 +56,5 @@ namespace Prevea.Model.Model
 
         [NotMapped]
         public int[] SplitDoctors { get; set; }
-        //{
-        //    get
-        //    {
-        //        if (DoctorsMedicalExaminationEmployee != null && DoctorsMedicalExaminationEmployee.Count > 0)
-        //        {
-        //            return DoctorsMedicalExaminationEmployee.Select(x => x.Id).ToArray();
-        //        }
-
-        //        return null;
-        //    }
-        //}
     }    
 }

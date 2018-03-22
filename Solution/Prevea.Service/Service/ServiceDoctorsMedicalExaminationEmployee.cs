@@ -94,5 +94,10 @@
                 };
             }
         }
+
+        public List<DateTime> GetDatesByWorkSheet(int doctorId)
+        {
+            return Repository.GetDatesByWorkSheet(doctorId);
+        }
     }
 }
