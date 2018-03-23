@@ -42,6 +42,13 @@
                 url: "MedicalExamination/{controller}/{action}/{id}",
                 defaults: new { controller = "HistoricMedicalExamination", action = "HistoricMedicalExamination", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "DoctorWorkSheet",
+                url: "MedicalExamination/{controller}/{action}/{id}",
+                defaults: new { controller = "DoctorWorkSheet", action = "DoctorWorkSheet", id = UrlParameter.Optional }
+            );
+
         }
     }
 }

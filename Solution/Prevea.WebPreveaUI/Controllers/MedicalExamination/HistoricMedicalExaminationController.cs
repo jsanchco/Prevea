@@ -40,7 +40,7 @@
                 ViewBag.CompanyId = 0;
             }
 
-            return PartialView("~/Views/MedicalExamination/Historic/HistoricMedicalExamination.cshtml");
+            return PartialView("~/Views/MedicalExamination/HistoricMedicalExamination.cshtml");
         }
 
         [HttpGet]

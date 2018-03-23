@@ -90,7 +90,11 @@
             case "healthSurveillance|doctors":
                 url = "/Doctors/Doctors";
                 break;
-                
+
+            case "medicalHealth|doctorWorkSheet":
+                url = "/DoctorWorkSheet/DoctorWorkSheet";
+                break;
+                                
             default:
                 break;
         };

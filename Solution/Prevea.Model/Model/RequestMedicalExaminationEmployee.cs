@@ -11,15 +11,6 @@
 
     public class RequestMedicalExaminationEmployee
     {
-        #region Constructor
-
-        public RequestMedicalExaminationEmployee()
-        {
-            DateOnlyDay = new DateTime(Date.Year, Date.Month, Date.Day);
-        }
-
-        #endregion
-
         [Key, Required]
         public int Id { get; set; }
 
@@ -29,9 +20,7 @@
         public int RequestMedicalExaminationsId { get; set; }
         public virtual RequestMedicalExaminations RequestMedicalExaminations { get; set; }
 
-        public DateTime Date { get; set; }
-        
-        public DateTime DateOnlyDay { get; set; }
+        public DateTime Date { get; set; }       
 
         public bool ChangeDate { get; set; }
 

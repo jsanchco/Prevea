@@ -180,6 +180,7 @@
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\MedicalExamination\DoctorWorkSheetController.cs" />
     <Compile Include="Controllers\MedicalExamination\HistoricMedicalExaminationController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -678,7 +679,8 @@
     <Content Include="js\CommercialTool\Simulations\TrainingService.js" />
     <Content Include="js\Courses\ManagementCourses\ManagementCourses.js" />
     <Content Include="js\Doctors\Doctors.js" />
-    <Content Include="js\MedicalExamination\Historic\HistoricMedicalExamination.js" />
+    <Content Include="js\MedicalExamination\DoctorWorkSheet.js" />
+    <Content Include="js\MedicalExamination\HistoricMedicalExamination.js" />
     <Content Include="js\Notifications\Notifications.js" />
     <Content Include="js\Profile\ChangePassword.js" />
     <Content Include="js\Profile\ChoosePhoto.js" />
@@ -1152,12 +1154,15 @@
     <Content Include="Views\CommercialTool\Companies\Reports\OfferTrainingReport.cshtml" />
     <Content Include="Views\CommercialTool\Companies\Reports\ContractAgencyReport.cshtml" />
     <Content Include="Views\CommercialTool\Companies\Reports\ContractTrainingReport.cshtml" />
-    <Content Include="Views\MedicalExamination\Historic\HistoricMedicalExamination.cshtml" />
+    <Content Include="Views\MedicalExamination\HistoricMedicalExamination.cshtml" />
     <Content Include="Views\Clinics\Clinics.cshtml" />
     <Content Include="Views\Doctors\Doctors.cshtml" />
+    <Content Include="Views\Shared\MenuDoctor.cshtml" />
+    <Content Include="Views\MedicalExamination\DoctorWorkSheet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\DoctorWorkSheet\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

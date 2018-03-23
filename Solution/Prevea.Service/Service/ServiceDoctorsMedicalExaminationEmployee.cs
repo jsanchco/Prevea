@@ -95,7 +95,7 @@
             }
         }
 
-        public List<DateTime> GetDatesByWorkSheet(int doctorId)
+        public List<DateTime?> GetDatesByWorkSheet(int doctorId)
         {
             return Repository.GetDatesByWorkSheet(doctorId);
         }

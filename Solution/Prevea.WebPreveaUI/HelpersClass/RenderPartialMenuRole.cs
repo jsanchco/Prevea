@@ -43,6 +43,10 @@
                         html.RenderPartial("MenuEmployee");
                         break;
 
+                    case (int)EnRole.Doctor:
+                        html.RenderPartial("MenuDoctor");
+                        break;
+
                     default:
                         return null;                     
                 }

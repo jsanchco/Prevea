@@ -343,7 +343,7 @@
         DoctorMedicalExaminationEmployee GetDoctorMedicalExaminationEmployeeByDoctorId(int medicalExaminationEmployeeId, int doctorId);
         Result SaveDoctorMedicalExaminationEmployee(DoctorMedicalExaminationEmployee doctorMedicalExaminationEmployee);
         Result DeleteDoctorMedicalExaminationEmployee(int id);
-        List<DateTime> GetDatesByWorkSheet(int doctorId);
+        List<DateTime?> GetDatesByWorkSheet(int doctorId);
 
         #endregion
     }
