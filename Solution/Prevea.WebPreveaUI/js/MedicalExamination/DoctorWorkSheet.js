@@ -82,8 +82,8 @@
                 }
             },
             dataSource: this.doctorWorkSheetDataSource,
-            //detailTemplate: this.getTemplateChildren(),
-            //detailInit: this.childrenMedicalExamination,
+            detailTemplate: this.getTemplateChildren(),
+            detailInit: this.childrenMedicalExamination,
             resizable: true,
             autoScroll: true,
             selectable: true,
@@ -93,17 +93,33 @@
             }
         });
         kendo.bind($("#" + this.gridDoctorWorkSheetId), this);
+
+        var grid = $("#" + this.gridDoctorWorkSheetId).data("kendoGrid");
+        var options = localStorage["kendo-grid-options"];
+        if (options) {
+            grid.setOptions(JSON.parse(options));
+        }
     },
 
     getColumnTemplateDate: function (data) {
-        var html = kendo.format("<div align='center'>{0}</div>",
-            kendo.toString(data.Date, "dd/MM/yyyy"));
+        var total = data.MedicalExaminationPendings + data.MedicalExaminationInCourse + data.MedicalExaminationFinished;
+        var html = "<div><div class='row'><div class='col-sm-2'>";
+        html += kendo.format("<div class='row' style='font-weight: bold; margin: 10px;'>{0}</div>", data.Date.getFullYear());
+        html += "<div class='row' style=''>&nbsp;</div><div class='row' style=''>&nbsp;</div></div><div class='col-sm-6'>";
+        html += kendo.format("<div class='row' style='color: red; font-size: 10px'>{0}</div>", GeneralData.getDayOfTheWeek(data.Date.getDay()));
+        html += kendo.format("<div class='row' style='font-size: 20px; font-weight: bold;'>{0}</div>", data.Date.getDate());
+        html += kendo.format("<div class='row' style='font-size: 10px'>{0}</div>", GeneralData.getMonth(data.Date.getMonth()));
+        html += "</div><div class='col-sm-1'><div class='row' style=''>Pendientes:</div><div class='row' style=''>En Curso:</div><div class='row' style=''>Acabados:</div><div class='row' style='font-weight: bold; color: blue;'>Totales:</div></div><div class='col-sm-1'>";
+        html += kendo.format("<div class='row' style=''>{0}</div>", data.MedicalExaminationPendings);
+        html += kendo.format("<div class='row' style=''>{0}</div>", data.MedicalExaminationInCourse);
+        html += kendo.format("<div class='row' style=''>{0}</div>", data.MedicalExaminationFinished);
+        html += kendo.format("<div class='row' style='font-weight: bold; color: blue;'>{0}</div>", total );
 
         return html;
     },
 
-    getTemplateChildren: function () {
-        var html = "<div id='templateGridEmployeesMedicalExamination' style='border: 1px solid; border-radius: 10px;'>";
+    getTemplateChildren: function () {        
+        var html = "<div id='templateGridEmployeesMedicalExamination' class='templateChildren'>";
         html += "<H2 style='text-align: center;'>Trabajadores</H2><br />";
         html += "<div id='gridEmployeesMedicalExamination' class='gridEmployeesMedicalExamination' style='margin: 5px;'></div><br /><br />";
         html += "</div>";
@@ -125,49 +141,54 @@
                 model: {
                     id: "Id",
                     fields: {
-                        Id: { type: "number", defaultValue: 0 },
+                        Id: { type: "number" },
                         EmployeeId: { type: "number" },
                         EmployeeName: { type: "string", editable: false },
                         Observations: { type: "string" },
-                        SamplerNumber: { type: "string", editable: samplerNumberEditableValue },
-                        Date: { type: "date", format: "{0:dd/MM/yyyy hh:mm}", editable: dateEditableValue },
-                        ChangeDate: { type: "boolean" },
-                        Included: { type: "boolean", defaultValue: false, editable: includedEditableValue },
+                        SamplerNumber: { type: "string" },
+                        Date: { type: "date", format: "{hh:mm}", editable: false },
                         RequestMedicalExaminationsId: { type: "number" },
-                        ContactPersonId: { type: "number" },
-                        NIF: { type: "string", editable: false },
-                        ClinicId: { type: "number", editable: clinicEditableValue },
-                        ClinicName: { type: "string", editable: clinicEditableValue },
-                        Doctors: { type: "string" },
-                        SplitDoctors: { editable: doctorsEditableValue }
+                        EmployeeDNI: { type: "string", editable: false }
                     }
                 }
             },
             transport: {
                 read: {
-                    url: "/HistoricMedicalExamination/RequestMedicalExaminationEmployees_Read",
+                    url: "/DoctorWorkSheet/RequestMedicalExaminationEmployees_Read",
                     dataType: "jsonp",
                     data: {
-                        requestMedicalExaminationId: e.data.Id,
-                        companyId: e.data.CompanyId
+                        date: e.data.Date
                     }
+                },
+                update: {
+                    url: "/DoctorWorkSheet/RequestMedicalExaminationEmployees_Update",
+                    dataType: "jsonp"
                 },
                 parameterMap: function (options, operation) {
                     if (operation === "read") {
                         return {
-                            requestMedicalExaminationId: options.requestMedicalExaminationId,
-                            companyId: options.companyId
+                            dateString: kendo.toString(options.date, "yyyy/M/d")
                         };
+                    }
+                    if (operation !== "read" && options) {
+                        return { medicalExamination: kendo.stringify(options.models[0]) };
                     }
 
                     return null;
-                }
-            },
-            change: function (e) {
-                if (e.action != null && e.action === "itemchange") {
-                    if (e.field === "Date") {
-                        var dataItem = e.items[0];
-                        dataItem.set("ChangeDate", true);
+                },
+                requestEnd: function (e) {
+                    if ((e.type === "update" || e.type === "destroy" || e.type === "create") &&
+                        e.response !== null) {
+                        if (typeof e.response.Errors !== "undefined") {
+                            GeneralData.showNotification(Constants.ko, "", "error");
+                            if (e.type === "create") {
+                                this.data().remove(this.data().at(0));
+                            } else {
+                                this.cancelChanges();
+                            }
+                        } else {
+                            GeneralData.showNotification(Constants.ok, "", "success");
+                        }
                     }
                 }
             },
@@ -175,50 +196,40 @@
             pageSize: 20
         });
 
-        var detailRow = e.detailRow;
+        var detailRow = e.detailRow; 
+        var classGridDetail = kendo.format("{0}gridEmployeesMedicalExamination", kendo.toString(e.data.Date, "yyyyMMdd"));
+        detailRow.find(".gridEmployeesMedicalExamination").addClass(classGridDetail);
+               
         detailRow.find(".gridEmployeesMedicalExamination").kendoGrid({
             columns: [
                 {
                     field: "EmployeeName",
                     title: "Nombre",
-                    width: 200,
-                    editor: HistoricMedicalExamination.editorSimple
+                    width: 200
                 }, {
                     field: "EmployeeDNI",
                     title: "DNI",
-                    width: 100,
-                    editor: HistoricMedicalExamination.editorSimple
-                }, {
-                    field: "ClinicId",
-                    title: "Clínica",
-                    width: 150,
-                    editor: HistoricMedicalExamination.clinicsDropDownEditor,
-                    template: "#= HistoricMedicalExamination.getClinicName(data.ClinicId) #"
-                }, {
-                    field: "SplitDoctors",
-                    title: "Médicos",
-                    width: 200,
-                    editor: HistoricMedicalExamination.doctorsDropDownEditor,
-                    template: "#= HistoricMedicalExamination.getDoctorsName(data.Doctors) #"
+                    width: 100
                 }, {
                     field: "Observations",
                     title: "Observaciones"
                 }, {
                     field: "SamplerNumber",
                     title: "Nº Muestra",
-                    width: 150
+                    width: 150,
+                    template: "#= Templates.getColumnTemplateIncreaseRight(data.SamplerNumber) #"
                 }, {
                     field: "Date",
-                    title: "Día",
+                    title: "Hora",
                     width: 200,
-                    template: "#= HistoricMedicalExamination.getColumnTemplateDate(data) #",
-                    editor: HistoricMedicalExamination.editorDate
+                    template: "#= Templates.getColumnTemplateDateOnlyHourBold(data.Date) #"
                 }, {
-                    title: "Incluido",
-                    field: "Included",
-                    width: 100,
-                    template: "#= Templates.getColumnTemplateBooleanIncrease(data.Included) #",
-                    editor: HistoricMedicalExamination.editorIncluded
+                    title: "Comandos",
+                    field: "Commands",
+                    width: 120,
+                    groupable: "false",
+                    filterable: false,
+                    template: "#= DoctorWorkSheet.getColumnTemplateCommands(data) #"
                 }],
             pageable: {
                 buttonCount: 2,
@@ -263,8 +274,10 @@
                     }
                 }
             },
-            toolbar: HistoricMedicalExamination.getTemplateChildrenToolBar(),
-            editable: true,
+            editable: {
+                mode: "inline",
+                confirmation: false
+            },
             resizable: true,
             autoScroll: true,
             selectable: true,
@@ -272,21 +285,50 @@
                 mode: "single",
                 allowUnsort: false
             },
+            edit: function (e) {
+                var commandCell = e.container.find("td:last");
+                var html = "<div align='center'>";
+                html += "<a class='k-grid-update' toggle='tooltip' title='Guardar' style='cursor: pointer;'><i class='glyphicon glyphicon-saved' style='font-size: 18px;'></i></a>&nbsp;&nbsp;";
+                html += "<a class='k-grid-cancel' toggle='tooltip' title='Cancelar' style='cursor: pointer;'><i class='glyphicon glyphicon-ban-circle' style='font-size: 18px;'></i></a>";
+                html += "</div>";
+
+                commandCell.html(html);
+            },
             groupable: false
         });
+        
         var grid = detailRow.find(".gridEmployeesMedicalExamination").data("kendoGrid");
-        grid.setDataSource(dataSourceChildren);
+        grid.setDataSource(dataSourceChildren);                
+    },
 
-        if (GeneralData.userRoleId !== Constants.role.ContactPerson) {
-            var filter = {
-                field: "Included",
-                operator: "eq",
-                value: true
-            };
-            grid.dataSource.filter(filter);
-            grid.hideColumn("Included");
-        }
+    getColumnTemplateCommands: function (data) {
+        var html = "<div align='center'>";
+        html += kendo.format("<a toggle='tooltip' title='Editar' onclick='DoctorWorkSheet.goToEditMedicalExamination(\"{0}\", \"{1}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id, kendo.toString(data.Date, "yyyyMMdd"));
+        html += kendo.format("<a toggle='tooltip' title='Detalle' onclick='DoctorWorkSheet.goToDetailMedicalExamination(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+        html += kendo.format("</div>");
 
-        $("#templateGridEmployeesMedicalExamination").css("border-color", "#BFBFBF");
+        return html;
+    },
+
+    goToEditMedicalExamination: function (id, date) {
+        var findClass = kendo.format(".{0}gridEmployeesMedicalExamination", date);
+        var grid = $(findClass).data("kendoGrid");
+        var item = grid.dataSource.get(id);
+        var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
+
+        grid.editRow(tr);
+    },
+
+    goToDetailMedicalExamination: function (id) {
+        var grid = $("#" + this.gridDoctorWorkSheetId).data("kendoGrid");
+        localStorage["kendo-grid-options"] = kendo.stringify(grid.getOptions());
+
+        var params = {
+            url: "/MedicalExamination/DetailMedicalExamination",
+            data: {
+                medicalExaminationId: id
+            }
+        };
+        GeneralData.goToActionController(params);
     }
 });

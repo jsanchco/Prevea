@@ -110,6 +110,17 @@
         return html;
     },
 
+    getColumnTemplateDateOnlyHourBold: function (date) {
+        if (date === null) {
+            return "";
+        }
+
+        var html = kendo.format("<div align='center' style='font-weight: bold;'>{0}</div>",
+            kendo.toString(date, "HH:mm"));
+
+        return html;
+    },
+
     getColumnTemplateRight: function (data) {
         var html = kendo.format("<div align='right'>{0}</div>", data);
 

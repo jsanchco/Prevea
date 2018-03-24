@@ -244,7 +244,7 @@
     },
 
     getTemplateChildren: function () {
-        var html = "<div id='templateGridEmployeesMedicalExamination' style='border: 1px solid; border-radius: 10px;'>";
+        var html = "<div id='templateGridEmployeesMedicalExamination' class='templateChildren'>";
         html += "<H2 style='text-align: center;'>Trabajadores</H2><br />";
         html += "<div id='gridEmployeesMedicalExamination' class='gridEmployeesMedicalExamination' style='margin: 5px;'></div><br /><br />";
         html += "</div>";
@@ -430,7 +430,8 @@
                 }, {
                     field: "SamplerNumber",
                     title: "Nº Muestra",
-                    width: 150
+                    width: 150,
+                    template: "#= Templates.getColumnTemplateIncreaseRight(data.SamplerNumber) #"
                 }, {
                     field: "Date",
                     title: "Día",
@@ -510,8 +511,6 @@
             grid.dataSource.filter(filter);
             grid.hideColumn("Included");
         } 
-
-        $("#templateGridEmployeesMedicalExamination").css("border-color","#BFBFBF");
     },
 
     editorSimple: function (container, options) {

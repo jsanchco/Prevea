@@ -69,5 +69,11 @@
         Pending: 1,
         Validated: 2,
         Modified: 3
+    },
+
+    medicalExaminationState: {
+        Pending: 1,
+        InProcess: 2,
+        Finished: 3
     }
 });

@@ -50,6 +50,25 @@
                     };
                 }
 
+                var medicalExamination = Repository.GetMedicalExaminationById(requestMedicalExaminationEmployee.Id);
+                if (medicalExamination == null)
+                {
+                    var saveMedicalExamination = Repository.SaveMedicalExamination(new MedicalExamination
+                    {
+                        Id = requestMedicalExaminationEmployee.Id,
+                        MedicalExaminationStateId = (int)EnMedicalExaminationState.Pending                        
+                    });
+                    if (saveMedicalExamination == null)
+                    {
+                        return new Result
+                        {
+                            Message = "Se ha producido un error en la Grabación de la RequestMedicalExaminationEmployee",
+                            Object = null,
+                            Status = Status.Error
+                        };
+                    }
+                }
+
                 return new Result
                 {
                     Message = "La Grabación de la RequestMedicalExaminationEmployee se ha producido con éxito",
@@ -72,6 +91,10 @@
         {
             try
             {
+                var medicalExamination = Repository.GetMedicalExaminationById(id);
+                if (medicalExamination != null)
+                    Repository.DeleteMedicalExamination(id);
+
                 var result = Repository.DeleteRequestMedicalExaminationEmployee(id);
 
                 if (result == false)
@@ -331,6 +354,11 @@
                     Status = Status.Error
                 };
             }
+        }
+
+        public List<RequestMedicalExaminationEmployee> GetRequestMedicalExaminationEmployeesByDate(int doctorId, DateTime date)
+        {
+            return Repository.GetRequestMedicalExaminationEmployeesByDate(doctorId, date);
         }
     }
 }

@@ -182,6 +182,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MedicalExamination\DoctorWorkSheetController.cs" />
     <Compile Include="Controllers\MedicalExamination\HistoricMedicalExaminationController.cs" />
+    <Compile Include="Controllers\MedicalExamination\MedicalExaminationController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\StartController.cs" />
@@ -679,8 +680,11 @@
     <Content Include="js\CommercialTool\Simulations\TrainingService.js" />
     <Content Include="js\Courses\ManagementCourses\ManagementCourses.js" />
     <Content Include="js\Doctors\Doctors.js" />
+    <Content Include="js\MedicalExamination\DetailMedicalExamination.js" />
     <Content Include="js\MedicalExamination\DoctorWorkSheet.js" />
+    <Content Include="js\MedicalExamination\DocumentsMedicalExamination.js" />
     <Content Include="js\MedicalExamination\HistoricMedicalExamination.js" />
+    <Content Include="js\MedicalExamination\TemplateMedicalExamination.js" />
     <Content Include="js\Notifications\Notifications.js" />
     <Content Include="js\Profile\ChangePassword.js" />
     <Content Include="js\Profile\ChoosePhoto.js" />
@@ -1159,6 +1163,9 @@
     <Content Include="Views\Doctors\Doctors.cshtml" />
     <Content Include="Views\Shared\MenuDoctor.cshtml" />
     <Content Include="Views\MedicalExamination\DoctorWorkSheet.cshtml" />
+    <Content Include="Views\MedicalExamination\DetailMedicalExamination.cshtml" />
+    <Content Include="Views\MedicalExamination\TemplateMedicalExamination.cshtml" />
+    <Content Include="Views\MedicalExamination\DocumentsMedicalExamination.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1330,7 +1337,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>54788</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

@@ -76,6 +76,15 @@
                     if (requestMedicalExamination == null)
                         return false;
 
+                    foreach (var requestMedicalExaminationEmployee in requestMedicalExamination.RequestMedicalExaminationEmployees)
+                    {
+                        var medicalExaminationFind = GetMedicalExaminationById(requestMedicalExaminationEmployee.Id);
+                        Context.MedicalExaminations.Remove(medicalExaminationFind);
+
+                        //var requestMedicalExaminationEmployeeFind = GetRequestMedicalExaminationEmployeeById(requestMedicalExaminationEmployee.Id);
+                        //Context.RequestMedicalExaminationsEmployees.Remove(requestMedicalExaminationEmployeeFind);
+                    }
+
                     Context.RequestMedicalExaminations.Remove(requestMedicalExamination);
                     Context.SaveChanges();
 

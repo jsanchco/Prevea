@@ -12,9 +12,9 @@
         [ForeignKey("RequestMedicalExaminationEmployee")]
         public int Id { get; set; }
 
-        public DateTime BeginDate { get; set; }
+        public DateTime? BeginDate { get; set; }
 
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         public string MedicalExaminationJSON { get; set; }
 

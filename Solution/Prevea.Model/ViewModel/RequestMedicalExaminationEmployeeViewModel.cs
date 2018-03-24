@@ -24,5 +24,7 @@
         public string ClinicName { get; set; }
         public string Doctors { get; set; }
         public int[] SplitDoctors { get; set; }
+        public int MedicalExaminationStateId { get; set; }
+        public string MedicalExaminationStateDescription { get; set; }
     }
 }

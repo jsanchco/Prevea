@@ -307,6 +307,7 @@
         Result SaveRequestMedicalExaminationEmployee(RequestMedicalExaminationEmployee requestMedicalExaminationEmployee);
         Result DeleteRequestMedicalExaminationEmployee(int id);
         Result UpdateRequestHistoricMedicalExaminationEmployees(List<RequestMedicalExaminationEmployee> listEmployees, int userId);
+        List<RequestMedicalExaminationEmployee> GetRequestMedicalExaminationEmployeesByDate(int doctorId, DateTime date);
 
         #endregion
 
@@ -324,6 +325,15 @@
 
         List<RequestMedicalExaminationEmployeeState> GetRequestMedicalExaminationEmployeeStates();
         RequestMedicalExaminationEmployeeState GetRequestMedicalExaminationEmployeeState(int id);
+
+        #endregion
+
+        #region MedicalExamination
+
+        MedicalExamination GetMedicalExaminationById(int id);
+        List<MedicalExamination> GetMedicalExaminations();
+        Result SaveMedicalExamination(MedicalExamination medicalExamination);
+        Result DeleteMedicalExamination(int id);
 
         #endregion
 

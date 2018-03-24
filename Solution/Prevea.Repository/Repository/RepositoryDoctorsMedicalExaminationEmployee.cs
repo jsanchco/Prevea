@@ -89,6 +89,7 @@
                 .Where(x => x.DoctorsMedicalExaminationEmployee.Select(y => y.DoctorId).Contains(doctorId))
                 .Select(x => DbFunctions.TruncateTime(x.Date))
                 .Distinct()
+                .OrderByDescending(x => x.Value)
                 .ToList();
         }
     }

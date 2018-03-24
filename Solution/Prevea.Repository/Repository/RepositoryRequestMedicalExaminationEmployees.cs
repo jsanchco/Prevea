@@ -95,5 +95,14 @@
                 }
             }
         }
+
+        public List<RequestMedicalExaminationEmployee> GetRequestMedicalExaminationEmployeesByDate(int doctorId, DateTime date)
+        {
+            return Context.RequestMedicalExaminationsEmployees
+                .Where(x => x.DoctorsMedicalExaminationEmployee.Select(y => y.DoctorId).Contains(doctorId) &&
+                            DbFunctions.TruncateTime(x.Date) == DbFunctions.TruncateTime(date))
+                .OrderBy(x => x.Date)
+                .ToList();
+        }
     }
 }

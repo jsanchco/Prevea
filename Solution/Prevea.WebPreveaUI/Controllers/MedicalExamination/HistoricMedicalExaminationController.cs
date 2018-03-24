@@ -120,16 +120,22 @@
                 if (result.Status == Status.Error)
                     return this.Jsonp(new { Errors = errorRequestMedicalExamination });
 
-                var contactPerson = Service.GetContactPersonByUserId(User.Id);
+                
                 var notification = new Model.Model.Notification
                 {
                     DateCreation = DateTime.Now,
                     NotificationTypeId = (int)EnNotificationType.FromRequestMedicalExamination,
-                    NotificationStateId = (int)EnNotificationState.Assigned,
-                    ToUserId = contactPerson.Company.SimulationCompanyActive.Simulation.UserAssignedId,
-                    Observations =
-                        $"{Service.GetUser(User.Id).Initials} - Actualizada la Petición de Reconocimiento Médico [{contactPerson.Company.Name}]"
+                    NotificationStateId = (int)EnNotificationState.Assigned  
                 };
+
+                var contactPerson = Service.GetContactPersonByUserId(User.Id);
+                if (contactPerson != null)
+                {
+                    notification.ToUserId = contactPerson.Company.SimulationCompanyActive.Simulation.UserAssignedId;
+                    notification.Observations =
+                        $"{Service.GetUser(User.Id).Initials} - Actualizada la Petición de Reconocimiento Médico [{contactPerson.Company.Name}]";
+                }
+                    
                 var resultNotification = Service.SaveNotification(notification);
                 if (resultNotification.Status == Status.Error)
                     return this.Jsonp(new { Errors = resultNotification });
@@ -250,7 +256,8 @@
                         ClinicId = requestMedicalExaminationEmployee.ClinicId,
                         SplitDoctors = requestMedicalExaminationEmployee.SplitDoctors,
                         Doctors = requestMedicalExaminationEmployee.Doctors,
-                        Observations = requestMedicalExaminationEmployee.Observations
+                        Observations = requestMedicalExaminationEmployee.Observations,
+                        SamplerNumber = requestMedicalExaminationEmployee.SamplerNumber
                     });
                 }
             }            

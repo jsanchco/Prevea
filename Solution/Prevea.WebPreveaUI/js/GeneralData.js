@@ -3,6 +3,9 @@
     spanErrorPpalId: "spanErrorPpal",
     notificationId: "notification",
 
+    months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+    days: ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"],
+
     userId: null,
     userInitials: null,
     userRoleId: null,
@@ -294,13 +297,13 @@
  
         expresion_regular_dni = /^\d{8}[a-zA-Z]$/;
  
-        if(expresion_regular_dni.test (dni) == true){
+        if(expresion_regular_dni.test (dni) === true){
             numero = dni.substr(0,dni.length-1);
             letr = dni.substr(dni.length-1,1);
             numero = numero % 23;
             letra = "TRWAGMYFPDXBNJZSQVHLCKET";
             letra=letra.substring(numero,numero+1);
-            if (letra != letr.toUpperCase()) {
+            if (letra !== letr.toUpperCase()) {
                 return false;
             }else {
                 return true;
@@ -308,6 +311,14 @@
         }else {
             return false;
         }
+    },
+
+    getMonth: function (index) {
+        return this.months[index];
+    },
+
+    getDayOfTheWeek: function(index) {
+        return this.days[index];
     }
 });
 
