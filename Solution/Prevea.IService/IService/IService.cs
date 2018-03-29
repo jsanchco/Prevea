@@ -334,6 +334,7 @@
         List<MedicalExamination> GetMedicalExaminations();
         Result SaveMedicalExamination(MedicalExamination medicalExamination);
         Result DeleteMedicalExamination(int id);
+        string GenerateMedicalExaminationJSON(RequestMedicalExaminationEmployee requestMedicalExaminationEmployee);
 
         #endregion
 

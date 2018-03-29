@@ -75,5 +75,13 @@
         Pending: 1,
         InProcess: 2,
         Finished: 3
+    },
+
+    inputTemplateType: {
+        Input: 1,
+        Single: 2,
+        Multiple: 3,
+        DateTime: 4,
+        TextArea: 5
     }
 });

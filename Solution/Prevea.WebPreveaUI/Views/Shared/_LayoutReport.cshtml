@@ -1,28 +1,139 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servicio Report</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Prevea Panel">
+    <meta name="author" content="Jesús Sánchez">
 
-</head>
-<body>
-<div class="container body-content">
-    @RenderBody()
-</div>
+    <title>Servicio de Report</title>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-    
+    <link rel="stylesheet" href="~/Scripts/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
+    <link rel="stylesheet" href="~/Content/font-icons/entypo/font/entypo.css">
+    <link rel="stylesheet" href="~/Content/font-icons/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic">
+    <link rel="stylesheet" href="~/Content/bootstrap.css">
+    <link rel="stylesheet" href="~/Content/neon-core.css">
+    <link rel="stylesheet" href="~/Content/neon-theme.css">
+    <link rel="stylesheet" href="~/Content/neon-forms.css">
+    <link rel="stylesheet" href="~/Content/skins/prevea.css">
+
+    <link rel="stylesheet" href="~/Content/select2/select2-bootstrap.css" id="style-resource-1">
+    <link rel="stylesheet" href="~/Content/select2/select2.css" id="style-resource-2">
+    <link rel="stylesheet" href="~/Content/selectBoxIt/jquery.selectBoxIt.css" id="style-resource-3">
+    <link rel="stylesheet" href="~/Content/daterangepicker/daterangepicker-bs3.css" id="style-resource-4">
+    <link rel="stylesheet" href="~/Content/icheck/skins/minimal/_all.css" id="style-resource-5">
+    <link rel="stylesheet" href="~/Content/icheck/skins/square/_all.css" id="style-resource-6">
+    <link rel="stylesheet" href="~/Content/icheck/skins/flat/_all.css" id="style-resource-7">
+    <link rel="stylesheet" href="~/Content/icheck/skins/futurico/futurico.css" id="style-resource-8">
+    <link rel="stylesheet" href="~/Content/icheck/skins/polaris/polaris.css" id="style-resource-9">
+
+    @RenderSection("style", required: false)
+
+    <script src="http://www.google-analytics.com/ga.js" type="text/javascript" async=""></script>
+    <script src="~/Scripts/jquery-1.11.3.min.js"></script>
+
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
+
+    <script id="script-resource-1" src="~/Scripts/gsap/TweenMax.min.js"></script>
+    <script id="script-resource-2" src="~/Scripts/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
+    <script id="script-resource-3" src="~/Scripts/bootstrap.js"></script>
+    <script id="script-resource-4" src="~/Scripts/joinable.js"></script>
+    <script id="script-resource-5" src="~/Scripts/resizeable.js"></script>
+    <script id="script-resource-6" src="~/Scripts/neon-api.js"></script>
+    <script id="script-resource-7" src="~/Scripts/bootstrap-switch.min.js"></script>
+    <script id="script-resource-8" src="~/Scripts/cookies.min.js"></script>
+    <script id="script-resource-9" src="~/Scripts/toastr.js"></script>
+    <script id="script-resource-10" src="~/Scripts/icheck/icheck.min.js"></script>
+    <script id="script-resource-11" src="~/Scripts/select2/select2.min.js"></script>
+    <script id="script-resource-12" src="~/Scripts/bootstrap-tagsinput.min.js"></script>
+    <script id="script-resource-13" src="~/Scripts/typeahead.min.js"></script>
+    <script id="script-resource-14" src="~/Scripts/selectboxit/jquery.selectBoxIt.min.js"></script>
+    <script id="script-resource-15" src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script id="script-resource-16" src="~/Scripts/bootstrap-timepicker.min.js"></script>
+    <script id="script-resource-17" src="~/Scripts/bootstrap-colorpicker.min.js"></script>
+    <script id="script-resource-18" src="~/Scripts/moment.min.js"></script>
+    <script id="script-resource-19" src="~/Scripts/daterangepicker/daterangepicker.js"></script>
+    <script id="script-resource-20" src="~/Scripts/jquery.multi-select.js"></script>
+
+    <!-- JavaScripts initializations and stuff -->
+    <script id="script-resource-21" src="~/Scripts/neon-custom.js"></script>
+    <!-- Demo Settings -->
+    <script id="script-resource-22" src="~/Scripts/neon-demo.js"></script>
+    <script id="script-resource-23" src="~/Scripts/neon-skins.js"></script>
+
+    <link href="@Url.Content("~/Content/kendo/2016.3.1118/kendo.common.min.css")" rel="stylesheet" type="text/css" />
+
     <link rel="stylesheet" href="~/Content/custom.css">
 
-    <script src="~/js/GeneralData.js"></script>  
+    <script src="@Url.Content("~/Scripts/kendo/2016.3.1118/jquery.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2016.3.1118/jszip.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2016.3.1118/kendo.all.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2016.3.1118/kendo.culture.es-ES.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2016.3.1118/kendo.aspnetmvc.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+
+    <script src="~/js/GeneralData.js"></script>
+    <script src="~/js/Start/Start.js"></script>
+    <script src="~/js/Document/Documents.js"></script>
+    <script src="~/js/Document/AddDocument.js"></script>
+    <script src="~/js/Document/DetailDocument.js"></script>
+    <script src="~/js/Document/EditDocument.js"></script>
+    <script src="~/js/Document/DeleteDocument.js"></script>
+    <script src="~/js/Document/AddDocumentWithParent.js"></script>
+    <script src="~/js/Document/HistoricDownloadDocuments.js"></script>
+    <script src="~/js/CommercialTool/ManagementCompanies/Companies.js"></script>
+    <script src="~/js/CommercialTool/ManagementCompanies/SimulationsCompany.js"></script>
+    <script src="~/js/CommercialTool/ManagementCompanies/GeneralDataCompany.js"></script>
+    <script src="~/js/CommercialTool/ManagementCompanies/DetailCompany.js"></script>
+    <script src="~/js/CommercialTool/ManagementCompanies/ContactPersonsCompany.js"></script>
+    <script src="~/js/CommercialTool/ManagementCompanies/AgencyCompany.js"></script>
+    <script src="~/js/CommercialTool/ManagementCompanies/EmployeesCompany.js"></script>
+    <script src="~/js/CommercialTool/ManagementCompanies/EconomicDataCompany.js"></script>
+    <script src="~/js/CommercialTool/ManagementCompanies/ContractualsDocumentsCompany.js"></script>
+    <script src="~/js/CommercialTool/ManagementCompanies/PaymentMethodCompany.js"></script>
+    <script src="~/js/CommercialTool/ManagementCompanies/WorkCentersCompany.js"></script>
+    <script src="~/js/CommercialTool/ManagementCompanies/AddDocumentFirmed.js"></script>
+    <script src="~/js/CommercialTool/ManagementCompanies/AddOtherDocument.js"></script>
+    <script src="~/js/CommercialTool/Simulations/Simulations.js"></script>
+    <script src="~/js/CommercialTool/Simulations/DetailSimulation.js"></script>
+    <script src="~/js/CommercialTool/Simulations/ForeignPreventionService.js"></script>
+    <script src="~/js/CommercialTool/Simulations/AgencyService.js"></script>
+    <script src="~/js/CommercialTool/Simulations/TrainingService.js"></script>
+    <script src="~/js/CommercialTool/Simulations/ChooseCourse.js"></script>
+    <script src="~/js/User/Users.js"></script>
+    <script src="~/js/Notifications/Notifications.js"></script>
+    <script src="~/js/Courses/ManagementCourses/ManagementCourses.js"></script>
+    <script src="~/js/Profile/Profile.js"></script>
+    <script src="~/js/Profile/ChoosePhoto.js"></script>
+    <script src="~/js/Profile/ChangePassword.js"></script>
+    <script src="~/js/Profile/PersonalDataProfile.js"></script>
+    <script src="~/js/Profile/EconomicTrackingProfile.js"></script>
+    <script src="~/js/Profile/DocumentsProfile.js"></script>
+    <script src="~/js/MedicalExamination/HistoricMedicalExamination.js"></script>
+    <script src="~/js/MedicalExamination/DoctorWorkSheet.js"></script>
+    <script src="~/js/MedicalExamination/DetailMedicalExamination.js"></script>
+    <script src="~/js/MedicalExamination/TemplateMedicalExamination.js"></script>
+    <script src="~/js/MedicalExamination/DocumentsMedicalExamination.js"></script>
+    <script src="~/js/Clinics/Clinics.js"></script>
+    <script src="~/js/Doctors/Doctors.js"></script>
+    <script src="~/js/Error/ErrorPage.js"></script>
+    <script src="~/js/Shared/Templates.js"></script>
+    <script src="~/js/Shared/Constants.js"></script>
+
     <script src="~/js/CommercialTool/ManagementCompanies/Reports/DefaultReport.js"></script>
     <script src="~/js/CommercialTool/ManagementCompanies/Reports/OfferSPAReport.js"></script>
+
+    @RenderSection("script", required: false)
+
+</head>
+
+<body>
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
 
 </body>
 </html>

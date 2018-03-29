@@ -67,7 +67,7 @@
         public virtual ICollection<SimulationCompany> SimulationCompanies { get; set; }
 
         [NotMapped]
-        public SimulationCompany SimulationCompanyActive => SimulationCompanies.FirstOrDefault(x => x.Simulation.Active);
+        public SimulationCompany SimulationCompanyActive => SimulationCompanies?.FirstOrDefault(x => x.Simulation.Active);
 
         public virtual ICollection<ContractualDocumentCompany> ContractualsDocumentsCompany { get; set; }
 

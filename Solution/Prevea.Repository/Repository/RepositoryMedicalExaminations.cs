@@ -1,7 +1,4 @@
-﻿using System;
-using System.Data.Entity.Migrations;
-
-namespace Prevea.Repository.Repository
+﻿namespace Prevea.Repository.Repository
 {
     #region
 
@@ -9,6 +6,9 @@ namespace Prevea.Repository.Repository
     using Model.Model;
     using System.Linq;
     using System.Data.Entity;
+    using System;
+    using System.Data.Entity.Migrations;
+    using System.IO;
 
     #endregion
 
@@ -18,6 +18,7 @@ namespace Prevea.Repository.Repository
         {
             return Context.MedicalExaminations
                 .Include(x => x.RequestMedicalExaminationEmployee)
+                .Include(x => x.RequestMedicalExaminationEmployee.DoctorsMedicalExaminationEmployee)
                 .Include(x => x.MedicalExaminationState)
                 .FirstOrDefault(x => x.Id == id);
         }
@@ -26,6 +27,7 @@ namespace Prevea.Repository.Repository
         {
             return Context.MedicalExaminations
                 .Include(x => x.RequestMedicalExaminationEmployee)
+                .Include(x => x.RequestMedicalExaminationEmployee.DoctorsMedicalExaminationEmployee)
                 .Include(x => x.MedicalExaminationState)
                 .ToList();
         }
@@ -36,6 +38,8 @@ namespace Prevea.Repository.Repository
             {
                 try
                 {
+                    SetFiledsIfNotExist(medicalExamination);
+
                     Context.MedicalExaminations.AddOrUpdate(medicalExamination);
                     Context.SaveChanges();
 
@@ -77,6 +81,33 @@ namespace Prevea.Repository.Repository
                     return false;
                 }
             }
+        }
+
+        private void SetFiledsIfNotExist(MedicalExamination medicalExamination)
+        {
+            if (medicalExamination.RequestMedicalExaminationEmployee?.RequestMedicalExaminations?.Company == null)
+                return;
+            if (medicalExamination.RequestMedicalExaminationEmployee.Clinic == null)
+                return;
+            var countMedicalExamination = 0;
+            if (string.IsNullOrEmpty(medicalExamination.Enrollment))
+            {
+                countMedicalExamination = Context.MedicalExaminations.Count(x => x.Enrollment != null) + 1;
+            }
+            else
+            {
+                if (File.Exists(medicalExamination.Url))
+                    File.Delete(medicalExamination.Url);
+
+                var splitEnrollment = medicalExamination.Enrollment.Split('.');
+                countMedicalExamination = Convert.ToInt32(splitEnrollment[splitEnrollment.Length - 1]);
+            }
+
+            //Company.Clinic.CountMedicalExamination
+            medicalExamination.Enrollment = $"RM_{medicalExamination.RequestMedicalExaminationEmployee.RequestMedicalExaminations.Company.Enrollment}." +
+                             $"{medicalExamination.RequestMedicalExaminationEmployee.Clinic.Id}." +
+                             $"{countMedicalExamination}";
+            medicalExamination.Url = $"~/App_Data/Companies/{medicalExamination.RequestMedicalExaminationEmployee.RequestMedicalExaminations.Company.Enrollment}/MedicalExaminations/{medicalExamination.Enrollment}.pdf";
         }
     }
 }

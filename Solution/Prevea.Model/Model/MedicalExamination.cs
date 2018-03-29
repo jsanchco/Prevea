@@ -18,6 +18,10 @@
 
         public string MedicalExaminationJSON { get; set; }
 
+        public string Enrollment { get; set; }
+
+        public string Url { get; set; }
+
         public int MedicalExaminationStateId { get; set; }
         public virtual MedicalExaminationState MedicalExaminationState { get; set; }
 

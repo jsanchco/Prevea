@@ -1166,6 +1166,7 @@
     <Content Include="Views\MedicalExamination\DetailMedicalExamination.cshtml" />
     <Content Include="Views\MedicalExamination\TemplateMedicalExamination.cshtml" />
     <Content Include="Views\MedicalExamination\DocumentsMedicalExamination.cshtml" />
+    <Content Include="Views\MedicalExamination\TemplateMedicalExaminationReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

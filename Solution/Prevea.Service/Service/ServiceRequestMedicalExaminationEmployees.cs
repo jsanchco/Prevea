@@ -56,8 +56,23 @@
                     var saveMedicalExamination = Repository.SaveMedicalExamination(new MedicalExamination
                     {
                         Id = requestMedicalExaminationEmployee.Id,
-                        MedicalExaminationStateId = (int)EnMedicalExaminationState.Pending                        
+                        MedicalExaminationStateId = (int)EnMedicalExaminationState.Pending,
+                        RequestMedicalExaminationEmployee = requestMedicalExaminationEmployee,
+                        MedicalExaminationJSON = GenerateMedicalExaminationJSON(requestMedicalExaminationEmployee)
                     });
+                    if (saveMedicalExamination == null)
+                    {
+                        return new Result
+                        {
+                            Message = "Se ha producido un error en la Grabación de la RequestMedicalExaminationEmployee",
+                            Object = null,
+                            Status = Status.Error
+                        };
+                    }
+                }
+                else
+                {
+                    var saveMedicalExamination = Repository.SaveMedicalExamination(medicalExamination);
                     if (saveMedicalExamination == null)
                     {
                         return new Result
@@ -242,9 +257,9 @@
                                             Status = Status.Error
                                         };
                                     }
+
                                 }
                             }
-
                             continue;
                         }
 

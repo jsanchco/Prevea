@@ -18,6 +18,7 @@
             return Context.RequestMedicalExaminationsEmployees
                 .Include(x => x.Employee)
                 .Include(x => x.RequestMedicalExaminations)
+                .Include(x => x.DoctorsMedicalExaminationEmployee)
                 .FirstOrDefault(x => x.Id == id);
         }
 
@@ -27,6 +28,7 @@
             return Context.RequestMedicalExaminationsEmployees
                 .Include(x => x.Employee)
                 .Include(x => x.RequestMedicalExaminations)
+                .Include(x => x.DoctorsMedicalExaminationEmployee)
                 .FirstOrDefault(x => x.EmployeeId == employeeId && x.RequestMedicalExaminationsId == requestMedicalExaminationsId);
         }
 

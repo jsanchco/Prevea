@@ -66,6 +66,7 @@
     <Compile Include="Model\ContractualDocumentType.cs" />
     <Compile Include="Model\DoctorMedicalExaminationEmployee.cs" />
     <Compile Include="Model\DoctorWorkSheet.cs" />
+    <Compile Include="Model\InputTemplate.cs" />
     <Compile Include="Model\MedicalExamination.cs" />
     <Compile Include="Model\MedicalExaminationState.cs" />
     <Compile Include="Model\Document.cs" />

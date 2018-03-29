@@ -34,7 +34,7 @@
     },
 
     onClickValidate: function () {
-        var splitPayment = $("#" + this.SplitPaymentId).kendoMultiSelect().data("kendoMultiSelect");
+        var splitPayment = $("#" + this.cmbSplitPaymentId).data("kendoMultiSelect");
         var monthsSplitPayment = splitPayment.value().join(",");
         $("#" + this.MonthsSplitPaymentId).val(monthsSplitPayment);
     }

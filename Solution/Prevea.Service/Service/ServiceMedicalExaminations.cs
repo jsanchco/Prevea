@@ -6,6 +6,7 @@
     using System.Collections.Generic;
     using IService.IService;
     using Model.Model;
+    using Newtonsoft.Json;
 
     #endregion
 
@@ -25,6 +26,10 @@
         {
             try
             {
+                if (string.IsNullOrEmpty(medicalExamination.MedicalExaminationJSON))
+                    medicalExamination.MedicalExaminationJSON = GenerateMedicalExaminationJSON(medicalExamination.RequestMedicalExaminationEmployee);
+
+                medicalExamination.EndDate = DateTime.Now;
                 medicalExamination = Repository.SaveMedicalExamination(medicalExamination);
 
                 if (medicalExamination == null)
@@ -87,6 +92,57 @@
                     Status = Status.Error
                 };
             }
+        }
+
+        public string GenerateMedicalExaminationJSON(RequestMedicalExaminationEmployee requestMedicalExaminationEmployee)
+        {
+            var listInputTemplateMedicalExamination = new List<InputTemplate>
+            {
+                new InputTemplate
+                {
+                    Name = "me-1",
+                    Type = (int) EnInputTemplateType.Input,
+                    DefaultText = "40"
+                },
+                new InputTemplate
+                {
+                    Name = "me-2",
+                    Type = (int) EnInputTemplateType.TextArea,
+                    DefaultText = "No, actualmente se encuentra trabajando."
+                },
+                new InputTemplate
+                {
+                    Name = "me-3",
+                    Type = (int) EnInputTemplateType.TextArea,
+                    DefaultText = "No refiere haber sufrido accidentes laborales desde el último reconocimiento."
+                },
+                new InputTemplate
+                {
+                    Name = "me-4",
+                    Type = (int) EnInputTemplateType.TextArea,
+                    DefaultText = "No refiere diagnóstico de Enfermedad Profesional."
+                },
+                new InputTemplate
+                {
+                    Name = "me-5",
+                    Type = (int) EnInputTemplateType.TextArea,
+                    DefaultText = $"{requestMedicalExaminationEmployee.Employee.User.WorkStation} [meses]"
+                },
+                new InputTemplate
+                {
+                    Name = "me-6",
+                    Type = (int) EnInputTemplateType.Input,
+                    DefaultText = "hombre"
+                },
+                new InputTemplate
+                {
+                    Name = "me-7",
+                    Type = (int) EnInputTemplateType.Input,
+                    DefaultText = "desconocer la existencia de antecedentes patológicos de interés en su familia."
+                }
+            };
+
+            return JsonConvert.SerializeObject(listInputTemplateMedicalExamination);
         }
     }
 }

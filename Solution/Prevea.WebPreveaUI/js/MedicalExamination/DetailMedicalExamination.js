@@ -7,13 +7,16 @@
     id: null,
     selectTabId: null,
     medicalExaminationStateId: null,
+    model: null,
+
+    listInput: null,
 
     init: function (id, selectTabId, medicalExaminationStateId) {
         kendo.culture("es-ES");
 
         this.id = id;
         this.selectTabId = selectTabId;
-        this.medicalExaminationStateId = medicalExaminationStateId;
+        this.medicalExaminationStateId = medicalExaminationStateId;        
 
         this.setUpPage();
         this.createKendoWidgets();     
