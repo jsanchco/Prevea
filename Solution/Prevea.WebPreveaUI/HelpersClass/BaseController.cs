@@ -90,6 +90,27 @@
             return File(filedata, contentType);
         }
 
+        public ActionResult DownloadMedicalExamination(int id)
+        {
+            var medicalExamination = Service.GetMedicalExaminationById(id);
+            var url = Server.MapPath(medicalExamination.Url);
+            if (!System.IO.File.Exists(url))
+                return null;
+
+            var filedata = System.IO.File.ReadAllBytes(url);
+            var contentType = MimeMapping.GetMimeMapping(url);
+
+            var cd = new System.Net.Mime.ContentDisposition
+            {
+                FileName = Path.GetFileName(medicalExamination.Url),
+                Inline = true,
+            };
+
+            Response.AppendHeader("Content-Disposition", cd.ToString());
+
+            return File(filedata, contentType);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

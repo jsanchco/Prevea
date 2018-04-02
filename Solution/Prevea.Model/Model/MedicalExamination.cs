@@ -4,6 +4,7 @@
 
     using System;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Collections.Generic;
 
     #endregion
 
@@ -16,7 +17,10 @@
 
         public DateTime? EndDate { get; set; }
 
-        public string MedicalExaminationJSON { get; set; }
+        public string InputTemplatesJSON { get; set; }
+
+        [NotMapped]
+        public List<InputTemplate> InputTemplates { get; set; }
 
         public string Enrollment { get; set; }
 

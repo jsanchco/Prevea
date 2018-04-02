@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
 {
@@ -12,9 +11,10 @@ namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
     using System.Diagnostics;
     using System.IO;
     using Model.Model;
-    using Common;
+    using System.Collections.Generic;
     using Rotativa.MVC;
     using IService.IService;
+    using Newtonsoft.Json;
 
     #endregion
 
@@ -45,7 +45,7 @@ namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
         public ActionResult TemplateMedicalExamination(int medicalExaminationId)
         {
             var requestMedicalExaminationEmployee = Service.GetRequestMedicalExaminationEmployeeById(medicalExaminationId);
-            requestMedicalExaminationEmployee.MedicalExamination.MedicalExaminationJSON = Service.GenerateMedicalExaminationJSON(requestMedicalExaminationEmployee);
+            requestMedicalExaminationEmployee.MedicalExamination.InputTemplatesJSON = Service.GenerateMedicalExaminationInputTemplatesJSON(requestMedicalExaminationEmployee);
 
             var data = GetOptimizedRequestMedicalExaminationEmployee(requestMedicalExaminationEmployee);
 
@@ -57,9 +57,77 @@ namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
         public ActionResult TemplateMedicalExaminationReport(int medicalExaminationId)
         {
             var requestMedicalExaminationEmployee = Service.GetRequestMedicalExaminationEmployeeById(medicalExaminationId);
-            requestMedicalExaminationEmployee.MedicalExamination.MedicalExaminationJSON = Service.GenerateMedicalExaminationJSON(requestMedicalExaminationEmployee);
+            requestMedicalExaminationEmployee.MedicalExamination.InputTemplates = JsonConvert.DeserializeObject<List<InputTemplate>>(requestMedicalExaminationEmployee.MedicalExamination.InputTemplatesJSON);
+            //requestMedicalExaminationEmployee.MedicalExamination.InputTemplatesJSON = Service.GenerateMedicalExaminationInputTemplatesJSON(requestMedicalExaminationEmployee);
 
             var data = GetOptimizedRequestMedicalExaminationEmployee(requestMedicalExaminationEmployee);
+
+            #region IMC
+            decimal height = 0;
+            var inme19 =
+                requestMedicalExaminationEmployee.MedicalExamination.InputTemplates
+                    .FirstOrDefault(x => x.Name == "me-19");
+            if (inme19 != null)
+            {
+                height = Convert.ToDecimal(!string.IsNullOrEmpty(inme19.Text) ? inme19.Text.Replace(".", ",") : inme19.DefaultText.Replace(".", ","));
+            }
+
+            decimal weight = 0;
+            var inme20 =
+                requestMedicalExaminationEmployee.MedicalExamination.InputTemplates
+                    .FirstOrDefault(x => x.Name == "me-20");
+            if (inme20 != null)
+            {
+                weight = Convert.ToDecimal(!string.IsNullOrEmpty(inme20.Text) ? inme20.Text.Replace(".", ",") : inme20.DefaultText.Replace(".", ","));
+            }
+
+            var imc = Math.Round(weight / (height * height), 2);
+            ViewBag.IMC = imc;
+            #endregion
+
+            #region FVC            
+            decimal value;
+            var percentage = 0;
+            int constant;
+            var inme49 =
+                requestMedicalExaminationEmployee.MedicalExamination.InputTemplates
+                    .FirstOrDefault(x => x.Name == "me-49");
+            if (inme49 != null)
+            {
+                value = Convert.ToDecimal(!string.IsNullOrEmpty(inme49.Text) ? inme49.Text.Replace(".", ",") : inme49.DefaultText.Replace(".", ","));
+                constant = 5000;
+                percentage = Convert.ToInt32(value * 100 / constant);                
+            }
+            ViewBag.FVC = percentage;
+            #endregion
+
+            #region FEV1
+            percentage = 0;
+            var inme50 =
+                requestMedicalExaminationEmployee.MedicalExamination.InputTemplates
+                    .FirstOrDefault(x => x.Name == "me-50");
+            if (inme50 != null)
+            {
+                value = Convert.ToDecimal(!string.IsNullOrEmpty(inme50.Text) ? inme50.Text.Replace(".", ",") : inme50.DefaultText.Replace(".", ","));
+                constant = 4181;
+                percentage = Convert.ToInt32(value * 100 / constant);
+            }
+            ViewBag.FEV1 = percentage;
+            #endregion
+
+            #region FEF
+            percentage = 0;
+            var inme52 =
+                requestMedicalExaminationEmployee.MedicalExamination.InputTemplates
+                    .FirstOrDefault(x => x.Name == "me-52");
+            if (inme52 != null)
+            {
+                value = Convert.ToDecimal(!string.IsNullOrEmpty(inme52.Text) ? inme52.Text.Replace(".", ",") : inme52.DefaultText.Replace(".", ","));
+                constant = 4691;
+                percentage = Convert.ToInt32(value * 100 / constant);
+            }
+            ViewBag.FEF = percentage;
+            #endregion
 
             return View("~/Views/MedicalExamination/TemplateMedicalExaminationReport.cshtml", data);
         }
@@ -90,11 +158,12 @@ namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
                 MedicalExamination = new MedicalExamination
                 {
                     Id = medicalExaminationEmployee.MedicalExamination.Id,
-                    MedicalExaminationJSON = medicalExaminationEmployee.MedicalExamination.MedicalExaminationJSON,
+                    InputTemplatesJSON = medicalExaminationEmployee.MedicalExamination.InputTemplatesJSON,
                     BeginDate = medicalExaminationEmployee.MedicalExamination.BeginDate,
                     EndDate = medicalExaminationEmployee.MedicalExamination.EndDate,
                     MedicalExaminationStateId = medicalExaminationEmployee.MedicalExamination.MedicalExaminationStateId,
-                    Enrollment = medicalExaminationEmployee.MedicalExamination.Enrollment
+                    Enrollment = medicalExaminationEmployee.MedicalExamination.Enrollment,
+                    InputTemplates = medicalExaminationEmployee.MedicalExamination.InputTemplates
                 },
                 Employee = new Employee
                 {
@@ -142,8 +211,8 @@ namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
             if (requestMedicalExaminationEmployeeFind == null)
                 return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
 
-            requestMedicalExaminationEmployeeFind.MedicalExamination.MedicalExaminationJSON =
-                requestMedicalExaminationEmployee.MedicalExamination.MedicalExaminationJSON;
+            requestMedicalExaminationEmployeeFind.MedicalExamination.InputTemplatesJSON =
+                requestMedicalExaminationEmployee.MedicalExamination.InputTemplatesJSON;
 
             var result = Service.SaveMedicalExamination(requestMedicalExaminationEmployeeFind.MedicalExamination);
 
@@ -152,21 +221,38 @@ namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
                 new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
         }
 
-        //public JsonResult SaveMedicalExamination(RequestMedicalExaminationEmployee requestMedicalExaminationEmployee)
-        //{
-        //    return Json(CreatePdf(requestMedicalExaminationEmployee) ? new { resultStatus = Status.Ok } : new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
-        //}
+        public JsonResult PrintMedicalExamination(RequestMedicalExaminationEmployee requestMedicalExaminationEmployee)
+        {
+            var requestMedicalExaminationEmployeeFind = Service.GetRequestMedicalExaminationEmployeeById(requestMedicalExaminationEmployee.Id);
+            if (requestMedicalExaminationEmployeeFind == null)
+                return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
+
+            requestMedicalExaminationEmployeeFind.MedicalExamination.InputTemplatesJSON =
+                requestMedicalExaminationEmployee.MedicalExamination.InputTemplatesJSON;
+
+            var result = Service.SaveMedicalExamination(requestMedicalExaminationEmployeeFind.MedicalExamination);
+            if (result.Status == Status.Error)
+            {
+                return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
+            }
+
+            var createPdf = CreatePdf(requestMedicalExaminationEmployeeFind);
+            if (!createPdf)
+            {
+                return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { resultStatus = Status.Ok, id = requestMedicalExaminationEmployeeFind.MedicalExamination.Id }, JsonRequestBehavior.AllowGet);
+        }
 
         private bool CreatePdf(RequestMedicalExaminationEmployee requestMedicalExaminationEmployee)
         {
             try
             {
-                //var physicalPath = Server.MapPath(directory);
-                //var exits = Directory.Exists(physicalPath);
-                //if (!exits && physicalPath != null)
-                //    Directory.CreateDirectory(physicalPath);
-
-                var filePath = Server.MapPath("~/App_Data/Companies/44445555R/MedicalExaminations/1.pdf");
+                var filePath = Server.MapPath(requestMedicalExaminationEmployee.MedicalExamination.Url);
+                var directory = Path.GetDirectoryName(filePath);
+                if (directory != null)
+                    Directory.CreateDirectory(directory);
 
                 var actionPdf = new ActionAsPdf(
                     "TemplateMedicalExaminationReport",

@@ -58,7 +58,7 @@
                         Id = requestMedicalExaminationEmployee.Id,
                         MedicalExaminationStateId = (int)EnMedicalExaminationState.Pending,
                         RequestMedicalExaminationEmployee = requestMedicalExaminationEmployee,
-                        MedicalExaminationJSON = GenerateMedicalExaminationJSON(requestMedicalExaminationEmployee)
+                        InputTemplatesJSON = GenerateMedicalExaminationInputTemplatesJSON(requestMedicalExaminationEmployee)
                     });
                     if (saveMedicalExamination == null)
                     {

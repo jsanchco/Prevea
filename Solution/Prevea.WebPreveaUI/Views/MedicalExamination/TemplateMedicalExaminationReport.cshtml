@@ -8,131 +8,770 @@
     div {
         color: black;
         font-size: 10px;
-        font-family: Arial
+        font-family: Arial;
     }
 </style>
 
-<div class="row">
-    <div class="col-xs-8">
-        Dr/a. @Model.DoctorsMedicalExaminationEmployee.FirstOrDefault().Doctor.FirstName.ToUpper() &nbsp;@Model.DoctorsMedicalExaminationEmployee.FirstOrDefault().Doctor.LastName.ToUpper()
+<div id="pageMedicalExaminationReport">
+    <div class="row">
+        <div class="col-xs-8">
+            Dr/a. @Model.DoctorsMedicalExaminationEmployee.FirstOrDefault().Doctor.FirstName.ToUpper()&nbsp;@Model.DoctorsMedicalExaminationEmployee.FirstOrDefault().Doctor.LastName.ToUpper()
+        </div>
+        <div class="col-xs-4" style="text-align: right;">
+            @DateTime.Now.ToLongDateString()
+        </div>
     </div>
-    <div class="col-xs-4" style="text-align: right;">
-        @DateTime.Now.ToLongDateString()
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-xs-8">
-        Nº Colegiado &nbsp;
+    <div class="row">
+        <div class="col-xs-8">
+            Nº Colegiado &nbsp;
+        </div>
+        <div class="col-xs-4" style="text-align: right;">
+            Nº Historia: &nbsp;@Model.MedicalExamination.Enrollment
+        </div>
     </div>
-    <div class="col-xs-4" style="text-align: right;">
-        Nº Historia: &nbsp;@Model.MedicalExamination.Enrollment
-    </div>
-</div>
 
-<br />
-<br />
-<br />
+    <br />
+    <br />
+    <br />
 
-@{
-    var nameEmployee = string.Empty;
-    if (!string.IsNullOrEmpty(Model.Employee.User.LastName))
-    {
-        nameEmployee += string.Format("{0}, ", Model.Employee.User.LastName.ToUpper());
+    @{
+        var nameEmployee = string.Empty;
+        if (!string.IsNullOrEmpty(Model.Employee.User.LastName))
+        {
+            nameEmployee += string.Format("{0}, ", Model.Employee.User.LastName.ToUpper());
+        }
+        if (!string.IsNullOrEmpty(Model.Employee.User.FirstName))
+        {
+            nameEmployee += Model.Employee.User.FirstName.ToUpper();
+        }
     }
-    if (!string.IsNullOrEmpty(Model.Employee.User.FirstName))
-    {
-        nameEmployee += Model.Employee.User.FirstName.ToUpper();
+    <div class="row">
+        <div class="col-xs-6">
+            @nameEmployee
+        </div>
+        <div class="col-xs-6" style="text-align: left;">
+            @Model.MedicalExamination.Enrollment
+        </div>
+    </div>
+
+    @{
+        var nameClinic = string.Empty;
+        if (!string.IsNullOrEmpty(Model.Clinic.Address))
+        {
+            nameClinic += string.Format("{0}, ", Model.Clinic.Address.ToUpper());
+        }
+        if (!string.IsNullOrEmpty(Model.Clinic.Province))
+        {
+            nameClinic += Model.Clinic.Province.ToUpper();
+        }
     }
-}
-<div class="row">
-    <div class="col-xs-6">
-        @nameEmployee
-    </div>
-    <div class="col-xs-6" style="text-align: left;">
-        @Model.MedicalExamination.Enrollment
-    </div>
-</div>
 
-@{
-    var nameClinic = string.Empty;
-    if (!string.IsNullOrEmpty(Model.Clinic.Address))
-    {
-        nameClinic += string.Format("{0}, ", Model.Clinic.Address.ToUpper());
+    <div class="row">
+        <div class="col-xs-6">
+            @nameClinic
+        </div>
+        <div class="col-xs-6" style="text-align: left;">
+            @Model.Employee.User.DNI
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-6" style="font-weight: bold;">
+            @Model.Clinic.Name
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-offset-6 col-xs-6" style="font-weight: bold;">
+            @Model.Date.ToLongDateString()
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12">
+            Se trata de un reconocimiento médico de Vigilancia de la Salud del tipo Periódico en el que se estudia, de forma específica, las posibles alteraciones que sobre su salud pueden producir los riesgos inherentes a su puesto de trabajo. Los resultados obtenidos se relacionan, exclusivamente, con dichos riesgos laborales. Pueden existir otras alteraciones en su salud de origen no laboral que no son estudiadas en este reconocimiento.
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold; font-size: 14px;">
+            HISTORIA LABORAL
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Puesto de trabajo actual
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            @Model.Employee.User.WorkStation
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Tiempo de exposición a los Riesgos
+        </div>
+    </div>
+
+    @functions{
+        public string GetMe(string me)
+        {
+            var findMe = Model.MedicalExamination.InputTemplates.FirstOrDefault(x => x.Name == me);
+            if (findMe != null)
+            {
+                switch (findMe.Type)
+                {
+                    case (int)EnInputTemplateType.Input:
+                    case (int)EnInputTemplateType.TextArea:
+                    case (int)EnInputTemplateType.Single:
+                        return !string.IsNullOrEmpty(findMe.Text) ? findMe.Text : findMe.DefaultText;
+                }
+            }
+
+            return string.Empty;
+        }
     }
-    if (!string.IsNullOrEmpty(Model.Clinic.Province))
-    {
-        nameClinic += Model.Clinic.Province.ToUpper();
+
+    <div class="row">
+        <div class="col-xs-5">
+            Tiempo de exposición a los riesgos:&nbsp;@GetMe("me-1")&nbsp;H/S
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Antigüedad en el puesto y en la empresa
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-3">
+            Antigüedad en el puesto y en la empresa: @Model.Employee.User.ChargeDate.ToShortDateString()
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Se encuenta actualmente en situación de baja (IT)
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            ¿Se encuentra actualmente en situación de baja laboral (IT)?
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="me-2" class="col-xs-12">@GetMe("me-2")</div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            REGISTRO DE SINIESTRALIDAD LABORAL
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            ¿Ha sufrido desde el último reconocimiento algún accidente de trabajo?
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="me-3" class="col-xs-12">@GetMe("me-3")</div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            REGISTRO DE ENFERMEDADES PROFESIONALES
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            ¿Le ha sido diagnosticada alguna enfermedad profesional desde el último reconocimiento?
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="me-4" class="col-xs-12">@GetMe("me-4")</div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Historia Laboral anterior (puesto y meses)
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="me-5" class="col-xs-12">@GetMe("me-5")</div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold; font-size: 14px;">
+            INFORME DE ANAMNESIS
+        </div>
+    </div>
+
+    <br />
+
+    @{
+        var age = DateTime.Now.Year - Model.Employee.User.BirthDate.Year;
+        var actual = Convert.ToInt32(DateTime.Now.ToString("MMdd"));
+        var employee = Convert.ToInt32(Model.Employee.User.BirthDate.ToString("MMdd"));
+
+        if (actual <= employee)
+        {
+            age--;
+        }
     }
-}
 
-<div class="row">
-    <div class="col-xs-6">
-        @nameClinic
+    <div class="row">
+        <div class="col-xs-4">
+            Se trata de un/a&nbsp;@GetMe("me-6")&nbsp;de&nbsp;@age&nbsp;años
+        </div>
     </div>
-    <div class="col-xs-6" style="text-align: left;">
-        @Model.Employee.User.DNI
+
+    <div class="row">
+        <div class="col-xs-12">
+            Preguntado por los antecedentes familiares el paciente refiere&nbsp;@GetMe("me-7")
+        </div>
     </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            Como antecedentes personales de interés el paciente manifiesta&nbsp;@GetMe("me-8")
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold; font-size: 14px;">
+            HÁBITOS
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12">
+            A la pregunta sobre su hábito tabáquico refiere ser&nbsp;@GetMe("me-9")
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            Respecto al consumo de bebidas alcohólicas dice&nbsp;@GetMe("me-10")
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            Respecto a los hábitos alimentarios manifiesta&nbsp;@GetMe("me-11")
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            En cuanto a la actividad física dice&nbsp;@GetMe("me-12")
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            En relación con los hábitos del sueño afirma&nbsp;@GetMe("me-13")
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            A la pregunta sobre si realiza revisiones odontológicas, indica&nbsp;@GetMe("me-14")
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            En cuanto a las características de su hábito intestinal indica&nbsp;@GetMe("me-15")
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            A la pregunta sobre su estado de salud actual, nos informa que&nbsp;@GetMe("me-16")
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            En la actualidad refiere&nbsp;@GetMe("me-17")
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12">
+            En la <strong>exploración física</strong> encontramos un&nbsp;@GetMe("me-18")&nbsp;con una talla de&nbsp;@GetMe("me-19")&nbsp;m. y un peso de&nbsp;@GetMe("me-20")&nbsp;kg. (Índice de
+            Masa Corporal @ViewBag.IMC), con una tensión arterial de&nbsp;@GetMe("me-21")&nbsp;mmHg, con un pulso rítmico de&nbsp;@GetMe("me-22")&nbsp;lpm.
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            Se aprecia Desarrollo muscular&nbsp;@GetMe("me-23")
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            Al explorar la coloración de piel y mucosas apreciamos&nbsp;@GetMe("me-24")
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold; font-size: 14px;">
+            EXPLORACION CABEZA Y CUELLO
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Dentadura
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            A la inspección encontramos una dentadura&nbsp;@GetMe("me-25")
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Ojos
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            En la exploración encontramos un aparato ocular&nbsp;@GetMe("me-26")
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Orofaringe
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            En la exploración se aprecia una orofaringe&nbsp;@GetMe("me-27")
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Cuello
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            En la exploración se observa una movilidad cervical&nbsp;@GetMe("me-28")
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Otoscopia
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            En la exploración apreciamos que la otoscopia es&nbsp;@GetMe("me-29")
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            La cantidad de cerumen es&nbsp;@GetMe("me-30")
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold; font-size: 14px;">
+            EXPLORACION DEL TORAX
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12">
+            A la inspección encontramos&nbsp;@GetMe("me-31")
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            A la exploración cardiaca apreciamos&nbsp;@GetMe("me-32")
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            En la exploración pulmonar encontramos&nbsp;@GetMe("me-33")
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold; font-size: 14px;">
+            EXPLORACION DEL ABDOMEN
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12">
+            En la exploración se aprecia un abdomen&nbsp;@GetMe("me-34")
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold; font-size: 14px;">
+            EXPLORACION DEL APARATO LOCOMOTOR
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Exploración: extremidades superiores
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            En la exploración se observa&nbsp;@GetMe("me-35")
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Exploración: extremidades inferiores
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            En la exploración se pone de manifiesto&nbsp;@GetMe("me-36")
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Exploración: columna - espalda - zona lumbar
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            En la exploración se observa&nbsp;@GetMe("me-37")
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold; font-size: 14px;">
+            EXPLORACION DEL SISTEMA NERVIOSO
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12">
+            En la exploración se observa&nbsp;@GetMe("me-38")
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold; font-size: 14px;">
+            EXPLORACION OSTEOMUSCULAR ESPECIFICA
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Columna
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            En la exploración se pone de manifiesto que&nbsp;@GetMe("me-39")
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Muñeca/mano
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            En la exploración de muñeca y mano se observa&nbsp;@GetMe("me-40")
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold; font-size: 14px;">
+            OTRAS EXPLORACIONES
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Exploracion dermatológica
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            @GetMe("me-41")
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold; font-size: 14px;">
+            EXPLORACIONES COMPLEMENTARIAS
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            @GetMe("me-42")
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            Analítica de orina&nbsp;@GetMe("me-43")
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            Saturación de oxígeno capilar:&nbsp;@GetMe("me-44")
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold; font-size: 14px;">
+            PRUEBAS COMPLEMENTARIAS
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Audiometría
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            En el estudio audiométrico se aprecia&nbsp;@GetMe("me-45")
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Control visión
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            Al realizar la prueba de Control Visión detectamos&nbsp;@GetMe("me-46")
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Espirometria
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            Como resultado de la prueba de espirometría podemos concluir que&nbsp;@GetMe("me-47")
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Electrocardiograma
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            Como resultado del estudio electrocardiográfico, encontramos:&nbsp;@GetMe("me-48")
+        </div>
+    </div>
+
+    <div style="page-break-after: always;"></div>
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold; font-size: 14px;">
+            RESULTADO DE FUNCIÓN PULMONAR
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div clas="row">
+        <div class="col-xs-12">
+            <div class="col-xs-offset-2 col-xs-3" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-right: none; height: 32px; padding: 8px;">
+                &nbsp;
+            </div>
+            <div class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-right: none; height: 32px; padding: 8px;">
+                Valor
+            </div>
+            <div class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; height: 32px; padding: 8px;">
+                %
+            </div>
+        </div>
+    </div>
+
+    <div clas="row">
+        <div class="col-xs-12">
+            <div class="col-xs-offset-2 col-xs-3" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; border-right: none; border-top: none; height: 32px; padding: 8px;">
+                FVC
+            </div>
+            <div id="me-49" class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-right: none; border-top: none; height: 32px; padding: 8px;">@GetMe("me-49")</div>
+            <div id="me-FVC" class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-top: none; height: 32px; padding: 8px;">@ViewBag.FVC</div>
+        </div>
+    </div>
+
+    <div clas="row">
+        <div class="col-xs-12">
+            <div class="col-xs-offset-2 col-xs-3" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; border-right: none; border-top: none; height: 32px; padding: 8px;">
+                FEV1
+            </div>
+            <div id="me-50" class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-right: none; border-top: none; height: 32px; padding: 8px;">@GetMe("me-50")</div>
+            <div id="me-FEV1" class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-top: none; height: 32px; padding: 8px;">@ViewBag.FEV1</div>
+        </div>
+    </div>
+
+    <div clas="row">
+        <div class="col-xs-12">
+            <div class="col-xs-offset-2 col-xs-3" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; border-right: none; border-top: none; height: 32px; padding: 8px;">
+                RELACIÓN FEV1 / FVC
+            </div>
+            <div class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-right: none; border-top: none; height: 32px; padding: 8px;">&nbsp;</div>
+            <div id="me-51" class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-top: none; height: 32px; padding: 8px;">@GetMe("me-51")</div>
+        </div>
+    </div>
+
+    <div clas="row">
+        <div class="col-xs-12">
+            <div class="col-xs-offset-2 col-xs-3" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; border-right: none; border-top: none; height: 32px; padding: 8px;">
+                FEF 25% - 75%
+            </div>
+            <div id="me-52" class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-right: none; border-top: none; height: 32px; padding: 8px;">@GetMe("me-52")</div>
+            <div id="me-FEF" class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-top: none; height: 32px; padding: 8px;">@ViewBag.FEF</div>
+        </div>
+    </div>
+
 </div>
 
-<div class="row">
-    <div class="col-xs-6" style="font-weight: bold;">
-        @Model.Clinic.Name
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-offset-6 col-xs-6" style="font-weight: bold;">
-        @Model.Date.ToLongDateString()
-    </div>
-</div>
-
-<br />
-
-<div class="row">
-    <div class="col-xs-12">
-        Se trata de un reconocimiento médico de Vigilancia de la Salud del tipo Periódico en el que se estudia, de forma específica, las posibles alteraciones que sobre su salud pueden producir los riesgos inherentes a su puesto de trabajo. Los resultados obtenidos se relacionan, exclusivamente, con dichos riesgos laborales. Pueden existir otras alteraciones en su salud de origen no laboral que no son estudiadas en este reconocimiento.
-    </div>
-</div>
-
-<br />
-<br />
-
-<div class="row">
-    <div class="col-xs-12" style="font-weight: bold; font-size: 14px;">
-        HISTORIA LABORAL
-    </div>
-</div>
-
-<br />
-
-<div class="row">
-    <div class="col-xs-12" style="font-weight: bold;">
-        Puesto de trabajo actual
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12">
-        @Model.Employee.User.WorkStation
-    </div>
-</div>
-
-<br />
-
-<div class="row">
-    <div class="col-xs-12" style="font-weight: bold;">
-        Tiempo de exposición a los Riesgos
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-6">
-        Tiempo de exposición a los riesgos:
-    </div>
-    <div id="me-1" class="col-xs-1"></div>
-    <div class="col-xs-1">
-        H/S
-    </div>
-</div>
 

@@ -171,8 +171,8 @@
         window.location = url;
     },
 
-    goToOpenContractualDocument: function (id) {
-        var url = "/Base/DownloadContractualDocument?id=" + id;
+    goToOpenMedicalExamination: function (id) {
+        var url = "/Base/DownloadMedicalExamination?id=" + id;
 
         window.location = url;
     },

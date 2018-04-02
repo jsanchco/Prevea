@@ -89,7 +89,7 @@
                 return;
             if (medicalExamination.RequestMedicalExaminationEmployee.Clinic == null)
                 return;
-            var countMedicalExamination = 0;
+            int countMedicalExamination;
             if (string.IsNullOrEmpty(medicalExamination.Enrollment))
             {
                 countMedicalExamination = Context.MedicalExaminations.Count(x => x.Enrollment != null) + 1;
@@ -107,7 +107,7 @@
             medicalExamination.Enrollment = $"RM_{medicalExamination.RequestMedicalExaminationEmployee.RequestMedicalExaminations.Company.Enrollment}." +
                              $"{medicalExamination.RequestMedicalExaminationEmployee.Clinic.Id}." +
                              $"{countMedicalExamination}";
-            medicalExamination.Url = $"~/App_Data/Companies/{medicalExamination.RequestMedicalExaminationEmployee.RequestMedicalExaminations.Company.Enrollment}/MedicalExaminations/{medicalExamination.Enrollment}.pdf";
+            medicalExamination.Url = $"~/App_Data/Companies/{medicalExamination.RequestMedicalExaminationEmployee.RequestMedicalExaminations.Company.NIF}/MedicalExaminations/{medicalExamination.Enrollment}.pdf";
         }
     }
 }
