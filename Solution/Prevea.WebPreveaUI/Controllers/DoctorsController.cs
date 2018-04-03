@@ -45,13 +45,14 @@
         {
             try
             {
-                var doctor = this.DeserializeObject<User>("doctor");
+                var doctor = this.DeserializeObject<UserViewModel>("doctor");
                 if (doctor == null)
                 {
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Médico" });
                 }
 
-                var result = Service.SaveUser((int)EnRole.Doctor, doctor);
+                var data = AutoMapper.Mapper.Map<User>(doctor);
+                var result = Service.SaveUser((int)EnRole.Doctor, data);
 
                 return result.Status != Status.Error ? this.Jsonp(doctor) : this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Médico" });
             }

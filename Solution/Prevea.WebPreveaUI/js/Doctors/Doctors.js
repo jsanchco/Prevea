@@ -19,7 +19,11 @@
                         Id: { type: "number", defaultValue: 0 },
                         FirstName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         LastName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
-                        DNI: { type: "string", validation: { required: { message: " Campo Obligatorio " } } }
+                        DNI: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
+                        UserStateId: { type: "number", defaultValue: 1 },
+                        UserParentId: { type: "number", defaultValue: GeneralData.userId },
+                        BirthDate: { type: "date" },
+                        ChargeDate: { type: "date" }
                     }
                 }
             },
@@ -63,15 +67,55 @@
                     }
                 }
             },
+            change: function (e) {
+                if (e.action != null && e.action === "itemchange") {
+                    var dataItem;
+                    var value;
+                    //if (e.field === "AssistantsNumber") {
+                    //    dataItem = e.items[0];
+
+                    //    value = (dataItem.Price / dataItem.OriginalPrice) - 1;
+                    //    dataItem.set("Desviation", value);
+
+                    //    value = dataItem.AssistantsNumber * dataItem.Price;
+                    //    dataItem.set("Total", value);
+
+                    //}
+                    //if (e.field === "Total") {
+                    //    dataItem = e.items[0];
+
+                    //    value = (dataItem.Price / dataItem.OriginalPrice) - 1;
+                    //    dataItem.set("Desviation", value);
+
+                    //    value = dataItem.Total / dataItem.AssistantsNumber;
+                    //    dataItem.set("Price", value);
+                    //}
+                    //if (e.field === "Price") {
+                    //    dataItem = e.items[0];
+
+                    //    value = (dataItem.Price / dataItem.OriginalPrice) - 1;
+                    //    dataItem.set("Desviation", value);
+
+                    //    value = (dataItem.Price * dataItem.AssistantsNumber);
+                    //    dataItem.set("Total", value);
+                    //}
+                }
+            },
             pageSize: 10
         });
     },
 
     createDoctorsGrid: function () {
         $("#" + this.gridDoctorsId).kendoGrid({
-            columns: [{
+            columns: [{                
+                field: "FirstName",
                 title: "Nombre",
-                template: "#= Doctors.getColumnTemplateNameIncrease(data) #"
+                width: 300,
+                template: "#= Templates.getColumnTemplateIncrease(data.FirstName) #"
+            }, {
+                field: "LastName",
+                title: "Apellidos",
+                template: "#= Templates.getColumnTemplateIncrease(data.LastName) #"
             }, {
                 field: "DNI",
                 title: "DNI",
@@ -158,11 +202,13 @@
         });
         kendo.bind($("#" + this.gridDoctorsId), this);
 
-        var grid = $("#" + this.gridDoctorsId).data("kendoGrid");
-        grid.hideColumn("Commands");
+        if (GeneralData.userRoleId !== Constants.role.Super) {
+            var grid = $("#" + this.gridDoctorsId).data("kendoGrid");
+            grid.hideColumn("Commands");
 
-        $("#createDoctor").removeAttr("disabled");
-        $("#createDoctor").prop("disabled", true);
+            $("#createDoctor").removeAttr("disabled");
+            $("#createDoctor").prop("disabled", true);
+        }
     },
 
     getTemplateToolBar: function () {
@@ -190,7 +236,7 @@
     },
 
     goToEditDoctor: function (id) {
-        var grid = $("#" + Clinics.gridClinicsId).data("kendoGrid");
+        var grid = $("#" + Doctors.gridDoctorsId).data("kendoGrid");
         var item = grid.dataSource.get(id);
         var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
 
