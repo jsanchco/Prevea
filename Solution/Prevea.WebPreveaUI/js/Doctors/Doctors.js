@@ -2,7 +2,7 @@
 
     gridDoctorsId: "gridDoctors",
     confirmId: "confirm",
-    cont: 0,
+    //cont: 0,
 
     doctorsDataSource: null,
 
@@ -195,7 +195,7 @@
                 commandCell.html(html);
             }
         });
-        kendo.bind($("#" + this.gridDoctorsId), this);
+        //kendo.bind($("#" + this.gridDoctorsId), this);
 
         if (GeneralData.userRoleId !== Constants.role.Super) {
             var grid = $("#" + this.gridDoctorsId).data("kendoGrid");

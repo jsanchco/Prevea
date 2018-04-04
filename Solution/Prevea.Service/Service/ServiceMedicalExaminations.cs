@@ -516,6 +516,26 @@
                     Type = (int) EnInputTemplateType.TextArea,
                     DefaultText = "Normal"
                 },
+                new InputTemplate
+                {
+                    Name = "me-69",
+                    Type = (int) EnInputTemplateType.TextArea,
+                    DefaultText = ""
+                },
+                new InputTemplate
+                {
+                    Name = "me-70",
+                    Type = (int) EnInputTemplateType.TextArea,
+                    DefaultText = ""
+                },
+                new InputTemplate
+                {
+                    Name = "me-71",
+                    Type = (int) EnInputTemplateType.Single,
+                    DefaultValue = 0,
+                    DefaultText = "Seleccionar ...",
+                    DataSource = new List<string> { "Seleccionar ...", "Apto", "No Apto" }
+                }
             };
 
             return JsonConvert.SerializeObject(listInputTemplateMedicalExamination);
