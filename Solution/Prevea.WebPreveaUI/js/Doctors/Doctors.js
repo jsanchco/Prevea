@@ -2,6 +2,7 @@
 
     gridDoctorsId: "gridDoctors",
     confirmId: "confirm",
+    cont: 0,
 
     doctorsDataSource: null,
 
@@ -72,34 +73,23 @@
                 if (e.action != null && e.action === "itemchange") {
                     var dataItem;
                     var value;
-                    //if (e.field === "AssistantsNumber") {
-                    //    dataItem = e.items[0];
+                    if (e.field === "FirstName") {
+                        Doctors.cont++;
 
-                    //    value = (dataItem.Price / dataItem.OriginalPrice) - 1;
-                    //    dataItem.set("Desviation", value);
+                        dataItem = e.items[0];
 
-                    //    value = dataItem.AssistantsNumber * dataItem.Price;
-                    //    dataItem.set("Total", value);
+                        value = kendo.format("{0} {1}", dataItem.LastName, Doctors.cont);
+                        dataItem.set("LastName", value);
+                    }
 
-                    //}
-                    //if (e.field === "Total") {
-                    //    dataItem = e.items[0];
+                    if (e.field === "LastName") {
+                        Doctors.cont++;
 
-                    //    value = (dataItem.Price / dataItem.OriginalPrice) - 1;
-                    //    dataItem.set("Desviation", value);
+                        dataItem = e.items[0];
 
-                    //    value = dataItem.Total / dataItem.AssistantsNumber;
-                    //    dataItem.set("Price", value);
-                    //}
-                    //if (e.field === "Price") {
-                    //    dataItem = e.items[0];
-
-                    //    value = (dataItem.Price / dataItem.OriginalPrice) - 1;
-                    //    dataItem.set("Desviation", value);
-
-                    //    value = (dataItem.Price * dataItem.AssistantsNumber);
-                    //    dataItem.set("Total", value);
-                    //}
+                        value = kendo.format("{0} {1}", dataItem.FirstName, Doctors.cont);
+                        dataItem.set("LastName", value);
+                    }
                 }
             },
             pageSize: 10
