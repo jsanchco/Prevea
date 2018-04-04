@@ -416,6 +416,106 @@
                     Type = (int) EnInputTemplateType.Input,
                     DefaultText = "4691"
                 },
+                new InputTemplate
+                {
+                    Name = "me-53",
+                    Type = (int) EnInputTemplateType.Input,
+                    DefaultText = "10"
+                },
+                new InputTemplate
+                {
+                    Name = "me-54",
+                    Type = (int) EnInputTemplateType.Input,
+                    DefaultText = "10"
+                },
+                new InputTemplate
+                {
+                    Name = "me-55",
+                    Type = (int) EnInputTemplateType.Input,
+                    DefaultText = "10"
+                },
+                new InputTemplate
+                {
+                    Name = "me-56",
+                    Type = (int) EnInputTemplateType.Single,
+                    DefaultValue = 0,
+                    DefaultText = "No",
+                    DataSource = new List<string> { "No", "Si" }
+                },
+                new InputTemplate
+                {
+                    Name = "me-57",
+                    Type = (int) EnInputTemplateType.Input,
+                    DefaultText = "10"
+                },
+                new InputTemplate
+                {
+                    Name = "me-58",
+                    Type = (int) EnInputTemplateType.Input,
+                    DefaultText = "10"
+                },
+                new InputTemplate
+                {
+                    Name = "me-59",
+                    Type = (int) EnInputTemplateType.Input,
+                    DefaultText = "10"
+                },
+                new InputTemplate
+                {
+                    Name = "me-60",
+                    Type = (int) EnInputTemplateType.Single,
+                    DefaultValue = 0,
+                    DefaultText = "No",
+                    DataSource = new List<string> { "No", "Si" }
+                },
+                new InputTemplate
+                {
+                    Name = "me-61",
+                    Type = (int) EnInputTemplateType.TextArea,
+                    DefaultText = "Normal"
+                },
+                new InputTemplate
+                {
+                    Name = "me-62",
+                    Type = (int) EnInputTemplateType.TextArea,
+                    DefaultText = "Normal"
+                },
+                new InputTemplate
+                {
+                    Name = "me-63",
+                    Type = (int) EnInputTemplateType.Input,
+                    DefaultText = "0"
+                },
+                new InputTemplate
+                {
+                    Name = "me-64",
+                    Type = (int) EnInputTemplateType.Input,
+                    DefaultText = "0"
+                },
+                new InputTemplate
+                {
+                    Name = "me-65",
+                    Type = (int) EnInputTemplateType.Input,
+                    DefaultText = "0"
+                },
+                new InputTemplate
+                {
+                    Name = "me-66",
+                    Type = (int) EnInputTemplateType.Input,
+                    DefaultText = "0"
+                },
+                new InputTemplate
+                {
+                    Name = "me-67",
+                    Type = (int) EnInputTemplateType.Input,
+                    DefaultText = "0"
+                },
+                new InputTemplate
+                {
+                    Name = "me-68",
+                    Type = (int) EnInputTemplateType.TextArea,
+                    DefaultText = "Normal"
+                },
             };
 
             return JsonConvert.SerializeObject(listInputTemplateMedicalExamination);

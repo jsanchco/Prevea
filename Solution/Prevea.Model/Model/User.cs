@@ -63,6 +63,7 @@
         public DateTime BirthDate { get; set; }
         public DateTime ChargeDate { get; set; }
         public DateTime? DischargeDate { get; set; }
+        public string CollegiateNumber { get; set; }
 
         [Required]
         public string Password { get; set; }

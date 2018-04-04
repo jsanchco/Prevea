@@ -16,7 +16,7 @@
 
     <div class="row">
         <div class="col-xs-8">
-            Nº Colegiado &nbsp;
+            Nº Colegiado: @Model.DoctorsMedicalExaminationEmployee.FirstOrDefault().Doctor.CollegiateNumber
         </div>
         <div class="col-xs-4" style="text-align: right;">
             Nº Historia: &nbsp;@Model.MedicalExamination.Enrollment
@@ -841,8 +841,10 @@
         <div id="me-48" class="col-xs-12"></div>
     </div>
 
-    <br />
-    <br />
+    <div>&nbsp;</div>
+    <div>&nbsp;</div>
+    <br/>
+    <br/>
 
     <div class="row">
         <div class="col-xs-12" style="font-weight: bold; font-size: 14px;">
@@ -906,11 +908,168 @@
         </div>
     </div>
 
+    <div>&nbsp;</div>
+    <div>&nbsp;</div>
+    <br/>
+    <br/>
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold; font-size: 14px;">
+            RESULTADO DE CONTROL VISIÓN
+        </div>
+    </div>
+
     <br />
+
+    <div clas="row">
+        <div class="col-xs-12">
+            <div class="col-xs-3" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-right: none; height: 34px; padding: 8px;">
+                &nbsp;
+            </div>
+            <div class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-right: none; height: 34px; padding: 8px;">
+                Derecho
+            </div>
+            <div class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-right: none; height: 34px; padding: 8px;">
+                Izquierdo
+            </div>
+            <div class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-right: none; height: 34px; padding: 8px;">
+                Binocular
+            </div>
+            <div class="col-xs-3" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; height: 34px; padding: 8px;">
+                Examinado con lentes
+            </div>
+        </div>
+    </div>
+
+    <div clas="row">
+        <div class="col-xs-12">
+            <div class="col-xs-3" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; border-right: none; border-top: none; height: 34px; padding: 8px;">
+                Agudeza visual lejana
+            </div>
+            <div id="me-53" class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-right: none; border-top: none; height: 34px;"></div>
+            <div id="me-54" class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-right: none; border-top: none; height: 34px;"></div>
+            <div id="me-55" class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-right: none; border-top: none; height: 34px;"></div>
+            <div id="me-56" class="col-xs-3" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-top: none; height: 34px;"></div>
+        </div>
+    </div>
+
+    <div clas="row">
+        <div class="col-xs-12">
+            <div class="col-xs-3" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; border-right: none; border-top: none; height: 34px; padding: 8px;">
+                Agudeza visual cercana
+            </div>
+            <div id="me-57" class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-right: none; border-top: none; height: 34px;"></div>
+            <div id="me-58" class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-right: none; border-top: none; height: 34px;"></div>
+            <div id="me-59" class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-right: none; border-top: none; height: 34px;"></div>
+            <div id="me-60" class="col-xs-3" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-top: none; height: 34px;"></div>
+        </div>
+    </div>
+
+    <div>&nbsp;</div>
+    <div>&nbsp;</div>
+    
+   <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Resultado de la prueba
+        </div>
+    </div>
+    
+    <br/>
+
+    <div class="row">
+        <div class="col-xs-12">
+            Detectamos una visión cromática
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="me-61" class="col-xs-12"></div>
+    </div>
+    
+    <br/>
+
+    <div class="row">
+        <div class="col-xs-12">
+            Apreciamos un control visión
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="me-62" class="col-xs-12"></div>
+    </div>
+    
+    <div>&nbsp;</div>
+    <div>&nbsp;</div>
+    <br/>
+    <br/>
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold; font-size: 14px;">
+            RESULTADO AUDIOMÉTRICO
+        </div>
+    </div>
+
     <br />
+
+    <div clas="row">
+        <div class="col-xs-12">
+            <div class="col-xs-offset-2 col-xs-1" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-right: none; height: 34px; padding: 8px;">
+                &nbsp;
+            </div>
+            <div class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-right: none; height: 34px; padding: 8px;">
+                Derecho
+            </div>
+            <div class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-right: none; height: 34px; padding: 8px;">
+                Izquierdo
+            </div>
+            <div class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; height: 34px; padding: 8px;">
+                Global
+            </div>
+        </div>
+    </div>
+
+    <div clas="row">
+        <div class="col-xs-12">
+            <div class="col-xs-offset-2 col-xs-1" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; border-right: none; border-top: none; height: 34px; padding: 8px;">
+                SAL
+            </div>
+            <div id="me-63" class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-right: none; border-top: none; height: 34px;"></div>
+            <div id="me-64" class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-right: none; border-top: none; height: 34px;"></div>
+            <div id="me-65" class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-top: none; height: 34px;"></div>
+        </div>
+    </div>
+    
+    <div clas="row">
+        <div class="col-xs-12">
+            <div class="col-xs-offset-2 col-xs-1" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; border-right: none; border-top: none; height: 34px; padding: 8px;">
+                ELI
+            </div>
+            <div id="me-66" class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-right: none; border-top: none; height: 34px;"></div>
+            <div id="me-67" class="col-xs-2" style="border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-right: none; border-top: none; height: 34px;"></div>
+            <div class="col-xs-2" style="background-color: #CCCCCC; border-style: solid; border-color: black; border-width: thin; font-weight: bold; font-size: 14px; text-align: center; border-top: none; height: 34px;"></div>
+        </div>
+    </div>
+    
+    <div>&nbsp;</div>
+    <div>&nbsp;</div>
+    
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Resultado de la prueba
+        </div>
+    </div>
+    
+    <br/>
+
+    <div class="row">
+        <div id="me-68" class="col-xs-12"></div>
+    </div>
 </div>
 
-<div class="row" style="text-align: right">
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+
+<div class="form-actions" style="text-align: right">
     <input id="btnPrint" value="Imprimir" class="btn btn-prevea btn" onclick="TemplateMedicalExamination.printMedicalExamination()" target="_blank" />&nbsp;
     <input id="btnValidate" value="Guardar" class="btn btn-prevea btn" onclick="TemplateMedicalExamination.saveMedicalExamination()" />
 </div>      

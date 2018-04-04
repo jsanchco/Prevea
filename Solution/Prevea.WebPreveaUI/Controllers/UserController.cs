@@ -205,7 +205,6 @@
                     {
                         (int)EnRole.Super,
                         (int)EnRole.Library,
-                        (int)EnRole.Doctor,
                         (int)EnRole.PreveaPersonal,
                         (int)EnRole.PreveaCommercial,
                         (int)EnRole.ExternalPersonal

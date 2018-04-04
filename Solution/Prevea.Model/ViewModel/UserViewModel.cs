@@ -47,5 +47,6 @@
         public string RoleDescription { get; set; }
         public int UserStateId { get; set; }
         public string UserStateName { get; set; }
+        public string CollegiateNumber { get; set; }
     }
 }

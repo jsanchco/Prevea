@@ -19,6 +19,7 @@
                         Id: { type: "number", defaultValue: 0 },
                         FirstName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         LastName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
+                        CollegiateNumber: { type: "string" },
                         DNI: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         UserStateId: { type: "number", defaultValue: 1 },
                         UserParentId: { type: "number", defaultValue: GeneralData.userId },
@@ -116,6 +117,10 @@
                 field: "LastName",
                 title: "Apellidos",
                 template: "#= Templates.getColumnTemplateIncrease(data.LastName) #"
+            }, {
+                field: "CollegiateNumber",
+                title: "Nº de Colegiado",
+                template: "#= Templates.getColumnTemplateIncrease(data.CollegiateNumber) #"
             }, {
                 field: "DNI",
                 title: "DNI",
