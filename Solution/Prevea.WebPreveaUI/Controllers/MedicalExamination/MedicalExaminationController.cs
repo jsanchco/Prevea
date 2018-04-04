@@ -45,7 +45,7 @@ namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
         public ActionResult TemplateMedicalExamination(int medicalExaminationId)
         {
             var requestMedicalExaminationEmployee = Service.GetRequestMedicalExaminationEmployeeById(medicalExaminationId);
-            requestMedicalExaminationEmployee.MedicalExamination.InputTemplatesJSON = Service.GenerateMedicalExaminationInputTemplatesJSON(requestMedicalExaminationEmployee);
+            //requestMedicalExaminationEmployee.MedicalExamination.InputTemplatesJSON = Service.GenerateMedicalExaminationInputTemplatesJSON(requestMedicalExaminationEmployee);
 
             var data = GetOptimizedRequestMedicalExaminationEmployee(requestMedicalExaminationEmployee);
 

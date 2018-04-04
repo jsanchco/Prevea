@@ -535,6 +535,12 @@
                     DefaultValue = 0,
                     DefaultText = "Seleccionar ...",
                     DataSource = new List<string> { "Seleccionar ...", "Apto", "No Apto" }
+                },
+                new InputTemplate
+                {
+                    Name = "me-72",
+                    Type = (int) EnInputTemplateType.TextArea,
+                    DefaultText = ""
                 }
             };
 
