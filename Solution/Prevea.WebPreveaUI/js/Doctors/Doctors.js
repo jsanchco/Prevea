@@ -69,29 +69,29 @@
                     }
                 }
             },
-            change: function (e) {
-                if (e.action != null && e.action === "itemchange") {
-                    var dataItem;
-                    var value;
-                    if (e.field === "FirstName") {
-                        Doctors.cont++;
+            //change: function (e) {
+            //    if (e.action != null && e.action === "itemchange") {
+            //        var dataItem;
+            //        var value;
+            //        if (e.field === "FirstName") {
+            //            Doctors.cont++;
 
-                        dataItem = e.items[0];
+            //            dataItem = e.items[0];
 
-                        value = kendo.format("{0} {1}", dataItem.LastName, Doctors.cont);
-                        dataItem.set("LastName", value);
-                    }
+            //            value = kendo.format("{0} {1}", dataItem.LastName, Doctors.cont);
+            //            dataItem.set("LastName", value);
+            //        }
 
-                    if (e.field === "LastName") {
-                        Doctors.cont++;
+            //        if (e.field === "LastName") {
+            //            Doctors.cont++;
 
-                        dataItem = e.items[0];
+            //            dataItem = e.items[0];
 
-                        value = kendo.format("{0} {1}", dataItem.FirstName, Doctors.cont);
-                        dataItem.set("LastName", value);
-                    }
-                }
-            },
+            //            value = kendo.format("{0} {1}", dataItem.FirstName, Doctors.cont);
+            //            dataItem.set("LastName", value);
+            //        }
+            //    }
+            //},
             pageSize: 10
         });
     },
