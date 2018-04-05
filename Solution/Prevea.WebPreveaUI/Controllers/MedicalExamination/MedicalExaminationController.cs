@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
+﻿namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
 {
     #region Using
 
@@ -15,6 +13,7 @@ namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
     using Rotativa.MVC;
     using IService.IService;
     using Newtonsoft.Json;
+    using System.Linq;
 
     #endregion
 
@@ -133,6 +132,23 @@ namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
         }
 
         [HttpGet]
+        public ActionResult TemplateEmployeeCitationReport(int id, int clinicId, int employeeId)
+        {
+            var requestMedicalExaminationEmployeeFind = Service.GetRequestMedicalExaminationEmployeeById(id);
+            var clinicFind = Service.GetClinicById(clinicId);
+            var employeeFind = Service.GetEmployeeById(employeeId);
+
+            ViewBag.ClinicName = clinicFind.Name;
+            ViewBag.ClinicProvince = clinicFind.Province;
+            ViewBag.ClinicAddress = clinicFind.Address;
+            ViewBag.ClinicPhoneNumber = clinicFind.PhoneNumber;
+            ViewBag.ClinicPhoneNumber = clinicFind.PhoneNumber;
+            ViewBag.RequestMedicalExaminationEmployeeDate = requestMedicalExaminationEmployeeFind.Date.ToString("dd/mm/yyyy");
+
+            return View("~/Views/MedicalExamination/TemplateEmployeeCitationReport.cshtml");
+        }
+
+        [HttpGet]
         [AppAuthorize(Roles = "Doctor")]
         public ActionResult DocumentsMedicalExamination(int medicalExaminationId)
         {
@@ -236,7 +252,7 @@ namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
                 return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
             }
 
-            var createPdf = CreatePdf(requestMedicalExaminationEmployeeFind);
+            var createPdf = CreateMedicalExaminationReportPdf(requestMedicalExaminationEmployeeFind);
             if (!createPdf)
             {
                 return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
@@ -245,7 +261,7 @@ namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
             return Json(new { resultStatus = Status.Ok, id = requestMedicalExaminationEmployeeFind.MedicalExamination.Id }, JsonRequestBehavior.AllowGet);
         }
 
-        private bool CreatePdf(RequestMedicalExaminationEmployee requestMedicalExaminationEmployee)
+        private bool CreateMedicalExaminationReportPdf(RequestMedicalExaminationEmployee requestMedicalExaminationEmployee)
         {
             try
             {
@@ -271,6 +287,60 @@ namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
                 Debug.WriteLine(ex.Message);
 
                 return false;
+            }
+        }
+
+        public JsonResult PrintEmployeeCitation(int id, int clinicId, int employeeId)
+        {
+            var createPdf = CreateEmployeeCitationReportPdf(id, clinicId, employeeId);
+            if (string.IsNullOrEmpty(createPdf))
+            {
+                return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { resultStatus = Status.Ok, url = createPdf }, JsonRequestBehavior.AllowGet);
+        }
+
+        private string CreateEmployeeCitationReportPdf(int id, int clinicId, int employeeId)
+        {
+            try
+            {
+                var requestMedicalExaminationEmployeFind = Service.GetRequestMedicalExaminationEmployeeById(id);
+                if (requestMedicalExaminationEmployeFind == null)
+                    return null;
+
+                var employeeFind = Service.GetEmployeeById(employeeId);
+                if (employeeFind == null)
+                    return null;
+
+                var urlRelative = $"~/App_Data/Companies/{requestMedicalExaminationEmployeFind.RequestMedicalExaminations.Company.NIF}/MedicalExaminations/CIT_{employeeFind.UserId}.pdf";
+                var filePath = Server.MapPath(urlRelative);
+                var directory = Path.GetDirectoryName(filePath);
+                if (directory != null)
+                    Directory.CreateDirectory(directory);
+
+                var actionPdf = new ActionAsPdf(
+                    "TemplateEmployeeCitationReport",
+                    new
+                    {
+                        id,
+                        clinicId,
+                        employeeId
+                    });
+                //actionPdf.RotativaOptions.CustomSwitches = Constants.FooterPdf;
+
+                var applicationPdfData = actionPdf.BuildPdf(ControllerContext);
+                var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+                fileStream.Write(applicationPdfData, 0, applicationPdfData.Length);
+                fileStream.Close();
+
+                return urlRelative;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+
+                return null;
             }
         }
     }

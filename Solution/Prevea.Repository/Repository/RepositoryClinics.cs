@@ -20,7 +20,7 @@
                 .ToList();
         }
 
-        public Clinic GetClinic(int id)
+        public Clinic GetClinicById(int id)
         {
             return Context.Clinics
                 .Include(x => x.RequestMedicalExaminationsEmployees)

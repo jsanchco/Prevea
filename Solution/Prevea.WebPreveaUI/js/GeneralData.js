@@ -177,6 +177,12 @@
         window.location = url;
     },
 
+    goToOpenEmployeeCitation: function (urlRelative) {
+        var url = "/Base/DownloadPdfByUrl?urlRelative=" + urlRelative;
+
+        window.location = url;
+    },
+
     showNotification: function (message, title, type) {
         var opts;
         if (type === "error") {

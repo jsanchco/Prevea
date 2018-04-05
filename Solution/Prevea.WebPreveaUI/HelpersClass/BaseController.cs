@@ -111,6 +111,26 @@
             return File(filedata, contentType);
         }
 
+        public ActionResult DownloadPdfByUrl(string urlRelative)
+        {
+            var url = Server.MapPath(urlRelative);
+            if (!System.IO.File.Exists(url))
+                return null;
+
+            var filedata = System.IO.File.ReadAllBytes(url);
+            var contentType = MimeMapping.GetMimeMapping(url);
+
+            var cd = new System.Net.Mime.ContentDisposition
+            {
+                FileName = Path.GetFileName(urlRelative),
+                Inline = true,
+            };
+
+            Response.AppendHeader("Content-Disposition", cd.ToString());
+
+            return File(filedata, contentType);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

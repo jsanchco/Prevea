@@ -6,14 +6,25 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Data.Entity;
 
     #endregion
 
     public partial class Repository
     {
+        public Employee GetEmployeeById(int id)
+        {
+            return Context.Employees
+                .Include(x => x.User)
+                .Include(x => x.Company)
+                .FirstOrDefault(x => x.Id == id);
+        }
+
         public List<Employee> GetEmployeesByCompany(int companyId)
         {
             return Context.Employees.Where(x => x.CompanyId == companyId)
+                .Include(x => x.User)
+                .Include(x => x.Company)
                 .ToList();
         }
 

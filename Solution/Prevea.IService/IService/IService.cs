@@ -45,6 +45,7 @@
         ContactPerson GetContactPersonById(int contactPersonId);
         ContactPerson GetContactPersonByUserId(int userId);
         List<User> GetContactPersonsByCompany(int companyId);
+        Employee GetEmployeeById(int id);
         List<Employee> GetEmployeesByCompany(int companyId);
         List<User> GetUsersByUser(int id);
         Result SaveUser(int? roleId, User user);
@@ -341,7 +342,7 @@
         #region Clinics
 
         List<Clinic> GetClincs();
-        Clinic GetClinic(int id);
+        Clinic GetClinicById(int id);
         Result SaveClinic(Clinic clinic);
         Result DeleteClinic(int id);
 

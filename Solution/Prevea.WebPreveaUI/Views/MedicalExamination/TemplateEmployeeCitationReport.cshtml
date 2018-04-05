@@ -1,0 +1,105 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutReport.cshtml";
+}
+
+<style>
+    div {
+        color: black;
+        font-size: 14px;
+        font-family: Arial;
+    }
+</style>
+
+<div id="pageEmployeeCitationReport">
+    <div class="row">
+        <div class="col-xs-2" style="font-size: 16px; font-weight: bold;">
+            @ViewBag.ClinicName
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12" style="text-align: right">
+            @DateTime.Now.ToString("dd/MM/yyyy")
+        </div>
+    </div>
+
+    <div>&nbsp;</div>
+    <div>&nbsp;</div>
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12">
+            Estimado cliente:
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            Nos complace comunicarle las fechas y horas, a las que deben acudir sus trabajadores a nuestras instalaciones, para realizar los exámenes de salud específicos.
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            La dirección del centro donde deben presentarse es:
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            @ViewBag.ClinicProvince
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            @ViewBag.ClinicAddress
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12">
+            @ViewBag.ClinicPhoneNumber
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12">
+            Las instalaciones antes indicadas integran nuestra Red de Centros provenientes de los acuerdos de colaboración entre servicios  de prevención ajenos, referidos en las Condiciones Generales del Concierto y en el RD 843/2011, de 17 de junio. Por ello y en  conocimiento de dichos acuerdos, entendemos que su aceptación y consulta con los delegados de prevención quedan materializadas  al asistir sus trabajadores a esta cita.
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-2">
+            Fecha
+        </div>
+        <div class="col-xs-2">
+            Hora
+        </div>
+        <div class="col-xs-2">
+            Nº de Citas
+        </div>
+        <div class="col-xs-2">
+            Citas nominales
+        </div>
+        <div class="col-xs-2">
+            Descripción
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <hr/>
+        </div>
+    </div>
+
+</div>

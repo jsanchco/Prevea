@@ -246,6 +246,7 @@
 
                     listEmployees.Add(new RequestMedicalExaminationEmployeeViewModel
                     {
+                        Id = requestMedicalExaminationEmployee.Id,
                         Date = requestMedicalExaminationEmployee.Date,
                         EmployeeId = employee.Id,
                         EmployeeName = name,

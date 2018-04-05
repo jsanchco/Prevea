@@ -16,9 +16,9 @@
             return Repository.GetClincs();
         }
 
-        public Clinic GetClinic(int id)
+        public Clinic GetClinicById(int id)
         {
-            return Repository.GetClinic(id);
+            return Repository.GetClinicById(id);
         }
 
         public Result SaveClinic(Clinic clinic)

@@ -128,6 +128,7 @@
         #endregion
 
         #region Employee
+        Employee GetEmployeeById(int id);
         List<Employee> GetEmployeesByCompany(int companyId);
         Employee SaveEmployee(Employee employee);
         bool DeleteEmployee(Employee employee);
@@ -362,7 +363,7 @@
         #region Clinics
 
         List<Clinic> GetClincs();
-        Clinic GetClinic(int id);
+        Clinic GetClinicById(int id);
         Clinic SaveClinic(Clinic clinic);
         bool DeleteClinic(int id);
 

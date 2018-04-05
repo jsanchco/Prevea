@@ -16,8 +16,8 @@
         public string Name { get; set; }
         public string Address { get; set; }
         public string Province { get; set; }
-
         public string Description { get; set; }
+        public string PhoneNumber { get; set; }
 
         public virtual ICollection<RequestMedicalExaminationEmployee> RequestMedicalExaminationsEmployees { get; set; }
     }

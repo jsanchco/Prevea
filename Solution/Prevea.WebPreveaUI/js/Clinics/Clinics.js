@@ -20,6 +20,7 @@
                         Name: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         Address: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         Province: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
+                        PhoneNumber: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         Description: { type: "string" }
                     }
                 }
@@ -83,7 +84,11 @@
                 field: "Province",
                 title: "Provincia",
                 width: 100
-            },{
+            }, {
+                field: "PhoneNumber",
+                title: "Nº de Teléfono",
+                width: 150
+            }, {
                 field: "Description",
                 title: "Descripción",
                 width: 200,

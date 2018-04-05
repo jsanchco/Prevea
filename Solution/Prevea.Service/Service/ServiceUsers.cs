@@ -49,6 +49,11 @@
             return Repository.GetContatcPersonsByCompany(companyId);
         }
 
+        public Employee GetEmployeeById(int id)
+        {
+            return Repository.GetEmployeeById(id);
+        }
+
         public List<Employee> GetEmployeesByCompany(int companyId)
         {
             return Repository.GetEmployeesByCompany(companyId);

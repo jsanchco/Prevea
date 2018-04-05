@@ -444,6 +444,11 @@
                     width: 100,
                     template: "#= Templates.getColumnTemplateBooleanIncrease(data.Included) #",
                     editor: HistoricMedicalExamination.editorIncluded
+                }, {
+                    title: "Citación",
+                    width: 100,
+                    template: "#= HistoricMedicalExamination.getColumnTemplateCitation(data) #",
+                    editor: HistoricMedicalExamination.editorIncluded
                 }],
             pageable: {
                 buttonCount: 2,
@@ -734,5 +739,42 @@
         }
 
         return doctorsName;
+    },
+
+    getColumnTemplateCitation: function (data) {
+        var html = "<div align='center'>";
+
+        if (data.Included === true) {
+            html += kendo.format("<a toggle='tooltip' title='Abrir Documento' onclick='HistoricMedicalExamination.goToEmployeeCitation(\"{0}\", \"{1}\", \"{2}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>", data.Id, data.ClinicId, data.EmployeeId);
+        }
+
+        html += kendo.format("</div>");
+
+        return html;
+    },
+
+    goToEmployeeCitation: function (id, clinicId, employeeId) {
+        kendo.ui.progress($("#framePpal"), true);
+
+        $.ajax({
+            url: "/MedicalExamination/PrintEmployeeCitation",
+            data: {
+                requestMedicalExaminationsId: requestMedicalExaminationsId,
+                clinicId: clinicId,
+                employeeId: employeeId
+            },
+            type: "post",
+            dataType: "json",
+            success: function (response) {
+                if (response.resultStatus === Constants.resultStatus.Ok) {
+                    GeneralData.showNotification(Constants.ok, "", "success");
+                    GeneralData.goToOpenEmployeeCitation(response.url);                    
+                } else {
+                    GeneralData.showNotification(Constants.ko, "", "error");
+                }
+
+                kendo.ui.progress($("#framePpal"), false);
+            }
+        });
     }
 });
