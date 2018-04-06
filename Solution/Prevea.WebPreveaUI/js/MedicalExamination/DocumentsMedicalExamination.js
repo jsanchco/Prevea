@@ -2,6 +2,8 @@
 
     id: null,
 
+    gridDocumentsMedicalExaminationId: "gridDocumentsMedicalExamination",
+
     init: function (id) {
         kendo.culture("es-ES");
 

@@ -1172,7 +1172,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\DoctorWorkSheet\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

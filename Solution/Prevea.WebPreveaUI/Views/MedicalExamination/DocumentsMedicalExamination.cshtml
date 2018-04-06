@@ -1,7 +1,23 @@
-﻿
-@{
-    ViewBag.Title = "DocumentsMedicalExamination";
-}
+﻿@model RequestMedicalExaminationEmployee
 
-<h2>DocumentsMedicalExamination</h2>
+<script>
+    DocumentsMedicalExamination.init(@Model.Id);
+</script>
 
+<style>
+ 
+</style>
+
+<div class="row" id="pageDocumentsMedicalExamination" style="margin: 8px">
+
+    <div id="confirm"></div>
+
+    <div id="contentPartialView">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="gridDocumentsMedicalExamination" style="height: 77vh;"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
