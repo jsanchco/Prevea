@@ -744,8 +744,8 @@
     getColumnTemplateCitation: function (data) {
         var html = "<div align='center'>";
 
-        if (data.Included === true) {
-            html += kendo.format("<a toggle='tooltip' title='Abrir Documento' onclick='HistoricMedicalExamination.goToEmployeeCitation(\"{0}\", \"{1}\", \"{2}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>", data.Id, data.ClinicId, data.EmployeeId);
+        if (data.Included === true && data.Id !== 0 && data.ChangeDate === true) {
+            html += kendo.format("<a toggle='tooltip' title='Abrir Documento' onclick='HistoricMedicalExamination.goToEmployeeCitation(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>", data.Id);
         }
 
         html += kendo.format("</div>");
@@ -753,15 +753,13 @@
         return html;
     },
 
-    goToEmployeeCitation: function (id, clinicId, employeeId) {
+    goToEmployeeCitation: function (id) {
         kendo.ui.progress($("#framePpal"), true);
 
         $.ajax({
             url: "/MedicalExamination/PrintEmployeeCitation",
             data: {
-                requestMedicalExaminationsId: requestMedicalExaminationsId,
-                clinicId: clinicId,
-                employeeId: employeeId
+                id: id
             },
             type: "post",
             dataType: "json",

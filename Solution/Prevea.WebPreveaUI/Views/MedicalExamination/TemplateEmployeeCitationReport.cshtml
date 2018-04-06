@@ -1,4 +1,6 @@
-﻿@{
+﻿@model RequestMedicalExaminationEmployee
+
+@{
     Layout = "~/Views/Shared/_LayoutReport.cshtml";
 }
 
@@ -12,8 +14,8 @@
 
 <div id="pageEmployeeCitationReport">
     <div class="row">
-        <div class="col-xs-2" style="font-size: 16px; font-weight: bold;">
-            @ViewBag.ClinicName
+        <div class="col-xs-12" style="font-size: 16px; font-weight: bold;">
+            @Model.Clinic.Name
         </div>
     </div>
 
@@ -50,13 +52,13 @@
 
     <div class="row">
         <div class="col-xs-12" style="font-weight: bold;">
-            @ViewBag.ClinicProvince
+            @Model.Clinic.Province
         </div>
     </div>
 
     <div class="row">
         <div class="col-xs-12">
-            @ViewBag.ClinicAddress
+            @Model.Clinic.Address
         </div>
     </div>
 
@@ -64,7 +66,7 @@
 
     <div class="row">
         <div class="col-xs-12">
-            @ViewBag.ClinicPhoneNumber
+            @Model.Clinic.PhoneNumber
         </div>
     </div>
 
@@ -88,7 +90,7 @@
         <div class="col-xs-2">
             Nº de Citas
         </div>
-        <div class="col-xs-2">
+        <div class="col-xs-3">
             Citas nominales
         </div>
         <div class="col-xs-2">
@@ -99,6 +101,156 @@
     <div class="row">
         <div class="col-xs-12">
             <hr/>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-xs-2">
+            @Model.Date.ToString("dd/MM/yyyyy")
+        </div>
+        <div class="col-xs-2">
+            @Model.Date.ToString("HH:mm")
+        </div>
+        <div class="col-xs-2">
+            1
+        </div>
+        <div class="col-xs-3">
+            @{
+                var fullName = string.Format("{0}, {1}", Model.Employee.User.LastName.ToUpper(), Model.Employee.User.FirstName.ToUpper());
+            }
+            @fullName
+        </div>
+        <div class="col-xs-2">
+            Reconocimiento
+        </div>
+    </div>
+    
+    <br/>
+    
+    <div class="row">
+        <div class="col-xs-12">
+            Es absolutamente imprescindible la presentación del DNI/NIE/Pasaporte por parte de cada uno de los trabajadores citados, para proceder a la recepción de los mismos en nuestras instalaciones, y asegurar con ello, la correcta identificación. Para garantizar una óptima calidad de los resultados del reconocimiento médico es importante que los asistentes tengan en cuenta las siguientes indicaciones:
+        </div>
+    </div>
+    
+    <br/>
+    
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Acudir en ayunas de 6 horas* 
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Debe abstenerse de fumar en las horas previas.
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Traer lentes graduadas si se necesitan.
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-xs-12" style="font-size: 10px;">
+            * En caso de que interese estudiar específicamente el colesterol y triglicéridos (perfil metabólico) convendría que el periodo de ayuno fuese de al menos, 12 horas.
+        </div>
+    </div>
+    
+    <br/>
+    
+    <div class="row">
+        <div class="col-xs-12">
+            Si el examen de salud que se les van a practicar a los trabajadores contempla la realización de estudio de orina, en el mismo centro se les facilitará el recipiente para la recogida de la muestra.
+        </div>
+    </div>
+    
+    <br/>
+    
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            No olviden facilitar a los trabajadores que asistan a realizar el examen de salud un documento con los nombres de los  asistentes y la empresa a la que pertenecen.
+        </div>
+    </div>
+    
+    <br/>
+    
+    <div class="row">
+        <div class="col-xs-12">
+            Aquellos trabajadores que estén llevando tratamientos con medicamentos por alguna enfermedad o proceso (por ejemplo, hipertensión  arterial, aumento del colesterol, diabetes,...) pueden tomar el fármaco con agua o inyectarse si es el caso.            
+        </div>
+    </div>
+    
+    <br/>
+    
+    <div class="row">
+        <div class="col-xs-12">
+            Con el fin de poder estudiar las enfermedades susceptibles de estar relacionadas con el trabajo, dando cumplimiento al R.D.843/2011, el trabajador deberá aportar en el momento del reconocimiento, todos los informes y pruebas de que disponga, si ha padecido o padece alguna enfermedad común o profesional o en su caso, accidente de trabajo.          
+        </div>
+    </div>
+
+    <br/>
+    
+    <div class="row">
+        <div class="col-xs-12" style="font-weight: bold;">
+            Recuerde que:          
+        </div>
+    </div>
+    
+    <br/>
+        
+    <div class="row">
+        <div class="col-xs-12">
+            Los trabajadores que se encuentren en situación de incapacidad temporal (<strong>BAJA MÉDICA</strong>) en el momento del examen de salud, no se pueden realizar el mismo. En este supuesto, el trabajador deberá esperar que cause alta, momento en el que solicitará cita para realizarlo en cualquiera de nuestros centros.          
+        </div>
+    </div>
+    
+    <br/>
+    
+    <div class="row">
+        <div class="col-xs-12">
+            Es nuestro deseo evitar que sufra esperas innecesarias. Para ello, le rogamos encarecidamente que colabore con nosotros respetando el horario que hemos indicado.          
+        </div>
+    </div>
+    
+    <br/>
+    
+    <div class="row">
+        <div class="col-xs-12">
+            Con el fin de poder ajustar la programación de los exámenes de salud de manera más eficaz y siempre con el ánimo de poderles prestar nuestro mejor servicio, le rogamos nos comuniquen, al menos con tres días de antelación, las ausencias de las personas que por cualquier causa no pudieran acudir a la cita, poniéndose de nuevo en contacto con la Unidad de Citación de la Dirección de Medicina del Trabajo.          
+        </div>
+    </div>
+    
+    <br/>
+    
+    <div class="row">
+        <div class="col-xs-12">
+            Agradeciendo de antemano su colaboración reciba un cordial saludo.        
+        </div>
+    </div>
+    
+    <div>&nbsp;</div>
+    <div>&nbsp;</div>
+    <br/>
+    <br/>
+
+    <div class="row" style="text-align: center;">
+        <div class="col-xs-12">
+            Unidad de Citación      
+        </div>
+    </div>
+    
+    <div class="row" style="text-align: center;">
+        <div class="col-xs-12">
+            Dirección de Medicina del Trabajo     
+        </div>
+    </div>
+
+    <div class="row" style="text-align: center;">
+        <div class="col-xs-12">
+            @Model.Clinic.Name      
         </div>
     </div>
 

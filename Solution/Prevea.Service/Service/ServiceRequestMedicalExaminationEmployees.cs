@@ -91,8 +91,10 @@
                     Status = Status.Ok
                 };
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+
                 return new Result
                 {
                     Message = "Se ha producido un error en la Grabación de la RequestMedicalExaminationEmployee",
@@ -360,8 +362,10 @@
                     Status = Status.Ok
                 };
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+
                 return new Result
                 {
                     Message = "Se ha producido un error al Actualizar la RequestMedicalExaminationEmployee",

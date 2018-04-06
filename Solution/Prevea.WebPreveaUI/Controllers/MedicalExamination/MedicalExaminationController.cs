@@ -132,20 +132,11 @@
         }
 
         [HttpGet]
-        public ActionResult TemplateEmployeeCitationReport(int id, int clinicId, int employeeId)
+        public ActionResult TemplateEmployeeCitationReport(int id)
         {
             var requestMedicalExaminationEmployeeFind = Service.GetRequestMedicalExaminationEmployeeById(id);
-            var clinicFind = Service.GetClinicById(clinicId);
-            var employeeFind = Service.GetEmployeeById(employeeId);
 
-            ViewBag.ClinicName = clinicFind.Name;
-            ViewBag.ClinicProvince = clinicFind.Province;
-            ViewBag.ClinicAddress = clinicFind.Address;
-            ViewBag.ClinicPhoneNumber = clinicFind.PhoneNumber;
-            ViewBag.ClinicPhoneNumber = clinicFind.PhoneNumber;
-            ViewBag.RequestMedicalExaminationEmployeeDate = requestMedicalExaminationEmployeeFind.Date.ToString("dd/mm/yyyy");
-
-            return View("~/Views/MedicalExamination/TemplateEmployeeCitationReport.cshtml");
+            return View("~/Views/MedicalExamination/TemplateEmployeeCitationReport.cshtml", requestMedicalExaminationEmployeeFind);
         }
 
         [HttpGet]
@@ -290,9 +281,9 @@
             }
         }
 
-        public JsonResult PrintEmployeeCitation(int id, int clinicId, int employeeId)
+        public JsonResult PrintEmployeeCitation(int id)
         {
-            var createPdf = CreateEmployeeCitationReportPdf(id, clinicId, employeeId);
+            var createPdf = CreateEmployeeCitationReportPdf(id);
             if (string.IsNullOrEmpty(createPdf))
             {
                 return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
@@ -301,7 +292,7 @@
             return Json(new { resultStatus = Status.Ok, url = createPdf }, JsonRequestBehavior.AllowGet);
         }
 
-        private string CreateEmployeeCitationReportPdf(int id, int clinicId, int employeeId)
+        private string CreateEmployeeCitationReportPdf(int id)
         {
             try
             {
@@ -309,11 +300,7 @@
                 if (requestMedicalExaminationEmployeFind == null)
                     return null;
 
-                var employeeFind = Service.GetEmployeeById(employeeId);
-                if (employeeFind == null)
-                    return null;
-
-                var urlRelative = $"~/App_Data/Companies/{requestMedicalExaminationEmployeFind.RequestMedicalExaminations.Company.NIF}/MedicalExaminations/CIT_{employeeFind.UserId}.pdf";
+                var urlRelative = $"~/App_Data/Companies/{requestMedicalExaminationEmployeFind.RequestMedicalExaminations.Company.NIF}/MedicalExaminations/CIT_{requestMedicalExaminationEmployeFind.Employee.UserId}.pdf";
                 var filePath = Server.MapPath(urlRelative);
                 var directory = Path.GetDirectoryName(filePath);
                 if (directory != null)
@@ -323,9 +310,7 @@
                     "TemplateEmployeeCitationReport",
                     new
                     {
-                        id,
-                        clinicId,
-                        employeeId
+                        id
                     });
                 //actionPdf.RotativaOptions.CustomSwitches = Constants.FooterPdf;
 
