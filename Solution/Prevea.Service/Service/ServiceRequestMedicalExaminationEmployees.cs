@@ -269,13 +269,15 @@
                         {
                             Date = employee.Date,
                             EmployeeId = employee.EmployeeId,
+                            Employee = GetEmployeeById(employee.EmployeeId),
                             Observations = employee.Observations,
                             SamplerNumber = employee.SamplerNumber,
                             RequestMedicalExaminationEmployeeStateId =
                                 (int) EnRequestMedicalExaminationEmployeeState.Pending,
                             RequestMedicalExaminationsId = requestMedicalExaminationsId,
                             ChangeDate = employee.ChangeDate,
-                            ClinicId = employee.ClinicId
+                            ClinicId = employee.ClinicId,
+                            Clinic = employee.ClinicId != null ? GetClinicById((int)employee.ClinicId) : null
                         };
                         if (requestMedicalExaminationEmployee.ChangeDate == false)
                             allValidated = false;
