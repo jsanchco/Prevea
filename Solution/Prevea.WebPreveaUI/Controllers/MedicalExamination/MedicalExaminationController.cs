@@ -14,6 +14,8 @@
     using IService.IService;
     using Newtonsoft.Json;
     using System.Linq;
+    using Kendo.Mvc.UI;
+    using Common;
 
     #endregion
 
@@ -330,5 +332,70 @@
                 return null;
             }
         }
+
+        public JsonResult DocumentsMedicalExamination_Read([DataSourceRequest] DataSourceRequest request, int requestMedicalExaminationEmployeeId)
+        {
+            var data = AutoMapper.Mapper.Map<List<MedicalExaminationDocumentsViewModel>>(Service.GetMedicalExaminationDocumentsByRequestMedicalExaminationEmployeeId(requestMedicalExaminationEmployeeId));
+
+            return this.Jsonp(data);
+        }
+
+        public ActionResult DocumentsMedicalExamination_Destroy()
+        {
+            try
+            {
+                var medicalExaminationDocument = this.DeserializeObject<MedicalExaminationDocumentsViewModel>("medicalExaminationDocument");
+                if (medicalExaminationDocument == null)
+                {
+                    return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del Documento" });
+                }
+
+                var result = Service.DeleteMedicalExaminationDocument(medicalExaminationDocument.Id);
+
+                if (result.Status == Status.Error)
+                {
+                    return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del Documento" });
+                }
+
+                return this.Jsonp(AutoMapper.Mapper.Map<MedicalExaminationDocumentsViewModel>(medicalExaminationDocument));
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del Documento" });
+            }
+        }
+
+        public ActionResult DocumentsMedicalExamination_Create()
+        {
+            try
+            {
+                var medicalExaminationDocument = this.DeserializeObject<MedicalExaminationDocuments>("medicalExaminationDocument");
+                if (medicalExaminationDocument == null)
+                {
+                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
+                }
+
+                var result = Service.SaveMedicalExaminationDocument(medicalExaminationDocument);
+
+                if (result.Status != Status.Error)
+                {
+                    if (result.Object is MedicalExaminationDocuments)
+                        return this.Jsonp(AutoMapper.Mapper.Map<MedicalExaminationDocumentsViewModel>(medicalExaminationDocument));
+
+                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
+                }
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
+            }
+        }
+
     }
 }

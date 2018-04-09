@@ -358,5 +358,23 @@
         List<DateTime?> GetDatesByWorkSheet(int doctorId);
 
         #endregion
+
+        #region MedicalExamination Documents
+
+        List<MedicalExaminationDocuments> GetMedicalExaminationDocuments();
+        MedicalExaminationDocuments GetMedicalExaminationDocumentById(int id);
+        Result SaveMedicalExaminationDocument(MedicalExaminationDocuments medicalExaminationDocument);
+        Result DeleteMedicalExaminationDocument(int id);
+
+        List<MedicalExaminationDocuments> GetMedicalExaminationDocumentsByRequestMedicalExaminationEmployeeId(int requestMedicalExaminationEmployeeId);
+
+        #endregion
+
+        #region MedicalExaminationDocument Types
+
+        List<MedicalExaminationDocumentType> GetMedicalExaminationDocumentTypes();
+        MedicalExaminationDocumentType GetMedicalExaminationDocumentTypeById(int id);
+
+        #endregion
     }
 }

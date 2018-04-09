@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Service\ServiceMedicalExaminationDocuments.cs" />
     <Compile Include="Service\Service.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ServiceAgencies.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Service\ServiceForeignPreventionServices.cs" />
     <Compile Include="Service\ServiceHistoricDownloadDocuments.cs" />
     <Compile Include="Service\ServiceMedicalExaminations.cs" />
+    <Compile Include="Service\ServiceMedicalExaminationTypes.cs" />
     <Compile Include="Service\ServiceModesPayment.cs" />
     <Compile Include="Service\ServiceModesPaymentMedicalExamination.cs" />
     <Compile Include="Service\ServiceNotifications.cs" />

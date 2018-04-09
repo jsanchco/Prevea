@@ -61,6 +61,8 @@
         public DbSet<RequestMedicalExaminationEmployeeState> RequestMedicalExaminationEmployeeStates { get; set; }
         public DbSet<Clinic> Clinics { get; set; }
         public DbSet<DoctorMedicalExaminationEmployee> DoctorMedicalExaminationEmployees { get; set; }
+        public DbSet<MedicalExaminationDocuments> MedicalExaminationDocuments { get; set; }
+        public DbSet<MedicalExaminationDocumentType> MedicalExaminationDocumentTypes { get; set; }
 
         #endregion
 

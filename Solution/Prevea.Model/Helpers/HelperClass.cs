@@ -153,6 +153,20 @@
                     return "En Proceso";
                 case "Finished":
                     return "Finalizado";
+                case "Electrocardiogram":
+                    return "Electrocaediograma";
+                case "OpticalReport":
+                    return "Informe Óptico";
+                case "AudiometricReport":
+                    return "Informe Audiométrico";
+                case "Spirometry":
+                    return "Espirometría";
+                case "UrineAnalytics":
+                    return "Análitica de Orina";
+                case "BloodTest":
+                    return "Análitica de Sangre";
+                case "Others":
+                    return "Otros";
 
                 default:
                     return name;

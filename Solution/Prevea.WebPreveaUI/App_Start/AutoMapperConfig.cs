@@ -124,6 +124,10 @@
 
             AutoMapper.Mapper.CreateMap<User, DoctorViewModel>()
                 .ForMember(x => x.Name, x => x.MapFrom(y => y.FirstName + " " + y.LastName));
+
+            AutoMapper.Mapper.CreateMap<MedicalExaminationDocuments, MedicalExaminationDocumentsViewModel>()
+                .ForMember(x => x.MedicalExaminationDocumentTypeDescription, x => x.MapFrom(y => y.MedicalExaminationDocumentType.Description));
+            AutoMapper.Mapper.CreateMap<MedicalExaminationDocumentsViewModel, MedicalExaminationDocuments>();
         }
     }
 }

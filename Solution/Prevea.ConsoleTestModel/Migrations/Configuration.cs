@@ -296,6 +296,13 @@ namespace Prevea.ConsoleTestModel.Migrations
             }
             context.SaveChanges();
 
+            var typesMedicalExaminationDocuments = (EnMedicalExaminationDocumentType[])Enum.GetValues(typeof(EnMedicalExaminationDocumentType));
+            foreach (var type in typesMedicalExaminationDocuments)
+            {
+                context.MedicalExaminationDocumentTypes.AddOrUpdate(new MedicalExaminationDocumentType { Name = type.ToString() });
+            }
+            context.SaveChanges();
+
             context.TrainingCourses.Add(new TrainingCourse
             {
                 IsRoot = true

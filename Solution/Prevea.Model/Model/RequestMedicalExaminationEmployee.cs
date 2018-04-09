@@ -37,6 +37,8 @@
 
         public virtual ICollection<DoctorMedicalExaminationEmployee> DoctorsMedicalExaminationEmployee { get; set; }
 
+        public virtual ICollection<MedicalExaminationDocuments> MedicalExaminationDocuments { get; set; }
+
         [NotMapped]
         public bool Included { get; set; }
 
