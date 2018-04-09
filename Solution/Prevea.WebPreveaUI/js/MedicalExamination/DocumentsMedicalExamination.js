@@ -79,21 +79,14 @@
             columns: [{
                 field: "Enrollment",
                 title: "Nombre",
-                width: 300,
                 template: "#= Templates.getColumnTemplateIncrease(data.Enrollment) #"
             }, {
-                field: "LastName",
-                title: "Apellidos",
-                template: "#= Templates.getColumnTemplateIncrease(data.LastName) #"
-            }, {
-                field: "CollegiateNumber",
-                title: "Nº de Colegiado",
-                template: "#= Templates.getColumnTemplateIncrease(data.CollegiateNumber) #"
-            }, {
-                field: "DNI",
-                title: "DNI",
-                width: 200,
-                template: "#= Templates.getColumnTemplateIncreaseRight(data.DNI) #"
+                field: "MedicalExaminationDocumentTypeId",
+                title: "Tipo de Documento",
+                width: 90,
+                editor: DocumentsMedicalExamination.establishmentTypesDropDownEditor,
+                template: "#= DocumentsMedicalExamination.getMedicalExaminationDocumentTypeDescription(data.MedicalExaminationDocumentTypeId) #",
+                groupHeaderTemplate: "Agrupado : #= DocumentsMedicalExamination.getMedicalExaminationDocumentTypeDescription(value) #"
             }, {
                 title: "Comandos",
                 field: "Commands",
