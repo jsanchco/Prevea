@@ -901,6 +901,7 @@
     <Content Include="Content\font-icons\font-awesome\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\font-icons\font-awesome\fonts\FontAwesome.otf" />
     <Content Include="App_Browsers\qt.browser" />
+    <None Include="Properties\PublishProfiles\Prevea.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1078,7 +1079,9 @@
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\typeahead.min.js" />
     <None Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

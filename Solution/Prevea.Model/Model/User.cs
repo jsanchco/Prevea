@@ -55,6 +55,8 @@
         }
 
         public string PhoneNumber { get; set; }
+        public string Address { get; set; }
+        public string Province { get; set; }
         public string WorkStation { get; set; }
         public string ProfessionalCategory { get; set; }
 
