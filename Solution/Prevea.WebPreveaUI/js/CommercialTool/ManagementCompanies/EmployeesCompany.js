@@ -34,6 +34,15 @@
                 width: 80,
                 groupable: "false"
             }, {
+                field: "Address",
+                title: "Dirección",
+                width: 150,
+                groupable: "false"
+            }, {
+                field: "Province",
+                title: "Provincia",
+                width: 100
+            }, {
                 field: "BirthDate",
                 title: "Fecha de Nacimiento",
                 width: 130,
@@ -160,6 +169,8 @@
                         FirstName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         LastName: { type: "string" },
                         PhoneNumber: { type: "string" },
+                        Address: { type: "string" },
+                        Province: { type: "string" },
                         BirthDate: { type: "date", format: "{0:dd/MM/yy}", defaultValue: new Date() },
                         ChargeDate: { type: "date" },
                         Email: { type: "string" },

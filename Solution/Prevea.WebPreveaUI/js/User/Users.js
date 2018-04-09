@@ -30,6 +30,8 @@
                         RoleName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         RoleDescription: { type: "string" },
                         PhoneNumber: { type: "string" },
+                        Address: { type: "string" },
+                        Province: { type: "string" },
                         Email: { type: "string" },
                         DNI: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         UserStateId: { type: "number", defaultValue: 1 },
@@ -130,7 +132,7 @@
             }, {
                 field: "RoleId",
                 title: "Rol",
-                width: "90px",
+                width: 90,
                 editor: Users.rolesDropDownEditor,
                 template: "#=RoleDescription#",
                 groupHeaderTemplate: "Agrupado : #= Users.getRoleDescription(value) #"
@@ -143,6 +145,15 @@
                 title: "Teléfono",
                 width: 80,
                 groupable: "false"
+            }, {
+                field: "Address",
+                title: "Dirección",
+                width: 150,
+                groupable: "false"
+            }, {
+                field: "Province",
+                title: "Provincia",
+                width: 100
             }, {
                 field: "Email",
                 title: "Email",

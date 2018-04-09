@@ -183,7 +183,9 @@
                         BirthDate = medicalExaminationEmployee.Employee.User.BirthDate,
                         DNI = medicalExaminationEmployee.Employee.User.DNI,
                         WorkStation = medicalExaminationEmployee.Employee.User.WorkStation,
-                        PhoneNumber = medicalExaminationEmployee.Employee.User.PhoneNumber
+                        PhoneNumber = medicalExaminationEmployee.Employee.User.PhoneNumber,
+                        Address = medicalExaminationEmployee.Employee.User.Address,
+                        Province = medicalExaminationEmployee.Employee.User.Province
                     },
                     Company = new Company
                     {

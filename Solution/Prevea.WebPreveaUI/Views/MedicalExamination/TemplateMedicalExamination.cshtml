@@ -62,20 +62,20 @@
     </div>
 
     @{
-        var nameClinic = string.Empty;
-        if (!string.IsNullOrEmpty(Model.Clinic.Address))
+        var directionEmployee = string.Empty;
+        if (!string.IsNullOrEmpty(Model.Employee.User.Address))
         {
-            nameClinic += string.Format("{0}, ", Model.Clinic.Address.ToUpper());
+            directionEmployee += string.Format("{0}, ", Model.Employee.User.Address.ToUpper());
         }
-        if (!string.IsNullOrEmpty(Model.Clinic.Province))
+        if (!string.IsNullOrEmpty(Model.Employee.User.Province))
         {
-            nameClinic += Model.Clinic.Province.ToUpper();
+            directionEmployee += Model.Employee.User.Province.ToUpper();
         }
     }
 
     <div class="row">
         <div class="col-xs-6">
-            @nameClinic
+            @directionEmployee
         </div>
         <div class="col-xs-6" style="text-align: left;">
             @Model.Employee.User.DNI
