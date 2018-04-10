@@ -681,6 +681,7 @@
     <Content Include="js\CommercialTool\Simulations\TrainingService.js" />
     <Content Include="js\Courses\ManagementCourses\ManagementCourses.js" />
     <Content Include="js\Doctors\Doctors.js" />
+    <Content Include="js\MedicalExamination\AddOtherDocument.js" />
     <Content Include="js\MedicalExamination\DetailMedicalExamination.js" />
     <Content Include="js\MedicalExamination\DoctorWorkSheet.js" />
     <Content Include="js\MedicalExamination\DocumentsMedicalExamination.js" />
@@ -1172,6 +1173,7 @@
     <Content Include="Views\MedicalExamination\DocumentsMedicalExamination.cshtml" />
     <Content Include="Views\MedicalExamination\TemplateMedicalExaminationReport.cshtml" />
     <Content Include="Views\MedicalExamination\TemplateEmployeeCitationReport.cshtml" />
+    <Content Include="Views\MedicalExamination\AddOtherDocument.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

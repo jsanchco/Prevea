@@ -1,0 +1,32 @@
+﻿@model MedicalExaminationDocuments
+
+<style>
+    .k-window-titlebar {
+        height: 30px;
+    }
+
+    .k-window-content .k-content {
+        position: static;
+    }
+
+    .k-block > .k-header, .k-window-titlebar {
+        position: static;
+    }
+</style>
+
+<script>
+    AddOtherDocument.init(@Model.Id);
+</script>
+
+<div id="addOtherDocumentContainer">
+    <br />
+
+    <p @*style="color: #BBBBBB; font-size: x-small"*@>
+        Selecciona documento: <strong>@Model.Enrollment</strong>
+    </p>
+
+    <p style="">
+        <input type="file" id="fileOtherDocument" name="fileOtherDocument" accept=".pdf">
+    </p>
+</div>
+

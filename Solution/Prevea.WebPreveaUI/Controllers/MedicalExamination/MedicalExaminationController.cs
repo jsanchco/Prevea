@@ -397,5 +397,12 @@
             }
         }
 
+        [HttpGet]
+        public ActionResult AddOtherDocument(int medicalExaminationDocumentId)
+        {
+            var medicalExaminationDocument = Service.GetMedicalExaminationDocumentById(medicalExaminationDocumentId);
+
+            return PartialView("~/Views/MedicalExamination/AddOtherDocument.cshtml", medicalExaminationDocument);
+        }
     }
 }

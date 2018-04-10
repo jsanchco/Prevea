@@ -5,6 +5,10 @@
     gridDocumentsMedicalExaminationId: "gridDocumentsMedicalExamination",
 
     documentsMedicalExaminationDataSource: null,
+    documentMedicalExaminationTypesDataSource: null,
+
+    addOtherDocumentWindow: null,
+    addOtherDocumentId: "addOtherDocument",
 
     init: function (id) {
         kendo.culture("es-ES");
@@ -56,17 +60,29 @@
                 }
             },
             requestEnd: function (e) {
-                if ((e.type === "destroy" || e.type === "create") &&
-                    e.response !== null) {
+                if ((e.type === "destroy" || e.type === "create") && e.response !== null) {
+                    var grid = $("#" + DocumentsMedicalExamination.gridDocumentsMedicalExaminationId).data("kendoGrid");
                     if (typeof e.response.Errors !== "undefined") {
-                        GeneralData.showNotification(Constants.ko, "", "error");
+                        GeneralData.showNotification(e.response.Errors, "", "error");
                         if (e.type === "create") {
                             this.data().remove(this.data().at(0));
+
+                            kendo.ui.progress(grid.element, false);
                         } else {
+                            if (e.type === "destroy") {
+                                DocumentsMedicalExamination.documentsMedicalExaminationDataSource.read();
+                            }
                             this.cancelChanges();
                         }
                     } else {
-                        GeneralData.showNotification(Constants.ok, "", "success");
+                        if (e.type === "create") {
+                            kendo.ui.progress(grid.element, false);
+
+                            GeneralData.showNotification(Constants.ok, "", "success");
+                            if (!e.response.Url) {
+                                DocumentsMedicalExamination.goToAddOtherDocument(e.response.Id);
+                            }
+                        }
                     }
                 }
             },
@@ -83,8 +99,8 @@
             }, {
                 field: "MedicalExaminationDocumentTypeId",
                 title: "Tipo de Documento",
-                width: 90,
-                editor: DocumentsMedicalExamination.establishmentTypesDropDownEditor,
+                width: 300,
+                editor: DocumentsMedicalExamination.medicalExaminationDocumentTypesDropDownEditor,
                 template: "#= DocumentsMedicalExamination.getMedicalExaminationDocumentTypeDescription(data.MedicalExaminationDocumentTypeId) #",
                 groupHeaderTemplate: "Agrupado : #= DocumentsMedicalExamination.getMedicalExaminationDocumentTypeDescription(value) #"
             }, {
@@ -93,7 +109,7 @@
                 width: 120,
                 groupable: "false",
                 filterable: false,
-                template: "#= Doctors.getColumnTemplateCommands(data) #"
+                template: "#= DocumentsMedicalExamination.getColumnTemplateCommands(data) #"
             }],
             pageable: {
                 buttonCount: 2,
@@ -177,5 +193,101 @@
             }
         };
         GeneralData.goToActionController(params);
+    },
+
+    medicalExaminationDocumentTypesDropDownEditor: function (container, options) {
+        $("<input required name='" + options.field + "'/>")
+            .appendTo(container)
+            .kendoDropDownList({
+                dataTextField: "Description",
+                optionLabel: "Selecciona ...",
+                dataValueField: "Id",
+                dataSource: DocumentsMedicalExamination.documentMedicalExaminationTypesDataSource
+            });
+    },
+
+    getMedicalExaminationDocumentTypeDescription: function (medicalExaminationDocumentTypeId) {
+        if (DocumentsMedicalExamination.documentMedicalExaminationTypesDataSource.data().length === 0) {
+            DocumentsMedicalExamination.documentMedicalExaminationTypesDataSource.read();
+        }
+        for (var index = 0; index < DocumentsMedicalExamination.documentMedicalExaminationTypesDataSource.data().length; index++) {
+            if (DocumentsMedicalExamination.documentMedicalExaminationTypesDataSource.data()[index].Id === medicalExaminationDocumentTypeId) {
+                return DocumentsMedicalExamination.documentMedicalExaminationTypesDataSource.data()[index].Description;
+            }
+        }
+        return null;
+    },
+
+    getTemplateToolBar: function () {
+        var html = "<div class='toolbar'>";
+        html += "<span name='create' class='k-grid-add' id='createMedicalExaminationDocument'>";
+        html += "<a class='btn btn-prevea k-grid-add' role='button'> Agregar nuevo</a>";
+        html += "</span></div>";
+
+        return html;
+    },
+
+    getColumnTemplateCommands: function (data) {
+        var html = "<div style='display: inline-block; margin-left: 37px;'>";
+
+        if (data.Url) {
+            html += kendo.format("<a toggle='tooltip' title='Abrir Documento' onclick='GeneralData.goToOpenContractualDocument(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>&nbsp;&nbsp;", data.Id);
+        } else {
+            html += kendo.format("<a toggle='tooltip' title='Agregar Otro Documento' onclick='DocumentsMedicalExamination.goToAddOtherDocument(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/unknown_opt.png'></a></div></a>&nbsp;&nbsp;&nbsp;", data.Id);
+        }
+
+        html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='DocumentsMedicalExamination.goToDeleteMedicalExaminationDocument(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>", data.Id);
+        html += kendo.format("</div>");
+
+        return html;
+    },
+
+    goToDeleteMedicalExaminationDocument: function (id) {
+        var that = this;
+
+        var dialog = $("#" + this.confirmId);
+        dialog.kendoDialog({
+            width: "400px",
+            title: "<strong>Reconocimientos Médicos</strong>",
+            closable: false,
+            modal: true,
+            content: "¿Quieres <strong>Borrar</strong> este Documento?",
+            actions: [
+                {
+                    text: "Cancelar", primary: true
+                },
+                {
+                    text: "Borrar", action: function ()
+                    {
+                        var grid = $("#" + that.gridDocumentsMedicalExaminationId).data("kendoGrid");
+                        var item = grid.dataSource.get(id);
+                        var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
+
+                        grid.removeRow(tr);
+                    }
+                }
+            ]
+        });
+        dialog.data("kendoDialog").open();
+    },
+
+    goToAddOtherDocument: function (contractualDocumentId) {
+        this.setUpAddOtherDocumentWindow(contractualDocumentId);
+        this.addOtherDocumentWindow.data("kendoWindow").center().open();
+    },
+
+    setUpAddOtherDocumentWindow: function (medicalExaminationDocumentId) {
+        var url = "/MedicalExamination/AddOtherDocument?medicalExaminationDocumentId=" + medicalExaminationDocumentId;
+        this.addOtherDocumentWindow = $("#" + this.addOtherDocumentId);
+        this.addOtherDocumentWindow.kendoWindow({
+            width: "330px",
+            title: "Agregar Documento",
+            visible: false,
+            modal: true,
+            actions: [
+                "Close"
+            ],
+            content: url
+        });
     }
 });
