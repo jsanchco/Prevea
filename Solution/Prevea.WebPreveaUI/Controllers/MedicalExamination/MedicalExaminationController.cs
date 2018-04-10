@@ -16,6 +16,7 @@
     using System.Linq;
     using Kendo.Mvc.UI;
     using Common;
+    using System.Web;
 
     #endregion
 
@@ -397,12 +398,44 @@
             }
         }
 
+        public JsonResult DocumentMedicalExaminationTypes_Read([DataSourceRequest] DataSourceRequest request)
+        {
+            var data = AutoMapper.Mapper.Map<List<MedicalExaminationDocumentTypeViewModel>>(Service.GetMedicalExaminationDocumentTypes());
+
+            return this.Jsonp(data);
+        }
+
         [HttpGet]
-        public ActionResult AddOtherDocument(int medicalExaminationDocumentId)
+        public ActionResult AddDocument(int medicalExaminationDocumentId)
         {
             var medicalExaminationDocument = Service.GetMedicalExaminationDocumentById(medicalExaminationDocumentId);
 
-            return PartialView("~/Views/MedicalExamination/AddOtherDocument.cshtml", medicalExaminationDocument);
+            return PartialView("~/Views/MedicalExamination/AddDocument.cshtml", medicalExaminationDocument);
         }
+
+        [HttpPost]
+        public ActionResult SaveMedicalExaminationDocument(IEnumerable<HttpPostedFileBase> fileDocument, int medicalExaminationDocumentId)
+        {
+            if (fileDocument == null || !fileDocument.Any())
+                return Json(new Result { Status = Status.Error }, JsonRequestBehavior.AllowGet);
+
+            var result =
+                Service.SaveFileMedicalExaminationDocument(fileDocument.FirstOrDefault(), medicalExaminationDocumentId);
+
+            if (result.Status == Status.Error)
+            {
+                return Json(new Result
+                {
+                    Status = Status.Error
+                }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new Result
+            {
+                Status = Status.Ok,
+                Object = AutoMapper.Mapper.Map<MedicalExaminationDocumentsViewModel>(result.Object)
+            }, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

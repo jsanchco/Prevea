@@ -154,7 +154,7 @@
                 case "Finished":
                     return "Finalizado";
                 case "Electrocardiogram":
-                    return "Electrocaediograma";
+                    return "Electrocardiograma";
                 case "OpticalReport":
                     return "Informe Óptico";
                 case "AudiometricReport":

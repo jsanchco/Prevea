@@ -128,6 +128,9 @@
             AutoMapper.Mapper.CreateMap<MedicalExaminationDocuments, MedicalExaminationDocumentsViewModel>()
                 .ForMember(x => x.MedicalExaminationDocumentTypeDescription, x => x.MapFrom(y => y.MedicalExaminationDocumentType.Description));
             AutoMapper.Mapper.CreateMap<MedicalExaminationDocumentsViewModel, MedicalExaminationDocuments>();
+
+            AutoMapper.Mapper.CreateMap<MedicalExaminationDocumentType, MedicalExaminationDocumentTypeViewModel>();
+            AutoMapper.Mapper.CreateMap<MedicalExaminationDocumentTypeViewModel, MedicalExaminationDocumentType>();
         }
     }
 }

@@ -395,6 +395,7 @@
 
         List<MedicalExaminationDocumentType> GetMedicalExaminationDocumentTypes();
         MedicalExaminationDocumentType GetMedicalExaminationDocumentTypeById(int id);
+        int GetMaxMedicalExaminationDocumentByType(int requestMedicalExaminationEmployeeId, int medicalExaminationDocumentId);
 
         #endregion
     }

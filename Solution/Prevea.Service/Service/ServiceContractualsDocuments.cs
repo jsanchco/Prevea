@@ -378,7 +378,7 @@
                 if (contractualDocument == null)
                     return new Result { Status = Status.Error };
 
-                contractualDocument.UrlRelative = contractualDocument.UrlRelative = GetUrlRelativeContractualDocument(contractualDocument);
+                contractualDocument.UrlRelative = GetUrlRelativeContractualDocument(contractualDocument);
 
                 var path = contractualDocument.UrlRelative.Substring(0, contractualDocument.UrlRelative.LastIndexOf("/", StringComparison.Ordinal) + 1);
                 var fileName = contractualDocument.UrlRelative.Substring(contractualDocument.UrlRelative.LastIndexOf("/", StringComparison.Ordinal) + 1);

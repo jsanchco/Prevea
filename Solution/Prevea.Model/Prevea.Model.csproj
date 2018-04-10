@@ -122,6 +122,7 @@
     <Compile Include="ViewModel\EstablishmentTypeViewModel.cs" />
     <Compile Include="ViewModel\HistoricDownloadDocumentViewModel.cs" />
     <Compile Include="ViewModel\MedicalExaminationDocumentsViewModel.cs" />
+    <Compile Include="ViewModel\MedicalExaminationDocumentTypeViewModel.cs" />
     <Compile Include="ViewModel\NotificationViewModel.cs" />
     <Compile Include="ViewModel\PaymentMethodViewModel.cs" />
     <Compile Include="ViewModel\PaymentModeViewModel.cs" />

@@ -367,6 +367,7 @@
         Result DeleteMedicalExaminationDocument(int id);
 
         List<MedicalExaminationDocuments> GetMedicalExaminationDocumentsByRequestMedicalExaminationEmployeeId(int requestMedicalExaminationEmployeeId);
+        Result SaveFileMedicalExaminationDocument(HttpPostedFileBase fileOtherDocument, int medicalExaminationDocumentId);
 
         #endregion
 

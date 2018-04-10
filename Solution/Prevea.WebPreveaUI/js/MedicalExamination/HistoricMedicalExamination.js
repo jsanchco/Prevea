@@ -718,7 +718,7 @@
     },
 
     getDoctorsName: function (doctors) {
-        if (doctors === null)
+        if (doctors == null)
             return "";
 
         var splitDoctors = doctors.split(",");
@@ -766,7 +766,7 @@
             success: function (response) {
                 if (response.resultStatus === Constants.resultStatus.Ok) {
                     GeneralData.showNotification(Constants.ok, "", "success");
-                    GeneralData.goToOpenEmployeeCitation(response.url);                    
+                    GeneralData.goToOpenDocumentByUrl(response.url);                    
                 } else {
                     GeneralData.showNotification(Constants.ko, "", "error");
                 }

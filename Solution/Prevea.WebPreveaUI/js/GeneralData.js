@@ -177,7 +177,7 @@
         window.location = url;
     },
 
-    goToOpenEmployeeCitation: function (urlRelative) {
+    goToOpenDocumentByUrl: function (urlRelative) {
         var url = "/Base/DownloadPdfByUrl?urlRelative=" + urlRelative;
 
         window.location = url;

@@ -24,5 +24,12 @@
                 .Include(x => x.MedicalExaminationDocuments)
                 .FirstOrDefault(x => x.Id == id);
         }
+
+        public int GetMaxMedicalExaminationDocumentByType(int requestMedicalExaminationEmployeeId, int medicalExaminationDocumentTypeId)
+        {
+            return Context.MedicalExaminationDocuments
+                .Count(x => x.RequestMedicalExaminationEmployeeId == requestMedicalExaminationEmployeeId &&
+                            x.MedicalExaminationDocumentTypeId == medicalExaminationDocumentTypeId);
+        }
     }
 }
