@@ -193,9 +193,13 @@
                             exist.Date = employee.Date;
                             exist.Observations = employee.Observations;
                             exist.SamplerNumber = employee.SamplerNumber;
-                            exist.RequestMedicalExaminationEmployeeStateId =
-                                (int) EnRequestMedicalExaminationEmployeeState.Pending;
+ 
                             exist.ChangeDate = employee.ChangeDate;
+
+                            exist.RequestMedicalExaminationEmployeeStateId = employee.ChangeDate
+                                ? (int) EnRequestMedicalExaminationEmployeeState.Validated
+                                : (int) EnRequestMedicalExaminationEmployeeState.Pending;
+
                             exist.ClinicId = employee.ClinicId == 0 ? null : employee.ClinicId;
 
                             var saveExist = SaveRequestMedicalExaminationEmployee(exist);
@@ -272,15 +276,22 @@
                             Employee = GetEmployeeById(employee.EmployeeId),
                             Observations = employee.Observations,
                             SamplerNumber = employee.SamplerNumber,
-                            RequestMedicalExaminationEmployeeStateId =
-                                (int) EnRequestMedicalExaminationEmployeeState.Pending,
                             RequestMedicalExaminationsId = requestMedicalExaminationsId,
                             ChangeDate = employee.ChangeDate,
                             ClinicId = employee.ClinicId,
                             Clinic = employee.ClinicId != null ? GetClinicById((int)employee.ClinicId) : null
                         };
                         if (requestMedicalExaminationEmployee.ChangeDate == false)
+                        {
+                            requestMedicalExaminationEmployee.RequestMedicalExaminationEmployeeStateId =
+                                (int) EnRequestMedicalExaminationEmployeeState.Pending;
                             allValidated = false;
+                        }
+                        else
+                        {
+                            requestMedicalExaminationEmployee.RequestMedicalExaminationEmployeeStateId =
+                                (int)EnRequestMedicalExaminationEmployeeState.Validated;
+                        }
 
                         var saveEmployee = SaveRequestMedicalExaminationEmployee(requestMedicalExaminationEmployee);
                         if (saveEmployee.Status == Status.Error)

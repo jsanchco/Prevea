@@ -211,7 +211,7 @@
         var html = "<div align='center'>";
         html += kendo.format("<a toggle='tooltip' title='Editar' onclick='HistoricMedicalExamination.goToEditRequestMedicalExamination(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
 
-        if (GeneralData.userRoleId === Constants.role.ContactPerson) {
+        if (GeneralData.userRoleId === Constants.role.ContactPerson && data.RequestMedicalExaminationStateId === Constants.requestMedicalExaminationState.Pending) {
             html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='HistoricMedicalExamination.goToDeleteRequestMedicalExamination(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
         }
         

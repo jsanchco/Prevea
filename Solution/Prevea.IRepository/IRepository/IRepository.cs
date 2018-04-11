@@ -377,6 +377,7 @@
         DoctorMedicalExaminationEmployee SaveDoctorMedicalExaminationEmployee(DoctorMedicalExaminationEmployee doctorMedicalExaminationEmployee);
         bool DeleteDoctorMedicalExaminationEmployee(int id);
         List<DateTime?> GetDatesByWorkSheet(int doctorId);
+        int GetCountMedicalExaminationByState(int doctorId, DateTime date, EnMedicalExaminationState medicalExaminationState);
 
         #endregion
 

@@ -130,6 +130,8 @@
             contentType: "application/json; charset=utf-8",
             success: function (response) {
                 if (response.resultStatus === Constants.resultStatus.Ok) {
+                    DetailMedicalExamination.createIconMedicalExaminationState(response.medicalExaminationState);
+
                     GeneralData.showNotification(Constants.ok, "", "success");
                 } else {
                     GeneralData.showNotification(Constants.ko, "", "error");

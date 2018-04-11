@@ -23,22 +23,22 @@
     },
 
     setUpPage: function () {
-        this.createIconMedicalExaminationState();
+        this.createIconMedicalExaminationState(this.medicalExaminationStateId);
     },
 
     createKendoWidgets: function () {
         this.createTabStripDetailCompany();
     },
 
-    createIconMedicalExaminationState: function () {
+    createIconMedicalExaminationState: function (medicalExaminationState) {
         var html = "";
-        if (this.medicalExaminationStateId === Constants.medicalExaminationState.Pending) {
+        if (medicalExaminationState === Constants.medicalExaminationState.Pending) {
             html = "<div id='circleError' class='pull-right'></div>";
         }
-        if (this.medicalExaminationStateId === Constants.medicalExaminationState.InProcess) {
+        if (medicalExaminationState === Constants.medicalExaminationState.InProcess) {
             html = "<div id='circleWarning' class='pull-right'></div>";
         }
-        if (this.medicalExaminationStateId === Constants.medicalExaminationState.Finished) {
+        if (medicalExaminationState === Constants.medicalExaminationState.Finished) {
             html = "<div id='circleSuccess' class='pull-right'></div>";
         }
 

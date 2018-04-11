@@ -92,5 +92,13 @@
                 .OrderByDescending(x => x.Value)
                 .ToList();
         }
+
+        public int GetCountMedicalExaminationByState(int doctorId, DateTime date, EnMedicalExaminationState medicalExaminationState)
+        {
+            var requestMedicalExaminationsEmployeesByDoctorId = GetRequestMedicalExaminationEmployeesByDate(doctorId, date);
+
+            return requestMedicalExaminationsEmployeesByDoctorId
+                .Count(x => x.MedicalExamination.MedicalExaminationStateId == (int) medicalExaminationState);
+        }
     }
 }

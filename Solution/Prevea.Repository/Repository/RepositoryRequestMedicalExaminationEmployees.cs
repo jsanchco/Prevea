@@ -101,6 +101,7 @@
         public List<RequestMedicalExaminationEmployee> GetRequestMedicalExaminationEmployeesByDate(int doctorId, DateTime date)
         {
             return Context.RequestMedicalExaminationsEmployees
+                .Include(x => x.MedicalExamination)
                 .Where(x => x.DoctorsMedicalExaminationEmployee.Select(y => y.DoctorId).Contains(doctorId) &&
                             DbFunctions.TruncateTime(x.Date) == DbFunctions.TruncateTime(date))
                 .OrderBy(x => x.Date)

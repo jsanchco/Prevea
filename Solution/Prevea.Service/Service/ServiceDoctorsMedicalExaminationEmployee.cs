@@ -99,5 +99,10 @@
         {
             return Repository.GetDatesByWorkSheet(doctorId);
         }
+
+        public int GetCountMedicalExaminationByState(int doctorId, DateTime date, EnMedicalExaminationState medicalExaminationState)
+        {
+            return Repository.GetCountMedicalExaminationByState(doctorId, date, medicalExaminationState);
+        }
     }
 }

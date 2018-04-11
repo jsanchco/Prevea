@@ -44,7 +44,10 @@
 
                 doctorWorkSheets.Add(new DoctorWorkSheet
                 {
-                    Date = (DateTime)date
+                    Date = (DateTime)date,
+                    MedicalExaminationFinished = Service.GetCountMedicalExaminationByState(User.Id, (DateTime)date, EnMedicalExaminationState.Finished),
+                    MedicalExaminationInProcess = Service.GetCountMedicalExaminationByState(User.Id, (DateTime)date, EnMedicalExaminationState.InProcess),
+                    MedicalExaminationPending = Service.GetCountMedicalExaminationByState(User.Id, (DateTime)date, EnMedicalExaminationState.Pending),
                 });
             }
 

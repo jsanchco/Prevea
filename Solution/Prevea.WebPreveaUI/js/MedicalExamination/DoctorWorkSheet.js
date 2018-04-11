@@ -102,7 +102,7 @@
     },
 
     getColumnTemplateDate: function (data) {
-        var total = data.MedicalExaminationPendings + data.MedicalExaminationInCourse + data.MedicalExaminationFinished;
+        var total = data.MedicalExaminationPending + data.MedicalExaminationInProcess + data.MedicalExaminationFinished;
         var html = "<div><div class='row'><div class='col-sm-2'>";
         html += kendo.format("<div class='row' style='font-weight: bold; margin: 10px;'>{0}</div>", data.Date.getFullYear());
         html += "<div class='row' style=''>&nbsp;</div><div class='row' style=''>&nbsp;</div></div><div class='col-sm-6'>";
@@ -110,8 +110,8 @@
         html += kendo.format("<div class='row' style='font-size: 20px; font-weight: bold;'>{0}</div>", data.Date.getDate());
         html += kendo.format("<div class='row' style='font-size: 10px'>{0}</div>", GeneralData.getMonth(data.Date.getMonth()));
         html += "</div><div class='col-sm-1'><div class='row' style=''>Pendientes:</div><div class='row' style=''>En Curso:</div><div class='row' style=''>Acabados:</div><div class='row' style='font-weight: bold; color: blue;'>Totales:</div></div><div class='col-sm-1'>";
-        html += kendo.format("<div class='row' style=''>{0}</div>", data.MedicalExaminationPendings);
-        html += kendo.format("<div class='row' style=''>{0}</div>", data.MedicalExaminationInCourse);
+        html += kendo.format("<div class='row' style=''>{0}</div>", data.MedicalExaminationPending);
+        html += kendo.format("<div class='row' style=''>{0}</div>", data.MedicalExaminationInProcess);
         html += kendo.format("<div class='row' style=''>{0}</div>", data.MedicalExaminationFinished);
         html += kendo.format("<div class='row' style='font-weight: bold; color: blue;'>{0}</div>", total );
 

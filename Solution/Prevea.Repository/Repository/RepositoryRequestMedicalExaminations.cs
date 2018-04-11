@@ -28,6 +28,7 @@
                 .Include(x => x.RequestMedicalExaminationEmployees)
                 .Include(x => x.RequestMedicalExaminationState)
                 .Include(x => x.Company)
+                .Where(x => x.RequestMedicalExaminationStateId != (int)EnRequestMedicalExaminationState.Deleted)
                 .ToList();
         }
 
@@ -37,7 +38,7 @@
                 .Include(x => x.RequestMedicalExaminationEmployees)
                 .Include(x => x.RequestMedicalExaminationState)
                 .Include(x => x.Company)
-                .Where(x => x.CompanyId == companyId)
+                .Where(x => x.CompanyId == companyId && x.RequestMedicalExaminationStateId != (int)EnRequestMedicalExaminationState.Deleted)
                 .ToList();
         }
 
@@ -76,14 +77,20 @@
                     if (requestMedicalExamination == null)
                         return false;
 
-                    foreach (var requestMedicalExaminationEmployee in requestMedicalExamination.RequestMedicalExaminationEmployees)
-                    {
-                        var medicalExaminationFind = GetMedicalExaminationById(requestMedicalExaminationEmployee.Id);
-                        Context.MedicalExaminations.Remove(medicalExaminationFind);
-                    }
+                    requestMedicalExamination.RequestMedicalExaminationStateId =
+                        (int) EnRequestMedicalExaminationState.Deleted;
 
-                    Context.RequestMedicalExaminations.Remove(requestMedicalExamination);
-                    Context.SaveChanges();
+                    Context.SaveChanges();                    
+
+                    ///// MUY PELIGROSO!!!!!
+                    //foreach (var requestMedicalExaminationEmployee in requestMedicalExamination.RequestMedicalExaminationEmployees)
+                    //{
+                    //    var medicalExaminationFind = GetMedicalExaminationById(requestMedicalExaminationEmployee.Id);
+                    //    Context.MedicalExaminations.Remove(medicalExaminationFind);
+                    //}
+
+                    //Context.RequestMedicalExaminations.Remove(requestMedicalExamination);
+                    //Context.SaveChanges();
 
                     dbContextTransaction.Commit();
 

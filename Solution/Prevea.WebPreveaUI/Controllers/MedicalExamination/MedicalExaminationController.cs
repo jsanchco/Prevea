@@ -226,10 +226,28 @@
             requestMedicalExaminationEmployeeFind.MedicalExamination.InputTemplatesJSON =
                 requestMedicalExaminationEmployee.MedicalExamination.InputTemplatesJSON;
 
+            var inputTemplates = JsonConvert.DeserializeObject<List<InputTemplate>>(requestMedicalExaminationEmployee.MedicalExamination.InputTemplatesJSON);
+            var inputTemplateAptitude = inputTemplates.FirstOrDefault(x => x.Name == "me-71");
+            if (inputTemplateAptitude != null)
+            {
+                if (inputTemplateAptitude.Value == 0 && string.IsNullOrEmpty(inputTemplateAptitude.Text))
+                    requestMedicalExaminationEmployeeFind.MedicalExamination.MedicalExaminationStateId =
+                        (int) EnMedicalExaminationState.InProcess;
+                else
+                    requestMedicalExaminationEmployeeFind.MedicalExamination.MedicalExaminationStateId =
+                        (int)EnMedicalExaminationState.Finished;
+            }
+
             var result = Service.SaveMedicalExamination(requestMedicalExaminationEmployeeFind.MedicalExamination);
 
-            return Json(result.Status == Status.Ok ? 
-                new { resultStatus = Status.Ok } : 
+            if (result.Status == Status.Ok)
+            {
+                return Json(
+                    new {resultStatus = Status.Ok, medicalExaminationState = requestMedicalExaminationEmployeeFind.MedicalExamination.MedicalExaminationStateId },
+                    JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(
                 new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
         }
 

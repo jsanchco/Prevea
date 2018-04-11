@@ -23,5 +23,5 @@
         public virtual ICollection<RequestMedicalExaminations> RequestMedicalExaminations { get; set; }
     }
 
-    public enum EnRequestMedicalExaminationState { Pending = 1, Validated }
+    public enum EnRequestMedicalExaminationState { Pending = 1, Validated, Deleted }
 }

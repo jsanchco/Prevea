@@ -12,8 +12,8 @@
     {
         public DateTime Date { get; set; }
 
-        public int MedicalExaminationPendings { get; set; }
-        public int MedicalExaminationInCourse { get; set; }
+        public int MedicalExaminationPending { get; set; }
+        public int MedicalExaminationInProcess { get; set; }
         public int MedicalExaminationFinished { get; set; }
     }
 }
