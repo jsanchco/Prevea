@@ -49,6 +49,16 @@
             return Repository.GetContatcPersonsByCompany(companyId);
         }
 
+        public List<ContactPerson> GetContactPersons()
+        {
+            return Repository.GetContactPersons();
+        }
+
+        public List<Employee> GetEmployees()
+        {
+            return Repository.GetEmployees();
+        }
+
         public Employee GetEmployeeById(int id)
         {
             return Repository.GetEmployeeById(id);
@@ -446,6 +456,11 @@
         public List<CustomRole> GetCustomRoles(List<int> listRoles)
         {
             return Repository.GetCustomRoles(listRoles);
+        }
+
+        public List<User> GetUsersByUserFromContactUs(int id)
+        {
+            return Repository.GetUsersByUserFromContactUs(id);
         }
 
         public List<User> GetUsersInRoles(List<string> roles)

@@ -12,6 +12,14 @@
 
     public partial class Repository
     {
+        public List<Employee> GetEmployees()
+        {
+            return Context.Employees
+                .Include(x => x.User)
+                .Include(x => x.Company)
+                .ToList();
+        }
+
         public Employee GetEmployeeById(int id)
         {
             return Context.Employees

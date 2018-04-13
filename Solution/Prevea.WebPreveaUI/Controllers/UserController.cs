@@ -244,5 +244,46 @@
         {
             return PartialView();
         }
+
+        public JsonResult ContactUs_Read([DataSourceRequest] DataSourceRequest request)
+        {
+            var users = Service.GetUsersByUserFromContactUs(User.Id);
+            var usersFromContactUs = new List<UserFromContactUsViewModel>();
+            foreach (var user in users)
+            {
+                var userFromContactUsViewModel = new UserFromContactUsViewModel
+                {
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    FullName = $"{user.FirstName} {user.LastName}",
+                    RoleDescription = user.UserRoles.FirstOrDefault()?.Role.Description,
+                    Initials = user.Initials,
+                    Password = user.Password
+                };
+                var role = user.UserRoles.FirstOrDefault();
+                if (role?.Role.Id == (int) EnRole.ContactPerson)
+                {
+                    var contactPerson = Service.GetContactPersons().FirstOrDefault(x => x.UserId == user.Id);
+                    if (contactPerson != null)
+                    {
+                        userFromContactUsViewModel.CompanyName = contactPerson.Company.Name;
+                        userFromContactUsViewModel.CompanyEnrollment = contactPerson.Company.Enrollment;
+                    }
+                }
+                if (role?.Role.Id == (int)EnRole.Employee)
+                {
+                    var employee = Service.GetEmployees().FirstOrDefault(x => x.UserId == user.Id);
+                    if (employee != null)
+                    {
+                        userFromContactUsViewModel.CompanyName = employee.Company.Name;
+                        userFromContactUsViewModel.CompanyEnrollment = employee.Company.Enrollment;
+                    }
+                }
+                usersFromContactUs.Add(userFromContactUsViewModel);
+            }
+
+            return this.Jsonp(usersFromContactUs);
+        }
     }
 }

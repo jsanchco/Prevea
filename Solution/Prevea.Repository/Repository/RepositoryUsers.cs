@@ -302,6 +302,32 @@
             return roles;
         }
 
+        public List<User> GetUsersByUserFromContactUs(int id)
+        {
+            var user = Context.Users.FirstOrDefault(x => x.Id == id);
+
+            var userRole = user?.UserRoles.FirstOrDefault();
+            if (userRole == null)
+                return null;
+            switch (userRole.RoleId)
+            {
+                case (int)EnRole.Super:
+                    var roles = new List<string>
+                    {
+                        Enum.GetName(typeof(EnRole), (int)EnRole.Library),
+                        Enum.GetName(typeof(EnRole), (int)EnRole.PreveaPersonal),
+                        Enum.GetName(typeof(EnRole), (int)EnRole.PreveaCommercial),
+                        Enum.GetName(typeof(EnRole), (int)EnRole.ExternalPersonal),
+                        Enum.GetName(typeof(EnRole), (int)EnRole.ContactPerson),
+                        Enum.GetName(typeof(EnRole), (int)EnRole.Employee)
+                    };
+
+                    return GetUsersInRoles(roles);
+                default:
+                    return Context.Users.Where(x => x.UserParentId == id).ToList();
+            }
+        }
+
         public List<User> GetUsersInRoles(List<string> roles)
         {
             var users = from ur in Context.UserRoles

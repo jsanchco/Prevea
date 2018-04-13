@@ -45,6 +45,8 @@
         ContactPerson GetContactPersonById(int contactPersonId);
         ContactPerson GetContactPersonByUserId(int userId);
         List<User> GetContactPersonsByCompany(int companyId);
+        List<ContactPerson> GetContactPersons();
+        List<Employee> GetEmployees();
         Employee GetEmployeeById(int id);
         List<Employee> GetEmployeesByCompany(int companyId);
         List<User> GetUsersByUser(int id);
@@ -58,6 +60,7 @@
         Result DeleteUser(int userId);
         Result SubscribeUser(int userId, bool subscribe);
         List<CustomRole> GetCustomRoles(List<int> listRoles);
+        List<User> GetUsersByUserFromContactUs(int id);
 
         #endregion
 
