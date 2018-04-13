@@ -39,8 +39,8 @@
                 url = "/User/Users";
                 break;
 
-            case "users|contactUs":
-                url = "/User/ContactUs";
+            case "users|contactAs":
+                url = "/User/ContactAs";
                 break;
 
             case "library|documents":

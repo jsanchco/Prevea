@@ -131,7 +131,7 @@
     <Compile Include="ViewModel\SimulationViewModel.cs" />
     <Compile Include="ViewModel\TrainingCourseTrainingServiceViewModel.cs" />
     <Compile Include="ViewModel\TrainingCourseViewModel.cs" />
-    <Compile Include="ViewModel\UserFromContactUsViewModel.cs" />
+    <Compile Include="ViewModel\UserFromContactAsViewModel.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
     <Compile Include="ViewModel\WorkCenterViewModel.cs" />
   </ItemGroup>

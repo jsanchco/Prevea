@@ -458,9 +458,9 @@
             return Repository.GetCustomRoles(listRoles);
         }
 
-        public List<User> GetUsersByUserFromContactUs(int id)
+        public List<User> GetUsersByUserFromContactAs(int id)
         {
-            return Repository.GetUsersByUserFromContactUs(id);
+            return Repository.GetUsersByUserFromContactAs(id);
         }
 
         public List<User> GetUsersInRoles(List<string> roles)

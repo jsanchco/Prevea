@@ -240,18 +240,18 @@
         }
 
         [HttpGet]
-        public ActionResult ContactUs()
+        public ActionResult ContactAs()
         {
             return PartialView();
         }
 
-        public JsonResult ContactUs_Read([DataSourceRequest] DataSourceRequest request)
+        public JsonResult ContactAs_Read([DataSourceRequest] DataSourceRequest request)
         {
-            var users = Service.GetUsersByUserFromContactUs(User.Id);
-            var usersFromContactUs = new List<UserFromContactUsViewModel>();
+            var users = Service.GetUsersByUserFromContactAs(User.Id);
+            var usersFromContactAs = new List<UserFromContactAsViewModel>();
             foreach (var user in users)
             {
-                var userFromContactUsViewModel = new UserFromContactUsViewModel
+                var userFromContactAsViewModel = new UserFromContactAsViewModel
                 {
                     Id = user.Id,
                     FirstName = user.FirstName,
@@ -267,8 +267,8 @@
                     var contactPerson = Service.GetContactPersons().FirstOrDefault(x => x.UserId == user.Id);
                     if (contactPerson != null)
                     {
-                        userFromContactUsViewModel.CompanyName = contactPerson.Company.Name;
-                        userFromContactUsViewModel.CompanyEnrollment = contactPerson.Company.Enrollment;
+                        userFromContactAsViewModel.CompanyName = contactPerson.Company.Name;
+                        userFromContactAsViewModel.CompanyEnrollment = contactPerson.Company.Enrollment;
                     }
                 }
                 if (role?.Role.Id == (int)EnRole.Employee)
@@ -276,14 +276,14 @@
                     var employee = Service.GetEmployees().FirstOrDefault(x => x.UserId == user.Id);
                     if (employee != null)
                     {
-                        userFromContactUsViewModel.CompanyName = employee.Company.Name;
-                        userFromContactUsViewModel.CompanyEnrollment = employee.Company.Enrollment;
+                        userFromContactAsViewModel.CompanyName = employee.Company.Name;
+                        userFromContactAsViewModel.CompanyEnrollment = employee.Company.Enrollment;
                     }
                 }
-                usersFromContactUs.Add(userFromContactUsViewModel);
+                usersFromContactAs.Add(userFromContactAsViewModel);
             }
 
-            return this.Jsonp(usersFromContactUs);
+            return this.Jsonp(usersFromContactAs);
         }
     }
 }

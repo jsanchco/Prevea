@@ -302,7 +302,7 @@
             return roles;
         }
 
-        public List<User> GetUsersByUserFromContactUs(int id)
+        public List<User> GetUsersByUserFromContactAs(int id)
         {
             var user = Context.Users.FirstOrDefault(x => x.Id == id);
 

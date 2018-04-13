@@ -706,7 +706,7 @@
     <Content Include="js\GeneralData.js" />
     <Content Include="js\Shared\Templates.js" />
     <Content Include="js\Start\Start.js" />
-    <Content Include="js\User\ContactUs.js" />
+    <Content Include="js\User\ContactAs.js" />
     <Content Include="js\User\Users.js" />
     <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\bootstrap-colorpicker.min.js" />
@@ -1175,7 +1175,7 @@
     <Content Include="Views\MedicalExamination\TemplateMedicalExaminationReport.cshtml" />
     <Content Include="Views\MedicalExamination\TemplateEmployeeCitationReport.cshtml" />
     <Content Include="Views\MedicalExamination\AddDocument.cshtml" />
-    <Content Include="Views\User\ContactUs.cshtml" />
+    <Content Include="Views\User\ContactAs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

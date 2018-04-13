@@ -33,7 +33,7 @@
         List<User> GetContatcPersonsByCompany(int companyId);        
         List<User> GetUsersByUser(int id);
         List<CustomRole> GetCustomRoles(List<int> listRoles);
-        List<User> GetUsersByUserFromContactUs(int id);
+        List<User> GetUsersByUserFromContactAs(int id);
         #endregion
 
         #region Document

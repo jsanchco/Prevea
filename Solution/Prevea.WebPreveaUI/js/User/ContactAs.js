@@ -1,17 +1,17 @@
-﻿var ContactUs = kendo.observable({
+﻿var ContactAs = kendo.observable({
 
-    gridContactUsId: "gridContactUs",
+    gridContactAsId: "gridContactAs",
     confirmId: "confirm",
 
-    contactUsDataSource: null,
+    contactAsDataSource: null,
 
     init: function () {
-        this.createContactUsDataSource();
-        this.createContactUsGrid();
+        this.createContactAsDataSource();
+        this.createContactAsGrid();
     },
 
-    createContactUsDataSource: function () {
-        this.contactUsDataSource = new kendo.data.DataSource({
+    createContactAsDataSource: function () {
+        this.contactAsDataSource = new kendo.data.DataSource({
             schema: {
                 model: {
                     id: "Id",
@@ -27,7 +27,7 @@
             },
             transport: {
                 read: {
-                    url: "/User/ContactUs_Read",
+                    url: "/User/ContactAs_Read",
                     dataType: "jsonp"
                 },
                 parameterMap: function (options, operation) {
@@ -42,8 +42,8 @@
         });
     },
 
-    createContactUsGrid: function () {
-        $("#" + this.gridContactUsId).kendoGrid({
+    createContactAsGrid: function () {
+        $("#" + this.gridContactAsId).kendoGrid({
             columns: [{
                 field: "FirstName",
                 title: "Nombre",
@@ -81,7 +81,7 @@
                 width: 120,
                 groupable: "false",
                 filterable: false,                
-                template: "#= ContactUs.getColumnTemplateCommands(data) #"
+                template: "#= ContactAs.getColumnTemplateCommands(data) #"
             }],
             pageable: {
                 buttonCount: 2,
@@ -126,7 +126,7 @@
                     }
                 }
             },
-            dataSource: this.contactUsDataSource,
+            dataSource: this.contactAsDataSource,
             resizable: true,
             autoScroll: true,
             selectable: true,
@@ -145,16 +145,16 @@
     getColumnTemplateCommands: function (data) {
         var html = "<div align='center'>";        
         html += kendo.format(
-            "<a toggle='tooltip' title='Ir a Usuario' onclick='ContactUs.goToUser(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+            "<a toggle='tooltip' title='Ir a Usuario' onclick='ContactAs.goToUser(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
             data.Id);
         html += kendo.format("</div>");
 
         return html;
     },
 
-    goToContactUs: function() {
+    goToContactAs: function() {
         var params = {
-            url: "/User/ContactUs",
+            url: "/User/ContactAs",
             data: {}
         };
         GeneralData.goToActionController(params);
@@ -163,7 +163,7 @@
     goToUser: function (userId) {
         alert("Usuaio " + userId);
         //var params = {
-        //    url: "/User/ContactUs",
+        //    url: "/User/ContactAs",
         //    data: {}
         //};
         //GeneralData.goToActionController(params);

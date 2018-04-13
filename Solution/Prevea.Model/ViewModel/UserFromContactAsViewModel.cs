@@ -1,6 +1,6 @@
 ﻿namespace Prevea.Model.ViewModel
 {
-    public class UserFromContactUsViewModel
+    public class UserFromContactAsViewModel
     {
         public int? Id { get; set; }
         public string FirstName { get; set; }

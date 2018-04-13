@@ -60,7 +60,7 @@
         Result DeleteUser(int userId);
         Result SubscribeUser(int userId, bool subscribe);
         List<CustomRole> GetCustomRoles(List<int> listRoles);
-        List<User> GetUsersByUserFromContactUs(int id);
+        List<User> GetUsersByUserFromContactAs(int id);
 
         #endregion
 
