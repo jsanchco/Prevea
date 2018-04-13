@@ -167,6 +167,8 @@
                     return "Análitica de Sangre";
                 case "Others":
                     return "Otros";
+                case "Blocked":
+                    return "Bloqueada";
 
                 default:
                     return name;

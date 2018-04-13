@@ -178,7 +178,6 @@
                     }
                 }
 
-                var allValidated = true;
                 foreach (var employee in listEmployees)
                 {
                     if (!string.IsNullOrEmpty(employee.Doctors))
@@ -213,8 +212,6 @@
                                     Status = Status.Error
                                 };
                             }
-
-                            allValidated = false;
 
                             var doctorsMedicalExaminationEmployees = GetDoctorsMedicalExaminationEmployees()
                                 .Where(x => x.MedicalExaminationEmployeeId == exist.Id).ToList();
@@ -285,7 +282,6 @@
                         {
                             requestMedicalExaminationEmployee.RequestMedicalExaminationEmployeeStateId =
                                 (int) EnRequestMedicalExaminationEmployeeState.Pending;
-                            allValidated = false;
                         }
                         else
                         {
@@ -345,17 +341,10 @@
                 }
                 else
                 {
-                    if (allValidated)
-                    {
-                        requestMedicalExamination.RequestMedicalExaminationStateId =
-                            (int)EnRequestMedicalExaminationState.Validated;
-                    }
-                    else
-                    {
-                        requestMedicalExamination.RequestMedicalExaminationStateId =
-                            (int)EnRequestMedicalExaminationState.Pending;
-                    }
-
+     
+                    requestMedicalExamination.RequestMedicalExaminationStateId =
+                        (int)EnRequestMedicalExaminationState.Validated;
+     
                     var resultSaveRequestMedicalExaminations = SaveRequestMedicalExaminations(requestMedicalExamination);
                     if (resultSaveRequestMedicalExaminations.Status == Status.Error)
                     {

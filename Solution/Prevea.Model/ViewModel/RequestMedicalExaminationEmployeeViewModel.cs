@@ -13,6 +13,7 @@
         public string EmployeeName { get; set; }
         public string EmployeeDNI { get; set; }        
         public int RequestMedicalExaminationsId { get; set; }
+        public int RequestMedicalExaminationsStateId { get; set; }
         public DateTime Date { get; set; }
         public bool ChangeDate { get; set; }
         public string Observations { get; set; }

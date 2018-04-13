@@ -203,6 +203,9 @@
         if (data.RequestMedicalExaminationStateId === Constants.requestMedicalExaminationState.Validated) {
             html += kendo.format("<div id='circleSuccess' style='float: right; text-align: right;'></div></div>");
         }
+        if (data.RequestMedicalExaminationStateId === Constants.requestMedicalExaminationState.Blocked) {
+            html += kendo.format("<div id='circleSuccess' style='float: right; text-align: right;'></div></div>");
+        }
 
         return html;
     },
@@ -235,9 +238,14 @@
         return html;
     },
 
-    getTemplateChildrenToolBar: function () {
+    getTemplateChildrenToolBar: function (requestMedicalExaminationStateId) {
         var html = "<div class='toolbar'>";
-        html += "<a class='btn btn-prevea' role='button' onclick='HistoricMedicalExamination.validateRequestHistoricMedicalExaminationEmployees()'> Validar</a>";
+        if (requestMedicalExaminationStateId !== Constants.requestMedicalExaminationState.Blocked) {
+            html += "<a class='btn btn-prevea' role='button' onclick='HistoricMedicalExamination.validateRequestHistoricMedicalExaminationEmployees()'> Validar</a>";
+        } else {
+            html += "<a class='btn btn-prevea' role='button' onclick='HistoricMedicalExamination.validateRequestHistoricMedicalExaminationEmployees()' disabled> Validar</a>";
+        }
+        
         html += "</span></div>";
 
         return html;
@@ -358,6 +366,7 @@
                         ChangeDate: { type: "boolean" },
                         Included: { type: "boolean", defaultValue: false, editable: includedEditableValue },
                         RequestMedicalExaminationsId: { type: "number" },
+                        RequestMedicalExaminationsStateId: { type: "number" },
                         ContactPersonId: { type: "number" },
                         NIF: { type: "string", editable: false },
                         ClinicId: { type: "number", editable: clinicEditableValue },
@@ -493,7 +502,7 @@
                     }
                 }
             },
-            toolbar: HistoricMedicalExamination.getTemplateChildrenToolBar(),
+            toolbar: HistoricMedicalExamination.getTemplateChildrenToolBar(e.data.RequestMedicalExaminationStateId),
             editable: true,
             resizable: true,
             autoScroll: true,

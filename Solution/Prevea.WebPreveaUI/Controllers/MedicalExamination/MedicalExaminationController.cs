@@ -238,17 +238,27 @@
                         (int)EnMedicalExaminationState.Finished;
             }
 
-            var result = Service.SaveMedicalExamination(requestMedicalExaminationEmployeeFind.MedicalExamination);
-
-            if (result.Status == Status.Ok)
+            var requestMedicalExamination =
+                Service.GetRequestMedicalExaminationById(requestMedicalExaminationEmployeeFind.RequestMedicalExaminations.Id);
+            requestMedicalExamination.RequestMedicalExaminationStateId = (int) EnRequestMedicalExaminationState.Blocked;
+            var result = Service.SaveRequestMedicalExaminations(requestMedicalExamination);
+            if (result.Status == Status.Error)
             {
                 return Json(
-                    new {resultStatus = Status.Ok, medicalExaminationState = requestMedicalExaminationEmployeeFind.MedicalExamination.MedicalExaminationStateId },
-                    JsonRequestBehavior.AllowGet);
+                    new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
+            }
+
+            result = Service.SaveMedicalExamination(requestMedicalExaminationEmployeeFind.MedicalExamination);
+            if (result.Status == Status.Error)
+            {
+                return Json(
+                    new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
+  
             }
 
             return Json(
-                new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
+                new { resultStatus = Status.Ok, medicalExaminationState = requestMedicalExaminationEmployeeFind.MedicalExamination.MedicalExaminationStateId },
+                JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult PrintMedicalExamination(RequestMedicalExaminationEmployee requestMedicalExaminationEmployee)

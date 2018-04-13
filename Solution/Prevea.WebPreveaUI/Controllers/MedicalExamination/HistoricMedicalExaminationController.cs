@@ -268,6 +268,17 @@
         
         public JsonResult UpdateRequestHistoricMedicalExaminationEmployees(List<RequestMedicalExaminationEmployeeViewModel> listEmployees)
         {
+            var employee = listEmployees.FirstOrDefault();
+            if (employee != null)
+            {
+                var requestMedicalExaminationEmployee = Service.GetRequestMedicalExaminationEmployeeById(employee.Id);
+                if (requestMedicalExaminationEmployee.RequestMedicalExaminations.RequestMedicalExaminationStateId ==
+                    (int) EnRequestMedicalExaminationState.Blocked)
+                {
+                    return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
+                }
+            }
+
             var updateRequestHistoricMedicalExaminationEmployees = Service.UpdateRequestHistoricMedicalExaminationEmployees(AutoMapper.Mapper.Map<List<RequestMedicalExaminationEmployee>>(listEmployees), User.Id);
             
             if (updateRequestHistoricMedicalExaminationEmployees.Status == Status.Error)

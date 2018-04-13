@@ -62,13 +62,14 @@
 
     requestMedicalExaminationState: {
         Pending: 1,
-        Validated: 2
+        Validated: 2,
+        Deleted: 3,
+        Blocked: 4
     },
 
     requestMedicalExaminationEmployeeState: {
         Pending: 1,
-        Validated: 2,
-        Modified: 3
+        Validated: 2        
     },
 
     medicalExaminationState: {

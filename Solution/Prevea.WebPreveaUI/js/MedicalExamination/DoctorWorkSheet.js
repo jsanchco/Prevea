@@ -109,7 +109,7 @@
         html += kendo.format("<div class='row' style='color: red; font-size: 10px'>{0}</div>", GeneralData.getDayOfTheWeek(data.Date.getDay()));
         html += kendo.format("<div class='row' style='font-size: 20px; font-weight: bold;'>{0}</div>", data.Date.getDate());
         html += kendo.format("<div class='row' style='font-size: 10px'>{0}</div>", GeneralData.getMonth(data.Date.getMonth()));
-        html += "</div><div class='col-sm-1'><div class='row' style=''>Pendientes:</div><div class='row' style=''>En Curso:</div><div class='row' style=''>Acabados:</div><div class='row' style='font-weight: bold; color: blue;'>Totales:</div></div><div class='col-sm-1'>";
+        html += "</div><div class='col-sm-1'><div class='row' style=''>Pendientes:</div><div class='row' style=''>En Proceso:</div><div class='row' style=''>Finalizados:</div><div class='row' style='font-weight: bold; color: blue;'>Totales:</div></div><div class='col-sm-1'>";
         html += kendo.format("<div class='row' style=''>{0}</div>", data.MedicalExaminationPending);
         html += kendo.format("<div class='row' style=''>{0}</div>", data.MedicalExaminationInProcess);
         html += kendo.format("<div class='row' style=''>{0}</div>", data.MedicalExaminationFinished);
@@ -148,6 +148,8 @@
                         SamplerNumber: { type: "string" },
                         Date: { type: "date", format: "{hh:mm}", editable: false },
                         RequestMedicalExaminationsId: { type: "number" },
+                        MedicalExaminationStateId: { type: "number" },
+                        MedicalExaminationStateDescription: { type: "string" },
                         EmployeeDNI: { type: "string", editable: false }
                     }
                 }
@@ -224,6 +226,11 @@
                     width: 200,
                     template: "#= Templates.getColumnTemplateDateOnlyHourBold(data.Date) #"
                 }, {
+                    field: "MedicalExaminationStateId",
+                    title: "Estado",
+                    width: 150,
+                    template: "#= DoctorWorkSheet.getColumnTemplateMedicalExaminationState(data) #"
+                }, {
                     title: "Comandos",
                     field: "Commands",
                     width: 120,
@@ -299,6 +306,23 @@
         
         var grid = detailRow.find(".gridEmployeesMedicalExamination").data("kendoGrid");
         grid.setDataSource(dataSourceChildren);                
+    },
+
+    getColumnTemplateMedicalExaminationState: function (data) {
+        var html = kendo.format("<div style='float: left; text-align: left; display: inline;'>{0}</div>",
+            data.MedicalExaminationStateDescription);
+
+        if (data.MedicalExaminationStateId === Constants.medicalExaminationState.Pending) {
+            html += kendo.format("<div id='circleError' style='float: right; text-align: right;'></div></div>");
+        }
+        if (data.MedicalExaminationStateId === Constants.medicalExaminationState.InProcess) {
+            html += kendo.format("<div id='circleWarning' style='float: right; text-align: right;'></div></div>");
+        }
+        if (data.MedicalExaminationStateId === Constants.medicalExaminationState.Finished) {
+            html += kendo.format("<div id='circleSuccess' style='float: right; text-align: right;'></div></div>");
+        }
+
+        return html;
     },
 
     getColumnTemplateCommands: function (data) {
