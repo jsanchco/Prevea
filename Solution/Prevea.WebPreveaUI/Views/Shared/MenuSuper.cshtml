@@ -1,9 +1,23 @@
 ﻿<ul class="main-menu" id="main-menu">
     <li class="root-level">
-        <a id="users" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
-            <i class="fa fa-users"></i>
+        <a id="users" style="cursor: pointer;">
+            <i class="fa fa-cloud"></i>
             <span class="title">Usuarios</span>
         </a>
+        <ul>
+            <li>
+                <a id="users|myUsers" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                    <i class="fa fa-users"></i>
+                    <span class="title">Mis Usuarios</span>
+                </a>
+            </li>
+            <li>
+                <a id="users|contactUs" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                    <i class="fa fa-exchange"></i>
+                    <span class="title">Contactar como</span>
+                </a>
+            </li>
+        </ul>
     </li>
     <li class="has-sub">
         <a id="library">

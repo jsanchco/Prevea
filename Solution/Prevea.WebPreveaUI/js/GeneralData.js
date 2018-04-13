@@ -35,9 +35,12 @@
                 url = "/Dashboard/Index";
                 break;
 
-            case "users":
-            case "br-users":
+            case "users|myUsers":
                 url = "/User/Users";
+                break;
+
+            case "users|contactUs":
+                url = "/User/ContactUs";
                 break;
 
             case "library|documents":

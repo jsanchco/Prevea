@@ -238,5 +238,11 @@
 
             return this.Jsonp(roles);
         }
+
+        [HttpGet]
+        public ActionResult ContactUs()
+        {
+            return PartialView();
+        }
     }
 }

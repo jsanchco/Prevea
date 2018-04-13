@@ -1,19 +1,19 @@
 ﻿<script>
-    Users.init();
+    ContactUs.init();
 </script>
 
 <div class="row" id="pageUsers" style="margin: 8px">
-    
+
     <div id="headerPartialView">
-        <div class="row"><H1>Usuarios</H1></div><br/>
+        <div class="row"><H1>Usuarios</H1></div><br />
 
         <div class="row">
             <div class="col-sm-12">
                 <ol class="breadcrumb bc-2">
                     <li class="active">
-                        <a id="br-users" onclick="Users.goToUsers()" style="cursor: pointer;">
-                            <i class="fa fa-group"></i>
-                            <strong>Mis Usuarios</strong>
+                        <a onclick="Users.goToContactUs()" style="cursor: pointer;">
+                            <i class="fa fa-exchange"></i>
+                            <strong>Contactar como</strong>
                         </a>
                     </li>
                 </ol>
@@ -22,11 +22,11 @@
     </div>
 
     <div id="confirm"></div>
-    
+
     <div id="contentPartialView">
         <div class="row">
             <div class="col-sm-12">
-                <div id="gridUsers" style="height: 77vh;"></div>
+                <div id="gridContactUs" style="height: 77vh;"></div>
             </div>
         </div>
     </div>
