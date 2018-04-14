@@ -245,3 +245,6 @@ ModelManifest.xml
 # ignore a single file
 Solution/Prevea.ConsoleTestModel/App.config
 Solution/Prevea.WebPreveaUI/Web.config
+
+
+Solution/Prevea.WebPreveaUI/App_Data/
