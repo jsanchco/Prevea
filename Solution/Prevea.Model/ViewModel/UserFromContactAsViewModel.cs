@@ -7,6 +7,7 @@
         public string LastName { get; set; }
         public string FullName { get; set; }
         public string Initials { get; set; }
+        public string Nick { get; set; }
         public string Password { get; set; }
         public string CompanyName { get; set; }
         public string CompanyEnrollment { get; set; }

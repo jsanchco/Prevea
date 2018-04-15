@@ -20,8 +20,11 @@
                         FirstName: { type: "string" },
                         LastName: { type: "string" },
                         Initials: { type: "string" },
+                        RoleDescription: { type: "string" },
                         CompanyName: { type: "string" },
-                        CompanyEnrollment: { type: "string" }
+                        CompanyEnrollment: { type: "string" },
+                        Nick: { type: "string" },
+                        Password: { type: "string" }
                     }
                 }
             },
@@ -61,12 +64,9 @@
                 groupable: "false",
                 template: "#= Templates.getColumnTemplateIncrease(data.Initials) #"
             }, {
-                field: "RoleId",
+                field: "RoleDescription",
                 title: "Rol",
-                width: 90,
-                editor: Users.rolesDropDownEditor,
-                template: "#=RoleDescription#",
-                groupHeaderTemplate: "Agrupado : #= Users.getRoleDescription(value) #"
+                width: 90
             }, {
                 field: "CompanyName",
                 title: "Empresa",
@@ -145,8 +145,9 @@
     getColumnTemplateCommands: function (data) {
         var html = "<div align='center'>";        
         html += kendo.format(
-            "<a toggle='tooltip' title='Ir a Usuario' onclick='ContactAs.goToUser(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
-            data.Id);
+            "<a toggle='tooltip' title='Ir a Usuario' onclick='ContactAs.goToUser(\"{0}\", \"{1}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+            data.Nick,
+            data.Password);
         html += kendo.format("</div>");
 
         return html;
@@ -160,12 +161,27 @@
         GeneralData.goToActionController(params);
     },
 
-    goToUser: function (userId) {
-        alert("Usuaio " + userId);
-        //var params = {
-        //    url: "/User/ContactAs",
-        //    data: {}
-        //};
-        //GeneralData.goToActionController(params);
+    goToUser: function (nick, password) {
+        $.ajax({
+            url: "/Login/CallbacksValidateUser",
+            method: "POST",
+            dataType: "json",
+            data: {
+                User: nick,
+                Password: password
+            },
+            success: function (response) {
+                var login_status = response.login_status;
+                var urlSartPage = response.urlSartPage;
+
+                if (login_status === "invalid") {
+                    GeneralData.showNotification(Constants.ko, "", "error");
+                }
+                else
+                if (login_status === "success") {
+                        window.location.href = urlSartPage;
+                }
+            }
+        });
     }
 });

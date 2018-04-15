@@ -319,10 +319,24 @@
                         Enum.GetName(typeof(EnRole), (int)EnRole.PreveaCommercial),
                         Enum.GetName(typeof(EnRole), (int)EnRole.ExternalPersonal),
                         Enum.GetName(typeof(EnRole), (int)EnRole.ContactPerson),
+                        Enum.GetName(typeof(EnRole), (int)EnRole.Doctor),
                         Enum.GetName(typeof(EnRole), (int)EnRole.Employee)
                     };
 
                     return GetUsersInRoles(roles);
+
+                case (int)EnRole.PreveaPersonal:
+                    var users = Context.Users.Where(x => x.UserParentId == id).ToList();
+                    var companies = GetCompaniesByUser(id);
+                    foreach (var company in companies)
+                    {
+                        users.AddRange(company.ContactPersons.Select(contactPerson => contactPerson.User));
+                        users.AddRange(company.Employees.Select(employee => employee.User));
+                    }
+                    users.AddRange(GetUsersInRoles(new List<string> { Enum.GetName(typeof(EnRole), (int)EnRole.Doctor) }));
+
+                    return users;
+
                 default:
                     return Context.Users.Where(x => x.UserParentId == id).ToList();
             }

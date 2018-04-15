@@ -13,6 +13,11 @@
     using Common;
     using System.Linq;
     using Model.CustomModel;
+    using System.Web;
+    using System.Web.Security;
+    using Newtonsoft.Json;
+    using Security;
+    using ViewModels;
 
     #endregion
 
@@ -259,6 +264,7 @@
                     FullName = $"{user.FirstName} {user.LastName}",
                     RoleDescription = user.UserRoles.FirstOrDefault()?.Role.Description,
                     Initials = user.Initials,
+                    Nick = user.Nick,
                     Password = user.Password
                 };
                 var role = user.UserRoles.FirstOrDefault();
