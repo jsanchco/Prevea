@@ -77,15 +77,25 @@ namespace Prevea.Service.Service
             }                       
         }
 
-        public Result SaveDocumentWithParent(int userCreatorId, Document document)
+        public Result SaveDocumentWithParent(Document document)
         {
             try
             {
+                var documentUserCreator = document.DocumentUserCreators.FirstOrDefault();
+                if (documentUserCreator == null)
+                {
+                    return new Result
+                    {
+                        Message = "Se ha producido un error en la Grabación del Documento",
+                        Object = null,
+                        Status = Status.Error
+                    };
+                }
                 document = FillDataDocumentWithParent(document);
 
-                RestoreFile(userCreatorId, document.UrlRelative);
+                RestoreFile(documentUserCreator.UserId, document.UrlRelative);
 
-                document = Repository.SaveDocumentWithParent(userCreatorId, document);
+                document = Repository.SaveDocumentWithParent(document);
 
                 if (document == null)
                 {
@@ -298,7 +308,6 @@ namespace Prevea.Service.Service
                 return null;
 
             var documentParent = Repository.GetDocument((int)document.DocumentParentId);
-            document.DocumentUserCreators = documentParent.DocumentUserCreators;
 
             var extension = string.Empty;
             var documentUserCreator = documentParent.DocumentUserCreators.FirstOrDefault();

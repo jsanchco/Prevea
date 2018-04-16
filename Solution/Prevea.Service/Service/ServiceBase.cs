@@ -44,7 +44,7 @@
 
                 if (fileWithOutExtension == userId.ToString())
                 {
-                    return extension;
+                    return extension.ToLower();
                 }
             }
 

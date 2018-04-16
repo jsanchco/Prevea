@@ -37,7 +37,7 @@
                 field: "Date",
                 title: "Fecha Publicación",
                 width: 180,
-                template: "#= Documents.getColumnTemplateDateInitial(data.Date) #"
+                template: "#= Documents.getColumnTemplateDateInitial(data) #"
             }, {
                 field: "Edition",
                 title: "Edición",

@@ -169,7 +169,8 @@
         {
             try
             {
-                var result = Service.SaveDocumentWithParent(User.Id, document);
+                document.DocumentUserCreators = new List<DocumentUserCreator> { new DocumentUserCreator { UserId = User.Id } };
+                var result = Service.SaveDocumentWithParent(document);
 
                 if (result.Status != Status.Error)
                     return PartialView("Documents");

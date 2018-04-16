@@ -42,22 +42,6 @@
                     Context.Documents.Add(document);
                     Context.SaveChanges();
 
-                    //if (document.DocumentUserCreators != null)
-                    //{
-                    //    foreach (var documentUserCreator in document.DocumentUserCreators)
-                    //    {
-                    //        documentUserCreator.DocumentId = document.Id;
-                    //    }
-                    //}
-                    //if (document.DocumentUserOwners != null)
-                    //{
-                    //    foreach (var documentUserOwner in document.DocumentUserOwners)
-                    //    {
-                    //        documentUserOwner.DocumentId = document.Id;
-                    //    }
-                    //}
-                    //Context.SaveChanges();
-
                     dbContextTransaction.Commit();
 
                     return document;
@@ -73,13 +57,14 @@
             }
         }
 
-        public Document SaveDocumentWithParent(int userCreatorId, Document document)
+        public Document SaveDocumentWithParent(Document document)
         {
             using (var dbContextTransaction = Context.Database.BeginTransaction())
             {
                 try
                 {
-                    var documentsFind = Context.Documents.Where(l => l.Id == document.DocumentParentId || l.DocumentParentId == document.DocumentParentId).ToList();
+                    var documentsFind = Context.Documents.Where(l =>
+                        l.Id == document.DocumentParentId || l.DocumentParentId == document.DocumentParentId).ToList();
                     foreach (var dcF in documentsFind)
                     {
                         if (dcF.DocumentStateId != 1)
@@ -89,13 +74,11 @@
                     }
 
                     Context.Documents.Add(document);
-
                     Context.SaveChanges();
 
                     dbContextTransaction.Commit();
 
                     return document;
-
                 }
                 catch (Exception ex)
                 {

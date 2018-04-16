@@ -15,7 +15,7 @@
         #region Document
 
         Result SaveDocument(Document document, bool restoreFile);
-        Result SaveDocumentWithParent(int userCreatorId, Document document);
+        Result SaveDocumentWithParent(Document document);
         Result UpdateDocument(Document document, bool updateFile);
         Result UnsubscribeDocument(int documentId);
         Result SubscribeDocument(int documentId);
