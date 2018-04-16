@@ -1,4 +1,6 @@
-﻿namespace Prevea.Service.Service
+﻿using System.Linq;
+
+namespace Prevea.Service.Service
 {
     #region Using
 
@@ -26,15 +28,26 @@
             return Repository.GetDocument(id);
         }
 
-        public Result SaveDocument(int userCreatorId, int? userOwnerId, Document document)
+        public Result SaveDocument(Document document, bool restoreFile)
         {
             try
             {
-                document = FillDataDocument(userCreatorId, document);
+                var documentUserCreator = document.DocumentUserCreators.FirstOrDefault();
+                if (documentUserCreator == null)
+                {
+                    return new Result
+                    {
+                        Message = "Se ha producido un error en la Grabación del Documento",
+                        Object = null,
+                        Status = Status.Error
+                    };
+                }
+                document = FillDataDocument(documentUserCreator.UserId, document);
 
-                RestoreFile(userCreatorId, document.UrlRelative);
+                if (restoreFile)
+                    RestoreFile(documentUserCreator.UserId, document.UrlRelative);
 
-                document = Repository.SaveDocument(userCreatorId, userOwnerId, document);
+                document = Repository.SaveDocument(document);
 
                 if (document == null)
                 {
@@ -108,8 +121,19 @@
             {
                 document = FillDataDocumentUpdate(document, updateFile);
 
+                var documentUserCreator = document.DocumentUserCreators.FirstOrDefault();
+                if (documentUserCreator == null)
+                {
+                    return new Result
+                    {
+                        Message = "Se ha producido un error en la Grabación del Documento",
+                        Object = null,
+                        Status = Status.Error
+                    };
+                }
+
                 if (updateFile)
-                    RestoreFile(document.DocumentUserCreatorId, document.UrlRelative);
+                    RestoreFile(documentUserCreator.UserId, document.UrlRelative);
 
                 document = Repository.UpdateDocument(document.Id, document);
 
@@ -258,9 +282,9 @@
             else
                 document.Description = documentsByParent[documentsByParent.Count - 1].Description;
 
-            var fileName = $"{area.Name}_{document.DocumentNumber:000}_{document.Edition}{extension}";
+            var fileName = $"{area.Name}_{document.DocumentNumber:00000}_{document.Edition}{extension}";
 
-            document.UrlRelative = $"{DocumentUpload}/{area.Name}/{fileName}";
+            document.UrlRelative = $"{area.Entity.Directory}/{area.Name}/{fileName}";
             document.Date = DateTime.Now;
             document.DateModification = documentsByParent.Count == 0 ? document.Date : documentsByParent[documentsByParent.Count - 1].Date;
             document.DocumentStateId = 1;            
@@ -274,10 +298,13 @@
                 return null;
 
             var documentParent = Repository.GetDocument((int)document.DocumentParentId);
+            document.DocumentUserCreators = documentParent.DocumentUserCreators;
 
-            document.DocumentUserCreatorId = documentParent.DocumentUserCreatorId;
+            var extension = string.Empty;
+            var documentUserCreator = documentParent.DocumentUserCreators.FirstOrDefault();
+            if (documentUserCreator != null)
+                extension = GetExtension(documentUserCreator.UserId);
 
-            var extension = GetExtension(documentParent.DocumentUserCreator.UserId);
             var area = Repository.GetArea(documentParent.AreaId);
             document.AreaId = area.Id;
 
@@ -291,9 +318,9 @@
             else
                 document.Description = documentsByParent[documentsByParent.Count - 1].Description;
 
-            var fileName = $"{area.Name}_{document.DocumentNumber:000}_{document.Edition}{extension}";
+            var fileName = $"{area.Name}_{document.DocumentNumber:00000}_{document.Edition}{extension}";
 
-            document.UrlRelative = $"{DocumentUpload}/{area.Name}/{fileName}";
+            document.UrlRelative = $"{area.Entity.Directory}/{area.Name}/{fileName}";
             document.Date = DateTime.Now;
             document.DateModification = documentsByParent.Count == 0 ? document.Date : documentsByParent[documentsByParent.Count - 1].Date;
             document.DocumentStateId = 1;
@@ -312,9 +339,12 @@
             if (!updateFile)
                 return documentOriginal;
 
-            var extension = GetExtension(documentOriginal.DocumentUserCreatorId);
-            var fileName = $"{documentOriginal.Area.Name}_{documentOriginal.DocumentNumber:000}_{documentOriginal.Edition}{extension}";
-            documentOriginal.UrlRelative = $"{DocumentUpload}/{documentOriginal.Area.Name}/{fileName}";
+            var extension = string.Empty;
+            var documentUserCreator = documentOriginal.DocumentUserCreators.FirstOrDefault();
+            if (documentUserCreator != null)
+                extension = GetExtension(documentUserCreator.UserId);
+            var fileName = $"{documentOriginal.Area.Name}_{documentOriginal.DocumentNumber:00000}_{documentOriginal.Edition}{extension}";
+            documentOriginal.UrlRelative = $"{document.Area.Entity.Directory}/{documentOriginal.Area.Name}/{fileName}";
 
             return documentOriginal;
         }

@@ -59,8 +59,8 @@ namespace Prevea.ConsoleTestModel.Migrations
 
             var entities = new List<Entity>
             {
-                new Entity { Name = "Library", Description = "Biblioteca" },
-                new Entity { Name = "Companies", Description = "Empresas" }
+                new Entity { Name = "Library", Description = "Biblioteca", Directory = "~/App_Data/Library" },
+                new Entity { Name = "Companies", Description = "Empresas", Directory = "~/App_Data/Company" }
             };
             entities.ForEach(p => context.Entities.AddOrUpdate(s => s.Id, p));
             context.SaveChanges();

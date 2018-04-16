@@ -146,7 +146,8 @@
         {
             try
             {
-                var result = Service.SaveDocument(User.Id, null, document);
+                document.DocumentUserCreators = new List<DocumentUserCreator> { new DocumentUserCreator { UserId = User.Id } };
+                var result = Service.SaveDocument(document, true);
 
                 if (result.Status != Status.Error)
                     return PartialView("Documents");

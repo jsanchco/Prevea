@@ -14,7 +14,7 @@
         {
             AutoMapper.Mapper.CreateMap<Document, DocumentViewModel>()
                 .ForMember(x => x.AreaName, x => x.MapFrom(y => y.Area.Name))
-                .ForMember(x => x.DocumentUserCreatorName, x => x.MapFrom(y => y.DocumentUserCreator.User.Initials));
+                .ForMember(x => x.DocumentUserCreatorName, x => x.MapFrom(y => y.DocumentUserCreators.FirstOrDefault().User.Initials));
             AutoMapper.Mapper.CreateMap<DocumentViewModel, Document>();
 
             AutoMapper.Mapper.CreateMap<HistoricDownloadDocument, HistoricDownloadDocumentViewModel>()

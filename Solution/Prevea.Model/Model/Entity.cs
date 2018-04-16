@@ -15,6 +15,7 @@
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
+        public string Directory { get; set; }
 
         public virtual ICollection<Area> Areas { get; set; }
     }

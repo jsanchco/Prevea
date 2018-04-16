@@ -84,5 +84,7 @@
         public virtual ICollection<Simulation> Simulations { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
         public virtual ICollection<DoctorMedicalExaminationEmployee> DoctorsMedicalExaminationEmployee { get; set; }
+        public virtual ICollection<DocumentUserCreator> DocumentUserCreators { get; set; }
+        public virtual ICollection<DocumentUserOwner> DocumentUserOwners { get; set; }
     }
 }

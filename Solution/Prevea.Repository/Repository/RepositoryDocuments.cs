@@ -33,18 +33,30 @@
                 .FirstOrDefault(m => m.Id == id);
         }
 
-        public Document SaveDocument(int userCreatorId, int? userOwnerId, Document document)
+        public Document SaveDocument(Document document)
         {
             using (var dbContextTransaction = Context.Database.BeginTransaction())
             {
                 try
                 {
                     Context.Documents.Add(document);
-                    Context.DocumentUserCreators.Add(new DocumentUserCreator { UserId = userCreatorId } );
-                    if (userOwnerId != null)
-                        Context.DocumentUserOwners.Add(new DocumentUserOwner { UserId = (int)userOwnerId });
-
                     Context.SaveChanges();
+
+                    //if (document.DocumentUserCreators != null)
+                    //{
+                    //    foreach (var documentUserCreator in document.DocumentUserCreators)
+                    //    {
+                    //        documentUserCreator.DocumentId = document.Id;
+                    //    }
+                    //}
+                    //if (document.DocumentUserOwners != null)
+                    //{
+                    //    foreach (var documentUserOwner in document.DocumentUserOwners)
+                    //    {
+                    //        documentUserOwner.DocumentId = document.Id;
+                    //    }
+                    //}
+                    //Context.SaveChanges();
 
                     dbContextTransaction.Commit();
 
@@ -77,7 +89,6 @@
                     }
 
                     Context.Documents.Add(document);
-                    Context.DocumentUserCreators.Add(new DocumentUserCreator { UserId = userCreatorId });
 
                     Context.SaveChanges();
 

@@ -40,7 +40,7 @@
 
         List<Document> GetDocuments();
         Document GetDocument(int id);
-        Document SaveDocument(int userCreatorId, int? userOwnerId, Document document);
+        Document SaveDocument(Document document);
         Document SaveDocumentWithParent(int userCreatorId, Document document);
         Document UpdateDocument(int id, Document document);        
         Document UnsubscribeDocument(int id);

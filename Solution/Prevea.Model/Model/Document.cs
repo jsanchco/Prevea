@@ -20,7 +20,7 @@
         public string FileName => Path.GetFileName(UrlRelative);
         public string Extension => Path.GetExtension(UrlRelative);
 
-        public string Name => $"{Area.Name}_{DocumentNumber:000}_{Edition}";
+        public string Name => $"{Area.Name}_{DocumentNumber:00000}_{Edition}";
 
         public string Icon => HelperClass.GetExension(UrlRelative);
 
@@ -38,20 +38,13 @@
         [Required]
         public int Edition { get; set; }
 
-        [Required]
         public int AreaId { get; set; }
-        public virtual Area Area { get; set; }
+        public virtual Area Area { get; set; }        
 
-        [Required]
-        public int DocumentUserCreatorId { get; set; }
-        public virtual DocumentUserCreator DocumentUserCreator { get; set; }
-
-        public int? DocumentUserOwnerId { get; set; }
-        public virtual DocumentUserOwner DocumentUserOwner { get; set; }
-
-        [Required]
         public int DocumentStateId { get; set; }
         public virtual DocumentState DocumentState { get; set; }
+
+        public bool HasFirm { get; set; }
 
         public int? DocumentParentId { get; set; }
         public virtual Document DocumentParent { get; set; }
@@ -60,6 +53,10 @@
         public virtual Company Company { get; set; }
                        
         public virtual ICollection<HistoricDownloadDocument> HistoricDownloadDocuments { get; set; }
+
+        public virtual ICollection<DocumentUserCreator> DocumentUserCreators { get; set; }
+
+        public virtual ICollection<DocumentUserOwner> DocumentUserOwners { get; set; }
 
         #region Constructor
 
