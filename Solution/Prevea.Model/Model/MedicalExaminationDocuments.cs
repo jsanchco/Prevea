@@ -3,6 +3,7 @@
     #region Using
 
     using System.ComponentModel.DataAnnotations;
+    using System.Collections.Generic;
 
     #endregion
 
@@ -20,5 +21,7 @@
 
         public int MedicalExaminationDocumentTypeId { get; set; }
         public virtual MedicalExaminationDocumentType MedicalExaminationDocumentType { get; set; }
+
+        public virtual ICollection<ModelDocument> ModelsDocuments { get; set; }
     }
 }

@@ -428,7 +428,7 @@
 
         public JsonResult DocumentMedicalExaminationTypes_Read([DataSourceRequest] DataSourceRequest request)
         {
-            var data = AutoMapper.Mapper.Map<List<MedicalExaminationDocumentTypeViewModel>>(Service.GetMedicalExaminationDocumentTypes());
+            var data = AutoMapper.Mapper.Map<List<MedicalExaminationDocumentTypeViewModel>>(Service.GetMedicalExaminationDocumentTypes().Where(x => x.Id != (int) EnMedicalExaminationDocumentType.MedicalExamination));
 
             return this.Jsonp(data);
         }

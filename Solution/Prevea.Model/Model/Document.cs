@@ -58,6 +58,8 @@
 
         public virtual ICollection<DocumentUserOwner> DocumentUserOwners { get; set; }
 
+        public virtual ICollection<ModelDocument> ModelsDocuments { get; set; }
+
         #region Constructor
 
         public Document()

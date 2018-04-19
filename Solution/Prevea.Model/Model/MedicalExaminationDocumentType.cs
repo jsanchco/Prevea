@@ -23,5 +23,5 @@
         public virtual ICollection<MedicalExaminationDocuments> MedicalExaminationDocuments { get; set; }
     }
 
-    public enum EnMedicalExaminationDocumentType { BloodTest = 1, Electrocardiogram, AudiometricReport, Spirometry, UrineAnalytics, Others }
+    public enum EnMedicalExaminationDocumentType { MedicalExamination = 1, BloodTest, Electrocardiogram, AudiometricReport, Spirometry, UrineAnalytics, Others }
 }

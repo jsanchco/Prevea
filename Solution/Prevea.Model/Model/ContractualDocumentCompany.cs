@@ -4,6 +4,7 @@
 
     using System.ComponentModel.DataAnnotations;
     using System;
+    using System.Collections.Generic;
 
     #endregion
 
@@ -47,5 +48,7 @@
 
         public int SimulationId { get; set; }
         public virtual Simulation Simulation { get; set; }
+
+        public virtual ICollection<ModelDocument> ModelsDocuments { get; set; }
     }
 }

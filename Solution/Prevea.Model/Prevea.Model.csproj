@@ -79,6 +79,7 @@
     <Compile Include="Model\EstablishmentType.cs" />
     <Compile Include="Model\ForeignPreventionService.cs" />
     <Compile Include="Model\HistoricDownloadDocument.cs" />
+    <Compile Include="Model\ModelDocument.cs" />
     <Compile Include="Model\ModePayment.cs" />
     <Compile Include="Model\ModePaymentMedicalExamination.cs" />
     <Compile Include="Model\Notification.cs" />

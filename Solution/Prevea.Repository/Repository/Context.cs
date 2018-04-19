@@ -63,6 +63,7 @@
         public DbSet<DoctorMedicalExaminationEmployee> DoctorMedicalExaminationEmployees { get; set; }
         public DbSet<MedicalExaminationDocuments> MedicalExaminationDocuments { get; set; }
         public DbSet<MedicalExaminationDocumentType> MedicalExaminationDocumentTypes { get; set; }
+        public DbSet<ModelDocument> ModelsDocuments { get; set; }
 
         #endregion
 
