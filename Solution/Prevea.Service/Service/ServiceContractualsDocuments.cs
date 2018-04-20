@@ -522,5 +522,123 @@
 
             return typeId;
         }
+
+        private Document GetDocument(object entity)
+        {
+            var document = new Document();
+
+            #region ContractualDocumentCompany
+            if (entity is ContractualDocumentCompany)
+            {
+                Area area;
+                switch (((ContractualDocumentCompany)entity).ContractualDocumentTypeId)
+                {
+                    case (int)EnContractualDocumentType.OfferSPA:
+                        area = Repository.GetAreas().FirstOrDefault(x => x.Name == "OFE");
+                        if (area != null)
+                        {
+                            document.Description = $"Oferta SPA Empresa [{((ContractualDocumentCompany)entity).Company.Enrollment}, {((ContractualDocumentCompany)entity).Company.Name}] -> Simulación [{((ContractualDocumentCompany)entity).Company.SimulationCompanyActive.Simulation.Name}]";
+                            document.AreaId = area.Id;
+                        }
+                        else
+                            return null;
+
+                        break;
+
+                    case (int)EnContractualDocumentType.OfferFOR:
+                        area = Repository.GetAreas().FirstOrDefault(x => x.Name == "OFE");
+                        if (area != null)
+                        {
+                            document.Description = $"Oferta Formación Empresa [{((ContractualDocumentCompany)entity).Company.Enrollment}, {((ContractualDocumentCompany)entity).Company.Name}] -> Simulación [{((ContractualDocumentCompany)entity).Company.SimulationCompanyActive.Simulation.Name}]";
+                            document.AreaId = area.Id;
+                        }
+                        else
+                            return null;
+
+                        break;
+
+                    case (int)EnContractualDocumentType.OfferGES:
+                        area = Repository.GetAreas().FirstOrDefault(x => x.Name == "OFE");
+                        if (area != null)
+                        {
+                            document.Description = $"Oferta Formación Gestoría [{((ContractualDocumentCompany)entity).Company.Enrollment}, {((ContractualDocumentCompany)entity).Company.Name}] -> Simulación [{((ContractualDocumentCompany)entity).Company.SimulationCompanyActive.Simulation.Name}]";
+                            document.AreaId = area.Id;
+                        }
+                        else
+                            return null;
+
+                        break;
+
+
+                    case (int)EnContractualDocumentType.ContractSPA:
+                        area = Repository.GetAreas().FirstOrDefault(x => x.Name == "CON");
+                        if (area != null)
+                        {
+                            document.Description = $"Contrato Empresa [{((ContractualDocumentCompany)entity).Company.Enrollment}, {((ContractualDocumentCompany)entity).Company.Name}] -> Simulación [{((ContractualDocumentCompany)entity).Company.SimulationCompanyActive.Simulation.Name}]";
+                            document.AreaId = area.Id;
+                        }
+                        else
+                            return null;
+
+                        break;
+
+                    case (int)EnContractualDocumentType.ContractFOR:
+                        area = Repository.GetAreas().FirstOrDefault(x => x.Name == "CON");
+                        if (area != null)
+                        {
+                            document.Description = $"Contrato Formación [{((ContractualDocumentCompany)entity).Company.Enrollment}, {((ContractualDocumentCompany)entity).Company.Name}] -> Simulación [{((ContractualDocumentCompany)entity).Company.SimulationCompanyActive.Simulation.Name}]";
+                            document.AreaId = area.Id;
+                        }
+                        else
+                            return null;
+
+                        break;
+
+                    case (int)EnContractualDocumentType.ContractGES:
+                        area = Repository.GetAreas().FirstOrDefault(x => x.Name == "CON");
+                        if (area != null)
+                        {
+                            document.Description = $"Contrato Gestoría [{((ContractualDocumentCompany)entity).Company.Enrollment}, {((ContractualDocumentCompany)entity).Company.Name}] -> Simulación [{((ContractualDocumentCompany)entity).Company.SimulationCompanyActive.Simulation.Name}]";
+                            document.AreaId = area.Id;
+                        }
+                        else
+                            return null;
+
+                        break;
+
+                    case (int)EnContractualDocumentType.Annex:
+                        area = Repository.GetAreas().FirstOrDefault(x => x.Name == "ANX");
+                        if (area != null)
+                        {
+                            document.Description = $"Anexo [{((ContractualDocumentCompany)entity).Company.Enrollment}, {((ContractualDocumentCompany)entity).Company.Name}]";
+                            document.AreaId = area.Id;                            
+                        }
+                        else
+                            return null;
+
+                        break;
+
+                    case (int)EnContractualDocumentType.OtherDocuments:
+                        area = Repository.GetAreas().FirstOrDefault(x => x.Name == "OTR");
+                        if (area != null)
+                        {
+                            area.Description = $"Otro Documento Contractual [{((ContractualDocumentCompany)entity).Company.Enrollment}, {((ContractualDocumentCompany)entity).Company.Name}] ({((ContractualDocumentCompany)entity).Observations})";
+                            document.AreaId = area.Id;
+                        }
+                        else
+                            return null;
+
+                        break;
+                }
+
+                document.CompanyId = ((ContractualDocumentCompany) entity).CompanyId;
+                document.Date = ((ContractualDocumentCompany) entity).Date;
+                document.DocumentStateId = (int) EnDocumentState.Activo;
+                document.Edition = 1;
+            }
+            #endregion
+
+            return document;
+        }
     }
 }

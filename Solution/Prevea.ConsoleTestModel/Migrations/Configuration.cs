@@ -71,7 +71,11 @@ namespace Prevea.ConsoleTestModel.Migrations
                 new Area { Name = "FOR", Description = "Formación", EntityId = 1 },
                 new Area { Name = "TEC", Description = "Técnicas", EntityId = 1 },
                 new Area { Name = "MET", Description = "Medicina trabajo", EntityId = 1 },
-                new Area { Name = "COM", Description = "Comercial", EntityId = 1 }
+                new Area { Name = "COM", Description = "Comercial", EntityId = 1 },
+                new Area { Name = "CON", Description = "Contrato", EntityId = 2 },
+                new Area { Name = "OFE", Description = "Oferta", EntityId = 2 },
+                new Area { Name = "ANX", Description = "Anexo", EntityId = 2 },
+                new Area { Name = "OTR", Description = "Otros Documentos", EntityId = 2 }
             };
             areas.ForEach(p => context.Areas.AddOrUpdate(s => s.Id, p));
             context.SaveChanges();
