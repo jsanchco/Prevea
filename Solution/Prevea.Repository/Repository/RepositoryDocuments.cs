@@ -253,13 +253,11 @@
 
         public List<Document> GetDocumentsContractualsByCompany(int? companyId)
         {
-            var areasName = new List<string> { "OFE", "CON", "ANX", "OTR", "UNS" };
-
             return Context.Documents
                 .Include(x => x.DocumentState)
                 .Include(x => x.Area)
                 .Include(x => x.Company)
-                .Where(x => areasName.Contains(x.Area.Name) && x.CompanyId == companyId)
+                .Where(x => x.Area.EntityId == 2 && x.CompanyId == companyId)
                 .ToList();
         }
     }

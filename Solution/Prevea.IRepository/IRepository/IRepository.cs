@@ -75,6 +75,7 @@
         void DeleteArea(int id);
 
         List<Area> GetAreasByEntity(int entityId);
+        List<Area> GetAreasByCompanyAndSimulation(int companyId, int simulationId);
 
         #endregion
 

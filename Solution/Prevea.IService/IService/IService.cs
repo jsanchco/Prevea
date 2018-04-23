@@ -24,7 +24,7 @@
         List<Document> GetDocumentsByParent(int id, int? parentId);
         Document GetDocument(int id);
         List<Document> GetDocumentsContractualsByCompany(int? companyId);
-        string VerifyNewContractualDocument(int contractualDocumentId);
+        string VerifyNewContractualDocument(Document document);
 
         void RestoreFile(int userId, string urlRelative);
         void SaveFileTmp(int userId, HttpPostedFileBase files);
@@ -35,6 +35,7 @@
 
         List<Area> GetAreasByEntity(int entityId);
         Area GetAreaByName(string name);
+        List<Area> GetAreasByCompanyAndSimulation(int companyId, int simulationId);
 
         #endregion
 

@@ -56,7 +56,9 @@
 
         public int? CompanyId { get; set; }
         public virtual Company Company { get; set; }
-                       
+        public int? SimulationId { get; set; }
+        public virtual Simulation Simulation { get; set; }
+
         public virtual ICollection<HistoricDownloadDocument> HistoricDownloadDocuments { get; set; }
 
         public virtual ICollection<DocumentUserCreator> DocumentUserCreators { get; set; }

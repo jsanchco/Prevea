@@ -16,6 +16,7 @@
         public string Name { get; set; }
         public int AreaId { get; set; }
         public string AreaName { get; set; }
+        public string AreaDescription { get; set; }
         public string AreaUrl { get; set; }
         public string Icon { get; set; }
         public bool UpdateFile { get; set; }
@@ -29,5 +30,9 @@
         public string DocumentUserCreatorName { get; set; }
         public bool HasFirm { get; set; }
         public bool IsFirmedDocument { get; set; }
+        public int CompanyId { get; set; }
+        public string CompanyName { get; set; }
+        public int SimulationId { get; set; }
+        public int SimulationName { get; set; }
     }
 }

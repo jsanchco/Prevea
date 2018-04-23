@@ -48,6 +48,7 @@
                     };
                 }
                 document = FillDataDocument(documentUserCreator.UserId, document);
+                document.DocumentUserOwners = usersOwners;
 
                 if (restoreFile)
                     RestoreFile(documentUserCreator.UserId, document.UrlRelative);
@@ -282,20 +283,17 @@
             }
         }
 
-        public string VerifyNewContractualDocument(int contractualDocumentId)
+        public string VerifyNewContractualDocument(Document document)
         {
             var error = string.Empty;
             string errorGeneralData;
             string errorModePayment;
-            var document = Repository.GetDocument(contractualDocumentId);
-            if (document?.Company == null)
-            {
-                return "Documento/Empresa no encontrad@";
-            }
 
             switch (document.AreaId)
             {
-                case 2: // Oferta
+                case 6: // Oferta SPA
+                case 7: // Oferta FOR
+                case 8: // Oferta GES
                     errorGeneralData = GetErrorInGeneralData(document.Company);
                     if (!string.IsNullOrEmpty(errorGeneralData))
                     {
@@ -319,7 +317,9 @@
 
                     break;
 
-                case 7: // Contrato
+                case 9: // Contrato SPA
+                case 10: // Contrato FOR
+                case 11: // Contrato GES
                     errorGeneralData = GetErrorInGeneralData(document.Company);
                     if (!string.IsNullOrEmpty(errorGeneralData))
                     {
@@ -343,8 +343,8 @@
 
                     break;
 
-                case 8: // Anexo
-                case 10: // Baja Contrato
+                case 12: // Anexo
+                case 14: // Baja Contrato
                     errorGeneralData = GetErrorInGeneralData(document.Company);
                     if (!string.IsNullOrEmpty(errorGeneralData))
                     {
@@ -382,14 +382,23 @@
             var documentsByParent = Repository.GetDocumentsByParent(document.Id, document.DocumentParentId);
             document.Edition = documentsByParent.Count + 1;
 
-            if (document.DocumentParentId == null)
-                document.Observations = "*** Documento Original ***";
-            else
-                document.Description = documentsByParent[documentsByParent.Count - 1].Description;
+            switch (area.EntityId)
+            {
+                case 1:
+                    if (document.DocumentParentId == null)
+                        document.Observations = "*** Documento Original ***";
+                    else
+                        document.Description = documentsByParent[documentsByParent.Count - 1].Description;
+                    break;
+
+                case 2:
+                    document.Description = document.HasFirm ? document.Description = $"{area.Name} Firmad@" : document.Description = area.Name;
+                    break;
+            }
 
             var fileName = $"{area.Name}_{document.DocumentNumber:00000}_{document.Edition}{extension}";
 
-            document.UrlRelative = $"{area.Url}/{fileName}";
+            document.UrlRelative = $"{area.Url}{fileName}";
             document.Date = DateTime.Now;
             document.DateModification = documentsByParent.Count == 0 ? document.Date : documentsByParent[documentsByParent.Count - 1].Date;
             document.DocumentStateId = 1;            
@@ -417,14 +426,23 @@
             var documentsByParent = Repository.GetDocumentsByParent(document.Id, document.DocumentParentId);
             document.Edition = documentsByParent.Count + 1;
 
-            if (document.DocumentParentId == null)
-                document.Observations = "*** Documento Original ***";
-            else
-                document.Description = documentsByParent[documentsByParent.Count - 1].Description;
+            switch (area.EntityId)
+            {
+                case 1:
+                    if (document.DocumentParentId == null)
+                        document.Observations = "*** Documento Original ***";
+                    else
+                        document.Description = documentsByParent[documentsByParent.Count - 1].Description;
+                    break;
+
+                case 2:
+                    document.Description = document.HasFirm ? document.Description = $"{area.Name} Firmad@" : document.Description = area.Name;
+                    break;
+            }
 
             var fileName = $"{area.Name}_{document.DocumentNumber:00000}_{document.Edition}{extension}";
 
-            document.UrlRelative = $"{area.Url}/{fileName}";
+            document.UrlRelative = $"{area.Url}{fileName}";
             document.Date = DateTime.Now;
             document.DateModification = documentsByParent.Count == 0 ? document.Date : documentsByParent[documentsByParent.Count - 1].Date;
             document.DocumentStateId = 1;
@@ -448,7 +466,7 @@
             if (documentUserCreator != null)
                 extension = GetExtension(documentUserCreator.UserId);
             var fileName = $"{documentOriginal.Area.Name}_{documentOriginal.DocumentNumber:00000}_{documentOriginal.Edition}{extension}";
-            documentOriginal.UrlRelative = $"{documentOriginal.Area.Url}/{fileName}";
+            documentOriginal.UrlRelative = $"{documentOriginal.Area.Url}{fileName}";
 
             return documentOriginal;
         }

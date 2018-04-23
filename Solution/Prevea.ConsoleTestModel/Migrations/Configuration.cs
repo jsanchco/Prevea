@@ -72,11 +72,15 @@ namespace Prevea.ConsoleTestModel.Migrations
                 new Area { Name = "TEC", Description = "Técnicas", EntityId = 1, Url = "~/App_Data/Library/TEC/"  }, // 3
                 new Area { Name = "MET", Description = "Medicina trabajo", EntityId = 1, Url = "~/App_Data/Library/MET/"  }, // 4
                 new Area { Name = "COM", Description = "Comercial", EntityId = 1, Url = "~/App_Data/Library/COM/"  }, // 5
-                new Area { Name = "OFE", Description = "Oferta", EntityId = 2, Url = "~/App_Data/Company/OFE/"  }, // 6
-                new Area { Name = "CON", Description = "Contrato", EntityId = 2, Url = "~/App_Data/Company/CON/" }, // 7
-                new Area { Name = "ANX", Description = "Anexo", EntityId = 2, Url = "~/App_Data/Company/ANX/" }, // 8
-                new Area { Name = "OTR", Description = "Otros Documentos", EntityId = 2, Url = "~/App_Data/Company/OTR/" }, // 9
-                new Area { Name = "UNS", Description = "Baja Documento", EntityId = 2, Url = "~/App_Data/Company/UNS/" } // 10
+                new Area { Name = "OFE_SPA", Description = "Oferta SPA", EntityId = 2, Url = "~/App_Data/Company/OFE/SPA/"  }, // 6
+                new Area { Name = "OFE_FOR", Description = "Oferta Formación", EntityId = 2, Url = "~/App_Data/Company/OFE/FOR/"  }, // 7
+                new Area { Name = "OFE_GES", Description = "Oferta Gestoría", EntityId = 2, Url = "~/App_Data/Company/OFE/GES/"  }, // 8
+                new Area { Name = "CON_SPA", Description = "Contrato SPA", EntityId = 2, Url = "~/App_Data/Company/CON/SPA/" }, // 9
+                new Area { Name = "CON_FOR", Description = "Contrato Formación", EntityId = 2, Url = "~/App_Data/Company/CON/FOR/" }, // 10
+                new Area { Name = "CON_GES", Description = "Contrato Gestoría", EntityId = 2, Url = "~/App_Data/Company/CON/GES/" }, // 11
+                new Area { Name = "ANX", Description = "Anexo", EntityId = 2, Url = "~/App_Data/Company/ANX/" }, // 12
+                new Area { Name = "OTR", Description = "Otros Documentos", EntityId = 2, Url = "~/App_Data/Company/OTR/" }, // 13
+                new Area { Name = "UNS", Description = "Baja Documento", EntityId = 2, Url = "~/App_Data/Company/UNS/" } // 14
             };
             areas.ForEach(p => context.Areas.AddOrUpdate(s => s.Id, p));
             context.SaveChanges();

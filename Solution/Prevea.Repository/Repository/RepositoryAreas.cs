@@ -123,5 +123,14 @@
                 .Where(x => x.Entity.Id == entityId)
                 .ToList();
         }
+
+        public List<Area> GetAreasByCompanyAndSimulation(int companyId, int simulationId)
+        {
+            return Context.Areas
+                .Include(x => x.Entity)
+                .Include(x => x.Documents)
+                .Where(x => x.Entity.Id == 2)
+                .ToList();
+        }
     }
 }

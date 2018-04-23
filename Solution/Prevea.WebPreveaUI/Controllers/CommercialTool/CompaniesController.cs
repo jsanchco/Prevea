@@ -14,8 +14,6 @@
     using Model.ViewModel;
     using Common;
     using System.Diagnostics;
-    using System.IO;
-    using Rotativa.MVC;
     using System.Web;
 
     #endregion
@@ -683,22 +681,33 @@
         {
             try
             {
-                var contractualDocument = this.DeserializeObject<DocumentViewModel>("contractualDocument");
-                if (contractualDocument == null)
+                var document = this.DeserializeObject<Document>("document");
+                if (document?.CompanyId == null)
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
 
-                var error = Service.VerifyNewContractualDocument(contractualDocument.Id);
+                var company = Service.GetCompany((int)document.CompanyId);
+                document.Company = company;
+                var error = Service.VerifyNewContractualDocument(document);
                 if (!string.IsNullOrEmpty(error))  
                     return this.Jsonp(new { Errors = error });
 
-                var result = Service.SaveDocument(AutoMapper.Mapper.Map<Document>(contractualDocument), false, null, null);
+                var documentUserOwners = new List<DocumentUserOwner>();                
+                if (company?.ContactPersons != null)
+                    documentUserOwners.AddRange(company.ContactPersons.Select(contactPerson => new DocumentUserOwner {UserId = contactPerson.UserId}));
+
+                var result = Service.SaveDocument(
+                    document, 
+                    false, 
+                    new List<DocumentUserCreator> { new DocumentUserCreator { UserId = User.Id} },
+                    documentUserOwners);
+
                 if (result.Status == Status.Error)
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
 
-                if (contractualDocument.AreaId == 9) // Otros documentos
+                if (document.AreaId == 9) // Otros documentos
                     return this.Jsonp(AutoMapper.Mapper.Map<DocumentViewModel>(result.Object));
 
-                if (!CreatePdf(result.Object as Document, GetActionResultForReport(contractualDocument.AreaId)))  
+                if (!CreatePdf(result.Object as Document, GetActionResultForReport(document.AreaId)))  
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
 
                 return this.Jsonp(AutoMapper.Mapper.Map<DocumentViewModel>(result.Object));
@@ -1250,23 +1259,16 @@
 
         public JsonResult GetAllContractualDocumentTypes([DataSourceRequest] DataSourceRequest request)
         {
-            //var data = AutoMapper.Mapper.Map<List<ContractualDocumentTypeViewModel>>(Service.GetContractualDocumentTypes());
+            var data = AutoMapper.Mapper.Map<List<AreaViewModel>>(Service.GetAreasByEntity(2));
 
-            return this.Jsonp(null);
+            return this.Jsonp(data);
         }
 
         public JsonResult GetContractualDocumentTypes([DataSourceRequest] DataSourceRequest request, int companyId, int simulationId)
         {
-            //var data = AutoMapper.Mapper.Map<List<ContractualDocumentTypeViewModel>>(Service.GetContractualDocumentTypesBySimulation(companyId, simulationId));
+            var data = AutoMapper.Mapper.Map<List<AreaViewModel>>(Service.GetAreasByCompanyAndSimulation(companyId, simulationId));
 
-            return this.Jsonp(null);
-        }
-
-        public JsonResult GetChildrenContractualDocumentTypes([DataSourceRequest] DataSourceRequest request, int contractualParentId)
-        {            
-            //var data = AutoMapper.Mapper.Map<List<ContractualDocumentTypeViewModel>>(Service.GetContractualDocumentTypesByParent(contractualParentId));
-
-            return this.Jsonp(null);
+            return this.Jsonp(data);
         }
 
         private static string GetActionResultForReport(int areaId)
@@ -1274,24 +1276,24 @@
             string actionResult;
             switch (areaId)
             {
-                //case (int)EnContractualDocumentType.OfferSPA:
-                //    actionResult = "OfferSPAReport";
-                //    break;
-                //case (int)EnContractualDocumentType.ContractSPA:
-                //    actionResult = "ContractSPAReport";
-                //    break;
-                //case (int)EnContractualDocumentType.OfferGES:
-                //    actionResult = "OfferAgencyReport";
-                //    break;
-                //case (int)EnContractualDocumentType.ContractGES:
-                //    actionResult = "ContractAgencyReport";
-                //    break;
-                //case (int)EnContractualDocumentType.OfferFOR:
-                //    actionResult = "OfferTrainingReport";
-                //    break;
-                //case (int)EnContractualDocumentType.ContractFOR:
-                //    actionResult = "ContractTrainingReport";
-                //    break;
+                case 6:
+                    actionResult = "OfferSPAReport";
+                    break;
+                case 9:
+                    actionResult = "ContractSPAReport";
+                    break;
+                case 7:
+                    actionResult = "OfferTrainingReport";
+                    break;
+                case 10:
+                    actionResult = "ContractTrainingReport";
+                    break;
+                case 8:
+                    actionResult = "OfferAgencyReport";
+                    break;
+                case 11:
+                    actionResult = "ContractAgencyReport";
+                    break;
 
                 default:
                     actionResult = "DefaultReport";

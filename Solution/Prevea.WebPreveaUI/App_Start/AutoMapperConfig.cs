@@ -12,10 +12,16 @@
     {
         public static void RegisterMappings()
         {
+            AutoMapper.Mapper.CreateMap<AreaViewModel, Area>();
+            AutoMapper.Mapper.CreateMap<Area, AreaViewModel>();
+
             AutoMapper.Mapper.CreateMap<Document, DocumentViewModel>()
                 .ForMember(x => x.AreaId, x => x.MapFrom(y => y.Area.Id))
                 .ForMember(x => x.AreaName, x => x.MapFrom(y => y.Area.Name))
+                .ForMember(x => x.AreaDescription, x => x.MapFrom(y => y.Area.Description))
                 .ForMember(x => x.AreaUrl, x => x.MapFrom(y => y.Area.Url))
+                .ForMember(x => x.CompanyName, x => x.MapFrom(y => y.Company.Name))
+                .ForMember(x => x.SimulationName, x => x.MapFrom(y => y.Simulation.Name))
                 .ForMember(x => x.DocumentUserCreatorName, x => x.MapFrom(y => y.DocumentUserCreators.FirstOrDefault().User.Initials));
             AutoMapper.Mapper.CreateMap<DocumentViewModel, Document>();
 

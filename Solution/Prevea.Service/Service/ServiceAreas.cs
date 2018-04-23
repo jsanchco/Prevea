@@ -19,5 +19,10 @@
         {
             return Repository.GetAreaByName(name);
         }
+
+        public List<Area> GetAreasByCompanyAndSimulation(int companyId, int simulationId)
+        {
+            return Repository.GetAreasByCompanyAndSimulation(companyId, simulationId);
+        }
     }
 }

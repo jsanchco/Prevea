@@ -72,16 +72,16 @@
                         SimulationId: { type: "number", defaultValue: ContractualsDocumentsCompany.simulationId },
                         Enrollment: { type: "string", editable: false },
                         SimulationName: { type: "string", editable: false },
-                        ContractualDocumentTypeId: { type: "number", validation: { required: { message: " Campo Obligatorio " } } },
-                        ContractualDocumentTypeName: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
+                        AreaId: { type: "number", validation: { required: { message: " Campo Obligatorio " } } },
+                        AreaDescription: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         BeginDate: { type: "date", defaultValue: beginDate, format: "{0:dd/MM/yy}" },
                         EndDate: { type: "date", defaultValue: endDate, format: "{0:dd/MM/yy}" },
                         UrlRelative: { type: "string" },
                         Observations: { type: "string" },
-                        ContractualDocumentCompanyFirmedId: { type: "number", defaultValue: null },
-                        ContractualDocumentCompanyFirmedEnrollment: { type: "string" },
-                        ContractualDocumentCompanyFirmedUrlRelative: { type: "string" },
-                        ContractualDocumentCompanyParentId: { type: "number", defaultValue: null }
+                        //ContractualDocumentCompanyFirmedId: { type: "number", defaultValue: null },
+                        //ContractualDocumentCompanyFirmedEnrollment: { type: "string" },
+                        //ContractualDocumentCompanyFirmedUrlRelative: { type: "string" },
+                        //ContractualDocumentCompanyParentId: { type: "number", defaultValue: null }
                     }
                 }
             },
@@ -104,7 +104,7 @@
                         return { companyId: options.companyId };
                     }
                     if (operation !== "read" && options) {
-                        return { contractualDocument: kendo.stringify(options) };
+                        return { document: kendo.stringify(options) };
                     }
 
                     return null;
@@ -157,13 +157,6 @@
                 read: {
                     url: "/Companies/GetAllContractualDocumentTypes",
                     dataType: "jsonp"
-                },
-                parameterMap: function (options, operation) {
-                    if (operation === "read") {
-                        return { companyId: options.companyId };
-                    }
-
-                    return null;
                 }
             }
         });
@@ -187,11 +180,11 @@
                     groupable: "false",
                     template: "#= ContractualsDocumentsCompany.getColumnTemplateSimulationName(data) #"
                 }, {
-                    field: "ContractualDocumentTypeId",
+                    field: "AreaId",
                     title: "Tipo",
                     width: "150px",
                     editor: ContractualsDocumentsCompany.contractualDocumentTypeDropDownEditor,
-                    template: "#= ContractualsDocumentsCompany.getContractualDocumentTypeDescription(data.ContractualDocumentTypeId) #",
+                    template: "#= ContractualsDocumentsCompany.getContractualDocumentTypeDescription(data.AreaId) #",
                     groupHeaderTemplate: "Agrupado : #= ContractualsDocumentsCompany.getContractualDocumentTypeDescription(value) #"
                 }, {
                     field: "BeginDate",
@@ -358,12 +351,12 @@
         kendo.ui.progress(grid.element, true);
     },
 
-    getContractualDocumentTypeDescription: function (contractualDocumentType) {
+    getContractualDocumentTypeDescription: function (areaId) {
         if (ContractualsDocumentsCompany.contractualDocumentTypeDataSorce.data().length === 0) {
             ContractualsDocumentsCompany.contractualDocumentTypeDataSorce.read();
         }
         for (var index = 0; index < ContractualsDocumentsCompany.contractualDocumentTypeDataSorce.data().length; index++) {
-            if (ContractualsDocumentsCompany.contractualDocumentTypeDataSorce.data()[index].Id === contractualDocumentType) {
+            if (ContractualsDocumentsCompany.contractualDocumentTypeDataSorce.data()[index].Id === areaId) {
                 return ContractualsDocumentsCompany.contractualDocumentTypeDataSorce.data()[index].Description;
             }
         }
