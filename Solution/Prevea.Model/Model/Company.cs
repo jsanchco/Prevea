@@ -69,8 +69,6 @@
         [NotMapped]
         public SimulationCompany SimulationCompanyActive => SimulationCompanies?.FirstOrDefault(x => x.Simulation.Active);
 
-        public virtual ICollection<ContractualDocumentCompany> ContractualsDocumentsCompany { get; set; }
-
         [Required]
         public int CompanyStateId { get; set; }
         public virtual CompanyState CompanyState { get; set; }

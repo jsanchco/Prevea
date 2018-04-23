@@ -14,5 +14,10 @@
         {
             return Repository.GetAreasByEntity(entityId);
         }
+
+        public Area GetAreaByName(string name)
+        {
+            return Repository.GetAreaByName(name);
+        }
     }
 }

@@ -21,7 +21,5 @@
 
         public int MedicalExaminationDocumentTypeId { get; set; }
         public virtual MedicalExaminationDocumentType MedicalExaminationDocumentType { get; set; }
-
-        public virtual ICollection<ModelDocument> ModelsDocuments { get; set; }
     }
 }

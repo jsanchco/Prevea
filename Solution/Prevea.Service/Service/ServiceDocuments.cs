@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Prevea.Service.Service
+﻿namespace Prevea.Service.Service
 {
     #region Using
 
@@ -8,6 +6,7 @@ namespace Prevea.Service.Service
     using IService.IService;
     using Model.Model;
     using System;
+    using System.Linq;
 
     #endregion
 
@@ -28,10 +27,16 @@ namespace Prevea.Service.Service
             return Repository.GetDocument(id);
         }
 
-        public Result SaveDocument(Document document, bool restoreFile)
+        public List<Document> GetDocumentsContractualsByCompany(int? companyId)
+        {
+            return Repository.GetDocumentsContractualsByCompany(companyId);
+        }
+
+        public Result SaveDocument(Document document, bool restoreFile, List<DocumentUserCreator> usersCreators, List<DocumentUserOwner> usersOwners)
         {
             try
             {
+                document.DocumentUserCreators = usersCreators;
                 var documentUserCreator = document.DocumentUserCreators.FirstOrDefault();
                 if (documentUserCreator == null)
                 {
@@ -277,6 +282,96 @@ namespace Prevea.Service.Service
             }
         }
 
+        public string VerifyNewContractualDocument(int contractualDocumentId)
+        {
+            var error = string.Empty;
+            string errorGeneralData;
+            string errorModePayment;
+            var document = Repository.GetDocument(contractualDocumentId);
+            if (document?.Company == null)
+            {
+                return "Documento/Empresa no encontrad@";
+            }
+
+            switch (document.AreaId)
+            {
+                case 2: // Oferta
+                    errorGeneralData = GetErrorInGeneralData(document.Company);
+                    if (!string.IsNullOrEmpty(errorGeneralData))
+                    {
+                        error += $"<H2 style='color: white;'>Error</H2><br />DATOS GENERALES<ul>{errorGeneralData}</ul>";
+                    }
+                    if (document.Company.ContactPersons == null || document.Company.ContactPersons.Count == 0)
+                    {
+                        if (string.IsNullOrEmpty(error))
+                            error += "<H2>Error</H2><br />";
+
+                        error += "PERSONAS de CONTACTO<ul><li>Agregar persona de contacto</li></ul>";
+                    }
+                    errorModePayment = GetErrorInPaymentMethod(document.Company);
+                    if (!string.IsNullOrEmpty(errorModePayment))
+                    {
+                        if (string.IsNullOrEmpty(error))
+                            error += "<H2>Error</H2><br />";
+
+                        error += $"FORMA de PAGO<ul>{errorModePayment}</ul>";
+                    }
+
+                    break;
+
+                case 7: // Contrato
+                    errorGeneralData = GetErrorInGeneralData(document.Company);
+                    if (!string.IsNullOrEmpty(errorGeneralData))
+                    {
+                        error += $"<H2>Error</H2><br />DATOS GENERALES<ul>{errorGeneralData}</ul>";
+                    }
+                    if (document.Company.ContactPersons == null || document.Company.ContactPersons.Count == 0)
+                    {
+                        if (string.IsNullOrEmpty(error))
+                            error += "<H2>Error</H2><br />";
+
+                        error += "PERSONAS de CONTACTO<ul><li>Agregar persona de contacto</li></ul>";
+                    }
+                    errorModePayment = GetErrorInPaymentMethod(document.Company);
+                    if (!string.IsNullOrEmpty(errorModePayment))
+                    {
+                        if (string.IsNullOrEmpty(error))
+                            error += "<H2>Error</H2><br />";
+
+                        error += $"FORMA de PAGO<ul>{errorModePayment}</ul>";
+                    }
+
+                    break;
+
+                case 8: // Anexo
+                case 10: // Baja Contrato
+                    errorGeneralData = GetErrorInGeneralData(document.Company);
+                    if (!string.IsNullOrEmpty(errorGeneralData))
+                    {
+                        error += $"<H2>Error</H2><br />DATOS GENERALES<ul>{errorGeneralData}</ul>";
+                    }
+                    if (document.Company.ContactPersons == null || document.Company.ContactPersons.Count == 0)
+                    {
+                        if (string.IsNullOrEmpty(error))
+                            error += "<H2>Error</H2><br />";
+
+                        error += "PERSONAS de CONTACTO<ul><li>Agregar persona de contacto</li></ul>";
+                    }
+                    errorModePayment = GetErrorInPaymentMethod(document.Company);
+                    if (!string.IsNullOrEmpty(errorModePayment))
+                    {
+                        if (string.IsNullOrEmpty(error))
+                            error += "<H2>Error</H2><br />";
+
+                        error += $"FORMA de PAGO<ul>{errorModePayment}</ul>";
+                    }
+
+                    break;
+            }
+
+            return error;
+        }
+
         private Document FillDataDocument(int userId, Document document)
         {
             var extension = GetExtension(userId);
@@ -294,7 +389,7 @@ namespace Prevea.Service.Service
 
             var fileName = $"{area.Name}_{document.DocumentNumber:00000}_{document.Edition}{extension}";
 
-            document.UrlRelative = $"{area.Entity.Directory}/{area.Name}/{fileName}";
+            document.UrlRelative = $"{area.Url}/{fileName}";
             document.Date = DateTime.Now;
             document.DateModification = documentsByParent.Count == 0 ? document.Date : documentsByParent[documentsByParent.Count - 1].Date;
             document.DocumentStateId = 1;            
@@ -329,7 +424,7 @@ namespace Prevea.Service.Service
 
             var fileName = $"{area.Name}_{document.DocumentNumber:00000}_{document.Edition}{extension}";
 
-            document.UrlRelative = $"{area.Entity.Directory}/{area.Name}/{fileName}";
+            document.UrlRelative = $"{area.Url}/{fileName}";
             document.Date = DateTime.Now;
             document.DateModification = documentsByParent.Count == 0 ? document.Date : documentsByParent[documentsByParent.Count - 1].Date;
             document.DocumentStateId = 1;
@@ -353,9 +448,38 @@ namespace Prevea.Service.Service
             if (documentUserCreator != null)
                 extension = GetExtension(documentUserCreator.UserId);
             var fileName = $"{documentOriginal.Area.Name}_{documentOriginal.DocumentNumber:00000}_{documentOriginal.Edition}{extension}";
-            documentOriginal.UrlRelative = $"{document.Area.Entity.Directory}/{documentOriginal.Area.Name}/{fileName}";
+            documentOriginal.UrlRelative = $"{documentOriginal.Area.Url}/{fileName}";
 
             return documentOriginal;
+        }
+
+        private static string GetErrorInGeneralData(Company company)
+        {
+            var error = string.Empty;
+
+            if (string.IsNullOrEmpty(company.Address))
+                error += "<li>Seleccionar Dirección</li>";
+            if (string.IsNullOrEmpty(company.Province))
+                error += "<li>Seleccionar Provincia</li>";
+            if (company.Cnae == null)
+                error += "<li>Seleccionar Actividad</li>";
+
+            return error;
+        }
+
+        private static string GetErrorInPaymentMethod(Company company)
+        {
+            var error = string.Empty;
+
+            if (company.PaymentMethod == null)
+                return "Faltan datos por rellenar";
+
+            if (company.PaymentMethod.ModePayment == null)
+                error += "<li>Seleccionar Modalidad de Pago</li>";
+            if (string.IsNullOrEmpty(company.PaymentMethod.AccountNumber))
+                error += "<li>Seleccionar Nº de Cuenta</li>";
+
+            return error;
         }
     }
 }

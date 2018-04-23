@@ -674,16 +674,7 @@
         [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial,ContactPerson")]
         public JsonResult ContractualsDocumentsCompany_Read([DataSourceRequest] DataSourceRequest request, int companyId)
         {
-            var data = AutoMapper.Mapper.Map<List<ContractualDocumentCompanyViewModel>>(Service.GetContractualsDocuments(companyId));
-
-            return this.Jsonp(data);
-        }
-
-        [HttpGet]
-        [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial")]
-        public JsonResult ChildrenContractualsDocumentsCompany_Read([DataSourceRequest] DataSourceRequest request, int contractualDocumentId)
-        {
-            var data = AutoMapper.Mapper.Map<List<ContractualDocumentCompanyViewModel>>(Service.GetChildrenContractualsDocuments(contractualDocumentId));
+            var data = AutoMapper.Mapper.Map<List<DocumentViewModel>>(Service.GetDocumentsContractualsByCompany(companyId));
 
             return this.Jsonp(data);
         }
@@ -692,25 +683,25 @@
         {
             try
             {
-                var contractualDocument = this.DeserializeObject<ContractualDocumentCompanyViewModel>("contractualDocument");
+                var contractualDocument = this.DeserializeObject<DocumentViewModel>("contractualDocument");
                 if (contractualDocument == null)
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
 
-                var error = Service.VerifyNewContractualDocument(contractualDocument.CompanyId, contractualDocument.ContractualDocumentTypeId);
+                var error = Service.VerifyNewContractualDocument(contractualDocument.Id);
                 if (!string.IsNullOrEmpty(error))  
                     return this.Jsonp(new { Errors = error });
 
-                var result = Service.SaveContractualDocument(AutoMapper.Mapper.Map<ContractualDocumentCompany>(contractualDocument));
+                var result = Service.SaveDocument(AutoMapper.Mapper.Map<Document>(contractualDocument), false, null, null);
                 if (result.Status == Status.Error)
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
 
-                if (contractualDocument.ContractualDocumentTypeId == (int)EnContractualDocumentType.OtherDocuments)
-                    return this.Jsonp(AutoMapper.Mapper.Map<ContractualDocumentCompanyViewModel>(result.Object));
+                if (contractualDocument.AreaId == 9) // Otros documentos
+                    return this.Jsonp(AutoMapper.Mapper.Map<DocumentViewModel>(result.Object));
 
-                if (!CreatePdf(result.Object as ContractualDocumentCompany))  
+                if (!CreatePdf(result.Object as Document, GetActionResultForReport(contractualDocument.AreaId)))  
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
 
-                return this.Jsonp(AutoMapper.Mapper.Map<ContractualDocumentCompanyViewModel>(result.Object));
+                return this.Jsonp(AutoMapper.Mapper.Map<DocumentViewModel>(result.Object));
             }
             catch (Exception e)
             {
@@ -724,13 +715,14 @@
         {
             try
             {
-                var contractualDocument = this.DeserializeObject<ContractualDocumentCompanyViewModel>("contractualDocument");
+                var contractualDocument = this.DeserializeObject<DocumentViewModel>("contractualDocument");
                 if (contractualDocument == null)
                 {
                     return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del Documento" });
                 }
 
-                if (Service.DeleteContractualDocument(contractualDocument.Id))
+                var result = Service.DeleteDocument(contractualDocument.Id);
+                if (result.Status == Status.Ok)
                     return this.Jsonp(contractualDocument);
 
                 return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del Documento" });
@@ -747,11 +739,11 @@
         [HttpGet]
         public ActionResult AddDocumentFirmed(int companyId, int contractualDocumentId)
         {
-            var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
+            var contractualDocument = Service.GetDocument(contractualDocumentId);
 
             ViewBag.CompanyId = companyId;
             ViewBag.ContractualDocumentId = contractualDocumentId;
-            ViewBag.Enrollment = contractualDocument.Enrollment;
+            //ViewBag.Enrollment = contractualDocument.Enrollment;
 
             return PartialView("~/Views/CommercialTool/Companies/AddDocumentFirmed.cshtml");
         }
@@ -759,7 +751,7 @@
         [HttpGet]
         public ActionResult AddOtherDocument(int contractualDocumentId)
         {
-            var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
+            var contractualDocument = Service.GetDocument(contractualDocumentId);
 
             return PartialView("~/Views/CommercialTool/Companies/AddOtherDocument.cshtml", contractualDocument);
         }
@@ -770,8 +762,12 @@
             if (fileDocumentFirmed == null || !fileDocumentFirmed.Any())
                 return Json(new Result { Status = Status.Error }, JsonRequestBehavior.AllowGet);
 
-            var result =
-                Service.SaveContractualDocumentFirmed(fileDocumentFirmed.FirstOrDefault(), companyId, contractualDocumentId);
+            //var result =
+            //    Service.SaveContractualDocumentFirmed(fileDocumentFirmed.FirstOrDefault(), companyId, contractualDocumentId);
+            var result = new Result
+            {
+                Status = Status.Error
+            };
 
             if (result.Status == Status.Error)
             {
@@ -784,7 +780,7 @@
             return Json(new Result
             {
                 Status = Status.Ok,
-                Object = AutoMapper.Mapper.Map<ContractualDocumentCompanyViewModel>(result.Object)
+                Object = AutoMapper.Mapper.Map<DocumentViewModel>(result.Object)
             }, JsonRequestBehavior.AllowGet);    
         }
 
@@ -793,9 +789,14 @@
         {
             if (fileOtherDocument == null || !fileOtherDocument.Any())
                 return Json(new Result { Status = Status.Error }, JsonRequestBehavior.AllowGet);
+            
+            //var result =
+            //    Service.SaveOtherDocument(fileOtherDocument.FirstOrDefault(), contractualDocumentId);
 
-            var result =
-                Service.SaveOtherDocument(fileOtherDocument.FirstOrDefault(), contractualDocumentId);
+            var result = new Result
+            {
+                Status = Status.Error
+            };
 
             if (result.Status == Status.Error)
             {
@@ -808,15 +809,15 @@
             return Json(new Result
             {
                 Status = Status.Ok,
-                Object = AutoMapper.Mapper.Map<ContractualDocumentCompanyViewModel>(result.Object)
+                Object = AutoMapper.Mapper.Map<DocumentViewModel>(result.Object)
             }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         public ActionResult OfferView(int contractualDocumentId, bool isPartialView)
         {
-            var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
-            var actionResult = GetActionResultForReport(contractualDocument.ContractualDocumentTypeId);
+            var contractualDocument = Service.GetDocument(contractualDocumentId);
+            var actionResult = GetActionResultForReport(contractualDocument.AreaId);
 
             return RedirectToAction(
                 actionResult, 
@@ -829,13 +830,13 @@
         {
             ViewBag.IsPartialView = isPartialView;
 
-            var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
+            var contractualDocument = Service.GetDocument(contractualDocumentId);
 
             ViewBag.ContractualDocumentId = contractualDocumentId;
-            ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
+            //ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
             ViewBag.IVA = Service.GetTagValue("IVA");
 
-            var workCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
+            var workCenters = Service.GetWorkCentersByCompany((int)contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
             ViewBag.NumberWorkCenters = workCenters.Count;
 
             var provincesWorkCenters = string.Empty;
@@ -893,13 +894,13 @@
         {
             ViewBag.IsPartialView = isPartialView;
 
-            var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
+            var contractualDocument = Service.GetDocument(contractualDocumentId);
 
             ViewBag.ContractualDocumentId = contractualDocumentId;
-            ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
+            //ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
             ViewBag.IVA = Service.GetTagValue("IVA");
 
-            var workCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
+            var workCenters = Service.GetWorkCentersByCompany((int)contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
             ViewBag.NumberWorkCenters = workCenters.Count;
 
             var provincesWorkCenters = string.Empty;
@@ -957,13 +958,13 @@
         {
             ViewBag.IsPartialView = isPartialView;
 
-            var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
+            var contractualDocument = Service.GetDocument(contractualDocumentId);
 
             ViewBag.ContractualDocumentId = contractualDocumentId;
-            ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
+            //ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
             ViewBag.IVA = Service.GetTagValue("IVA");
 
-            var workCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
+            var workCenters = Service.GetWorkCentersByCompany((int)contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
             ViewBag.NumberWorkCenters = workCenters.Count;
 
             var provincesWorkCenters = string.Empty;
@@ -1021,13 +1022,13 @@
         {
             ViewBag.IsPartialView = isPartialView;
 
-            var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
+            var contractualDocument = Service.GetDocument(contractualDocumentId);
 
             ViewBag.ContractualDocumentId = contractualDocumentId;
-            ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
+            //ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
             ViewBag.IVA = Service.GetTagValue("IVA");
 
-            var workCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
+            var workCenters = Service.GetWorkCentersByCompany((int)contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
             ViewBag.NumberWorkCenters = workCenters.Count;
 
             var provincesWorkCenters = string.Empty;
@@ -1085,13 +1086,13 @@
         {
             ViewBag.IsPartialView = isPartialView;
 
-            var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
+            var contractualDocument = Service.GetDocument(contractualDocumentId);
 
             ViewBag.ContractualDocumentId = contractualDocumentId;
-            ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
+            //ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
             ViewBag.IVA = Service.GetTagValue("IVA");
 
-            var workCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
+            var workCenters = Service.GetWorkCentersByCompany((int)contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
             ViewBag.NumberWorkCenters = workCenters.Count;
 
             var provincesWorkCenters = string.Empty;
@@ -1149,13 +1150,13 @@
         {
             ViewBag.IsPartialView = isPartialView;
 
-            var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
+            var contractualDocument = Service.GetDocument(contractualDocumentId);
 
             ViewBag.ContractualDocumentId = contractualDocumentId;
-            ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
+            //ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
             ViewBag.IVA = Service.GetTagValue("IVA");
 
-            var workCenters = Service.GetWorkCentersByCompany(contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
+            var workCenters = Service.GetWorkCentersByCompany((int)contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
             ViewBag.NumberWorkCenters = workCenters.Count;
 
             var provincesWorkCenters = string.Empty;
@@ -1211,7 +1212,7 @@
         [HttpGet]
         public ActionResult DefaultReport(int contractualDocumentId)
         {
-            var contractualDocument = Service.GetContractualDocument(contractualDocumentId);
+            var contractualDocument = Service.GetDocument(contractualDocumentId);
 
             return View("~/Views/CommercialTool/Companies/Reports/DefaultReport.cshtml", contractualDocument.Company);
         }
@@ -1225,8 +1226,12 @@
         [HttpPost]
         public JsonResult DeleteContractualDocumentCompanyFirmed(int contractualDocumentCompanyFirmedId)
         {
-            var result =
-                Service.DeleteContractualDocumentCompanyFirmed(contractualDocumentCompanyFirmedId);
+            //var result =
+            //    Service.DeleteContractualDocumentCompanyFirmed(contractualDocumentCompanyFirmedId);
+            var result = new Result
+            {
+                Status = Status.Error
+            };
 
             if (result.Status == Status.Error)
             {
@@ -1239,80 +1244,54 @@
             return Json(new Result
             {
                 Status = Status.Ok,
-                Object = AutoMapper.Mapper.Map<ContractualDocumentCompanyViewModel>(result.Object)
+                Object = AutoMapper.Mapper.Map<DocumentViewModel>(result.Object)
             }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetAllContractualDocumentTypes([DataSourceRequest] DataSourceRequest request)
         {
-            var data = AutoMapper.Mapper.Map<List<ContractualDocumentTypeViewModel>>(Service.GetContractualDocumentTypes());
+            //var data = AutoMapper.Mapper.Map<List<ContractualDocumentTypeViewModel>>(Service.GetContractualDocumentTypes());
 
-            return this.Jsonp(data);
+            return this.Jsonp(null);
         }
 
         public JsonResult GetContractualDocumentTypes([DataSourceRequest] DataSourceRequest request, int companyId, int simulationId)
         {
-            var data = AutoMapper.Mapper.Map<List<ContractualDocumentTypeViewModel>>(Service.GetContractualDocumentTypesBySimulation(companyId, simulationId));
+            //var data = AutoMapper.Mapper.Map<List<ContractualDocumentTypeViewModel>>(Service.GetContractualDocumentTypesBySimulation(companyId, simulationId));
 
-            return this.Jsonp(data);
+            return this.Jsonp(null);
         }
 
         public JsonResult GetChildrenContractualDocumentTypes([DataSourceRequest] DataSourceRequest request, int contractualParentId)
         {            
-            var data = AutoMapper.Mapper.Map<List<ContractualDocumentTypeViewModel>>(Service.GetContractualDocumentTypesByParent(contractualParentId));
+            //var data = AutoMapper.Mapper.Map<List<ContractualDocumentTypeViewModel>>(Service.GetContractualDocumentTypesByParent(contractualParentId));
 
-            return this.Jsonp(data);
+            return this.Jsonp(null);
         }
 
-        private bool CreatePdf(ContractualDocumentCompany contractualDocument)
-        {
-            try
-            {
-                var filePath = Server.MapPath(contractualDocument.UrlRelative);
-
-                var actionPdf = new ActionAsPdf(
-                    GetActionResultForReport(contractualDocument.ContractualDocumentTypeId),
-                    new {contractualDocumentId = contractualDocument.Id});
-                actionPdf.RotativaOptions.CustomSwitches = Constants.FooterPdf;
-
-                var applicationPdfData = actionPdf.BuildPdf(ControllerContext);
-                var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
-                fileStream.Write(applicationPdfData, 0, applicationPdfData.Length);
-                fileStream.Close();
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-
-                return false;
-            }      
-        }
-
-        private static string GetActionResultForReport(int contractualDocumentTypeId)
+        private static string GetActionResultForReport(int areaId)
         {
             string actionResult;
-            switch (contractualDocumentTypeId)
+            switch (areaId)
             {
-                case (int)EnContractualDocumentType.OfferSPA:
-                    actionResult = "OfferSPAReport";
-                    break;
-                case (int)EnContractualDocumentType.ContractSPA:
-                    actionResult = "ContractSPAReport";
-                    break;
-                case (int)EnContractualDocumentType.OfferGES:
-                    actionResult = "OfferAgencyReport";
-                    break;
-                case (int)EnContractualDocumentType.ContractGES:
-                    actionResult = "ContractAgencyReport";
-                    break;
-                case (int)EnContractualDocumentType.OfferFOR:
-                    actionResult = "OfferTrainingReport";
-                    break;
-                case (int)EnContractualDocumentType.ContractFOR:
-                    actionResult = "ContractTrainingReport";
-                    break;
+                //case (int)EnContractualDocumentType.OfferSPA:
+                //    actionResult = "OfferSPAReport";
+                //    break;
+                //case (int)EnContractualDocumentType.ContractSPA:
+                //    actionResult = "ContractSPAReport";
+                //    break;
+                //case (int)EnContractualDocumentType.OfferGES:
+                //    actionResult = "OfferAgencyReport";
+                //    break;
+                //case (int)EnContractualDocumentType.ContractGES:
+                //    actionResult = "ContractAgencyReport";
+                //    break;
+                //case (int)EnContractualDocumentType.OfferFOR:
+                //    actionResult = "OfferTrainingReport";
+                //    break;
+                //case (int)EnContractualDocumentType.ContractFOR:
+                //    actionResult = "ContractTrainingReport";
+                //    break;
 
                 default:
                     actionResult = "DefaultReport";

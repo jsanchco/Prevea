@@ -30,7 +30,10 @@
 
         [Required]
         public DateTime Date { get; set; }
-        public DateTime DateModification { get; set; }
+        public DateTime? DateModification { get; set; }
+
+        public DateTime? BeginDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         [Required]
         public int DocumentNumber { get; set; }
@@ -46,6 +49,8 @@
 
         public bool HasFirm { get; set; }
 
+        public bool IsFirmedDocument { get; set; }
+
         public int? DocumentParentId { get; set; }
         public virtual Document DocumentParent { get; set; }
 
@@ -57,8 +62,6 @@
         public virtual ICollection<DocumentUserCreator> DocumentUserCreators { get; set; }
 
         public virtual ICollection<DocumentUserOwner> DocumentUserOwners { get; set; }
-
-        public virtual ICollection<ModelDocument> ModelsDocuments { get; set; }
 
         #region Constructor
 

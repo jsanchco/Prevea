@@ -60,8 +60,6 @@
     <Compile Include="Repository\RepositoryCompanies.cs" />
     <Compile Include="Repository\RepositoryConfigurations.cs" />
     <Compile Include="Repository\RepositoryContactPersons.cs" />
-    <Compile Include="Repository\RepositoryContractualDocumentTypes.cs" />
-    <Compile Include="Repository\RepositoryContractualsDocuments.cs" />
     <Compile Include="Repository\RepositoryDoctorsMedicalExaminationEmployee.cs" />
     <Compile Include="Repository\RepositoryDocuments.cs" />
     <Compile Include="Repository\RepositoryEmployees.cs" />

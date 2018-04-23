@@ -1,4 +1,9 @@
-﻿namespace Prevea.WebPreveaUI.HelpersClass
+﻿using System;
+using System.Diagnostics;
+using Prevea.WebPreveaUI.Common;
+using Rotativa.MVC;
+
+namespace Prevea.WebPreveaUI.HelpersClass
 {
     #region Using
 
@@ -37,6 +42,32 @@
             return query.ToList();
         }
 
+        protected bool CreatePdf(Document document, string actionResultForReport)
+        {
+            try
+            {
+                var filePath = Server.MapPath(document.UrlRelative);
+
+                var actionPdf = new ActionAsPdf(
+                    actionResultForReport,
+                    new { documentId = document.Id });
+                actionPdf.RotativaOptions.CustomSwitches = Constants.FooterPdf;
+
+                var applicationPdfData = actionPdf.BuildPdf(ControllerContext);
+                var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+                fileStream.Write(applicationPdfData, 0, applicationPdfData.Length);
+                fileStream.Close();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+
+                return false;
+            }
+        }
+
         public ActionResult DownloadFile(int id)
         {            
             var document = Service.GetDocument(id);
@@ -71,7 +102,7 @@
 
         public ActionResult DownloadContractualDocument(int id)
         {
-            var document = Service.GetContractualDocument(id);
+            var document = Service.GetDocument(id);
             var url = Server.MapPath(document.UrlRelative);
             if (!System.IO.File.Exists(url))
                 return null;

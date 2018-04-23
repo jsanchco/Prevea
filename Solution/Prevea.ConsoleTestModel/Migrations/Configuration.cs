@@ -59,23 +59,24 @@ namespace Prevea.ConsoleTestModel.Migrations
 
             var entities = new List<Entity>
             {
-                new Entity { Name = "Library", Description = "Biblioteca", Directory = "~/App_Data/Library" },
-                new Entity { Name = "Companies", Description = "Empresas", Directory = "~/App_Data/Company" }
+                new Entity { Name = "Library", Description = "Biblioteca" },
+                new Entity { Name = "Companies", Description = "Empresas" }
             };
             entities.ForEach(p => context.Entities.AddOrUpdate(s => s.Id, p));
             context.SaveChanges();
 
             var areas = new List<Area>
             {
-                new Area { Name = "ADM", Description = "Administración", EntityId = 1},
-                new Area { Name = "FOR", Description = "Formación", EntityId = 1 },
-                new Area { Name = "TEC", Description = "Técnicas", EntityId = 1 },
-                new Area { Name = "MET", Description = "Medicina trabajo", EntityId = 1 },
-                new Area { Name = "COM", Description = "Comercial", EntityId = 1 },
-                new Area { Name = "CON", Description = "Contrato", EntityId = 2 },
-                new Area { Name = "OFE", Description = "Oferta", EntityId = 2 },
-                new Area { Name = "ANX", Description = "Anexo", EntityId = 2 },
-                new Area { Name = "OTR", Description = "Otros Documentos", EntityId = 2 }
+                new Area { Name = "ADM", Description = "Administración", EntityId = 1, Url = "~/App_Data/Library/ADM/" }, // 1
+                new Area { Name = "FOR", Description = "Formación", EntityId = 1, Url = "~/App_Data/Library/FOR/"  }, // 2
+                new Area { Name = "TEC", Description = "Técnicas", EntityId = 1, Url = "~/App_Data/Library/TEC/"  }, // 3
+                new Area { Name = "MET", Description = "Medicina trabajo", EntityId = 1, Url = "~/App_Data/Library/MET/"  }, // 4
+                new Area { Name = "COM", Description = "Comercial", EntityId = 1, Url = "~/App_Data/Library/COM/"  }, // 5
+                new Area { Name = "OFE", Description = "Oferta", EntityId = 2, Url = "~/App_Data/Company/OFE/"  }, // 6
+                new Area { Name = "CON", Description = "Contrato", EntityId = 2, Url = "~/App_Data/Company/CON/" }, // 7
+                new Area { Name = "ANX", Description = "Anexo", EntityId = 2, Url = "~/App_Data/Company/ANX/" }, // 8
+                new Area { Name = "OTR", Description = "Otros Documentos", EntityId = 2, Url = "~/App_Data/Company/OTR/" }, // 9
+                new Area { Name = "UNS", Description = "Baja Documento", EntityId = 2, Url = "~/App_Data/Company/UNS/" } // 10
             };
             areas.ForEach(p => context.Areas.AddOrUpdate(s => s.Id, p));
             context.SaveChanges();
@@ -220,13 +221,6 @@ namespace Prevea.ConsoleTestModel.Migrations
             foreach (var dSate in companyStates)
             {
                 context.CompanyStates.AddOrUpdate(new CompanyState { Name = dSate.ToString() });
-            }
-            context.SaveChanges();
-
-            var contractualCompanyStates = (EnContractualDocumentType[])Enum.GetValues(typeof(EnContractualDocumentType));
-            foreach (var dType in contractualCompanyStates)
-            {
-                context.ContractualDocumentTypes.AddOrUpdate(new ContractualDocumentType { Name = dType.ToString() });
             }
             context.SaveChanges();
 

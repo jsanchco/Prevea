@@ -73,7 +73,5 @@
         public SimulationCompany SimulationCompanyActive { get; set; }
 
         public virtual ICollection<SimulationCompany> SimulationCompanies { get; set; }
-
-        public virtual ICollection<ContractualDocumentCompany> ContractualsDocumentsCompany { get; set; }
     }
 }

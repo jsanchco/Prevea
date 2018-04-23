@@ -63,7 +63,6 @@
     <Compile Include="Model\CompanyState.cs" />
     <Compile Include="Model\Configuration.cs" />
     <Compile Include="Model\ContactPerson.cs" />
-    <Compile Include="Model\ContractualDocumentType.cs" />
     <Compile Include="Model\DoctorMedicalExaminationEmployee.cs" />
     <Compile Include="Model\DoctorWorkSheet.cs" />
     <Compile Include="Model\InputTemplate.cs" />
@@ -72,14 +71,12 @@
     <Compile Include="Model\MedicalExaminationDocumentType.cs" />
     <Compile Include="Model\MedicalExaminationState.cs" />
     <Compile Include="Model\Document.cs" />
-    <Compile Include="Model\ContractualDocumentCompany.cs" />
     <Compile Include="Model\DocumentUserCreator.cs" />
     <Compile Include="Model\DocumentUserOwner.cs" />
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Model\EstablishmentType.cs" />
     <Compile Include="Model\ForeignPreventionService.cs" />
     <Compile Include="Model\HistoricDownloadDocument.cs" />
-    <Compile Include="Model\ModelDocument.cs" />
     <Compile Include="Model\ModePayment.cs" />
     <Compile Include="Model\ModePaymentMedicalExamination.cs" />
     <Compile Include="Model\Notification.cs" />
@@ -109,8 +106,6 @@
     <Compile Include="ViewModel\ChangePassword.cs" />
     <Compile Include="ViewModel\ClinicViewModel.cs" />
     <Compile Include="ViewModel\CompanyViewModel.cs" />
-    <Compile Include="ViewModel\ContractualDocumentCompanyViewModel.cs" />
-    <Compile Include="ViewModel\ContractualDocumentTypeViewModel.cs" />
     <Compile Include="ViewModel\DoctorViewModel.cs" />
     <Compile Include="ViewModel\DocumentViewModel.cs" />
     <Compile Include="Model\Employee.cs" />

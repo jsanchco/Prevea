@@ -51,6 +51,7 @@
         List<Document> GetDocumentsByParent(int id, int? parentId);
         List<Document> GetChildrenDocument(int parentId);
         int GetNumberDocumentsByArea(int areaId);
+        List<Document> GetDocumentsContractualsByCompany(int? companyId);
 
         #endregion
 
@@ -68,6 +69,7 @@
 
         List<Area> GetAreas();
         Area GetArea(int id);
+        Area GetAreaByName(string name);
         Area SaveArea(Area area);
         Area UpdateArea(int id, Area area);
         void DeleteArea(int id);
@@ -162,16 +164,6 @@
 
         List<ModePaymentMedicalExamination> GetModesPaymentMedicalExamination();
         ModePaymentMedicalExamination GetModePaymentMedicalExamination(int id);
-
-        #endregion
-
-        #region Contractual Document Company
-
-        ContractualDocumentCompany GetContractualDocument(int contractualDocumentId);
-        List<ContractualDocumentCompany> GetContractualsDocuments(int? companyId = null);
-        ContractualDocumentCompany SaveContractualDocument(ContractualDocumentCompany contractualDocument);
-        ContractualDocumentCompany UpdateContractualDocument(int contractualDocumentId, ContractualDocumentCompany contractualDocument);
-        bool DeleteContractualDocument(int contractualDocumentId);
 
         #endregion
 
@@ -306,13 +298,6 @@
 
         List<EngagementType> GetEngagmentTypes();
         EngagementType GetEngagementType(int id);
-
-        #endregion
-
-        #region ContractualDocumentType
-
-        List<ContractualDocumentType> GetContractualDocumentTypes();
-        ContractualDocumentType GetContractualDocumentType(int id);
 
         #endregion
 

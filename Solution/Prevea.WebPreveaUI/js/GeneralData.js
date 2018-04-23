@@ -186,6 +186,12 @@
         window.location = url;
     },
 
+    goToOpenContractualDocument: function (id) {
+        var url = "/Base/DownloadContractualDocument?id=" + id;
+
+        window.location = url;
+    },
+
     showNotification: function (message, title, type) {
         var opts;
         if (type === "error") {

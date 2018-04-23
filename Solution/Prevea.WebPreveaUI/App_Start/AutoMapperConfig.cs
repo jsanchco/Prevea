@@ -13,7 +13,9 @@
         public static void RegisterMappings()
         {
             AutoMapper.Mapper.CreateMap<Document, DocumentViewModel>()
+                .ForMember(x => x.AreaId, x => x.MapFrom(y => y.Area.Id))
                 .ForMember(x => x.AreaName, x => x.MapFrom(y => y.Area.Name))
+                .ForMember(x => x.AreaUrl, x => x.MapFrom(y => y.Area.Url))
                 .ForMember(x => x.DocumentUserCreatorName, x => x.MapFrom(y => y.DocumentUserCreators.FirstOrDefault().User.Initials));
             AutoMapper.Mapper.CreateMap<DocumentViewModel, Document>();
 
@@ -63,13 +65,6 @@
             AutoMapper.Mapper.CreateMap<PaymentMethodViewModel, PaymentMethod>();
             AutoMapper.Mapper.CreateMap<PaymentMethod, PaymentMethodViewModel>();
 
-            AutoMapper.Mapper.CreateMap<ContractualDocumentCompany, ContractualDocumentCompanyViewModel>()
-                .ForMember(x => x.ContractualDocumentTypeName, x => x.MapFrom(y => y.ContractualDocumentType.Name))
-                .ForMember(x => x.ContractualDocumentCompanyFirmedEnrollment, x => x.MapFrom(y => y.ContractualDocumentCompanyFirmed.Enrollment))
-                .ForMember(x => x.ContractualDocumentCompanyFirmedUrlRelative, x => x.MapFrom(y => y.ContractualDocumentCompanyFirmed.UrlRelative))
-                .ForMember(x => x.SimulationName, x => x.MapFrom(y => y.Simulation.Name));
-            AutoMapper.Mapper.CreateMap<ContractualDocumentCompanyViewModel, ContractualDocumentCompany>();
-
             AutoMapper.Mapper.CreateMap<Notification, NotificationViewModel>()
                 .ForMember(x => x.NotificationTypeName, x => x.MapFrom(y => y.NotificationType.Name))
                 .ForMember(x => x.NotificationTypeDescription, x => x.MapFrom(y => y.NotificationType.Description))
@@ -102,9 +97,6 @@
 
             AutoMapper.Mapper.CreateMap<AgencyServiceViewModel, AgencyService>();
             AutoMapper.Mapper.CreateMap<AgencyService, AgencyServiceViewModel>();
-
-            AutoMapper.Mapper.CreateMap<ContractualDocumentTypeViewModel, ContractualDocumentType>();
-            AutoMapper.Mapper.CreateMap<ContractualDocumentType, ContractualDocumentTypeViewModel>();
 
             AutoMapper.Mapper.CreateMap<RequestMedicalExaminations, RequestMedicalExaminationsViewModel>()
                 .ForMember(x => x.RequestMedicalExaminationStateDescription, x => x.MapFrom(y => y.RequestMedicalExaminationState.Description));

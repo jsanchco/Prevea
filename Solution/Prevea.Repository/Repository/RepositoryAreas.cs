@@ -26,7 +26,16 @@
         {
             return Context.Areas
                 .Include(x => x.Documents)
+                .Include(x => x.Entity)
                 .FirstOrDefault(m => m.Id == id);
+        }
+
+        public Area GetAreaByName(string name)
+        {
+            return Context.Areas
+                .Include(x => x.Documents)
+                .Include(x => x.Entity)
+                .FirstOrDefault(m => m.Name == name);
         }
 
         public Area SaveArea(Area area)

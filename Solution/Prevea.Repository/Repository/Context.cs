@@ -38,8 +38,6 @@
         public DbSet<SimulationCompany> SimulationCompanies { get; set; }
         public DbSet<SimulationState> SimulationStates { get; set; }
         public DbSet<CompanyState> CompanyStates { get; set; }
-        public DbSet<ContractualDocumentCompany> ContractualsDocumentsCompany { get; set; }
-        public DbSet<ContractualDocumentType> ContractualDocumentTypes { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<NotificationType> NotificationTypes { get; set; }
         public DbSet<NotificationState> NotificationStates { get; set; }
@@ -63,7 +61,6 @@
         public DbSet<DoctorMedicalExaminationEmployee> DoctorMedicalExaminationEmployees { get; set; }
         public DbSet<MedicalExaminationDocuments> MedicalExaminationDocuments { get; set; }
         public DbSet<MedicalExaminationDocumentType> MedicalExaminationDocumentTypes { get; set; }
-        public DbSet<ModelDocument> ModelsDocuments { get; set; }
 
         #endregion
 
@@ -87,8 +84,6 @@
             modelBuilder.Entity<ContactPerson>().HasRequired(x => x.Company).WithMany(y => y.ContactPersons).WillCascadeOnDelete(false);
             modelBuilder.Entity<Employee>().HasRequired(x => x.Company).WithMany(y => y.Employees).WillCascadeOnDelete(false);
             modelBuilder.Entity<Simulation>().HasOptional(x => x.UserAssigned).WithMany(y => y.SimulationsAssigned);
-            modelBuilder.Entity<ContractualDocumentCompany>().HasOptional(x => x.ContractualDocumentCompanyFirmed).WithMany().HasForeignKey(y => y.ContractualDocumentCompanyFirmedId);
-            modelBuilder.Entity<ContractualDocumentCompany>().HasRequired(x => x.Simulation).WithMany(y => y.ContractualsDocumentsCompany).WillCascadeOnDelete(false);
             modelBuilder.Entity<Employee>().HasRequired(x => x.User).WithMany().WillCascadeOnDelete(false);
             modelBuilder.Entity<RequestMedicalExaminations>().HasRequired(x => x.Company).WithMany(y => y.RequestMedicalExaminations).WillCascadeOnDelete(false);
         }

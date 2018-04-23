@@ -4,6 +4,7 @@
 
     using System.ComponentModel.DataAnnotations;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     #endregion
 
@@ -15,6 +16,8 @@
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
+
+        public string Url { get; set; }
 
         [Required]
         public int EntityId { get; set; }

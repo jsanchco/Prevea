@@ -14,7 +14,7 @@
     {
         #region Document
 
-        Result SaveDocument(Document document, bool restoreFile);
+        Result SaveDocument(Document document, bool restoreFile, List<DocumentUserCreator> usersCreators, List<DocumentUserOwner> usersOwners);
         Result SaveDocumentWithParent(Document document);
         Result UpdateDocument(Document document, bool updateFile);
         Result UnsubscribeDocument(int documentId);
@@ -23,6 +23,8 @@
         List<Document> GetDocuments(int documentStateId = 0);
         List<Document> GetDocumentsByParent(int id, int? parentId);
         Document GetDocument(int id);
+        List<Document> GetDocumentsContractualsByCompany(int? companyId);
+        string VerifyNewContractualDocument(int contractualDocumentId);
 
         void RestoreFile(int userId, string urlRelative);
         void SaveFileTmp(int userId, HttpPostedFileBase files);
@@ -32,11 +34,12 @@
         #region Area
 
         List<Area> GetAreasByEntity(int entityId);
+        Area GetAreaByName(string name);
 
         #endregion
 
         #region User
-            
+
         List<User> GetUsersInRoles(List<string> roles);
         User ValidateUser(string user, string password);
         List<string> GetRolesByUser(int userId);
@@ -136,22 +139,6 @@
 
         List<ModePaymentMedicalExamination> GetModesPaymentMedicalExamination();
         ModePaymentMedicalExamination GetModePaymentMedicalExamination(int id);
-
-        #endregion
-
-        #region Contractual Document Company
-
-        ContractualDocumentCompany GetContractualDocument(int contractualDocumentId);
-        List<ContractualDocumentCompany> GetContractualsDocuments(int? companyId = null);        
-        List<ContractualDocumentCompany> GetChildrenContractualsDocuments(int contractualDocumentParentId);
-        Result SaveContractualDocument(ContractualDocumentCompany contractualDocument);
-        Result UpdateContractualDocument(int contractualDocumentId, ContractualDocumentCompany contractualDocument);
-        bool DeleteContractualDocument(int contractualDocumentId);
-        string CanAddContractualDocument(int companyId, int contractualDocumentTypeId);
-        string VerifyNewContractualDocument(int companyId, int contractualDocumentTypeId);
-        Result SaveContractualDocumentFirmed(HttpPostedFileBase fileDocumentFirmed, int companyId, int contractualDocumentId);
-        Result SaveOtherDocument(HttpPostedFileBase fileOtherDocument, int contractualDocumentId);
-        Result DeleteContractualDocumentCompanyFirmed(int contractualDocumentCompanyFirmedId);
 
         #endregion
 
@@ -282,16 +269,6 @@
 
         List<EngagementType> GetEngagmentTypes();
         EngagementType GetEngagementType(int id);
-
-        #endregion
-
-        #region ContractualDocumentType
-
-        List<ContractualDocumentType> GetContractualDocumentTypes();
-        List<ContractualDocumentType> GetContractualDocumentTypesByParent(int contractualParentId);
-        ContractualDocumentType GetContractualDocumentType(int id);
-        List<ContractualDocumentType> GetContractualDocumentTypes(int companyId);
-        List<ContractualDocumentType> GetContractualDocumentTypesBySimulation(int companyId, int simulationId);
 
         #endregion
 
