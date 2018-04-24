@@ -32,7 +32,7 @@
             return Repository.GetDocumentsContractualsByCompany(companyId);
         }
 
-        public Result SaveDocument(Document document, bool restoreFile, List<DocumentUserCreator> usersCreators, List<DocumentUserOwner> usersOwners)
+        public Result SaveDocument(Document document, bool restoreFile, List<DocumentUserCreator> usersCreators, List<DocumentUserOwner> usersOwners, string extension = null)
         {
             try
             {
@@ -392,7 +392,7 @@
                     break;
 
                 case 2:
-                    document.Description = document.HasFirm ? document.Description = $"{area.Name} Firmad@" : document.Description = area.Name;
+                    document.Description = document.HasFirm ? document.Description = $"{area.Description} Firmad@" : document.Description = area.Description;
                     break;
             }
 
@@ -436,7 +436,7 @@
                     break;
 
                 case 2:
-                    document.Description = document.HasFirm ? document.Description = $"{area.Name} Firmad@" : document.Description = area.Name;
+                    document.Description = document.HasFirm ? document.Description = $"{area.Description} Firmad@" : document.Description = area.Description;
                     break;
             }
 

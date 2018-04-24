@@ -14,7 +14,7 @@
     {
         #region Document
 
-        Result SaveDocument(Document document, bool restoreFile, List<DocumentUserCreator> usersCreators, List<DocumentUserOwner> usersOwners);
+        Result SaveDocument(Document document, bool restoreFile, List<DocumentUserCreator> usersCreators, List<DocumentUserOwner> usersOwners, string extension = null);
         Result SaveDocumentWithParent(Document document);
         Result UpdateDocument(Document document, bool updateFile);
         Result UnsubscribeDocument(int documentId);
@@ -357,6 +357,14 @@
 
         List<MedicalExaminationDocumentType> GetMedicalExaminationDocumentTypes();
         MedicalExaminationDocumentType GetMedicalExaminationDocumentTypeById(int id);
+
+        #endregion
+
+        #region Contractual Document Types
+
+        List<Area> GetContractualDocumentTypes();
+        List<Area> GetContractualDocumentTypes(int companyId);
+        List<Area> GetContractualDocumentTypesBySimulation(int companyId, int simulationId);
 
         #endregion
     }

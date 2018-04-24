@@ -44,7 +44,7 @@
         [AppAuthorize(Roles = "Super,Admin,Library,Basic")]
         public JsonResult Documents_Read([DataSourceRequest] DataSourceRequest request, int documentStateId)
         {
-            var documents = Service.GetDocuments(1);
+            var documents = Service.GetDocuments(1).Where(x => x.Area.EntityId == 1).ToList();
             if (documentStateId == 3)
                 documents.AddRange(Service.GetDocuments(3));
 

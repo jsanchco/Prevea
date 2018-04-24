@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Service\ServiceContractualDocumentTypes.cs" />
     <Compile Include="Service\ServiceMedicalExaminationDocuments.cs" />
     <Compile Include="Service\Service.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

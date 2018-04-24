@@ -672,6 +672,7 @@
         [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial,ContactPerson")]
         public JsonResult ContractualsDocumentsCompany_Read([DataSourceRequest] DataSourceRequest request, int companyId)
         {
+            var t = Service.GetDocumentsContractualsByCompany(companyId);
             var data = AutoMapper.Mapper.Map<List<DocumentViewModel>>(Service.GetDocumentsContractualsByCompany(companyId));
 
             return this.Jsonp(data);
@@ -1259,14 +1260,14 @@
 
         public JsonResult GetAllContractualDocumentTypes([DataSourceRequest] DataSourceRequest request)
         {
-            var data = AutoMapper.Mapper.Map<List<AreaViewModel>>(Service.GetAreasByEntity(2));
+            var data = AutoMapper.Mapper.Map<List<AreaViewModel>>(Service.GetContractualDocumentTypes());
 
             return this.Jsonp(data);
         }
 
         public JsonResult GetContractualDocumentTypes([DataSourceRequest] DataSourceRequest request, int companyId, int simulationId)
         {
-            var data = AutoMapper.Mapper.Map<List<AreaViewModel>>(Service.GetAreasByCompanyAndSimulation(companyId, simulationId));
+            var data = AutoMapper.Mapper.Map<List<AreaViewModel>>(Service.GetContractualDocumentTypesBySimulation(companyId, simulationId));
 
             return this.Jsonp(data);
         }
