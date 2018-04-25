@@ -50,7 +50,9 @@
                         Status = Status.Error
                     };
                 }
-                document = FillDataDocument(documentUserCreator.UserId, document, extension);
+                if (document.DocumentFirmedId == null)
+                    document = FillDataDocument(documentUserCreator.UserId, document, extension);
+
                 document.DocumentUserOwners = usersOwners;
 
                 if (restoreFile)
@@ -410,12 +412,80 @@
             }
         }
 
+        public Result SaveContractualDocumentFirmed(HttpPostedFileBase fileDocumentFirmed, int companyId, int documentId, int userId)
+        {
+            try
+            {
+                var contractualDocument = GetDocument(documentId);
+                if (contractualDocument == null)
+                    return new Result { Status = Status.Error };
+
+                var area = Repository.GetArea(contractualDocument.AreaId);
+
+                var document = new Document
+                {
+                    CompanyId = companyId,
+                    SimulationId = contractualDocument.SimulationId,
+                    AreaId = contractualDocument.AreaId,
+                    Date = DateTime.Now,
+                    DocumentParentId = contractualDocument.Id,
+                    DocumentNumber = contractualDocument.DocumentNumber,
+                    Edition = contractualDocument.Edition,
+                    DocumentStateId = 1,
+                    Description = $"{area.Description} Firmad@"
+                };
+
+                var fileName = Path.GetFileName(contractualDocument.UrlRelative);
+                var extension = Path.GetExtension(contractualDocument.UrlRelative);                
+                if (fileName == null || extension == null)
+                    return new Result { Status = Status.Error };
+
+                fileName = fileName.Replace(extension, "");
+                var newFileName = $"{fileName}_FIRMED";
+                document.UrlRelative = contractualDocument.UrlRelative.Replace(fileName, newFileName);
+
+                var url = HttpContext.Current.Server.MapPath(document.UrlRelative);
+                if (url == null)
+                    return new Result { Status = Status.Error };
+
+                fileDocumentFirmed.SaveAs(url);
+
+                var documentUserCreators = new List<DocumentUserCreator> {new DocumentUserCreator {UserId = userId}};
+                var documentUserOwners = contractualDocument.DocumentUserOwners.Select(documentUserOwner => new DocumentUserOwner {UserId = documentUserOwner.UserId}).ToList();                
+
+                var result = SaveDocument(document, false, documentUserCreators, documentUserOwners);
+                if (result.Status == Status.Error)
+                    return new Result { Status = Status.Error };
+                if (!(result.Object is Document))
+                    return new Result { Status = Status.Error };
+
+                contractualDocument.DocumentFirmedId = ((Document) result.Object).Id;
+                result = UpdateDocument(contractualDocument, false);
+                if (result.Status == Status.Error)
+                    return new Result { Status = Status.Error };
+                if (!(result.Object is Document))
+                    return new Result { Status = Status.Error };
+
+                return new Result
+                {
+                    Status = Status.Ok,
+                    Object = result.Object
+                };
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+
+                return new Result { Status = Status.Error };
+            }
+        }
+
         private Document FillDataDocument(int userId, Document document, string extension)
-        {           
+        {
+            var area = Repository.GetArea(document.AreaId);
+
             if (extension == null)
                 extension = GetExtension(userId);
-
-            var area = Repository.GetArea(document.AreaId);
 
             document.DocumentNumber = Repository.GetNumberDocumentsByArea(document.AreaId) + 1;
 
@@ -432,7 +502,7 @@
                     break;
 
                 case 2:
-                    document.Description = document.HasFirm ? document.Description = $"{area.Description} Firmad@" : document.Description = area.Description;
+                    document.Description = area.Description;
                     break;
             }
 
@@ -441,7 +511,7 @@
             document.UrlRelative = $"{area.Url}{fileName}";
             document.Date = DateTime.Now;
             document.DateModification = documentsByParent.Count == 0 ? document.Date : documentsByParent[documentsByParent.Count - 1].Date;
-            document.DocumentStateId = 1;            
+            document.DocumentStateId = 1;
 
             return document;
         }

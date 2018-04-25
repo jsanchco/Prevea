@@ -81,11 +81,8 @@
                         Icon: { type: "string" },
                         Extension: { type: "string" },
                         Observations: { type: "string" },
-                        Date: { type: "date", defaultValue: new Date() }
-                        //ContractualDocumentCompanyFirmedId: { type: "number", defaultValue: null },
-                        //ContractualDocumentCompanyFirmedEnrollment: { type: "string" },
-                        //ContractualDocumentCompanyFirmedUrlRelative: { type: "string" },
-                        //ContractualDocumentCompanyParentId: { type: "number", defaultValue: null }
+                        Date: { type: "date", defaultValue: new Date() },
+                        DocumentFirmedId: { type: "number", defaultValue: null }
                     }
                 }
             },
@@ -402,7 +399,7 @@
 
     getColumnTemplateEnrollment: function (data) {
         var html;
-        if (data.ContractualDocumentCompanyFirmedId == null) {
+        if (data.DocumentFirmedId == null) {
             if (data.Id !== 0) {
                 html = "<div style='text-align: center'>";
                 html += "<div style='text-align: left'>";
@@ -574,7 +571,7 @@
     updateRow: function (contractualDocument) {
         var grid = $("#" + this.gridContractualsDocumentsCompanyId).data("kendoGrid");           
         var dataItem = grid.dataSource.get(contractualDocument.Id);
-        dataItem.ContractualDocumentCompanyFirmedId = contractualDocument.ContractualDocumentCompanyFirmedId;
+        dataItem.DocumentFirmedId = contractualDocument.DocumentFirmedId;
 
         grid.refresh();
     },

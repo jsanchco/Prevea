@@ -28,7 +28,7 @@
             upload:function(e) {
                 e.data = {
                     companyId: AddDocumentFirmed.companyId,
-                    contractualDocumentId: AddDocumentFirmed.contractualDocumentId
+                    documentId: AddDocumentFirmed.contractualDocumentId
                 };
             },
             success: AddDocumentFirmed.onSuccessSaveDocument,

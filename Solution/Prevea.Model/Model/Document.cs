@@ -49,10 +49,11 @@
 
         public bool HasFirm { get; set; }
 
-        public bool IsFirmedDocument { get; set; }
-
         public int? DocumentParentId { get; set; }
         public virtual Document DocumentParent { get; set; }
+
+        public int? DocumentFirmedId { get; set; }
+        public virtual Document DocumentFirmed { get; set; }
 
         public int? CompanyId { get; set; }
         public virtual Company Company { get; set; }

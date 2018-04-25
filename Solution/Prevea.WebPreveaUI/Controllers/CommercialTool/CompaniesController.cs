@@ -761,7 +761,7 @@
 
             ViewBag.CompanyId = companyId;
             ViewBag.ContractualDocumentId = contractualDocumentId;
-            //ViewBag.Enrollment = contractualDocument.Enrollment;
+            ViewBag.Enrollment = contractualDocument.Name;
 
             return PartialView("~/Views/CommercialTool/Companies/AddDocumentFirmed.cshtml");
         }
@@ -775,17 +775,13 @@
         }
 
         [HttpPost]
-        public ActionResult SaveDocumentFirmed(IEnumerable<HttpPostedFileBase> fileDocumentFirmed, int companyId, int contractualDocumentId)
+        public ActionResult SaveDocumentFirmed(IEnumerable<HttpPostedFileBase> fileDocumentFirmed, int companyId, int documentId)
         {
             if (fileDocumentFirmed == null || !fileDocumentFirmed.Any())
                 return Json(new Result { Status = Status.Error }, JsonRequestBehavior.AllowGet);
 
-            //var result =
-            //    Service.SaveContractualDocumentFirmed(fileDocumentFirmed.FirstOrDefault(), companyId, contractualDocumentId);
-            var result = new Result
-            {
-                Status = Status.Error
-            };
+            var result =
+                Service.SaveContractualDocumentFirmed(fileDocumentFirmed.FirstOrDefault(), companyId, documentId, User.Id);
 
             if (result.Status == Status.Error)
             {

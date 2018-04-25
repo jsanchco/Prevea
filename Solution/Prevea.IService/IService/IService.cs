@@ -26,6 +26,7 @@
         List<Document> GetDocumentsContractualsByCompany(int? companyId);
         string VerifyNewContractualDocument(Document document);
         Result SaveOtherDocument(HttpPostedFileBase fileOtherDocument, int documentId);
+        Result SaveContractualDocumentFirmed(HttpPostedFileBase fileDocumentFirmed, int companyId, int documentId, int userId);
 
         void RestoreFile(int userId, string urlRelative);
         void SaveFileTmp(int userId, HttpPostedFileBase files);

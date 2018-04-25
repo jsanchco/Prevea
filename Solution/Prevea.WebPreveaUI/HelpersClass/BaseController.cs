@@ -173,24 +173,24 @@ namespace Prevea.WebPreveaUI.HelpersClass
                 case 6:
                     actionResult = "OfferSPAReport";
                     break;
-                case 9:
-                    actionResult = "/Companies/ContractSPAReport";
-                    break;
                 case 7:
-                    actionResult = "/Companies/OfferTrainingReport";
-                    break;
-                case 10:
-                    actionResult = "/Companies/ContractTrainingReport";
+                    actionResult = "OfferTrainingReport";
                     break;
                 case 8:
-                    actionResult = "/Companies/OfferAgencyReport";
+                    actionResult = "OfferAgencyReport";
+                    break;
+                case 9:
+                    actionResult = "ContractSPAReport";
+                    break;
+                case 10:
+                    actionResult = "ContractTrainingReport";
                     break;
                 case 11:
-                    actionResult = "/Companies/ContractAgencyReport";
+                    actionResult = "ContractAgencyReport";
                     break;
 
                 default:
-                    actionResult = "/Companies/DefaultReport";
+                    actionResult = "DefaultReport";
                     break;
             }
 

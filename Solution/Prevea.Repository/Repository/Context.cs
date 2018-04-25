@@ -86,6 +86,7 @@
             modelBuilder.Entity<Simulation>().HasOptional(x => x.UserAssigned).WithMany(y => y.SimulationsAssigned);
             modelBuilder.Entity<Employee>().HasRequired(x => x.User).WithMany().WillCascadeOnDelete(false);
             modelBuilder.Entity<RequestMedicalExaminations>().HasRequired(x => x.Company).WithMany(y => y.RequestMedicalExaminations).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Document>().HasOptional(x => x.DocumentFirmed).WithMany().HasForeignKey(x => x.DocumentFirmedId);
         }
     }
 }
