@@ -25,6 +25,7 @@
         Document GetDocument(int id);
         List<Document> GetDocumentsContractualsByCompany(int? companyId);
         string VerifyNewContractualDocument(Document document);
+        Result SaveOtherDocument(HttpPostedFileBase fileOtherDocument, int documentId);
 
         void RestoreFile(int userId, string urlRelative);
         void SaveFileTmp(int userId, HttpPostedFileBase files);
@@ -33,6 +34,7 @@
 
         #region Area
 
+        Area GetArea(int id);
         List<Area> GetAreasByEntity(int entityId);
         Area GetAreaByName(string name);
         List<Area> GetAreasByCompanyAndSimulation(int companyId, int simulationId);

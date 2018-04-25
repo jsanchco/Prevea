@@ -42,14 +42,17 @@ namespace Prevea.WebPreveaUI.HelpersClass
             return query.ToList();
         }
 
-        protected bool CreatePdf(Document document, string actionResultForReport)
+        public bool CreatePdf(Document document)
         {
             try
             {
                 var filePath = Server.MapPath(document.UrlRelative);
+                var directoryPath = Path.GetDirectoryName(filePath);
+                if (directoryPath != null)
+                    Directory.CreateDirectory(directoryPath);
 
                 var actionPdf = new ActionAsPdf(
-                    actionResultForReport,
+                    GetActionResultForReport(document.AreaId),
                     new { documentId = document.Id });
                 actionPdf.RotativaOptions.CustomSwitches = Constants.FooterPdf;
 
@@ -161,6 +164,39 @@ namespace Prevea.WebPreveaUI.HelpersClass
 
             return File(filedata, contentType);
         }
+
+        protected static string GetActionResultForReport(int areaId)
+        {
+            string actionResult;
+            switch (areaId)
+            {
+                case 6:
+                    actionResult = "OfferSPAReport";
+                    break;
+                case 9:
+                    actionResult = "/Companies/ContractSPAReport";
+                    break;
+                case 7:
+                    actionResult = "/Companies/OfferTrainingReport";
+                    break;
+                case 10:
+                    actionResult = "/Companies/ContractTrainingReport";
+                    break;
+                case 8:
+                    actionResult = "/Companies/OfferAgencyReport";
+                    break;
+                case 11:
+                    actionResult = "/Companies/ContractAgencyReport";
+                    break;
+
+                default:
+                    actionResult = "/Companies/DefaultReport";
+                    break;
+            }
+
+            return actionResult;
+        }
+
 
         protected override void Dispose(bool disposing)
         {

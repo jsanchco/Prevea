@@ -10,6 +10,11 @@
 
     public partial class Service
     {
+        public Area GetArea(int id)
+        {
+            return Repository.GetArea(id);
+        }
+
         public List<Area> GetAreasByEntity(int entityId)
         {
             return Repository.GetAreasByEntity(entityId);

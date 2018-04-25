@@ -7,6 +7,9 @@
     using Model.Model;
     using System;
     using System.Linq;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Web;
 
     #endregion
 
@@ -47,7 +50,7 @@
                         Status = Status.Error
                     };
                 }
-                document = FillDataDocument(documentUserCreator.UserId, document);
+                document = FillDataDocument(documentUserCreator.UserId, document, extension);
                 document.DocumentUserOwners = usersOwners;
 
                 if (restoreFile)
@@ -372,9 +375,46 @@
             return error;
         }
 
-        private Document FillDataDocument(int userId, Document document)
+        public Result SaveOtherDocument(HttpPostedFileBase fileOtherDocument, int documentId)
         {
-            var extension = GetExtension(userId);
+            try
+            {
+                var contractualDocument = GetDocument(documentId);
+                if (contractualDocument == null)
+                    return new Result { Status = Status.Error };
+
+                contractualDocument.UrlRelative += Path.GetExtension(fileOtherDocument.FileName);
+
+                var url = HttpContext.Current.Server.MapPath(contractualDocument.UrlRelative);
+                if (url == null)
+                    return new Result { Status = Status.Error };
+
+                fileOtherDocument.SaveAs(url);
+
+                var result = Repository.UpdateDocument(documentId, contractualDocument);
+
+                if (result == null)
+                    return new Result { Status = Status.Error };
+
+                return new Result
+                {
+                    Status = Status.Ok,
+                    Object = result
+                };
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+
+                return new Result { Status = Status.Error };
+            }
+        }
+
+        private Document FillDataDocument(int userId, Document document, string extension)
+        {           
+            if (extension == null)
+                extension = GetExtension(userId);
+
             var area = Repository.GetArea(document.AreaId);
 
             document.DocumentNumber = Repository.GetNumberDocumentsByArea(document.AreaId) + 1;

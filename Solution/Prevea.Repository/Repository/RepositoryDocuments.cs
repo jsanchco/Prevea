@@ -20,6 +20,7 @@
                 .Include(x => x.Area)
                 .Include(x => x.DocumentState)
                 .Include(x => x.Company)
+                .Include(x => x.Simulation)
                 .OrderBy(x => x.Date)
                 .ToList();
         }
@@ -30,6 +31,7 @@
                 .Include(x => x.DocumentState)
                 .Include(x => x.Area)
                 .Include(x => x.Company)
+                .Include(x => x.Simulation)
                 .FirstOrDefault(m => m.Id == id);
         }
 

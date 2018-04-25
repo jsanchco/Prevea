@@ -70,14 +70,18 @@
                         Id: { type: "number", defaultValue: 0 },
                         CompanyId: { type: "number", defaultValue: ContractualsDocumentsCompany.companyId },
                         SimulationId: { type: "number", defaultValue: ContractualsDocumentsCompany.simulationId },
-                        Enrollment: { type: "string", editable: false },
+                        Name: { type: "string", editable: false },
                         SimulationName: { type: "string", editable: false },
                         AreaId: { type: "number", validation: { required: { message: " Campo Obligatorio " } } },
                         AreaDescription: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         BeginDate: { type: "date", defaultValue: beginDate, format: "{0:dd/MM/yy}" },
                         EndDate: { type: "date", defaultValue: endDate, format: "{0:dd/MM/yy}" },
+                        DateModification: { type: "date", defaultValue: null },
                         UrlRelative: { type: "string" },
+                        Icon: { type: "string" },
+                        Extension: { type: "string" },
                         Observations: { type: "string" },
+                        Date: { type: "date", defaultValue: new Date() }
                         //ContractualDocumentCompanyFirmedId: { type: "number", defaultValue: null },
                         //ContractualDocumentCompanyFirmedEnrollment: { type: "string" },
                         //ContractualDocumentCompanyFirmedUrlRelative: { type: "string" },
@@ -129,13 +133,13 @@
                         if (e.type === "create") {
                             kendo.ui.progress(grid.element, false);
 
-                            GeneralData.showNotification(Constants.ok, "", "success");
-                            if (!e.response.UrlRelative) {
+                            if (e.response.AreaId === 13) {
                                 ContractualsDocumentsCompany.goToAddOtherDocument(e.response.Id);
                             }
-                        }                                                
+                        }
+                        GeneralData.showNotification(Constants.ok, "", "success");
                     }
-                }
+                }                
             },
             pageSize: 10
         });        
@@ -168,8 +172,8 @@
         $("#" + this.gridContractualsDocumentsCompanyId).kendoGrid({
             columns: [
                 {
-                    field: "Enrollment",
-                    title: "Matrícula",
+                    field: "Name",
+                    title: "Nombre",
                     width: 250,
                     groupable: "false",
                     template: "#= ContractualsDocumentsCompany.getColumnTemplateEnrollment(data) #"
@@ -348,7 +352,10 @@
 
     onSave: function () {
         var grid = $("#" + ContractualsDocumentsCompany.gridContractualsDocumentsCompanyId).data("kendoGrid");
-        kendo.ui.progress(grid.element, true);
+        var result = $("#" + ContractualsDocumentsCompany.gridContractualsDocumentsCompanyId).data().kendoGrid.editable.validatable.validate();
+
+        if (result === true)
+            kendo.ui.progress(grid.element, true);
     },
 
     getContractualDocumentTypeDescription: function (areaId) {
@@ -375,7 +382,7 @@
     getColumnTemplateCommands: function (data) {
         var html = "<div style='display: inline-block; margin-left: 37px;'>";
 
-        if (data.UrlRelative) {
+        if (data.Extension) {
             html += kendo.format("<a toggle='tooltip' title='Abrir Documento' onclick='GeneralData.goToOpenContractualDocument(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>&nbsp;&nbsp;", data.Id);
             //html += kendo.format("<a toggle='tooltip' title='Ver Documento' onclick='ContractualsDocumentsCompany.goToOfferView(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>&nbsp;&nbsp;", data.Id);
         } else {
@@ -403,7 +410,7 @@
                     "<div id='circleFirmPending' toggle='tooltip' title='Agregar Documento Firmado' onclick='ContractualsDocumentsCompany.goToAddContractualDocumentFirmed(\"{0}\")' style='cursor: pointer; float: left; text-align: left;'>",
                     data.Id);
                 html += "</div></div>";
-                html += kendo.format("<div style='font-size: 16px; font-weight: bold;'>{0}", data.Enrollment);
+                html += kendo.format("<div style='font-size: 16px; font-weight: bold;'>{0}", data.Name);
                 html += "</div></div>";
             } else {
                 html = "";
@@ -421,7 +428,7 @@
             html += removeDocumentFirmed;
             html += "</div>";            
             html += "</div>";
-            html += kendo.format("<div style='font-size: 16px; font-weight: bold;'>{0}", data.Enrollment);
+            html += kendo.format("<div style='font-size: 16px; font-weight: bold;'>{0}", data.Name);
             html += "</div></div>";
         }
         
@@ -576,6 +583,8 @@
         var grid = $("#" + this.gridContractualsDocumentsCompanyId).data("kendoGrid");
         var dataItem = grid.dataSource.get(contractualDocument.Id);
         dataItem.UrlRelative = contractualDocument.UrlRelative;
+        dataItem.Extension = contractualDocument.Extension;
+        dataItem.Icon = contractualDocument.Icon;
 
         grid.refresh();
     }

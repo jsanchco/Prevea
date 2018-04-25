@@ -672,7 +672,6 @@
         [AppAuthorize(Roles = "Super,Admin,PreveaPersonal,PreveaCommercial,ContactPerson")]
         public JsonResult ContractualsDocumentsCompany_Read([DataSourceRequest] DataSourceRequest request, int companyId)
         {
-            var t = Service.GetDocumentsContractualsByCompany(companyId);
             var data = AutoMapper.Mapper.Map<List<DocumentViewModel>>(Service.GetDocumentsContractualsByCompany(companyId));
 
             return this.Jsonp(data);
@@ -696,22 +695,31 @@
                 if (company?.ContactPersons != null)
                     documentUserOwners.AddRange(company.ContactPersons.Select(contactPerson => new DocumentUserOwner {UserId = contactPerson.UserId}));
 
+                string extension = null;
+                var area = Service.GetArea(document.AreaId);
+                if (area.EntityId != 1)
+                {
+                    extension = area.Id == 13 ? string.Empty : ".pdf";
+                }
+                                    
                 var result = Service.SaveDocument(
                     document, 
                     false, 
                     new List<DocumentUserCreator> { new DocumentUserCreator { UserId = User.Id} },
-                    documentUserOwners);
+                    documentUserOwners,
+                    extension);
 
                 if (result.Status == Status.Error)
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
 
+                document = Service.GetDocument(((Document)result.Object).Id);
                 if (document.AreaId == 9) // Otros documentos
-                    return this.Jsonp(AutoMapper.Mapper.Map<DocumentViewModel>(result.Object));
+                    return this.Jsonp(AutoMapper.Mapper.Map<DocumentViewModel>(document));
 
-                if (!CreatePdf(result.Object as Document, GetActionResultForReport(document.AreaId)))  
+                if (!CreatePdf(document))  
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
 
-                return this.Jsonp(AutoMapper.Mapper.Map<DocumentViewModel>(result.Object));
+                return this.Jsonp(AutoMapper.Mapper.Map<DocumentViewModel>(document));
             }
             catch (Exception e)
             {
@@ -725,7 +733,7 @@
         {
             try
             {
-                var contractualDocument = this.DeserializeObject<DocumentViewModel>("contractualDocument");
+                var contractualDocument = this.DeserializeObject<DocumentViewModel>("document");
                 if (contractualDocument == null)
                 {
                     return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del Documento" });
@@ -795,18 +803,13 @@
         }
 
         [HttpPost]
-        public ActionResult SaveOtherDocument(IEnumerable<HttpPostedFileBase> fileOtherDocument, int contractualDocumentId)
+        public ActionResult SaveOtherDocument(IEnumerable<HttpPostedFileBase> fileOtherDocument, int documentId)
         {
             if (fileOtherDocument == null || !fileOtherDocument.Any())
                 return Json(new Result { Status = Status.Error }, JsonRequestBehavior.AllowGet);
-            
-            //var result =
-            //    Service.SaveOtherDocument(fileOtherDocument.FirstOrDefault(), contractualDocumentId);
 
-            var result = new Result
-            {
-                Status = Status.Error
-            };
+            var result =
+                Service.SaveOtherDocument(fileOtherDocument.FirstOrDefault(), documentId);
 
             if (result.Status == Status.Error)
             {
@@ -836,14 +839,14 @@
         }
 
         [HttpGet]
-        public ActionResult OfferSPAReport(int contractualDocumentId, bool isPartialView = false)
+        public ActionResult OfferSPAReport(int documentId, bool isPartialView = false)
         {
             ViewBag.IsPartialView = isPartialView;
 
-            var contractualDocument = Service.GetDocument(contractualDocumentId);
+            var contractualDocument = Service.GetDocument(documentId);
 
-            ViewBag.ContractualDocumentId = contractualDocumentId;
-            //ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
+            ViewBag.ContractualDocumentId = documentId;
+            ViewBag.ContractualDocumentEnrollment = contractualDocument.Name;
             ViewBag.IVA = Service.GetTagValue("IVA");
 
             var workCenters = Service.GetWorkCentersByCompany((int)contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
@@ -1270,38 +1273,6 @@
             var data = AutoMapper.Mapper.Map<List<AreaViewModel>>(Service.GetContractualDocumentTypesBySimulation(companyId, simulationId));
 
             return this.Jsonp(data);
-        }
-
-        private static string GetActionResultForReport(int areaId)
-        {
-            string actionResult;
-            switch (areaId)
-            {
-                case 6:
-                    actionResult = "OfferSPAReport";
-                    break;
-                case 9:
-                    actionResult = "ContractSPAReport";
-                    break;
-                case 7:
-                    actionResult = "OfferTrainingReport";
-                    break;
-                case 10:
-                    actionResult = "ContractTrainingReport";
-                    break;
-                case 8:
-                    actionResult = "OfferAgencyReport";
-                    break;
-                case 11:
-                    actionResult = "ContractAgencyReport";
-                    break;
-
-                default:
-                    actionResult = "DefaultReport";
-                    break;
-            }
-
-            return actionResult;
         }
 
         #endregion

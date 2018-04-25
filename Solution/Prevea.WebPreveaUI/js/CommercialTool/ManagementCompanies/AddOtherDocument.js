@@ -24,7 +24,7 @@
                 uploadSelectedFiles: "Guardar"
             },
             upload: function (e) {
-                e.data = { contractualDocumentId: AddOtherDocument.contractualDocumentId };
+                e.data = { documentId: AddOtherDocument.contractualDocumentId };
             },
             success: AddOtherDocument.onSuccessSaveDocument,
             error: AddOtherDocument.onErrorSaveDocument
