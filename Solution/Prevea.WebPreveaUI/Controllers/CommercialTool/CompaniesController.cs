@@ -716,7 +716,7 @@
                 if (document.AreaId == 9) // Otros documentos
                     return this.Jsonp(AutoMapper.Mapper.Map<DocumentViewModel>(document));
 
-                if (!CreatePdf(document))  
+                if (!CreatePdf(document, Constants.FooterPdf))  
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
 
                 return this.Jsonp(AutoMapper.Mapper.Map<DocumentViewModel>(document));

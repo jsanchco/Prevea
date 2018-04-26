@@ -60,7 +60,8 @@ namespace Prevea.ConsoleTestModel.Migrations
             var entities = new List<Entity>
             {
                 new Entity { Name = "Library", Description = "Biblioteca" },
-                new Entity { Name = "Companies", Description = "Empresas" }
+                new Entity { Name = "Company", Description = "Empresas" },
+                new Entity { Name = "MedicalExamination", Description = "Reconocimientos Médicos" }
             };
             entities.ForEach(p => context.Entities.AddOrUpdate(s => s.Id, p));
             context.SaveChanges();
@@ -80,7 +81,9 @@ namespace Prevea.ConsoleTestModel.Migrations
                 new Area { Name = "CON_GES", Description = "Contrato Gestoría", EntityId = 2, Url = "~/App_Data/Company/CON/GES/" }, // 11
                 new Area { Name = "ANX", Description = "Anexo", EntityId = 2, Url = "~/App_Data/Company/ANX/" }, // 12
                 new Area { Name = "OTR", Description = "Otros Documentos", EntityId = 2, Url = "~/App_Data/Company/OTR/" }, // 13
-                new Area { Name = "UNS", Description = "Baja Documento", EntityId = 2, Url = "~/App_Data/Company/UNS/" } // 14
+                new Area { Name = "UNS", Description = "Baja Documento", EntityId = 2, Url = "~/App_Data/Company/UNS/" }, // 14
+                new Area { Name = "CIT", Description = "Citación", EntityId = 3, Url = "~/App_Data/MedicalExamination/CIT/" }, // 15
+                new Area { Name = "RCM", Description = "Reconocimientos Médicos", EntityId = 3, Url = "~/App_Data/MedicalExamination/RCM/" }, // 16
             };
             areas.ForEach(p => context.Areas.AddOrUpdate(s => s.Id, p));
             context.SaveChanges();

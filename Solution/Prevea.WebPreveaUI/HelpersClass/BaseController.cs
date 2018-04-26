@@ -42,7 +42,7 @@ namespace Prevea.WebPreveaUI.HelpersClass
             return query.ToList();
         }
 
-        public bool CreatePdf(Document document)
+        public bool CreatePdf(Document document, string footer)
         {
             try
             {
@@ -54,7 +54,8 @@ namespace Prevea.WebPreveaUI.HelpersClass
                 var actionPdf = new ActionAsPdf(
                     GetActionResultForReport(document.AreaId),
                     new { documentId = document.Id });
-                actionPdf.RotativaOptions.CustomSwitches = Constants.FooterPdf;
+                if (!string.IsNullOrEmpty(footer))
+                    actionPdf.RotativaOptions.CustomSwitches = footer;
 
                 var applicationPdfData = actionPdf.BuildPdf(ControllerContext);
                 var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
@@ -187,6 +188,9 @@ namespace Prevea.WebPreveaUI.HelpersClass
                     break;
                 case 11:
                     actionResult = "ContractAgencyReport";
+                    break;
+                case 15:
+                    actionResult = "TemplateEmployeeCitationReport";
                     break;
 
                 default:

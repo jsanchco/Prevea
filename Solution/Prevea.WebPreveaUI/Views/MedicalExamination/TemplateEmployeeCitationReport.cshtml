@@ -116,7 +116,15 @@
         </div>
         <div class="col-xs-3">
             @{
-                var fullName = string.Format("{0}, {1}", Model.Employee.User.LastName.ToUpper(), Model.Employee.User.FirstName.ToUpper());
+                var fullName = string.Empty;
+                if (Model.Employee.User.LastName != null)
+                {
+                    fullName = string.Format("{0}, ", Model.Employee.User.LastName.ToUpper());
+                }
+                if (Model.Employee.User.FirstName != null)
+                {
+                    fullName += string.Format("{0}, ", Model.Employee.User.FirstName.ToUpper());
+                }
             }
             @fullName
         </div>

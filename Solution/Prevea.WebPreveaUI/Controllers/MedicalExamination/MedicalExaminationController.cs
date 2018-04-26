@@ -135,9 +135,9 @@
         }
 
         [HttpGet]
-        public ActionResult TemplateEmployeeCitationReport(int id)
+        public ActionResult TemplateEmployeeCitationReport(int documentId)
         {
-            var requestMedicalExaminationEmployeeFind = Service.GetRequestMedicalExaminationEmployeeById(id);
+            var requestMedicalExaminationEmployeeFind = Service.GetRequestMedicalExaminationEmployeeById(documentId);
 
             return View("~/Views/MedicalExamination/TemplateEmployeeCitationReport.cshtml", requestMedicalExaminationEmployeeFind);
         }
@@ -329,30 +329,42 @@
         {
             try
             {
-                var requestMedicalExaminationEmployeFind = Service.GetRequestMedicalExaminationEmployeeById(id);
-                if (requestMedicalExaminationEmployeFind == null)
-                    return null;
+                var area = Service.GetAreaByName("CIT");
+                var document = new Document
+                {
+                    Id = id,
+                    AreaId = area.Id,
+                    UrlRelative = $"{area.Url}CIT_{User.Id}.pdf"
+                };
 
-                var urlRelative = $"~/App_Data/Companies/{requestMedicalExaminationEmployeFind.RequestMedicalExaminations.Company.NIF}/MedicalExaminations/CIT_{requestMedicalExaminationEmployeFind.Employee.UserId}.pdf";
-                var filePath = Server.MapPath(urlRelative);
-                var directory = Path.GetDirectoryName(filePath);
-                if (directory != null)
-                    Directory.CreateDirectory(directory);
+                var result = CreatePdf(document, null);
 
-                var actionPdf = new ActionAsPdf(
-                    "TemplateEmployeeCitationReport",
-                    new
-                    {
-                        id
-                    });
-                //actionPdf.RotativaOptions.CustomSwitches = Constants.FooterPdf;
+                //var requestMedicalExaminationEmployeFind = Service.GetRequestMedicalExaminationEmployeeById(id);
+                //if (requestMedicalExaminationEmployeFind == null)
+                //    return null;
 
-                var applicationPdfData = actionPdf.BuildPdf(ControllerContext);
-                var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
-                fileStream.Write(applicationPdfData, 0, applicationPdfData.Length);
-                fileStream.Close();
+                //var urlRelative = $"~/App_Data/Companies/{requestMedicalExaminationEmployeFind.RequestMedicalExaminations.Company.NIF}/MedicalExaminations/CIT_{requestMedicalExaminationEmployeFind.Employee.UserId}.pdf";
+                //var filePath = Server.MapPath(urlRelative);
+                //var directory = Path.GetDirectoryName(filePath);
+                //if (directory != null)
+                //    Directory.CreateDirectory(directory);
 
-                return urlRelative;
+                //var actionPdf = new ActionAsPdf(
+                //    "TemplateEmployeeCitationReport",
+                //    new
+                //    {
+                //        id
+                //    });
+                ////actionPdf.RotativaOptions.CustomSwitches = Constants.FooterPdf;
+
+                //var applicationPdfData = actionPdf.BuildPdf(ControllerContext);
+                //var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+                //fileStream.Write(applicationPdfData, 0, applicationPdfData.Length);
+                //fileStream.Close();
+
+                //return urlRelative;
+
+                return result ? document.UrlRelative : null;
             }
             catch (Exception ex)
             {

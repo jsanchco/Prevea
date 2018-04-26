@@ -272,7 +272,7 @@
             if (employee != null)
             {
                 var requestMedicalExaminationEmployee = Service.GetRequestMedicalExaminationEmployeeById(employee.Id);
-                if (requestMedicalExaminationEmployee.RequestMedicalExaminations.RequestMedicalExaminationStateId ==
+                if (requestMedicalExaminationEmployee?.RequestMedicalExaminations.RequestMedicalExaminationStateId ==
                     (int) EnRequestMedicalExaminationState.Blocked)
                 {
                     return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
