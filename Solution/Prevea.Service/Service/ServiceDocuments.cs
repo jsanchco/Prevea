@@ -306,6 +306,12 @@
                         RemoveFile(url);
                     }
 
+                    if (document.IsFirmedDocument)
+                    {
+                        document.DocumentParent.DocumentFirmedId = null;
+                        UpdateDocument(document, false);
+                    }
+
                     url = HttpContext.Current.Server.MapPath(document.UrlRelative);
                     deleteDocument = Repository.DeleteDocument(document.Id);
                     if (deleteDocument == false)

@@ -1235,6 +1235,13 @@
         [HttpPost]
         public JsonResult DeleteContractualDocumentCompanyFirmed(int documentFirmedId)
         {
+            Document documentParent = null;
+            var documentParentId = Service.GetDocument(documentFirmedId).DocumentParentId;
+            if (documentParentId != null)
+            {
+                documentParent = Service.GetDocument((int) documentParentId);
+            }
+
             var result =
                 Service.DeleteDocument(documentFirmedId);
 
@@ -1249,7 +1256,7 @@
             return Json(new Result
             {
                 Status = Status.Ok,
-                Object = AutoMapper.Mapper.Map<DocumentViewModel>(result.Object)
+                Object = AutoMapper.Mapper.Map<DocumentViewModel>(documentParent)
             }, JsonRequestBehavior.AllowGet);
         }
 
