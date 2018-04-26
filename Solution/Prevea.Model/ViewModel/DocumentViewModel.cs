@@ -37,5 +37,6 @@
         public string DocumentUserCreatorName { get; set; }
         public string CompanyName { get; set; }
         public string SimulationName { get; set; }
+        public int? DocumentFirmedId { get; set; }
     }
 }

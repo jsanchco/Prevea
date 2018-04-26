@@ -22,6 +22,7 @@
         Result DeleteDocument(int documentId);
         List<Document> GetDocuments(int documentStateId = 0);
         List<Document> GetDocumentsByParent(int id, int? parentId);
+        List<Document> GetChildrenDocument(int parentId);
         Document GetDocument(int id);
         List<Document> GetDocumentsContractualsByCompany(int? companyId);
         string VerifyNewContractualDocument(Document document);

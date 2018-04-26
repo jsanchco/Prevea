@@ -906,7 +906,7 @@
             var contractualDocument = Service.GetDocument(contractualDocumentId);
 
             ViewBag.ContractualDocumentId = contractualDocumentId;
-            //ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
+            ViewBag.ContractualDocumentEnrollment = contractualDocument.Name;
             ViewBag.IVA = Service.GetTagValue("IVA");
 
             var workCenters = Service.GetWorkCentersByCompany((int)contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
@@ -970,7 +970,7 @@
             var contractualDocument = Service.GetDocument(contractualDocumentId);
 
             ViewBag.ContractualDocumentId = contractualDocumentId;
-            //ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
+            ViewBag.ContractualDocumentEnrollment = contractualDocument.Name;
             ViewBag.IVA = Service.GetTagValue("IVA");
 
             var workCenters = Service.GetWorkCentersByCompany((int)contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
@@ -1034,7 +1034,7 @@
             var contractualDocument = Service.GetDocument(contractualDocumentId);
 
             ViewBag.ContractualDocumentId = contractualDocumentId;
-            //ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
+            ViewBag.ContractualDocumentEnrollment = contractualDocument.Name;
             ViewBag.IVA = Service.GetTagValue("IVA");
 
             var workCenters = Service.GetWorkCentersByCompany((int)contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
@@ -1098,7 +1098,7 @@
             var contractualDocument = Service.GetDocument(contractualDocumentId);
 
             ViewBag.ContractualDocumentId = contractualDocumentId;
-            //ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
+            ViewBag.ContractualDocumentEnrollment = contractualDocument.Name;
             ViewBag.IVA = Service.GetTagValue("IVA");
 
             var workCenters = Service.GetWorkCentersByCompany((int)contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
@@ -1162,7 +1162,7 @@
             var contractualDocument = Service.GetDocument(contractualDocumentId);
 
             ViewBag.ContractualDocumentId = contractualDocumentId;
-            //ViewBag.ContractualDocumentEnrollment = contractualDocument.Enrollment;
+            ViewBag.ContractualDocumentEnrollment = contractualDocument.Name;
             ViewBag.IVA = Service.GetTagValue("IVA");
 
             var workCenters = Service.GetWorkCentersByCompany((int)contractualDocument.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
@@ -1233,14 +1233,10 @@
         }
 
         [HttpPost]
-        public JsonResult DeleteContractualDocumentCompanyFirmed(int contractualDocumentCompanyFirmedId)
+        public JsonResult DeleteContractualDocumentCompanyFirmed(int documentFirmedId)
         {
-            //var result =
-            //    Service.DeleteContractualDocumentCompanyFirmed(contractualDocumentCompanyFirmedId);
-            var result = new Result
-            {
-                Status = Status.Error
-            };
+            var result =
+                Service.DeleteDocument(documentFirmedId);
 
             if (result.Status == Status.Error)
             {

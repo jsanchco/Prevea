@@ -184,9 +184,7 @@
                 try
                 {
                     var document = GetDocument(id);
-                    var children = GetDocumentsByParent(id, document.DocumentParentId);
-                    foreach (var child in children)
-                        Context.Documents.Remove(child);
+                    Context.Documents.Remove(document);
 
                     Context.SaveChanges();
 
@@ -199,7 +197,7 @@
                     dbContextTransaction.Rollback();
 
                     System.Diagnostics.Debug.WriteLine(ex.Message);
-                    return true;
+                    return false;
                 }
             }
         }
@@ -259,7 +257,7 @@
                 .Include(x => x.DocumentState)
                 .Include(x => x.Area)
                 .Include(x => x.Company)
-                .Where(x => x.Area.EntityId == 2 && x.CompanyId == companyId)
+                .Where(x => x.Area.EntityId == 2 && x.CompanyId == companyId && x.IsFirmedDocument == false)
                 .ToList();
         }
     }

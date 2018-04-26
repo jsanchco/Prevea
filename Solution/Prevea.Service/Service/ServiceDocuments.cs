@@ -25,6 +25,11 @@
             return Repository.GetDocumentsByParent(id, parentId);
         }
 
+        public List<Document> GetChildrenDocument(int parentId)
+        {
+            return Repository.GetChildrenDocument(parentId);
+        }
+
         public Document GetDocument(int id)
         {
             return Repository.GetDocument(id);
@@ -50,7 +55,7 @@
                         Status = Status.Error
                     };
                 }
-                if (document.DocumentFirmedId == null)
+                if (!document.IsFirmedDocument)
                     document = FillDataDocument(documentUserCreator.UserId, document, extension);
 
                 document.DocumentUserOwners = usersOwners;
@@ -258,16 +263,61 @@
         {
             try
             {
-                var result = Repository.DeleteDocument(id);
+                var document = GetDocument(id);
+                List<Document> children;
+                bool deleteDocument;
+                string url;
 
-                if (result == false)
+                if (document.Area.EntityId == 1)
                 {
-                    return new Result
+                    children = GetDocumentsByParent(id, document.DocumentParentId);
+                    foreach (var child in children)
                     {
-                        Message = "Se ha producido un error en al Borrar el Documento",
-                        Object = null,
-                        Status = Status.Error
-                    };
+                        url = HttpContext.Current.Server.MapPath(child.UrlRelative);
+                        deleteDocument = Repository.DeleteDocument(child.Id);
+                        if (deleteDocument == false)
+                        {
+                            return new Result
+                            {
+                                Message = "Se ha producido un error en al Borrar el Documento",
+                                Object = null,
+                                Status = Status.Error
+                            };
+                        }
+                        RemoveFile(url);
+                    }
+                }
+                else
+                {
+                    children = GetChildrenDocument(id);
+                    foreach (var child in children)
+                    {
+                        url = HttpContext.Current.Server.MapPath(child.UrlRelative);
+                        deleteDocument = Repository.DeleteDocument(child.Id);
+                        if (deleteDocument == false)
+                        {
+                            return new Result
+                            {
+                                Message = "Se ha producido un error en al Borrar el Documento",
+                                Object = null,
+                                Status = Status.Error
+                            };
+                        }
+                        RemoveFile(url);
+                    }
+
+                    url = HttpContext.Current.Server.MapPath(document.UrlRelative);
+                    deleteDocument = Repository.DeleteDocument(document.Id);
+                    if (deleteDocument == false)
+                    {
+                        return new Result
+                        {
+                            Message = "Se ha producido un error en al Borrar el Documento",
+                            Object = null,
+                            Status = Status.Error
+                        };
+                    }
+                    RemoveFile(url);
                 }
 
                 return new Result
@@ -432,7 +482,8 @@
                     DocumentNumber = contractualDocument.DocumentNumber,
                     Edition = contractualDocument.Edition,
                     DocumentStateId = 1,
-                    Description = $"{area.Description} Firmad@"
+                    Description = $"{area.Description} Firmad@",
+                    IsFirmedDocument = true
                 };
 
                 var fileName = Path.GetFileName(contractualDocument.UrlRelative);

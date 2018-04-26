@@ -48,6 +48,7 @@
         public virtual DocumentState DocumentState { get; set; }
 
         public bool HasFirm { get; set; }
+        public bool IsFirmedDocument { get; set; }
 
         public int? DocumentParentId { get; set; }
         public virtual Document DocumentParent { get; set; }

@@ -82,7 +82,8 @@
                         Extension: { type: "string" },
                         Observations: { type: "string" },
                         Date: { type: "date", defaultValue: new Date() },
-                        DocumentFirmedId: { type: "number", defaultValue: null }
+                        DocumentFirmedId: { type: "number", defaultValue: null },
+                        IsFirmedDocument: { type: "boolean" }
                     }
                 }
             },
@@ -415,13 +416,13 @@
         } else {
             var removeDocumentFirmed = "";
             if (GeneralData.userRoleId !== Constants.role.ContactPerson) {
-                removeDocumentFirmed = kendo.format("<a toggle='tooltip' title='Eliminar Documento Firmado' onclick='ContractualsDocumentsCompany.goToDeleteContractualDocumentCompanyFirmed(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 7px;'></i></a>", data.ContractualDocumentCompanyFirmedId);
+                removeDocumentFirmed = kendo.format("<a toggle='tooltip' title='Eliminar Documento Firmado' onclick='ContractualsDocumentsCompany.goToDeleteContractualDocumentCompanyFirmed(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 7px;'></i></a>", data.DocumentFirmedId);
             }
 
             html = "<div style='text-align: center'>";
             html += "<div style='text-align: left'>";
             html += "<div style='cursor: pointer; float: left; text-align: left; margin-top: -10px;'>";
-            html += kendo.format("<img toggle='tooltip' title='Ver Documento Firmado' onclick='GeneralData.goToOpenContractualDocument(\"{0}\")' target='_blank' src='../../Images/pdf_opt_little.jpg'>&nbsp;&nbsp;", data.ContractualDocumentCompanyFirmedId);
+            html += kendo.format("<img toggle='tooltip' title='Ver Documento Firmado' onclick='GeneralData.goToOpenContractualDocument(\"{0}\")' target='_blank' src='../../Images/pdf_opt_little.jpg'>&nbsp;&nbsp;", data.DocumentFirmedId);
             html += removeDocumentFirmed;
             html += "</div>";            
             html += "</div>";
@@ -502,7 +503,7 @@
         this.addOtherDocumentWindow.data("kendoWindow").center().open();
     },
 
-    goToDeleteContractualDocumentCompanyFirmed: function (contractualDocumentCompanyFirmedId) {
+    goToDeleteContractualDocumentCompanyFirmed: function (documentFirmedId) {
         var dialog = $("#" + this.confirmId);
         dialog.kendoDialog({
             width: "400px",
@@ -519,7 +520,7 @@
                         $.ajax({
                             url: "/Companies/DeleteContractualDocumentCompanyFirmed",
                             data: {
-                                ContractualDocumentCompanyFirmedId: contractualDocumentCompanyFirmedId
+                                documentFirmedId: documentFirmedId
                             },
                             type: "post",
                             dataType: "json",
@@ -572,6 +573,7 @@
         var grid = $("#" + this.gridContractualsDocumentsCompanyId).data("kendoGrid");           
         var dataItem = grid.dataSource.get(contractualDocument.Id);
         dataItem.DocumentFirmedId = contractualDocument.DocumentFirmedId;
+        dataItem.IsFirmedDocument = contractualDocument.IsFirmedDocument;
 
         grid.refresh();
     },
