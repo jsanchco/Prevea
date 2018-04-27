@@ -1,9 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using Prevea.WebPreveaUI.Common;
-using Rotativa.MVC;
-
-namespace Prevea.WebPreveaUI.HelpersClass
+﻿namespace Prevea.WebPreveaUI.HelpersClass
 {
     #region Using
 
@@ -15,12 +10,15 @@ namespace Prevea.WebPreveaUI.HelpersClass
     using Security;
     using IService.IService;
     using Model.Model;
+    using System;
+    using System.Diagnostics;
+    using Rotativa.MVC;
 
     #endregion
 
     public class BaseController : Controller
     {
-        protected IService Service;
+        protected readonly IService Service;
 
         #region Construtor
 
@@ -200,7 +198,6 @@ namespace Prevea.WebPreveaUI.HelpersClass
 
             return actionResult;
         }
-
 
         protected override void Dispose(bool disposing)
         {
