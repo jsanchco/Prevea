@@ -67,6 +67,8 @@
 
         public virtual ICollection<DocumentUserOwner> DocumentUserOwners { get; set; }
 
+        public virtual ICollection<MedicalExaminationDocuments> MedicalExaminationDocuments { get; set; }
+
         #region Constructor
 
         public Document()

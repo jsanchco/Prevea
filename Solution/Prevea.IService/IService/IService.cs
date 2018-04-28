@@ -39,7 +39,7 @@
         Area GetArea(int id);
         List<Area> GetAreasByEntity(int entityId);
         Area GetAreaByName(string name);
-        List<Area> GetAreasByCompanyAndSimulation(int companyId, int simulationId);
+        List<Area> GetAreasByCompanyAndSimulation(int companyId, int simulationId);        
 
         #endregion
 
@@ -357,13 +357,6 @@
 
         #endregion
 
-        #region MedicalExaminationDocument Types
-
-        List<MedicalExaminationDocumentType> GetMedicalExaminationDocumentTypes();
-        MedicalExaminationDocumentType GetMedicalExaminationDocumentTypeById(int id);
-
-        #endregion
-
         #region Contractual Document Types
 
         List<Area> GetContractualDocumentTypes();
@@ -371,5 +364,12 @@
         List<Area> GetContractualDocumentTypesBySimulation(int companyId, int simulationId);
 
         #endregion
+
+        #region Medical Examination Types
+
+        List<Area> GetMedicalExaminationDocumentTypes();
+
+        #endregion
+
     }
 }

@@ -378,13 +378,5 @@
         List<MedicalExaminationDocuments> GetMedicalExaminationDocumentsByRequestMedicalExaminationEmployeeId(int requestMedicalExaminationEmployeeId);
 
         #endregion
-
-        #region MedicalExaminationDocument Types
-
-        List<MedicalExaminationDocumentType> GetMedicalExaminationDocumentTypes();
-        MedicalExaminationDocumentType GetMedicalExaminationDocumentTypeById(int id);
-        int GetMaxMedicalExaminationDocumentByType(int requestMedicalExaminationEmployeeId, int medicalExaminationDocumentId);
-
-        #endregion
     }
 }

@@ -25,7 +25,7 @@
         #endregion
 
         [HttpGet]
-        [AppAuthorize(Roles = "ContactPerson,PreveaPersonal")]
+        [AppAuthorize(Roles = "Super,ContactPerson,PreveaPersonal")]
         public ActionResult HistoricMedicalExamination()
         {
             var contactPerson = Service.GetContactPersonByUserId(User.Id);

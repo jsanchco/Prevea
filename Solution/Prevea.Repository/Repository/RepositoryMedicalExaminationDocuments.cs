@@ -17,7 +17,7 @@
         {
             return Context.MedicalExaminationDocuments
                 .Include(x => x.RequestMedicalExaminationEmployee)
-                .Include(x => x.MedicalExaminationDocumentType)
+                .Include(x => x.Document)
                 .ToList();
         }
 
@@ -25,7 +25,7 @@
         {
             return Context.MedicalExaminationDocuments
                 .Include(x => x.RequestMedicalExaminationEmployee)
-                .Include(x => x.MedicalExaminationDocumentType)
+                .Include(x => x.Document)
                 .FirstOrDefault(x => x.Id == id);
         }
 
@@ -81,7 +81,7 @@
         {
             return Context.MedicalExaminationDocuments
                 .Include(x => x.RequestMedicalExaminationEmployee)
-                .Include(x => x.MedicalExaminationDocumentType)
+                .Include(x => x.Document)
                 .Where(x => x.RequestMedicalExaminationEmployeeId == requestMedicalExaminationEmployeeId)
                 .ToList();
         }

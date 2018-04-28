@@ -68,7 +68,6 @@
     <Compile Include="Model\InputTemplate.cs" />
     <Compile Include="Model\MedicalExamination.cs" />
     <Compile Include="Model\MedicalExaminationDocuments.cs" />
-    <Compile Include="Model\MedicalExaminationDocumentType.cs" />
     <Compile Include="Model\MedicalExaminationState.cs" />
     <Compile Include="Model\Document.cs" />
     <Compile Include="Model\DocumentUserCreator.cs" />

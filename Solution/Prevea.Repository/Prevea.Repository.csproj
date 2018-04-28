@@ -70,7 +70,6 @@
     <Compile Include="Repository\RepositoryHistoricDownloadDocuments.cs" />
     <Compile Include="Repository\RepositoryMedicalExaminationDocuments.cs" />
     <Compile Include="Repository\RepositoryMedicalExaminations.cs" />
-    <Compile Include="Repository\RepositoryMedicalExaminationTypes.cs" />
     <Compile Include="Repository\RepositoryModesPayment.cs" />
     <Compile Include="Repository\RepositoryModesPaymentMedicalExamination.cs" />
     <Compile Include="Repository\RepositoryNotifications.cs" />

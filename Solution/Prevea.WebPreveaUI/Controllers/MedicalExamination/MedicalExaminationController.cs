@@ -248,6 +248,26 @@
                     new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
             }
 
+            var document = new Document
+            {
+                CompanyId = requestMedicalExamination.CompanyId,               
+                SimulationId = requestMedicalExamination.Company.SimulationCompanyActive.Id,
+                AreaId = Service.GetAreaByName("RCM").Id
+            };
+            var documentUserOwners = requestMedicalExamination.Company.ContactPersons.Select(contactPerson => new DocumentUserOwner {UserId = contactPerson.UserId}).ToList();
+            documentUserOwners.Add(new DocumentUserOwner{ UserId = requestMedicalExaminationEmployeeFind.Employee.UserId} );
+
+            result = Service.SaveDocument(document,
+                false,
+                new List<DocumentUserCreator> { new DocumentUserCreator { UserId = User.Id } },
+                documentUserOwners,
+                ".pdf");
+            if (result.Status == Status.Error)
+            {
+                return Json(
+                    new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
+            }
+
             result = Service.SaveMedicalExamination(requestMedicalExaminationEmployeeFind.MedicalExamination);
             if (result.Status == Status.Error)
             {
@@ -440,7 +460,7 @@
 
         public JsonResult DocumentMedicalExaminationTypes_Read([DataSourceRequest] DataSourceRequest request)
         {
-            var data = AutoMapper.Mapper.Map<List<MedicalExaminationDocumentTypeViewModel>>(Service.GetMedicalExaminationDocumentTypes().Where(x => x.Id != (int) EnMedicalExaminationDocumentType.MedicalExamination));
+            var data = AutoMapper.Mapper.Map<List<AreaViewModel>>(Service. GetMedicalExaminationDocumentTypes());
 
             return this.Jsonp(data);
         }

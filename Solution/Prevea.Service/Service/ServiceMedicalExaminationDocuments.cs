@@ -28,40 +28,40 @@
         {
             try
             {
-                if (string.IsNullOrEmpty(medicalExaminationDocument.Enrollment))
-                {
-                    string enrollment;
-                    var countMaxDocuments = Repository.GetMaxMedicalExaminationDocumentByType(
-                        medicalExaminationDocument.RequestMedicalExaminationEmployeeId,
-                        medicalExaminationDocument.MedicalExaminationDocumentTypeId) + 1;
+                //if (string.IsNullOrEmpty(medicalExaminationDocument.Enrollment))
+                //{
+                //    string enrollment;
+                //    var countMaxDocuments = Repository.GetMaxMedicalExaminationDocumentByType(
+                //        medicalExaminationDocument.RequestMedicalExaminationEmployeeId,
+                //        medicalExaminationDocument.MedicalExaminationDocumentTypeId) + 1;
 
-                    switch (medicalExaminationDocument.MedicalExaminationDocumentTypeId)
-                    {
-                        case (int)EnMedicalExaminationDocumentType.BloodTest:
-                            enrollment = $"ME_BT.{medicalExaminationDocument.RequestMedicalExaminationEmployeeId}.{countMaxDocuments}";
-                            break;
-                        case (int)EnMedicalExaminationDocumentType.Electrocardiogram:
-                            enrollment = $"ME_EL.{medicalExaminationDocument.RequestMedicalExaminationEmployeeId}.{countMaxDocuments}";
-                            break;
-                        case (int)EnMedicalExaminationDocumentType.AudiometricReport:
-                            enrollment = $"ME_AR.{medicalExaminationDocument.RequestMedicalExaminationEmployeeId}.{countMaxDocuments}";
-                            break;
-                        case (int)EnMedicalExaminationDocumentType.Spirometry:
-                            enrollment = $"ME_SP.{medicalExaminationDocument.RequestMedicalExaminationEmployeeId}.{countMaxDocuments}";
-                            break;
-                        case (int)EnMedicalExaminationDocumentType.UrineAnalytics:
-                            enrollment = $"ME_UA.{medicalExaminationDocument.RequestMedicalExaminationEmployeeId}.{countMaxDocuments}";
-                            break;
-                        case (int)EnMedicalExaminationDocumentType.Others:
-                            enrollment = $"ME_OT.{medicalExaminationDocument.RequestMedicalExaminationEmployeeId}.{countMaxDocuments}";
-                            break;
+                //    switch (medicalExaminationDocument.MedicalExaminationDocumentTypeId)
+                //    {
+                //        case (int)EnMedicalExaminationDocumentType.BloodTest:
+                //            enrollment = $"ME_BT.{medicalExaminationDocument.RequestMedicalExaminationEmployeeId}.{countMaxDocuments}";
+                //            break;
+                //        case (int)EnMedicalExaminationDocumentType.Electrocardiogram:
+                //            enrollment = $"ME_EL.{medicalExaminationDocument.RequestMedicalExaminationEmployeeId}.{countMaxDocuments}";
+                //            break;
+                //        case (int)EnMedicalExaminationDocumentType.AudiometricReport:
+                //            enrollment = $"ME_AR.{medicalExaminationDocument.RequestMedicalExaminationEmployeeId}.{countMaxDocuments}";
+                //            break;
+                //        case (int)EnMedicalExaminationDocumentType.Spirometry:
+                //            enrollment = $"ME_SP.{medicalExaminationDocument.RequestMedicalExaminationEmployeeId}.{countMaxDocuments}";
+                //            break;
+                //        case (int)EnMedicalExaminationDocumentType.UrineAnalytics:
+                //            enrollment = $"ME_UA.{medicalExaminationDocument.RequestMedicalExaminationEmployeeId}.{countMaxDocuments}";
+                //            break;
+                //        case (int)EnMedicalExaminationDocumentType.Others:
+                //            enrollment = $"ME_OT.{medicalExaminationDocument.RequestMedicalExaminationEmployeeId}.{countMaxDocuments}";
+                //            break;
 
-                        default:
-                            enrollment = $"ME_OT.{medicalExaminationDocument.RequestMedicalExaminationEmployeeId}.{countMaxDocuments}";
-                            break;
-                    }
-                    medicalExaminationDocument.Enrollment = enrollment;
-                }
+                //        default:
+                //            enrollment = $"ME_OT.{medicalExaminationDocument.RequestMedicalExaminationEmployeeId}.{countMaxDocuments}";
+                //            break;
+                //    }
+                //    medicalExaminationDocument.Enrollment = enrollment;
+                //}
 
                 medicalExaminationDocument = Repository.SaveMedicalExaminationDocument(medicalExaminationDocument);
                 if (medicalExaminationDocument == null)
@@ -98,7 +98,7 @@
             try
             {
                 var medicalExaminationDocument = Repository.GetMedicalExaminationDocumentById(id);
-                var physicalPath = HttpContext.Current.Server.MapPath(medicalExaminationDocument.Url);
+                var physicalPath = HttpContext.Current.Server.MapPath(medicalExaminationDocument.Document.UrlRelative);
                 if (!RemoveFile(physicalPath))
                 {
                     return new Result
@@ -157,10 +157,10 @@
                     Repository.GetRequestMedicalExaminationEmployeeById(medicalExaminationDocument
                         .RequestMedicalExaminationEmployeeId);
 
-                medicalExaminationDocument.Url = $"~/App_Data/Companies/{requestMedicalExaminationEmployee.RequestMedicalExaminations.Company.NIF}/MedicalExaminations/{medicalExaminationDocument.Enrollment}.pdf";
+                //medicalExaminationDocument.Url = $"~/App_Data/Companies/{requestMedicalExaminationEmployee.RequestMedicalExaminations.Company.NIF}/MedicalExaminations/{medicalExaminationDocument.Enrollment}.pdf";
 
-                var url = Path.Combine(HttpContext.Current.Server.MapPath(medicalExaminationDocument.Url));
-                fileDocument.SaveAs(url);
+                //var url = Path.Combine(HttpContext.Current.Server.MapPath(medicalExaminationDocument.Url));
+                //fileDocument.SaveAs(url);
 
                 var result = SaveMedicalExaminationDocument(medicalExaminationDocument);
                 if (result.Status == Status.Error)

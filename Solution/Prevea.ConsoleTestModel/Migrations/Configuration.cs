@@ -83,7 +83,13 @@ namespace Prevea.ConsoleTestModel.Migrations
                 new Area { Name = "OTR", Description = "Otros Documentos", EntityId = 2, Url = "~/App_Data/Company/OTR/" }, // 13
                 new Area { Name = "UNS", Description = "Baja Documento", EntityId = 2, Url = "~/App_Data/Company/UNS/" }, // 14
                 new Area { Name = "CIT", Description = "Citación", EntityId = 3, Url = "~/App_Data/MedicalExamination/CIT/" }, // 15
-                new Area { Name = "RCM", Description = "Reconocimientos Médicos", EntityId = 3, Url = "~/App_Data/MedicalExamination/RCM/" }, // 16
+                new Area { Name = "RCM", Description = "Reconocimiento Médico", EntityId = 3, Url = "~/App_Data/MedicalExamination/RCM/" }, // 16
+                new Area { Name = "BLT", Description = "Análitica de Sangre", EntityId = 3, Url = "~/App_Data/MedicalExamination/RCM/" }, // 17
+                new Area { Name = "ELT", Description = "Electrocardiograma", EntityId = 3, Url = "~/App_Data/MedicalExamination/RCM/" }, // 18
+                new Area { Name = "AUD", Description = "Informe Audiométrico", EntityId = 3, Url = "~/App_Data/MedicalExamination/RCM/" }, // 19
+                new Area { Name = "SPR", Description = "Espirometría", EntityId = 3, Url = "~/App_Data/MedicalExamination/RCM/" }, // 20
+                new Area { Name = "URA", Description = "Análitica de Orina", EntityId = 3, Url = "~/App_Data/MedicalExamination/RCM/" }, // 21
+                new Area { Name = "OTR", Description = "Otros", EntityId = 3, Url = "~/App_Data/MedicalExamination/RCM/" } // 22
             };
             areas.ForEach(p => context.Areas.AddOrUpdate(s => s.Id, p));
             context.SaveChanges();
@@ -298,13 +304,6 @@ namespace Prevea.ConsoleTestModel.Migrations
             foreach (var type in typesRequestMedicalExaminationEmployees)
             {
                 context.RequestMedicalExaminationEmployeeStates.AddOrUpdate(new RequestMedicalExaminationEmployeeState { Name = type.ToString() });
-            }
-            context.SaveChanges();
-
-            var typesMedicalExaminationDocuments = (EnMedicalExaminationDocumentType[])Enum.GetValues(typeof(EnMedicalExaminationDocumentType));
-            foreach (var type in typesMedicalExaminationDocuments)
-            {
-                context.MedicalExaminationDocumentTypes.AddOrUpdate(new MedicalExaminationDocumentType { Name = type.ToString() });
             }
             context.SaveChanges();
 

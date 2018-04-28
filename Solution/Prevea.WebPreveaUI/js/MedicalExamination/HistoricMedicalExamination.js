@@ -435,7 +435,8 @@
                     template: "#= HistoricMedicalExamination.getDoctorsName(data.Doctors) #"
                 }, {
                     field: "Observations",
-                    title: "Observaciones"                    
+                    title: "Observaciones",    
+                    width: 200
                 }, {
                     field: "SamplerNumber",
                     title: "Nº Muestra",

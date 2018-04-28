@@ -125,11 +125,8 @@
                 .ForMember(x => x.Name, x => x.MapFrom(y => y.FirstName + " " + y.LastName));
 
             AutoMapper.Mapper.CreateMap<MedicalExaminationDocuments, MedicalExaminationDocumentsViewModel>()
-                .ForMember(x => x.MedicalExaminationDocumentTypeDescription, x => x.MapFrom(y => y.MedicalExaminationDocumentType.Description));
+                .ForMember(x => x.MedicalExaminationDocumentTypeDescription, x => x.MapFrom(y => y.Document.Area.Description));
             AutoMapper.Mapper.CreateMap<MedicalExaminationDocumentsViewModel, MedicalExaminationDocuments>();
-
-            AutoMapper.Mapper.CreateMap<MedicalExaminationDocumentType, MedicalExaminationDocumentTypeViewModel>();
-            AutoMapper.Mapper.CreateMap<MedicalExaminationDocumentTypeViewModel, MedicalExaminationDocumentType>();
         }
     }
 }

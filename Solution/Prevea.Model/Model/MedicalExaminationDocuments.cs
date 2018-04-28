@@ -12,14 +12,10 @@
         [Key, Required]
         public int Id { get; set; }
 
-        public string Url { get; set; }
-
-        public string Enrollment { get; set; }
+        public int DocumentId { get; set; }
+        public virtual Document Document { get; set; }
 
         public int RequestMedicalExaminationEmployeeId  { get; set; }
         public virtual RequestMedicalExaminationEmployee RequestMedicalExaminationEmployee { get; set; }
-
-        public int MedicalExaminationDocumentTypeId { get; set; }
-        public virtual MedicalExaminationDocumentType MedicalExaminationDocumentType { get; set; }
     }
 }

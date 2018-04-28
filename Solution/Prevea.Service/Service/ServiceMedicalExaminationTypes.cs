@@ -4,19 +4,17 @@
 
     using System.Collections.Generic;
     using Model.Model;
+    using System.Linq;
 
     #endregion
 
     public partial class Service
     {
-        public List<MedicalExaminationDocumentType> GetMedicalExaminationDocumentTypes()
+        public List<Area> GetMedicalExaminationDocumentTypes()
         {
-            return Repository.GetMedicalExaminationDocumentTypes();
-        }
-
-        public MedicalExaminationDocumentType GetMedicalExaminationDocumentTypeById(int id)
-        {
-            return Repository.GetMedicalExaminationDocumentTypeById(id);
+            return Repository.GetAreas()
+                .Where(x => x.EntityId == 3 && x.Id != 16 && x.Id != 15)
+                .ToList();
         }
     }
 }
