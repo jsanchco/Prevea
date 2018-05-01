@@ -65,6 +65,7 @@
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
+                Model.Helpers.HelperClass.WriteLog(ex.Message);
 
                 return false;
             }

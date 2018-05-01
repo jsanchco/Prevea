@@ -174,5 +174,15 @@
                     return name;
             }
         }
+
+        public static void WriteLog(string trace)
+        {
+            const string routeLog = @"C:\Log\PreveaWEB.txt";
+            using (var file = new StreamWriter(routeLog, true))
+            {
+                trace = $"{DateTime.Now:dd-MM-yyyyy} -> {trace}";
+                file.WriteLine(trace);
+            }
+        }
     }
 }

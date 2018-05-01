@@ -701,6 +701,7 @@
                 {
                     extension = area.Id == 13 ? string.Empty : ".pdf";
                 }
+                document.Area = area;
                                     
                 var result = Service.SaveDocument(
                     document, 
