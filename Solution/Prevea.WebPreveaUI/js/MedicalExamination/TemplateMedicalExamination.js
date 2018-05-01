@@ -10,7 +10,7 @@
         kendo.culture("es-ES");
 
         this.model = model;
-        this.inputTemplatesJSONToModel = $.parseJSON(model.MedicalExamination.InputTemplatesJSON);
+        this.inputTemplatesJSONToModel = $.parseJSON(model.DocumentInputTemplateJSON);
 
         this.setUpPage();
     },
@@ -121,16 +121,16 @@
     },
 
     saveMedicalExamination: function () {
-        this.model.MedicalExamination.InputTemplatesJSON = JSON.stringify(this.inputTemplatesJSONToModel);
+        this.model.DocumentInputTemplateJSON = JSON.stringify(this.inputTemplatesJSONToModel);
         $.ajax({
             url: "/MedicalExamination/SaveMedicalExamination",
-            data: JSON.stringify({ "requestMedicalExaminationEmployee": this.model }),
+            data: JSON.stringify({ "templateMedicalExaminationViewModel": this.model }),
             type: "post",
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (response) {
                 if (response.resultStatus === Constants.resultStatus.Ok) {
-                    DetailMedicalExamination.createIconMedicalExaminationState(response.medicalExaminationState);
+                    DetailMedicalExamination.createIconMedicalExaminationState(response.documentState);
 
                     GeneralData.showNotification(Constants.ok, "", "success");
                 } else {
@@ -162,17 +162,17 @@
     printMedicalExamination: function () {
         kendo.ui.progress($("#framePpal"), true);
 
-        this.model.MedicalExamination.InputTemplatesJSON = JSON.stringify(this.inputTemplatesJSONToModel);
+        this.model.DocumentInputTemplateJSON = JSON.stringify(this.inputTemplatesJSONToModel);
         $.ajax({
             url: "/MedicalExamination/PrintMedicalExamination",
-            data: JSON.stringify({ "requestMedicalExaminationEmployee": this.model }),
+            data: JSON.stringify({ "templateMedicalExaminationViewModel": this.model }),
             type: "post",
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (response) {
                 if (response.resultStatus === Constants.resultStatus.Ok) {
                     GeneralData.showNotification(Constants.ok, "", "success");
-                    GeneralData.goToOpenMedicalExamination(response.id);
+                    GeneralData.goToOpenFile(response.documentId);
                 } else {
                     GeneralData.showNotification(Constants.ko, "", "error");
                 }

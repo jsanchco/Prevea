@@ -1,4 +1,6 @@
-﻿namespace Prevea.IService.IService
+﻿using Prevea.Model.ViewModel;
+
+namespace Prevea.IService.IService
 {
     #region Using
 
@@ -25,9 +27,10 @@
         List<Document> GetChildrenDocument(int parentId);
         Document GetDocument(int id);
         List<Document> GetDocumentsContractualsByCompany(int? companyId);
-        string VerifyNewContractualDocument(Document document);
+        string VerifyNewContractualDocument(Document document);        
         Result SaveOtherDocument(HttpPostedFileBase fileOtherDocument, int documentId);
         Result SaveContractualDocumentFirmed(HttpPostedFileBase fileDocumentFirmed, int companyId, int documentId, int userId);
+        Document GetDocumentByArea(int areaId);
 
         void RestoreFile(int userId, string urlRelative);
         void SaveFileTmp(int userId, HttpPostedFileBase files);
@@ -294,6 +297,12 @@
         Result DeleteRequestMedicalExaminationEmployee(int id);
         Result UpdateRequestHistoricMedicalExaminationEmployees(List<RequestMedicalExaminationEmployee> listEmployees, int userId);
         List<RequestMedicalExaminationEmployee> GetRequestMedicalExaminationEmployeesByDate(int doctorId, DateTime date);
+        string GenerateMedicalExaminationInputTemplatesJSON(RequestMedicalExaminationEmployee requestMedicalExaminationEmployee);
+        TemplateMedicalExaminationViewModel GetTemplateMedicalExaminationViewModel(
+            int requestMedicalExaminationEmployeeId);
+        RequestMedicalExaminationEmployee GetRequestMedicalExaminationEmployeesByDocumentId(int documentId);
+
+        Result SaveMedicalExamination(TemplateMedicalExaminationViewModel templateMedicalExaminationViewModel, int userId);
 
         #endregion
 
@@ -313,17 +322,7 @@
         RequestMedicalExaminationEmployeeState GetRequestMedicalExaminationEmployeeState(int id);
 
         #endregion
-
-        #region MedicalExamination
-
-        MedicalExamination GetMedicalExaminationById(int id);
-        List<MedicalExamination> GetMedicalExaminations();
-        Result SaveMedicalExamination(MedicalExamination medicalExamination);
-        Result DeleteMedicalExamination(int id);
-        string GenerateMedicalExaminationInputTemplatesJSON(RequestMedicalExaminationEmployee requestMedicalExaminationEmployee);
-
-        #endregion
-
+      
         #region Clinics
 
         List<Clinic> GetClincs();
@@ -341,7 +340,7 @@
         Result SaveDoctorMedicalExaminationEmployee(DoctorMedicalExaminationEmployee doctorMedicalExaminationEmployee);
         Result DeleteDoctorMedicalExaminationEmployee(int id);
         List<DateTime?> GetDatesByWorkSheet(int doctorId);
-        int GetCountMedicalExaminationByState(int doctorId, DateTime date, EnMedicalExaminationState medicalExaminationState);
+        int GetCountMedicalExaminationByState(int doctorId, DateTime date, EnDocumentState medicalExaminationState);
 
         #endregion
 
@@ -349,10 +348,12 @@
 
         List<MedicalExaminationDocuments> GetMedicalExaminationDocuments();
         MedicalExaminationDocuments GetMedicalExaminationDocumentById(int id);
-        Result SaveMedicalExaminationDocument(MedicalExaminationDocuments medicalExaminationDocument);
-        Result DeleteMedicalExaminationDocument(int id);
+        Result SaveMedicalExaminationDocument(int requestMedicalExaminationEmployeeId, Document document, int userId);
+        Result DeleteMedicalExaminationDocument(int id, int requestMedicalExaminationEmployeeId);
 
         List<MedicalExaminationDocuments> GetMedicalExaminationDocumentsByRequestMedicalExaminationEmployeeId(int requestMedicalExaminationEmployeeId);
+        MedicalExaminationDocuments GetMedicalExaminationDocumentsByRequestMedicalExaminationEmployeeIdAndAreaId(
+            int requestMedicalExaminationEmployeeId, int areaId);
         Result SaveFileMedicalExaminationDocument(HttpPostedFileBase fileOtherDocument, int medicalExaminationDocumentId);
 
         #endregion

@@ -100,7 +100,7 @@
             return Repository.GetDatesByWorkSheet(doctorId);
         }
 
-        public int GetCountMedicalExaminationByState(int doctorId, DateTime date, EnMedicalExaminationState medicalExaminationState)
+        public int GetCountMedicalExaminationByState(int doctorId, DateTime date, EnDocumentState medicalExaminationState)
         {
             return Repository.GetCountMedicalExaminationByState(doctorId, date, medicalExaminationState);
         }

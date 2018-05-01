@@ -174,20 +174,8 @@
         window.location = url;
     },
 
-    goToOpenMedicalExamination: function (id) {
-        var url = "/Base/DownloadMedicalExamination?id=" + id;
-
-        window.location = url;
-    },
-
     goToOpenDocumentByUrl: function (urlRelative) {
         var url = "/Base/DownloadPdfByUrl?urlRelative=" + urlRelative;
-
-        window.location = url;
-    },
-
-    goToOpenContractualDocument: function (id) {
-        var url = "/Base/DownloadContractualDocument?id=" + id;
 
         window.location = url;
     },

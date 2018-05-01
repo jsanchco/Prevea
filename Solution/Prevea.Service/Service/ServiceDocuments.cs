@@ -55,7 +55,7 @@
                         Status = Status.Error
                     };
                 }
-                if (!document.IsFirmedDocument)
+                if (!document.IsFirmedDocument && document.Area.EntityId != 3)
                     document = FillDataDocument(documentUserCreator.UserId, document, extension);
 
                 document.DocumentUserOwners = usersOwners;
@@ -535,6 +535,55 @@
 
                 return new Result { Status = Status.Error };
             }
+        }
+
+        public Document GetDocumentByArea(int areaId)
+        {
+            var document = new Document();
+
+            var area = GetArea(areaId);
+            document.Area = area;
+            document.AreaId = area.Id;
+
+            string fileName;
+
+            switch (areaId)
+            {
+                case 16:
+                    document.DocumentNumber = Repository.GetNumberDocumentsByArea(areaId) + 1;
+                    document.Edition = 1;
+                    document.Description = area.Description;
+
+                    fileName = $"{area.Name}_{document.DocumentNumber:00000}_{document.Edition}.pdf";
+
+                    document.UrlRelative = $"{area.Url}{fileName}";
+                    document.Date = DateTime.Now;
+                    document.DateModification = null;
+                    document.DocumentStateId = (int) EnDocumentState.Pending;
+
+                    break;
+
+                case 17:
+                case 18:
+                case 19:
+                case 20:
+                case 21:
+                case 22:
+                    document.DocumentNumber = Repository.GetNumberDocumentsByArea(areaId) + 1;
+                    document.Edition = 1;
+                    document.Description = area.Description;
+
+                    fileName = $"{area.Name}_{document.DocumentNumber:00000}_{document.Edition}.xxx";
+
+                    document.UrlRelative = $"{area.Url}{fileName}";
+                    document.Date = DateTime.Now;
+                    document.DateModification = null;
+                    document.DocumentStateId = (int)EnDocumentState.Activo;
+
+                    break;
+            }
+
+            return document;
         }
 
         private Document FillDataDocument(int userId, Document document, string extension)

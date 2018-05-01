@@ -63,7 +63,6 @@
     <Compile Include="Service\ServiceEstablishmentTypes.cs" />
     <Compile Include="Service\ServiceForeignPreventionServices.cs" />
     <Compile Include="Service\ServiceHistoricDownloadDocuments.cs" />
-    <Compile Include="Service\ServiceMedicalExaminations.cs" />
     <Compile Include="Service\ServiceMedicalExaminationTypes.cs" />
     <Compile Include="Service\ServiceModesPayment.cs" />
     <Compile Include="Service\ServiceModesPaymentMedicalExamination.cs" />

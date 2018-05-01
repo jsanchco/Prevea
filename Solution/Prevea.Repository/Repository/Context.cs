@@ -48,8 +48,6 @@
         public DbSet<WorkCenter> WorkCenters { get; set; }
         public DbSet<WorkCenterState> WorkCenterStates { get; set; }
         public DbSet<WorkCenterCompany> WorkCentersCompany { get; set; }
-        public DbSet<MedicalExamination> MedicalExaminations { get; set; }
-        public DbSet<MedicalExaminationState> MedicalExaminationStates { get; set; }
         public DbSet<Configuration> Configurations { get; set; }
         public DbSet<StretchAgency> StretchesAgencies { get; set; }
         public DbSet<EngagementType> EngagementTypes { get; set; }

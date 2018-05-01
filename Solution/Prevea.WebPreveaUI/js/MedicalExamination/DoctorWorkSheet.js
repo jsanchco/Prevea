@@ -312,13 +312,13 @@
         var html = kendo.format("<div style='float: left; text-align: left; display: inline;'>{0}</div>",
             data.MedicalExaminationStateDescription);
 
-        if (data.MedicalExaminationStateId === Constants.medicalExaminationState.Pending) {
+        if (data.MedicalExaminationStateId === Constants.documentState.Pending) {
             html += kendo.format("<div id='circleError' style='float: right; text-align: right;'></div></div>");
         }
-        if (data.MedicalExaminationStateId === Constants.medicalExaminationState.InProcess) {
+        if (data.MedicalExaminationStateId === Constants.documentState.InProcess) {
             html += kendo.format("<div id='circleWarning' style='float: right; text-align: right;'></div></div>");
         }
-        if (data.MedicalExaminationStateId === Constants.medicalExaminationState.Finished) {
+        if (data.MedicalExaminationStateId === Constants.documentState.Finished) {
             html += kendo.format("<div id='circleSuccess' style='float: right; text-align: right;'></div></div>");
         }
 

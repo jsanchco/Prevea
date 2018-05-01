@@ -85,5 +85,15 @@
                 .Where(x => x.RequestMedicalExaminationEmployeeId == requestMedicalExaminationEmployeeId)
                 .ToList();
         }
+
+        public MedicalExaminationDocuments GetMedicalExaminationDocumentsByRequestMedicalExaminationEmployeeIdAndAreaId(int requestMedicalExaminationEmployeeId, int areaId)
+        {
+            return Context.MedicalExaminationDocuments
+                .Include(x => x.RequestMedicalExaminationEmployee)
+                .Include(x => x.Document)
+                .FirstOrDefault(x =>
+                    x.RequestMedicalExaminationEmployeeId == requestMedicalExaminationEmployeeId &&
+                    x.Document.AreaId == areaId);
+        }
     }
 }

@@ -13,7 +13,7 @@
     addOtherDocumentId: "addOtherDocument",
 
     contractualsDocumentsCompanyDataSource: null,
-    contractualDocumentTypeDataSorce: null,
+    contractualDocumentTypeDataSource: null,
 
     init: function (companyId, simulationId) {
         kendo.culture("es-ES");
@@ -144,7 +144,7 @@
     },
 
     createContractualDocumentTypeDataSource: function () {
-        ContractualsDocumentsCompany.contractualDocumentTypeDataSorce = new kendo.data.DataSource({
+        ContractualsDocumentsCompany.contractualDocumentTypeDataSource = new kendo.data.DataSource({
             schema: {
                 model: {
                     id: "Id",
@@ -163,7 +163,7 @@
             }
         });
 
-        ContractualsDocumentsCompany.contractualDocumentTypeDataSorce.read();
+        ContractualsDocumentsCompany.contractualDocumentTypeDataSource.read();
     },
 
     createContractualsDocumentsCompanyGrid: function () {
@@ -270,23 +270,6 @@
                     empty: "Arrastre un encabezado de columna y póngalo aquí para agrupar por ella"
                 }
             },
-            dataBound: function () {
-                ContractualsDocumentsCompany.updateTemplate();
-
-                var grid = this;
-                grid.tbody.find(">tr").each(function() {
-                    var dataItem = grid.dataItem(this);
-                    if (dataItem.ContractualDocumentTypeId === Constants.contractualDocumentType.OfferSPA ||
-                        dataItem.ContractualDocumentTypeId === Constants.contractualDocumentType.OfferGES ||
-                        dataItem.ContractualDocumentTypeId === Constants.contractualDocumentType.OfferFOR ||
-                        dataItem.ContractualDocumentTypeId === Constants.contractualDocumentType.ContractFOR ||
-                        dataItem.ContractualDocumentTypeId === Constants.contractualDocumentType.Annex ||
-                        dataItem.ContractualDocumentTypeId === Constants.contractualDocumentType.UnSubscribeContract ||
-                        dataItem.ContractualDocumentTypeId === Constants.contractualDocumentType.Firmed) {
-                        $(this).find(".k-hierarchy-cell a").removeClass("k-icon");
-                    }
-                });
-            },
             edit: function (e) {
                 var commandCell = e.container.find("td:last");
                 var html = "<div align='center'>";
@@ -357,12 +340,12 @@
     },
 
     getContractualDocumentTypeDescription: function (areaId) {
-        if (ContractualsDocumentsCompany.contractualDocumentTypeDataSorce.data().length === 0) {
-            ContractualsDocumentsCompany.contractualDocumentTypeDataSorce.read();
+        if (ContractualsDocumentsCompany.contractualDocumentTypeDataSource.data().length === 0) {
+            ContractualsDocumentsCompany.contractualDocumentTypeDataSource.read();
         }
-        for (var index = 0; index < ContractualsDocumentsCompany.contractualDocumentTypeDataSorce.data().length; index++) {
-            if (ContractualsDocumentsCompany.contractualDocumentTypeDataSorce.data()[index].Id === areaId) {
-                return ContractualsDocumentsCompany.contractualDocumentTypeDataSorce.data()[index].Description;
+        for (var index = 0; index < ContractualsDocumentsCompany.contractualDocumentTypeDataSource.data().length; index++) {
+            if (ContractualsDocumentsCompany.contractualDocumentTypeDataSource.data()[index].Id === areaId) {
+                return ContractualsDocumentsCompany.contractualDocumentTypeDataSource.data()[index].Description;
             }
         }
         return null;
@@ -543,30 +526,6 @@
             ]
         });
         dialog.data("kendoDialog").open();
-    },
-
-    updateTemplate: function() {
-        var grid = $("#" + ContractualsDocumentsCompany.gridContractualsDocumentsCompanyId).data("kendoGrid");
-        var hasOffer = false;
-        var hasContract = false;
-        for (var i = 0; i < grid.dataSource.data().length; i++) {
-            var row = grid.dataSource.data()[i];
-            if (row["ContractualDocumentTypeId"] === Constants.contractualDocumentType.Offer) {
-                hasOffer = true;
-            }
-            if (row["ContractualDocumentTypeId"] === Constants.contractualDocumentType.Contract) {
-                hasContract = true;
-            }
-        }
-        if (hasOffer === false && hasContract === false) {
-            $("a#btnTypeContractualDocument").text(" Generar oferta");
-        }
-        if (hasOffer === true && hasContract === false) {
-            $("a#btnTypeContractualDocument").text(" Generar contrato");
-        }
-        if (hasOffer === true && hasContract === true) {
-            $("a#btnTypeContractualDocument").text(" Agregar anexo");
-        }
     },
 
     updateRow: function (contractualDocument) {

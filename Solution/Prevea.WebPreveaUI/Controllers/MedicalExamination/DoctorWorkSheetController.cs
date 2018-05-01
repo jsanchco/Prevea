@@ -1,4 +1,6 @@
-﻿namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
+﻿using System.Linq;
+
+namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
 {
     #region Using
 
@@ -45,9 +47,9 @@
                 doctorWorkSheets.Add(new DoctorWorkSheet
                 {
                     Date = (DateTime)date,
-                    MedicalExaminationFinished = Service.GetCountMedicalExaminationByState(User.Id, (DateTime)date, EnMedicalExaminationState.Finished),
-                    MedicalExaminationInProcess = Service.GetCountMedicalExaminationByState(User.Id, (DateTime)date, EnMedicalExaminationState.InProcess),
-                    MedicalExaminationPending = Service.GetCountMedicalExaminationByState(User.Id, (DateTime)date, EnMedicalExaminationState.Pending),
+                    MedicalExaminationFinished = Service.GetCountMedicalExaminationByState(User.Id, (DateTime)date, EnDocumentState.Finished),
+                    MedicalExaminationInProcess = Service.GetCountMedicalExaminationByState(User.Id, (DateTime)date, EnDocumentState.InProcess),
+                    MedicalExaminationPending = Service.GetCountMedicalExaminationByState(User.Id, (DateTime)date, EnDocumentState.Pending),
                 });
             }
 
@@ -61,10 +63,27 @@
             {
                 var splitDateString = dateString.Split('/');
                 var date = new DateTime(Convert.ToInt16(splitDateString[0]), Convert.ToInt16(splitDateString[1]), Convert.ToInt16(splitDateString[2]));
-                var requestMedicalExaminationEmployees = Service.GetRequestMedicalExaminationEmployeesByDate(User.Id, date);
 
-                var data = AutoMapper.Mapper.Map<List<RequestMedicalExaminationEmployeeViewModel>>(requestMedicalExaminationEmployees);
-                return this.Jsonp(data);
+                var requestMedicalExaminationEmployeeViewModels = new List<RequestMedicalExaminationEmployeeViewModel>();
+                var requestMedicalExaminationEmployees = Service.GetRequestMedicalExaminationEmployeesByDate(User.Id, date);
+                foreach (var requestMedicalExaminationEmployee in requestMedicalExaminationEmployees)
+                {
+                    var medicalExaminationDocument = requestMedicalExaminationEmployee.MedicalExaminationDocuments.FirstOrDefault(x => x.Document.AreaId == 16);
+                    var requestMedicalExaminationEmployeeViewModel = AutoMapper.Mapper.Map<RequestMedicalExaminationEmployeeViewModel>(requestMedicalExaminationEmployee);
+                    if (medicalExaminationDocument != null)
+                    {
+                        requestMedicalExaminationEmployeeViewModel.MedicalExaminationStateId = medicalExaminationDocument.Document.DocumentStateId;
+                        requestMedicalExaminationEmployeeViewModel.MedicalExaminationStateDescription =  medicalExaminationDocument.Document.DocumentState.Description;
+                    }
+                    else
+                    {
+                        requestMedicalExaminationEmployeeViewModel.MedicalExaminationStateId = (int)EnDocumentState.Pending;
+                        requestMedicalExaminationEmployeeViewModel.MedicalExaminationStateDescription = "Pendiente";
+                    }
+                    requestMedicalExaminationEmployeeViewModels.Add(requestMedicalExaminationEmployeeViewModel);
+                }           
+
+                return this.Jsonp(requestMedicalExaminationEmployeeViewModels);
             }
             catch (Exception ex)
             {

@@ -32,13 +32,13 @@
 
     createIconMedicalExaminationState: function (medicalExaminationState) {
         var html = "";
-        if (medicalExaminationState === Constants.medicalExaminationState.Pending) {
+        if (medicalExaminationState === Constants.documentState.Pending) {
             html = "<div id='circleError' class='pull-right'></div>";
         }
-        if (medicalExaminationState === Constants.medicalExaminationState.InProcess) {
+        if (medicalExaminationState === Constants.documentState.InProcess) {
             html = "<div id='circleWarning' class='pull-right'></div>";
         }
-        if (medicalExaminationState === Constants.medicalExaminationState.Finished) {
+        if (medicalExaminationState === Constants.documentState.Finished) {
             html = "<div id='circleSuccess' class='pull-right'></div>";
         }
 
@@ -49,11 +49,11 @@
         var tabStrip = $("#" + this.tabStripDetailMedicalExaminationId).kendoTabStrip().data("kendoTabStrip");
         tabStrip.append({
             text: "RECONOCIMIENTO MÉDICO",
-            contentUrl: kendo.format("/MedicalExamination/TemplateMedicalExamination?medicalExaminationId={0}", this.id)
+            contentUrl: kendo.format("/MedicalExamination/TemplateMedicalExamination?requestMedicalExaminationEmployeeId={0}", this.id)
         });
         tabStrip.append({
             text: "DOCUMENTOS",
-            contentUrl: kendo.format("/MedicalExamination/DocumentsMedicalExamination?medicalExaminationId={0}", this.id)
+            contentUrl: kendo.format("/MedicalExamination/DocumentsMedicalExamination?requestMedicalExaminationEmployeeId={0}", this.id)
         });
 
         tabStrip = $("#" + this.tabStripDetailMedicalExaminationId).data("kendoTabStrip");

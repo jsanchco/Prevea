@@ -93,12 +93,55 @@
                 .ToList();
         }
 
-        public int GetCountMedicalExaminationByState(int doctorId, DateTime date, EnMedicalExaminationState medicalExaminationState)
+        public int GetCountMedicalExaminationByState(int doctorId, DateTime date, EnDocumentState medicalExaminationState)
         {
             var requestMedicalExaminationsEmployeesByDoctorId = GetRequestMedicalExaminationEmployeesByDate(doctorId, date);
+            var cont = 0;
+            switch (medicalExaminationState)
+            {
+                case EnDocumentState.Pending:
+                    cont = 0;
+                    foreach (var requestMedicalExamination in requestMedicalExaminationsEmployeesByDoctorId)
+                    {
+                        var document =
+                            requestMedicalExamination.MedicalExaminationDocuments.FirstOrDefault(x =>
+                                x.Document.AreaId == 16);
+                        if (document != null && document.Document.DocumentStateId == (int) EnDocumentState.Pending)
+                            cont++;
+                        if (document == null)
+                            cont++;                        
+                    }
 
-            return requestMedicalExaminationsEmployeesByDoctorId
-                .Count(x => x.MedicalExamination.MedicalExaminationStateId == (int) medicalExaminationState);
+                    return cont;
+
+                case EnDocumentState.InProcess:
+                    cont = 0;
+                    foreach (var requestMedicalExamination in requestMedicalExaminationsEmployeesByDoctorId)
+                    {
+                        var document =
+                            requestMedicalExamination.MedicalExaminationDocuments.FirstOrDefault(x =>
+                                x.Document.AreaId == 16);
+                        if (document != null && document.Document.DocumentStateId == (int)EnDocumentState.InProcess)
+                            cont++;
+                    }
+
+                    return cont;
+
+                case EnDocumentState.Finished:
+                    cont = 0;
+                    foreach (var requestMedicalExamination in requestMedicalExaminationsEmployeesByDoctorId)
+                    {
+                        var document =
+                            requestMedicalExamination.MedicalExaminationDocuments.FirstOrDefault(x =>
+                                x.Document.AreaId == 16);
+                        if (document != null && document.Document.DocumentStateId == (int)EnDocumentState.Finished)
+                            cont++;
+                    }
+
+                    return cont;
+            }
+
+            return cont;
         }
     }
 }

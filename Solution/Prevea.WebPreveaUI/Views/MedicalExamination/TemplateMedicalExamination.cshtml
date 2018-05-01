@@ -1,4 +1,4 @@
-﻿@model RequestMedicalExaminationEmployee
+﻿@model TemplateMedicalExaminationViewModel
 
 <script>
     TemplateMedicalExamination.init(@Html.Raw(Json.Encode(Model)));
@@ -7,21 +7,7 @@
 <div id="pageMedicalExamination" style="font-size: 14px;">
     <div class="row">
         <div class="col-xs-8">
-            @{
-                var fullName = string.Empty;
-                var collegiateNumber = string.Empty;
-                var doctorsMedicalExaminationEmployee = Model.DoctorsMedicalExaminationEmployee.FirstOrDefault();
-                if (doctorsMedicalExaminationEmployee != null)
-                {
-                    if (doctorsMedicalExaminationEmployee.Doctor != null)
-                    {
-                        fullName = string.Format("{0} {1}", doctorsMedicalExaminationEmployee.Doctor.FirstName.ToUpper(), doctorsMedicalExaminationEmployee.Doctor.LastName.ToUpper());
-                        collegiateNumber = doctorsMedicalExaminationEmployee.Doctor.CollegiateNumber;
-                    }
-                }
-            }
-
-            Dr/a. @fullName
+            Dr/a. @Model.DoctorName
         </div>
         <div class="col-xs-4" style="text-align: right;">
             @DateTime.Now.ToLongDateString()
@@ -30,10 +16,10 @@
 
     <div class="row">
         <div class="col-xs-8">
-            Nº Colegiado: @collegiateNumber
+            Nº Colegiado:@Model.DoctorCollegiateNumber
         </div>
         <div class="col-xs-4" style="text-align: right;">
-            Nº Historia: &nbsp;@Model.MedicalExamination.Enrollment
+            Nº Historia: &nbsp;@Model.DocumentName
         </div>
     </div>
 
@@ -41,35 +27,24 @@
     <br />
     <br />
 
-    @{
-        var nameEmployee = string.Empty;
-        if (!string.IsNullOrEmpty(Model.Employee.User.LastName))
-        {
-            nameEmployee += string.Format("{0}, ", Model.Employee.User.LastName.ToUpper());
-        }
-        if (!string.IsNullOrEmpty(Model.Employee.User.FirstName))
-        {
-            nameEmployee += Model.Employee.User.FirstName.ToUpper();
-        }
-    }
     <div class="row">
         <div class="col-xs-6">
-            @nameEmployee
+            @Model.EmployeeName
         </div>
         <div class="col-xs-6" style="text-align: left;">
-            @Model.MedicalExamination.Enrollment
+            @Model.DocumentName
         </div>
     </div>
 
     @{
         var directionEmployee = string.Empty;
-        if (!string.IsNullOrEmpty(Model.Employee.User.Address))
+        if (!string.IsNullOrEmpty(Model.EmployeeAddress))
         {
-            directionEmployee += string.Format("{0}, ", Model.Employee.User.Address.ToUpper());
+            directionEmployee += string.Format("{0}, ", Model.EmployeeAddress.ToUpper());
         }
-        if (!string.IsNullOrEmpty(Model.Employee.User.Province))
+        if (!string.IsNullOrEmpty(Model.EmployeeProvince))
         {
-            directionEmployee += Model.Employee.User.Province.ToUpper();
+            directionEmployee += Model.EmployeeProvince.ToUpper();
         }
     }
 
@@ -78,19 +53,19 @@
             @directionEmployee
         </div>
         <div class="col-xs-6" style="text-align: left;">
-            @Model.Employee.User.DNI
+            @Model.EmployeeDNI
         </div>
     </div>
 
     <div class="row">
         <div class="col-xs-6" style="font-weight: bold;">
-            @Model.Employee.Company.Name
+            @Model.CompanyName
         </div>
     </div>
 
     <div class="row">
         <div class="col-xs-offset-6 col-xs-6" style="font-weight: bold;">
-            @Model.Date.ToLongDateString()
+            @Model.RequestMedicalExaminationEmployeeDate.ToLongDateString()
         </div>
     </div>
 
@@ -121,7 +96,7 @@
 
     <div class="row">
         <div class="col-xs-12">
-            @Model.Employee.User.WorkStation
+            @Model.EmployeeWorkStation
         </div>
     </div>
 
@@ -151,7 +126,7 @@
 
     <div class="row">
         <div class="col-xs-3">
-            Antigüedad en el puesto y en la empresa: @Model.Employee.User.ChargeDate.ToShortDateString()
+            Antigüedad en el puesto y en la empresa: @Model.EmployeeChargeDate.ToShortDateString()
         </div>
     </div>
 
@@ -233,9 +208,9 @@
     <br />
 
     @{
-        var age = DateTime.Now.Year - Model.Employee.User.BirthDate.Year;
+        var age = DateTime.Now.Year - Model.EmployeeBirthDate.Year;
         var actual = Convert.ToInt32(DateTime.Now.ToString("MMdd"));
-        var employee = Convert.ToInt32(Model.Employee.User.BirthDate.ToString("MMdd"));
+        var employee = Convert.ToInt32(Model.EmployeeBirthDate.ToString("MMdd"));
 
         if (actual <= employee)
         {
@@ -1134,7 +1109,7 @@
 
     <div class="row">
         <div class="col-xs-12">
-            De acuerdo al presente informe de exploración y al informe de resultados analíticos, considerando las características conocidas del puesto de trabajo se ratifica esta aptitud por el Dr/a. @fullName (Nº Colegiado: @collegiateNumber)
+            De acuerdo al presente informe de exploración y al informe de resultados analíticos, considerando las características conocidas del puesto de trabajo se ratifica esta aptitud por el Dr/a. @Model.DoctorName (Nº Colegiado: @Model.DoctorCollegiateNumber)
         </div>        
     </div>
        

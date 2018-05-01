@@ -8,6 +8,7 @@
     using System;
     using System.Web;
     using System.Diagnostics;
+    using System.Linq;
     using System.IO;
 
     #endregion
@@ -24,51 +25,44 @@
             return Repository.GetMedicalExaminationDocumentById(id);
         }
 
-        public Result SaveMedicalExaminationDocument(MedicalExaminationDocuments medicalExaminationDocument)
+        public Result SaveMedicalExaminationDocument(int requestMedicalExaminationEmployeeId, Document document, int userId)
         {
             try
             {
-                //if (string.IsNullOrEmpty(medicalExaminationDocument.Enrollment))
-                //{
-                //    string enrollment;
-                //    var countMaxDocuments = Repository.GetMaxMedicalExaminationDocumentByType(
-                //        medicalExaminationDocument.RequestMedicalExaminationEmployeeId,
-                //        medicalExaminationDocument.MedicalExaminationDocumentTypeId) + 1;
+                var requestMedicalExaminationEmployee =
+                    GetRequestMedicalExaminationEmployeeById(requestMedicalExaminationEmployeeId);
 
-                //    switch (medicalExaminationDocument.MedicalExaminationDocumentTypeId)
-                //    {
-                //        case (int)EnMedicalExaminationDocumentType.BloodTest:
-                //            enrollment = $"ME_BT.{medicalExaminationDocument.RequestMedicalExaminationEmployeeId}.{countMaxDocuments}";
-                //            break;
-                //        case (int)EnMedicalExaminationDocumentType.Electrocardiogram:
-                //            enrollment = $"ME_EL.{medicalExaminationDocument.RequestMedicalExaminationEmployeeId}.{countMaxDocuments}";
-                //            break;
-                //        case (int)EnMedicalExaminationDocumentType.AudiometricReport:
-                //            enrollment = $"ME_AR.{medicalExaminationDocument.RequestMedicalExaminationEmployeeId}.{countMaxDocuments}";
-                //            break;
-                //        case (int)EnMedicalExaminationDocumentType.Spirometry:
-                //            enrollment = $"ME_SP.{medicalExaminationDocument.RequestMedicalExaminationEmployeeId}.{countMaxDocuments}";
-                //            break;
-                //        case (int)EnMedicalExaminationDocumentType.UrineAnalytics:
-                //            enrollment = $"ME_UA.{medicalExaminationDocument.RequestMedicalExaminationEmployeeId}.{countMaxDocuments}";
-                //            break;
-                //        case (int)EnMedicalExaminationDocumentType.Others:
-                //            enrollment = $"ME_OT.{medicalExaminationDocument.RequestMedicalExaminationEmployeeId}.{countMaxDocuments}";
-                //            break;
+                document = GetDocumentByArea(document.AreaId);
 
-                //        default:
-                //            enrollment = $"ME_OT.{medicalExaminationDocument.RequestMedicalExaminationEmployeeId}.{countMaxDocuments}";
-                //            break;
-                //    }
-                //    medicalExaminationDocument.Enrollment = enrollment;
-                //}
+                var documentUserOwners = requestMedicalExaminationEmployee.RequestMedicalExaminations.Company.ContactPersons.Select(contactPerson => new DocumentUserOwner { UserId = contactPerson.UserId }).ToList();
+                documentUserOwners.Add(new DocumentUserOwner { UserId = requestMedicalExaminationEmployee.Employee.UserId });
+                var result = SaveDocument(document,
+                    true,
+                    new List<DocumentUserCreator> { new DocumentUserCreator { UserId = userId } },
+                    documentUserOwners,
+                    ".xxx");
+                if (result.Status == Status.Error)
+                {
+                    return new Result
+                    {
+                        Message = "Se ha producido un error en SaveMedicalExaminationDocument",
+                        Object = null,
+                        Status = Status.Error
+                    };
+                }
 
-                medicalExaminationDocument = Repository.SaveMedicalExaminationDocument(medicalExaminationDocument);
+                var medicalExaminationDocument =
+                    Repository.SaveMedicalExaminationDocument(new MedicalExaminationDocuments
+                    {
+                        RequestMedicalExaminationEmployeeId = requestMedicalExaminationEmployeeId,
+                        DocumentId = ((Document)result.Object).Id
+                    });
+
                 if (medicalExaminationDocument == null)
                 {
                     return new Result
                     {
-                        Message = "Se ha producido un error en la Grabación del Documento",
+                        Message = "Se ha producido un error en SaveMedicalExaminationDocument",
                         Object = null,
                         Status = Status.Error
                     };
@@ -76,8 +70,8 @@
 
                 return new Result
                 {
-                    Message = "La Grabación del la Clínica se ha producido con éxito",
-                    Object = medicalExaminationDocument,
+                    Message = "La Grabación de SaveMedicalExaminationDocument se ha producido con éxito",
+                    Object = document,
                     Status = Status.Ok
                 };
             }
@@ -86,20 +80,25 @@
                 return new Result
                 {
                     Message = "Se ha producido un error en la Grabación del Documento",
-                    Object = medicalExaminationDocument,
+                    Object = document,
                     Status = Status.Error
                 };
             }
 
         }
 
-        public Result DeleteMedicalExaminationDocument(int id)
+        public Result DeleteMedicalExaminationDocument(int id, int requestMedicalExaminationEmployeeId)
         {
             try
             {
-                var medicalExaminationDocument = Repository.GetMedicalExaminationDocumentById(id);
-                var physicalPath = HttpContext.Current.Server.MapPath(medicalExaminationDocument.Document.UrlRelative);
-                if (!RemoveFile(physicalPath))
+                var document = Repository.GetDocument(id);
+                var physicalPath = HttpContext.Current.Server.MapPath(document.UrlRelative);
+                RemoveFile(physicalPath);
+
+                var medicalExaminationDocument =
+                    GetMedicalExaminationDocumentsByRequestMedicalExaminationEmployeeId(
+                        requestMedicalExaminationEmployeeId).FirstOrDefault(x => x.DocumentId == id);
+                if (medicalExaminationDocument == null)
                 {
                     return new Result
                     {
@@ -107,10 +106,8 @@
                         Object = null,
                         Status = Status.Error
                     };
-
                 }
-
-                var result = Repository.DeleteMedicalExaminationDocument(id);
+                var result = Repository.DeleteMedicalExaminationDocument(medicalExaminationDocument.Id);
                 if (result == false)
                 {
                     return new Result
@@ -119,7 +116,18 @@
                         Object = null,
                         Status = Status.Error
                     };
-                }                
+                }
+
+                var resutDeleteDocument = DeleteDocument(id);
+                if (resutDeleteDocument.Status == Status.Error)
+                {
+                    return new Result
+                    {
+                        Message = "Se ha producido un error al Borrar el Documento",
+                        Object = null,
+                        Status = Status.Error
+                    };
+                }
 
                 return new Result
                 {
@@ -145,31 +153,36 @@
                 requestMedicalExaminationEmployeeId);
         }
 
+        public MedicalExaminationDocuments GetMedicalExaminationDocumentsByRequestMedicalExaminationEmployeeIdAndAreaId(
+            int requestMedicalExaminationEmployeeId, int areaId)
+        {
+            return Repository.GetMedicalExaminationDocumentsByRequestMedicalExaminationEmployeeIdAndAreaId(
+                requestMedicalExaminationEmployeeId, areaId);
+        }
+
         public Result SaveFileMedicalExaminationDocument(HttpPostedFileBase fileDocument, int medicalExaminationDocumentId)
         {
             try
             {
-                var medicalExaminationDocument = GetMedicalExaminationDocumentById(medicalExaminationDocumentId);
-                if (medicalExaminationDocument == null)
+                var document = GetDocument(medicalExaminationDocumentId);
+                if (document == null)
                     return new Result { Status = Status.Error };
 
-                var requestMedicalExaminationEmployee =
-                    Repository.GetRequestMedicalExaminationEmployeeById(medicalExaminationDocument
-                        .RequestMedicalExaminationEmployeeId);
-
-                //medicalExaminationDocument.Url = $"~/App_Data/Companies/{requestMedicalExaminationEmployee.RequestMedicalExaminations.Company.NIF}/MedicalExaminations/{medicalExaminationDocument.Enrollment}.pdf";
-
-                //var url = Path.Combine(HttpContext.Current.Server.MapPath(medicalExaminationDocument.Url));
-                //fileDocument.SaveAs(url);
-
-                var result = SaveMedicalExaminationDocument(medicalExaminationDocument);
-                if (result.Status == Status.Error)
-                    return new Result { Status = Status.Error };
+                if (document.UrlRelative.EndsWith("xxx"))
+                {
+                    document.UrlRelative = document.UrlRelative.Replace("xxx", "pdf");
+                    var result = UpdateDocument(document, false);
+                    if (result.Status == Status.Error)
+                        return new Result { Status = Status.Error };
+                }
+                
+                var url = Path.Combine(HttpContext.Current.Server.MapPath(document.UrlRelative));
+                fileDocument.SaveAs(url);
 
                 return new Result
                 {
                     Status = Status.Ok,
-                    Object = result.Object
+                    Object = document
                 };
             }
             catch (Exception ex)

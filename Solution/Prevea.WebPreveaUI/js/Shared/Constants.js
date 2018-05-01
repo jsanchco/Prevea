@@ -48,18 +48,6 @@
         Baja: 2
     },
 
-    contractualDocumentType: {
-        OfferSPA: 1, 
-        OfferGES: 2, 
-        OfferFOR: 3, 
-        ContractSPA: 4, 
-        ContractGES: 5, 
-        ContractFOR: 6, 
-        Annex: 7, 
-        UnSubscribeContract: 8, 
-        Firmed: 9
-    },
-
     requestMedicalExaminationState: {
         Pending: 1,
         Validated: 2,
@@ -72,10 +60,13 @@
         Validated: 2        
     },
 
-    medicalExaminationState: {
-        Pending: 1,
-        InProcess: 2,
-        Finished: 3
+    documentState: {
+        Activo: 1,
+        Modificado: 2,
+        Baja: 3,
+        Pending: 4,
+        InProcess: 5,
+        Finished: 6
     },
 
     inputTemplateType: {

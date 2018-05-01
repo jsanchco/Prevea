@@ -101,11 +101,16 @@
         public List<RequestMedicalExaminationEmployee> GetRequestMedicalExaminationEmployeesByDate(int doctorId, DateTime date)
         {
             return Context.RequestMedicalExaminationsEmployees
-                .Include(x => x.MedicalExamination)
+                .Include(x => x.MedicalExaminationDocuments)
                 .Where(x => x.DoctorsMedicalExaminationEmployee.Select(y => y.DoctorId).Contains(doctorId) &&
                             DbFunctions.TruncateTime(x.Date) == DbFunctions.TruncateTime(date))
                 .OrderBy(x => x.Date)
                 .ToList();
+        }
+
+        public RequestMedicalExaminationEmployee GetRequestMedicalExaminationEmployeesByDocumentId(int documentId)
+        {
+            return Context.MedicalExaminationDocuments.FirstOrDefault(x => x.DocumentId == documentId)?.RequestMedicalExaminationEmployee;
         }
     }
 }

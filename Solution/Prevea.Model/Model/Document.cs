@@ -7,6 +7,7 @@
     using System.IO;
     using System.Collections.Generic;
     using Helpers;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     #endregion
 
@@ -49,6 +50,11 @@
 
         public bool HasFirm { get; set; }
         public bool IsFirmedDocument { get; set; }
+
+        public string InputTemplatesJSON { get; set; }
+
+        [NotMapped]
+        public List<InputTemplate> InputTemplates { get; set; }
 
         public int? DocumentParentId { get; set; }
         public virtual Document DocumentParent { get; set; }

@@ -309,15 +309,6 @@
 
         #endregion
 
-        #region MedicalExamination
-
-        MedicalExamination GetMedicalExaminationById(int id);
-        List<MedicalExamination> GetMedicalExaminations();
-        MedicalExamination SaveMedicalExamination(MedicalExamination medicalExamination);
-        bool DeleteMedicalExamination(int id);
-
-        #endregion
-
         #region RequestMedicalExamination Employee
 
         RequestMedicalExaminationEmployee GetRequestMedicalExaminationEmployeeById(int id);
@@ -327,6 +318,7 @@
         RequestMedicalExaminationEmployee SaveRequestMedicalExaminationEmployee(RequestMedicalExaminationEmployee requestMedicalExaminationEmployee);
         bool DeleteRequestMedicalExaminationEmployee(int id);
         List<RequestMedicalExaminationEmployee> GetRequestMedicalExaminationEmployeesByDate(int doctorId, DateTime date);
+        RequestMedicalExaminationEmployee GetRequestMedicalExaminationEmployeesByDocumentId(int documentId);
 
         #endregion
 
@@ -364,7 +356,7 @@
         DoctorMedicalExaminationEmployee SaveDoctorMedicalExaminationEmployee(DoctorMedicalExaminationEmployee doctorMedicalExaminationEmployee);
         bool DeleteDoctorMedicalExaminationEmployee(int id);
         List<DateTime?> GetDatesByWorkSheet(int doctorId);
-        int GetCountMedicalExaminationByState(int doctorId, DateTime date, EnMedicalExaminationState medicalExaminationState);
+        int GetCountMedicalExaminationByState(int doctorId, DateTime date, EnDocumentState medicalExaminationState);
 
         #endregion
 
@@ -376,6 +368,8 @@
         bool DeleteMedicalExaminationDocument(int id);
 
         List<MedicalExaminationDocuments> GetMedicalExaminationDocumentsByRequestMedicalExaminationEmployeeId(int requestMedicalExaminationEmployeeId);
+        MedicalExaminationDocuments GetMedicalExaminationDocumentsByRequestMedicalExaminationEmployeeIdAndAreaId(
+            int requestMedicalExaminationEmployeeId, int areaId);
 
         #endregion
     }

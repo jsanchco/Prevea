@@ -112,8 +112,6 @@
                 .ForMember(x => x.RequestMedicalExaminationEmployeeStateDescription, x => x.MapFrom(y => y.RequestMedicalExaminationEmployeeState.Description))
                 .ForMember(x => x.EmployeeDNI, x => x.MapFrom(y => y.Employee.User.DNI))
                 .ForMember(x => x.EmployeeName, x => x.MapFrom(y => $"{y.Employee.User.FirstName} {y.Employee.User.LastName}"))
-                .ForMember(x => x.MedicalExaminationStateId, x => x.MapFrom(y => y.MedicalExamination.MedicalExaminationState.Id))
-                .ForMember(x => x.MedicalExaminationStateDescription, x => x.MapFrom(y => y.MedicalExamination.MedicalExaminationState.Description))
                 .ForMember(x => x.ClinicName, x => x.MapFrom(y => y.Clinic.Name))
                 .ForMember(x => x.RequestMedicalExaminationsStateId, x => x.MapFrom(y => y.RequestMedicalExaminations.RequestMedicalExaminationStateId));
             AutoMapper.Mapper.CreateMap<RequestMedicalExaminationEmployeeViewModel, RequestMedicalExaminationEmployee>();
@@ -123,10 +121,6 @@
 
             AutoMapper.Mapper.CreateMap<User, DoctorViewModel>()
                 .ForMember(x => x.Name, x => x.MapFrom(y => y.FirstName + " " + y.LastName));
-
-            AutoMapper.Mapper.CreateMap<MedicalExaminationDocuments, MedicalExaminationDocumentsViewModel>()
-                .ForMember(x => x.MedicalExaminationDocumentTypeDescription, x => x.MapFrom(y => y.Document.Area.Description));
-            AutoMapper.Mapper.CreateMap<MedicalExaminationDocumentsViewModel, MedicalExaminationDocuments>();
         }
     }
 }

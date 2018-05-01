@@ -66,9 +66,7 @@
     <Compile Include="Model\DoctorMedicalExaminationEmployee.cs" />
     <Compile Include="Model\DoctorWorkSheet.cs" />
     <Compile Include="Model\InputTemplate.cs" />
-    <Compile Include="Model\MedicalExamination.cs" />
     <Compile Include="Model\MedicalExaminationDocuments.cs" />
-    <Compile Include="Model\MedicalExaminationState.cs" />
     <Compile Include="Model\Document.cs" />
     <Compile Include="Model\DocumentUserCreator.cs" />
     <Compile Include="Model\DocumentUserOwner.cs" />
@@ -118,13 +116,13 @@
     <Compile Include="ViewModel\EstablishmentTypeViewModel.cs" />
     <Compile Include="ViewModel\HistoricDownloadDocumentViewModel.cs" />
     <Compile Include="ViewModel\MedicalExaminationDocumentsViewModel.cs" />
-    <Compile Include="ViewModel\MedicalExaminationDocumentTypeViewModel.cs" />
     <Compile Include="ViewModel\NotificationViewModel.cs" />
     <Compile Include="ViewModel\PaymentMethodViewModel.cs" />
     <Compile Include="ViewModel\PaymentModeViewModel.cs" />
     <Compile Include="ViewModel\RequestMedicalExaminationEmployeeViewModel.cs" />
     <Compile Include="ViewModel\RequestMedicalExaminationsViewModel.cs" />
     <Compile Include="ViewModel\SimulationViewModel.cs" />
+    <Compile Include="ViewModel\TemplateMedicalExaminationViewModel.cs" />
     <Compile Include="ViewModel\TrainingCourseTrainingServiceViewModel.cs" />
     <Compile Include="ViewModel\TrainingCourseViewModel.cs" />
     <Compile Include="ViewModel\UserFromContactAsViewModel.cs" />

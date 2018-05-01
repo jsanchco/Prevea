@@ -33,8 +33,6 @@
         public int? ClinicId { get; set; }
         public virtual Clinic Clinic { get; set; }
 
-        public virtual MedicalExamination MedicalExamination { get; set; }
-
         public virtual ICollection<DoctorMedicalExaminationEmployee> DoctorsMedicalExaminationEmployee { get; set; }
 
         public virtual ICollection<MedicalExaminationDocuments> MedicalExaminationDocuments { get; set; }
