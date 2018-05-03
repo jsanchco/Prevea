@@ -234,6 +234,16 @@
             }
         }
 
+        [HttpGet]
+        public ActionResult EmployeeCitationReport(int requestMedicalExaminationEmployeeId)
+        {
+            var requestMedicalExaminationEmployee = Service.GetRequestMedicalExaminationEmployeeById(requestMedicalExaminationEmployeeId);
+
+            ViewBag.fileName = $"CIT_{User.Id}.pdf";
+
+            return PartialView("~/Views/MedicalExamination/TemplateEmployeeCitationReport.cshtml", requestMedicalExaminationEmployee);
+        }
+
         public JsonResult DocumentsMedicalExamination_Read([DataSourceRequest] DataSourceRequest request, int requestMedicalExaminationEmployeeId)
         {
             var data = AutoMapper.Mapper.Map<List<DocumentViewModel>>(Service.GetMedicalExaminationDocumentsByRequestMedicalExaminationEmployeeId(

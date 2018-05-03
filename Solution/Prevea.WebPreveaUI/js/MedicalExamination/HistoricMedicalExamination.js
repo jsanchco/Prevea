@@ -755,7 +755,8 @@
         var html = "<div align='center'>";
 
         if (data.Included === true && data.Id !== 0 && data.ChangeDate === true) {
-            html += kendo.format("<a toggle='tooltip' title='Abrir Documento' onclick='HistoricMedicalExamination.goToEmployeeCitation(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>", data.Id);
+            //html += kendo.format("<a toggle='tooltip' title='Abrir Documento' onclick='HistoricMedicalExamination.goToEmployeeCitation(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>", data.Id);
+            html += kendo.format("<a toggle='tooltip' title='Abrir Documento' onclick='HistoricMedicalExamination.openEmployeeCitation(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>", data.Id);
         }
 
         html += kendo.format("</div>");
@@ -784,5 +785,11 @@
                 kendo.ui.progress($("#framePpal"), false);
             }
         });
+    },
+
+    openEmployeeCitation: function (id) {
+        var win = window.open("", "_blank");
+        var url = kendo.format("/MedicalExamination/EmployeeCitationReport?requestMedicalExaminationEmployeeId={0}", id);
+        win.location = url;
     }
 });
