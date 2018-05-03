@@ -1,27 +1,7 @@
 ﻿@model Company
 
 @{
-    var withButtonUpdate = true;
-    if (!ViewBag.IsPartialView == true)
-    {
-        Layout = "~/Views/Shared/_LayoutReport.cshtml";
-        withButtonUpdate = false;
-    }
-}
-
-<script>
-    OfferSPAReport.init(@Model.Id, @ViewBag.ContractualDocumentId);
-</script>
-
-@if (withButtonUpdate)
-{
-    <div class="row">
-        <div class="col-sm-offset-11 col-sm-1">
-            <a id="updateView" onclick="OfferSPAReport.goToOfferView();" style="cursor: pointer;">
-                <i class="fa fa-rotate-left"></i>
-            </a>
-        </div>
-    </div>
+    Layout = "~/Views/Shared/_LayoutReport.cshtml";
 }
 
 <style>
@@ -30,664 +10,676 @@
     }
 </style>
 
-<div style="font-size: 14px;">
-    <div class="row">
-        <div class="col-xs-2">
-            <a href="#">
-                <img alt="" src="~/Images/Logo_report.png">
-            </a>
-        </div>
-
-        <div class="col-xs-offset-8 col-sm-2">
-            <div class="row" style="font-size: 12px;">
-                <div>PREVEA SPA</div>
-                <div>C/ Abad Juan Catalán, 38 28032-Madrid</div>
-                <div>Tfno.- 917602713</div>
-                <div>prevea@preveaspa.com</div>
+<div id="pageOfferSPAReport">
+    <div style="font-size: 14px;">
+        <div class="row">
+            <div class="col-xs-2">
+                <a href="#">
+                    <img alt="" src="~/Images/Logo_report.png">
+                </a>
             </div>
-        </div>
-    </div>
 
-    <br />
-    <br />
-
-    <div class="row">
-        <div class="col-xs-3" style="font-size: large; font-weight: bold; text-align: left">OFERTA DE SERVICIO</div>
-        <div class="col-xs-offset-6 col-xs-3">
-            <div class="row" style="font-size: 12px; border-style: solid; border-width: thin; background: #ccccff;">
-                <div style="display: inline-block">
-                    <div>Nº OFERTA</div>
-                    <div>FECHA</div>
-                </div>
-                <div style="display: inline-block">
-                    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@ViewBag.ContractualDocumentEnrollment</div>
-                    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Model.Date.ToShortDateString()</div>
+            <div class="col-xs-offset-8 col-sm-2">
+                <div class="row" style="font-size: 12px;">
+                    <div>PREVEA SPA</div>
+                    <div>C/ Abad Juan Catalán, 38 28032-Madrid</div>
+                    <div>Tfno.- 917602713</div>
+                    <div>prevea@preveaspa.com</div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-xs-12">
-            <hr />
-        </div>
-    </div>
+        <br />
+        <br />
 
-    <div class="row" style="text-align: center;">
-        <div class="col-xs-12 sectionReportBox">
-            EMPRESA
+        <div class="row">
+            <div class="col-xs-3" style="font-size: large; font-weight: bold; text-align: left">OFERTA DE SERVICIO</div>
+            <div class="col-xs-offset-6 col-xs-3">
+                <div class="row" style="font-size: 12px; border-style: solid; border-width: thin; background: #ccccff;">
+                    <div style="display: inline-block">
+                        <div>Nº OFERTA</div>
+                        <div>FECHA</div>
+                    </div>
+                    <div style="display: inline-block">
+                        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@ViewBag.ContractualDocumentEnrollment</div>
+                        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Model.Date.ToShortDateString()</div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <br />
+        <div class="row">
+            <div class="col-xs-12">
+                <hr />
+            </div>
+        </div>
 
-    <div class="row">
-        <div class="col-xs-3">
-            <span style="font-weight: bold;">RAZÓN SOCIAL/AUTÓNOMO</span>
+        <div class="row" style="text-align: center;">
+            <div class="col-xs-12 sectionReportBox">
+                EMPRESA
+            </div>
         </div>
-        <div class="col-xs-5">
-            <span style="">
-                @Model.Name
-            </span>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-xs-3">
-            <span style="font-weight: bold;">CIF/NIF</span>
-        </div>
-        <div class="col-xs-5">
-            <span style="">
-                @Model.NIF
-            </span>
-        </div>
-    </div>
+        <br />
 
-    <div class="row">
-        <div class="col-xs-3">
-            <span style="font-weight: bold;">DOMICILIO SOCIAL</span>
+        <div class="row">
+            <div class="col-xs-3">
+                <span style="font-weight: bold;">RAZÓN SOCIAL/AUTÓNOMO</span>
+            </div>
+            <div class="col-xs-5">
+                <span style="">
+                    @Model.Name
+                </span>
+            </div>
         </div>
-        <div class="col-xs-5">
-            <span style="">
-                @Model.Address
-            </span>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-xs-3">
-            <span style="font-weight: bold;">ACTIVIDAD</span>
+        <div class="row">
+            <div class="col-xs-3">
+                <span style="font-weight: bold;">CIF/NIF</span>
+            </div>
+            <div class="col-xs-5">
+                <span style="">
+                    @Model.NIF
+                </span>
+            </div>
         </div>
-        <div class="col-xs-5">
-            <span style="">
-                @Model.Cnae.Name
-            </span>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-xs-3">
-            <span style="font-weight: bold;">PERSONA de CONTACTO</span>
+        <div class="row">
+            <div class="col-xs-3">
+                <span style="font-weight: bold;">DOMICILIO SOCIAL</span>
+            </div>
+            <div class="col-xs-5">
+                <span style="">
+                    @Model.Address
+                </span>
+            </div>
         </div>
-        <div class="col-xs-5">
-            <span style="">
-                @{
-                    var contactPerson = Model.ContactPersons.FirstOrDefault();
-                    var name = string.Empty;
-                    if (contactPerson != null)
-                    {
-                        name = string.Format("{0}  {1}", contactPerson.User.FirstName, contactPerson.User.LastName);
-                    }
-                }
-                @if (contactPerson != null)
-                {
-                    @name
-                }
-            </span>
+
+        <div class="row">
+            <div class="col-xs-3">
+                <span style="font-weight: bold;">ACTIVIDAD</span>
+            </div>
+            <div class="col-xs-5">
+                <span style="">
+                    @Model.Cnae.Name
+                </span>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-xs-3">
-            <span style="font-weight: bold;">CARGO</span>
-        </div>
-        <div class="col-xs-5">
-            <span style="">
-                @if (contactPerson != null)
-                {
-                    @contactPerson.User.WorkStation
-                }
-            </span>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-3">
-            <span style="font-weight: bold;">TELÉFONO</span>
-        </div>
-        <div class="col-xs-5">
-            <span style="">
-                @if (contactPerson != null)
-                {
-                    @contactPerson.User.PhoneNumber
-                }
-            </span>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-3">
-            <span style="font-weight: bold;">E-MAIL</span>
-        </div>
-        <div class="col-xs-5">
-            <span style="">
-                @if (contactPerson != null)
-                {
-                    @contactPerson.User.Email
-                }
-            </span>
-        </div>
-    </div>
-
-    <br />
-    <br />
-
-    <div class="row" style="text-align: center;">
-        <div class="col-xs-12 sectionReportBox">
-            ESPECIALIDADES OBJETO DE LA OFERTA
-        </div>
-    </div>
-
-    <br />
-
-    @{
-        var tecniches = "No";
-        var health = "No";
-
-        if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService != null)
-        {
-            if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques != null)
-            {
-                tecniches = "Si";
-            }
-            if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance != null &&
-                Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination != null)
-            {
-                health = "Si";
-            }
-        }
-
-    }
-
-    <div class="row" style="text-align: left;">
-        <div class="col-xs-4">
-            SEGURIDAD EN EL TRABAJO
-        </div>
-        <div class="col-xs-2" style="font-weight: bold">
-            @tecniches
-        </div>
-        <div class="col-xs-4">
-            HIGIENE INDUSTRIAL
-        </div>
-        <div class="col-xs-2" style="font-weight: bold">
-            @tecniches
-        </div>
-    </div>
-
-    <div class="row" style="text-align: left;">
-        <div class="col-xs-4">
-            ERGONOMÍA Y PSICOSOCIOLOGÍA
-        </div>
-        <div class="col-xs-2" style="font-weight: bold">
-            @tecniches
-        </div>
-        <div class="col-xs-4">
-            MEDICINA DEL TRABAJO
-        </div>
-        <div class="col-xs-2" style="font-weight: bold">
-            @health
-        </div>
-    </div>
-
-    <br />
-    <br />
-
-    <div class="row" style="text-align: center;">
-        <div class="col-xs-12 sectionReportBox">
-            CENTROS DE TRABAJO
-        </div>
-    </div>
-
-    <br />
-
-    <div class="row">
-        <div class="col-xs-12">
-            @{
-                var workCenters = ViewBag.NumberWorkCenters == 0 ?
-                    "No tiene declarados Centros de Trabajo" :
-                    "Centros de trabajo permanentes y móviles con domicilio en ";
-            }
-            @workCenters <strong>@ViewBag.ProvincesWorkCenters</strong>
-        </div>
-        <div class="col-xs-12">
-            Según manifestación declarada por el empresario a la firma del contrato, debiendo ser comunicada las modificaciones de altas y bajas al Servicio de Prevención para la incorporación de los mismos en la base de datos, a los efectos de actualizar la evaluación de riesgos y la planificación preventiva de los centros incorporados, previa visita a los centros informados
-        </div>
-    </div>
-
-    <br />
-    <br />
-
-    <div class="row" style="text-align: center;">
-        <div class="col-xs-12 sectionReportBox">
-            OBSERVACIONES (nº de trabajadores, maquinaria y medios auxiliares, etc.,)
-        </div>
-    </div>
-
-    <br />
-
-    <div class="row">
-        <div class="col-xs-12">
-            TRABAJADORES DECLARADOS POR LA EMPRESA: @Model.Employees.Count
-        </div>
-    </div>
-
-    <br />
-
-    <div class="row">
-        <div class="col-xs-12">
-            Aceptada la oferta y firmado el contrato, se realizará visita previa a centro/s comunicado/s por la empresa, a los efectos de verificación de la toma de datos que posteriormente servirá para la elaboración de la evaluación de riesgos y planificación preventiva, así como el resto de información que componen el plan de prevención
-        </div>
-    </div>
-
-    <br />
-    <br />
-
-    <div class="row" style="text-align: center;">
-        <div class="col-xs-12 sectionReportBox">
-            FORMA de PAGO
-        </div>
-    </div>
-
-    <br />
-
-    <div class="row">
-        <div class="col-xs-2">
-            <span style="font-weight: bold; color: red;">FORMA de COBRO</span>
-        </div>
-        <div class="col-xs-2">
-            <span style="">
-                @{
-                    var paymentMethod = string.Empty;
-                    if (Model.PaymentMethod.SinglePayment)
-                    {
-                        paymentMethod = "Pago único";
-                    }
-                    else
-                    {
-                        var months = new[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
-                        foreach (var month in Model.PaymentMethod.SplitPayment)
+        <div class="row">
+            <div class="col-xs-3">
+                <span style="font-weight: bold;">PERSONA de CONTACTO</span>
+            </div>
+            <div class="col-xs-5">
+                <span style="">
+                    @{
+                        var contactPerson = Model.ContactPersons.FirstOrDefault();
+                        var name = string.Empty;
+                        if (contactPerson != null)
                         {
-                            paymentMethod += string.Format("{0}, ", months[month - 1]);
+                            name = string.Format("{0}  {1}", contactPerson.User.FirstName, contactPerson.User.LastName);
                         }
-                        paymentMethod = paymentMethod.Substring(0, paymentMethod.Length - 2);
                     }
+                    @if (contactPerson != null)
+                    {
+                        @name
+                    }
+                </span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-3">
+                <span style="font-weight: bold;">CARGO</span>
+            </div>
+            <div class="col-xs-5">
+                <span style="">
+                    @if (contactPerson != null)
+                    {
+                        @contactPerson.User.WorkStation
+                    }
+                </span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-3">
+                <span style="font-weight: bold;">TELÉFONO</span>
+            </div>
+            <div class="col-xs-5">
+                <span style="">
+                    @if (contactPerson != null)
+                    {
+                        @contactPerson.User.PhoneNumber
+                    }
+                </span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-3">
+                <span style="font-weight: bold;">E-MAIL</span>
+            </div>
+            <div class="col-xs-5">
+                <span style="">
+                    @if (contactPerson != null)
+                    {
+                        @contactPerson.User.Email
+                    }
+                </span>
+            </div>
+        </div>
+
+        <br />
+        <br />
+
+        <div class="row" style="text-align: center;">
+            <div class="col-xs-12 sectionReportBox">
+                ESPECIALIDADES OBJETO DE LA OFERTA
+            </div>
+        </div>
+
+        <br />
+
+        @{
+            var tecniches = "No";
+            var health = "No";
+
+            if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService != null)
+            {
+                if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques != null)
+                {
+                    tecniches = "Si";
                 }
-                @paymentMethod
-            </span>
-        </div>
-        <div class="col-xs-2">
-            <span style="font-weight: bold; color: red;">MODALIDAD de PAGO</span>
-        </div>
-        <div class="col-xs-2">
-            <span style="">
-                @Model.PaymentMethod.ModePayment.Description
-            </span>
-        </div>
-        <div class="col-xs-2">
-            <span style="font-weight: bold; color: red;">COBRO de R. MÉDICOS</span>
-        </div>
-        <div class="col-xs-2">
-            <span style="">
-                @Model.PaymentMethod.ModePaymentMedicalExamination.Description
-            </span>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-2 col-xs-offset-4">
-            <span style="font-weight: bold; color: red;">Nº de CUENTA</span>
-        </div>
-        <div class="col-xs-3">
-            <span style="">
-                @Model.PaymentMethod.AccountNumber
-            </span>
-        </div>
-    </div>
-
-    <br />
-    <br />
-
-    <div class="row" style="text-align: center;">
-        <div class="col-xs-12 sectionReportBox">
-            ACTIVIDADES OFERTADAS POR ESPECIALIDADES
-        </div>
-    </div>
-
-    <br />
-
-    <div class="row" style="text-align: center;">
-        <div class="col-xs-12 sectionReportBox" style="background: white; color: black">
-            SEGURIDAD EN EL TRABAJO, HIGIENE INDUSTRIAL, ERGONOMÍA Y PSICOSOCIOLOGÍA APLICADA
-        </div>
-    </div>
-
-    <br />
-
-    <div class="row">
-        <div class="col-xs-12">
-            ·  Diseño y elaboración del <strong>Plan de Prevención</strong>, colaborando en el seguimiento del mismo: análisis de las necesidades relativas a la estructura organizativa de prevención de acuerdo con la legislación vigente y las características de ésta, con objeto de definir un sistema organizativo y los procedimientos que permitan gestionar la prevención de los riesgos laborales de una forma integral, eficaz, efectiva y fiable, mediante la programación de actividades.
-        </div>
-        <div class="col-xs-12">
-            ·  Realización, revisión y/o actualización de la <strong>Evaluación de Riesgos</strong> Laborales por puestos de trabajo, gestionando ésta mediante una aplicación informática propia: revisión del informe técnico de la Evaluación de Riesgos, evaluando los nuevos riesgos, en caso de existir, y reevaluando aquellos riesgos identificados con anterioridad y para los que ya se planificaron medidas preventivas. La Revisión de la Evaluación de los Riesgos no incluirá, a no ser que se especifiquen en la presente renovación, la realización de evaluaciones especificas determinados riesgos, tales como evaluaciones higiénicas, evaluaciones ergonómicas y psicosociales, análisis de adecuación de equipos de trabajo y análisis de instalaciones sometidas a reglamentación específica. Estas actuaciones serán propuestas y/o incluidas en la Planificación de la Actividad Preventiva y deberán ser contratadas adicionalmente.
-        </div>
-        <div class="col-xs-12">
-            ·  Diseño y elaboración de la <strong>Planificación de la Actividad Preventiva</strong>, gestionando ésta mediante una aplicación informática propia, y colaborando en el seguimiento de la implantación de las medidas correctoras y acciones propuestas: especificación en el informe técnico de las actividades preventivas a desarrollar, relacionadas con los riesgos identificados y valorados; incluyendo su priorización, propuesta de designación de responsables de su ejecución y recursos económicos.
-        </div>
-        <div class="col-xs-12">
-            ·  Análisis de las posibles situaciones de emergencia y las medidas necesarias a adoptar en materia de primeros auxilios, lucha contra incendios y evacuación de los trabajadores.
-        </div>
-        <div class="col-xs-12">
-            ·  Verificación de la Eficacia de las Medidas Preventivas: verificación, en función de la entidad de los riesgos y del tamaño de la empresa, del grado de implantación de las medidas programadas, mediante comprobación de las condiciones de seguridad del centro de trabajo y del seguimiento y control del sistema de gestión de prevención de riesgos laborales.
-        </div>
-        <div class="col-xs-12">
-            ·  Se excluyen en estos precios los gastos correspondientes al laboratorio por analíticas de contaminantes en higiene industrial y estudios específicos de ergonomia y psicosociología aplicada.
-        </div>
-        <div class="col-xs-12">
-            ·  Información a los trabajadores sobre los riesgos para la seguridad y salud en el trabajo, sobre las medidas y actividades de protección y prevención y sobre las medidas de emergencia. Queda incluido lo concerniente a la formación inicial de los trabajadores.
-        </div>
-        <div class="col-xs-12">
-            ·  Asesoramiento y apoyo para definir las necesidades formativas de los trabajadores, de manera que se puedan incluir en un plan de formación general que elabore la Empresa Contratante, de acuerdo a la evaluación de riesgos.
-        </div>
-        <div class="col-xs-12">
-            ·  Asesoramiento en el control y gestión de seguridad en el sector de actividad que corresponda, así como en los aspectos relativos a la coordinación de actividades empresariales.
-        </div>
-        <div class="col-xs-12">
-            ·  Elaboración de la <strong>Memoria Anual</strong> a la finalización de la actividad, como resumen de las actividades de Prevención Técnica desarrolladas por PREVEA. Dado su carácter recapitulativo, se entregará transcurrido el período anual de referencia.
-        </div>
-        <div class="col-xs-12">
-            ·  Asesoramiento y apoyo para el cumplimiento de la obligación de realizar la investigación de accidentes e incidentes, siempre que sea requerido por la Empresa Contratante.
-        </div>
-        <div class="col-xs-12">
-            ·  Evaluación de riesgos de las instalaciones fijas estipuladas en el presente contrato-concierto, incluyendo estudio ergonómico, de higiene industrial y psicología aplicada de dichas instalaciones.
-        </div>
-        <div class="col-xs-12">
-            ·  Asesoría y asistencia jurídica relacionada con las especialidades preventivas contratadas.
-        </div>
-        <div class="col-xs-12">
-            ·  Asesoramiento ante posibles inspecciones que se pudieran presentar a la Empresa Contratante relacionadas con las especialidades contratadas.
-        </div>
-        <div class="col-xs-12">
-            ·  Asesoramiento para la integración de la prevención de riesgos laborales en el conjunto de actividades y decisiones de la Empresa Contratante, así como para la elaboración de un Sistema de Gestión de prevención de riesgos laborales.
-        </div>
-    </div>
-
-    <br />
-
-    <div class="row" style="text-align: center;">
-        <div class="col-xs-12 sectionReportBox" style="background: white; color: black">
-            VIGILANCIA DE LA SALUD
-        </div>
-    </div>
-
-    <br />
-
-    <div class="row">
-        <div class="col-xs-12">
-            · <strong>Planificación de Vigilancia de la Salud:</strong> planificación de las acciones necesarias para un eficaz control de los riesgos laborales sobre la salud de los trabajadores y establecimiento de las prioridades de las actividades sanitarias a realizar en función de la magnitud de los riesgos, del número de trabajadores expuestos y de la posible patología laboral asociada a los mismos.
-        </div>
-        <div class="col-xs-12">
-            · <strong>Estudio descriptivo de los resultados obtenidos de los Exámenes de Salud Específicos,</strong> con la finalidad de identificar problemas de salud abordables o modificables mediante intervenciones colectivas. Se elaborará un informe cuando se hayan realizado un mínimo de 10 Exámenes de Salud Específicos. Dado su carácter recapitulativo, podrá entregarse transcurrido el período anual de referencia.
-        </div>
-        <div class="col-xs-12">
-            · <strong>Memoria Anual de Vigilancia de la Salud:</strong> resumen de las actividades preventivas desarrolladas por PREVEA en la empresa. Dado su carácter recapitulativo, podrá entregarse transcurrido el período anual de referencia.
-        </div>
-        <div class="col-xs-12">
-            · <strong>Exámenes de Salud Específicos:</strong> práctica de exámenes de salud relacionados con los riesgos laborales que darán lugar a la elaboración de un informe médico personalizado que se entregará al trabajador, y a la valoración de la aptitud del trabajador para su puesto de trabajo, indicando, en su caso, la necesidad de adoptar medidas preventivas complementarias.
-        </div>
-        <div class="col-xs-12">
-            Los exámenes de Salud están compuestos de:
-        </div>
-        <div class="col-xs-12">
-            &nbsp;&nbsp;&nbsp;&nbsp;o <strong>Analítica:</strong> Análisis de una muestra biológica de un trabajador (Sangre y Orina), mediante un proceso técnico, obteniéndose un resultado
-        </div>
-        <div class="col-xs-12">
-            &nbsp;&nbsp;&nbsp;&nbsp;que facilita la valoración de su estado de salud.
-        </div>
-        <div class="col-xs-12">
-            &nbsp;&nbsp;&nbsp;&nbsp;o <strong>Pruebas Complementarias:</strong>
-        </div>
-        <div class="col-xs-12">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Control Visión:</strong> Determinación de la Agudeza Visual tanto cercana como lejana y un test de cromatografía.
-        </div>
-        <div class="col-xs-12">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Audiometría:</strong> Valoración de la agudeza auditiva de los trabajadores realizada en una cabina audiométrica analizando las siguientes
-        </div>
-        <div class="col-xs-12">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frecuencias en ambos oídos: 250 Hz, 500 Hz, 1000 Hz, 2000 Hz, 3000Hz, 4000 Hz, 6000 Hz y 8000 Hz.
-        </div>
-        <div class="col-xs-12">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Espirometría:</strong> Determinación de la Capacidad Vital Forzada de los trabajadores, las curvas de Flujo-Volumen y de Volumen-Tiempo.
-        </div>
-        <div class="col-xs-12">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Electrocardigrama:</strong> Según protocolo o criterio medico.
-        </div>
-        <div class="col-xs-12">
-            &nbsp;&nbsp;&nbsp;&nbsp;o <strong>Examen Médico:</strong>
-        </div>
-        <div class="col-xs-12">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Estudio Biométrico de los trabajadores:</strong> Peso, Talla, Índice de Masa Corporal, Tensión Arterial, Pulso.
-        </div>
-        <div class="col-xs-12">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Hábitos e Historia Médica</strong>
-        </div>
-        <div class="col-xs-12">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Inspección general y por aparatos:</strong> Oro-faringe, Tórax, Auscultación Pulmonar y Cardiaca, Abdomen, Sistema Músculo Esquelético,
-        </div>
-        <div class="col-xs-12">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sistema Venoso Periférico, Piel y Lesiones Dérmicas, Sistema Nervioso, Otoscopia.
-        </div>
-    </div>
-
-    <div style="page-break-after: always;"></div>
-
-    @{
-        var totalAmountTecniques = 0.0m;
-        var totalAmountHealthVigilance = 0.0m;
-        var totalAmountMedicalExamination = 0.0m;
-        decimal total;
-        if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService != null)
-        {
-            if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques != null)
-            {
-                totalAmountTecniques = (decimal)Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques * Model.SimulationCompanyActive.Simulation.NumberEmployees;
+                if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance != null &&
+                    Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination != null)
+                {
+                    health = "Si";
+                }
             }
-            if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance != null)
-            {
-                totalAmountHealthVigilance = (decimal)Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance * Model.SimulationCompanyActive.Simulation.NumberEmployees;
-            }
-            if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination != null)
-            {
-                totalAmountMedicalExamination = (decimal)Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination * Model.SimulationCompanyActive.Simulation.NumberEmployees;
-            }
+
         }
 
-        total = totalAmountTecniques * Convert.ToDecimal(ViewBag.IVA) + totalAmountHealthVigilance * Convert.ToDecimal(ViewBag.IVA) + totalAmountMedicalExamination;
-        total = Math.Round(total, 2);
-    }
-
-
-    <div class="row" style="text-align: center;">
-        <div class="col-xs-12 sectionReportBox">
-            PRESUPUESTO
-        </div>
-    </div>
-
-    <br />
-
-    <div class="row" style="text-align: center;">
-        <div class="col-xs-12 sectionReportBox" style="background: white; color: black">
-            PRECIO
-        </div>
-    </div>
-
-    <br />
-
-    <div class="row">
-        <div class="col-xs-12">
-            Como contraprestación económica por las citadas actividades, la Empresa Contratante abonará a PREVEA las siguientes cantidades:
-        </div>
-    </div>
-
-    <br />
-
-    <div class="row">
-        <div class="col-xs-offset-2 col-xs-4" style="background: #ccccff">
-            ESPECIALIDADES TÉCNICAS
-        </div>
-        <div class="col-xs-2" style="background: #ccccff">
-            @totalAmountTecniques €
-        </div>
-        <div class="col-xs-4" style="background: #ccccff">
-            (IVA NO INCLUIDO)
-        </div>
-    </div>
-
-    <br />
-
-    <div class="row">
-        <div class="col-xs-offset-2 col-xs-4" style="background: #ccccff">
-            VIGILANCIA DE LA SALUD
-        </div>
-        <div class="col-xs-2" style="background: #ccccff">
-            @totalAmountHealthVigilance €
-        </div>
-        <div class="col-xs-4" style="background: #ccccff">
-            (IVA NO INCLUIDO)
-        </div>
-    </div>
-
-    <br />
-
-    <div class="row">
-        <div class="col-xs-offset-2 col-xs-4" style="background: #ccccff">
-            REC. MÉDICO REALIZADO EN CLÍNICA
-        </div>
-        <div class="col-xs-2" style="background: #ccccff">
-            @totalAmountMedicalExamination €
-        </div>
-        <div class="col-xs-4" style="background: #ccccff">
-            (EXENTO DE IVA)
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-offset-2 col-xs-9">
-            (Los reconocimientos médicos se facturarán una vez realizados)
-        </div>
-    </div>
-
-    <br />
-
-    <div class="row" style="text-align: center;">
-        <div class="col-xs-12 sectionReportBox" style="background: white; color: black">
-            FORMA DE PAGO
-        </div>
-    </div>
-
-    <br />
-
-    <div class="row">
-        <div class="col-xs-12">
-            La forma de pago de las especialidades técnicas y vigilancia de la salud, se realizará mediante pago @Model.PaymentMethod.ModePaymentMedicalExamination.Description por la cantidad:
-        </div>
-    </div>
-
-    <br />
-
-    <div class="row">
-        <div class="col-xs-offset-4 col-xs-2">
-            <strong>TOTAL:</strong>
-        </div>
-        <div class="col-xs-2" style="background: #ccccff; border-color: black">
-            @total €
-        </div>
-        <div class="col-xs-2">
-            (IVA INCLUIDO)
-        </div>
-    </div>
-
-    <br />
-    <br />
-
-    <div class="row" style="text-align: center;">
-        <div class="col-xs-12 sectionReportBox">
-            ACEPTACIÓN DE PRESUPUESTO
-        </div>
-    </div>
-
-    <br />
-    <br />
-
-    <div class="row">
-        <div class="col-xs-8">
-            <div class="row">
-                <div class="col-xs-4">
-                    EMPRESA 
-                </div>
-                <div class="col-xs-4">
-                    @Model.Name 
-                </div>
+        <div class="row" style="text-align: left;">
+            <div class="col-xs-4">
+                SEGURIDAD EN EL TRABAJO
             </div>
-            <div class="row">
-                <div class="col-xs-4">
-                    NOMBRE 
-                </div>
-                <div class="col-xs-4">
-                    @Model.ContactPersons.FirstOrDefault().User.FirstName  @Model.ContactPersons.FirstOrDefault().User.LastName
-                </div>
+            <div class="col-xs-2" style="font-weight: bold">
+                @tecniches
             </div>
-            <div class="row">
-                <div class="col-xs-4">
-                    CARGO 
-                </div>
-                <div class="col-xs-4">
-                    @Model.ContactPersons.FirstOrDefault().User.WorkStation
-                </div>
+            <div class="col-xs-4">
+                HIGIENE INDUSTRIAL
             </div>
-            <div class="row">
-                <div class="col-xs-4">
-                    FIRMA Y SELLO 
-                </div>
-                <div class="col-xs-8">
-                    PREVEA CONSULTORES Y PORYECTOS S.L. 
-                </div>
+            <div class="col-xs-2" style="font-weight: bold">
+                @tecniches
             </div>
         </div>
-        
-        <div class="col-xs-4">
-            <img src="~/Images/companySeal.png" style="text-align: center" alt="Firma de Empresa"/>
-        </div>
-    </div>
 
-    <br />
+        <div class="row" style="text-align: left;">
+            <div class="col-xs-4">
+                ERGONOMÍA Y PSICOSOCIOLOGÍA
+            </div>
+            <div class="col-xs-2" style="font-weight: bold">
+                @tecniches
+            </div>
+            <div class="col-xs-4">
+                MEDICINA DEL TRABAJO
+            </div>
+            <div class="col-xs-2" style="font-weight: bold">
+                @health
+            </div>
+        </div>
 
-    <div class="row">
-        <div class="col-xs-offset-8 col-xs-2">
-            FECHA
+        <br />
+        <br />
+
+        <div class="row" style="text-align: center;">
+            <div class="col-xs-12 sectionReportBox">
+                CENTROS DE TRABAJO
+            </div>
         </div>
-        <div class="col-xs-2">
-            @DateTime.Now.ToString("dd/MM/yyyy")
+
+        <br />
+
+        <div class="row">
+            <div class="col-xs-12">
+                @{
+                    var workCenters = ViewBag.NumberWorkCenters == 0 ?
+                        "No tiene declarados Centros de Trabajo" :
+                        "Centros de trabajo permanentes y móviles con domicilio en ";
+                }
+                @workCenters <strong>@ViewBag.ProvincesWorkCenters</strong>
+            </div>
+            <div class="col-xs-12">
+                Según manifestación declarada por el empresario a la firma del contrato, debiendo ser comunicada las modificaciones de altas y bajas al Servicio de Prevención para la incorporación de los mismos en la base de datos, a los efectos de actualizar la evaluación de riesgos y la planificación preventiva de los centros incorporados, previa visita a los centros informados
+            </div>
         </div>
+
+        <br />
+        <br />
+
+        <div class="row" style="text-align: center;">
+            <div class="col-xs-12 sectionReportBox">
+                OBSERVACIONES (nº de trabajadores, maquinaria y medios auxiliares, etc.,)
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-xs-12">
+                TRABAJADORES DECLARADOS POR LA EMPRESA: @Model.Employees.Count
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-xs-12">
+                Aceptada la oferta y firmado el contrato, se realizará visita previa a centro/s comunicado/s por la empresa, a los efectos de verificación de la toma de datos que posteriormente servirá para la elaboración de la evaluación de riesgos y planificación preventiva, así como el resto de información que componen el plan de prevención
+            </div>
+        </div>
+
+        <br />
+        <br />
+
+        <div class="row" style="text-align: center;">
+            <div class="col-xs-12 sectionReportBox">
+                FORMA de PAGO
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-xs-2">
+                <span style="font-weight: bold; color: red;">FORMA de COBRO</span>
+            </div>
+            <div class="col-xs-2">
+                <span style="">
+                    @{
+                        var paymentMethod = string.Empty;
+                        if (Model.PaymentMethod.SinglePayment)
+                        {
+                            paymentMethod = "Pago único";
+                        }
+                        else
+                        {
+                            var months = new[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
+                            foreach (var month in Model.PaymentMethod.SplitPayment)
+                            {
+                                paymentMethod += string.Format("{0}, ", months[month - 1]);
+                            }
+                            paymentMethod = paymentMethod.Substring(0, paymentMethod.Length - 2);
+                        }
+                    }
+                    @paymentMethod
+                </span>
+            </div>
+            <div class="col-xs-2">
+                <span style="font-weight: bold; color: red;">MODALIDAD de PAGO</span>
+            </div>
+            <div class="col-xs-2">
+                <span style="">
+                    @Model.PaymentMethod.ModePayment.Description
+                </span>
+            </div>
+            <div class="col-xs-2">
+                <span style="font-weight: bold; color: red;">COBRO de R. MÉDICOS</span>
+            </div>
+            <div class="col-xs-2">
+                <span style="">
+                    @Model.PaymentMethod.ModePaymentMedicalExamination.Description
+                </span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-2 col-xs-offset-4">
+                <span style="font-weight: bold; color: red;">Nº de CUENTA</span>
+            </div>
+            <div class="col-xs-3">
+                <span style="">
+                    @Model.PaymentMethod.AccountNumber
+                </span>
+            </div>
+        </div>
+
+        <br />
+        <br />
+
+        <div class="row" style="text-align: center;">
+            <div class="col-xs-12 sectionReportBox">
+                ACTIVIDADES OFERTADAS POR ESPECIALIDADES
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row" style="text-align: center;">
+            <div class="col-xs-12 sectionReportBox" style="background: white; color: black">
+                SEGURIDAD EN EL TRABAJO, HIGIENE INDUSTRIAL, ERGONOMÍA Y PSICOSOCIOLOGÍA APLICADA
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-xs-12">
+                ·  Diseño y elaboración del <strong>Plan de Prevención</strong>, colaborando en el seguimiento del mismo: análisis de las necesidades relativas a la estructura organizativa de prevención de acuerdo con la legislación vigente y las características de ésta, con objeto de definir un sistema organizativo y los procedimientos que permitan gestionar la prevención de los riesgos laborales de una forma integral, eficaz, efectiva y fiable, mediante la programación de actividades.
+            </div>
+            <div class="col-xs-12">
+                ·  Realización, revisión y/o actualización de la <strong>Evaluación de Riesgos</strong> Laborales por puestos de trabajo, gestionando ésta mediante una aplicación informática propia: revisión del informe técnico de la Evaluación de Riesgos, evaluando los nuevos riesgos, en caso de existir, y reevaluando aquellos riesgos identificados con anterioridad y para los que ya se planificaron medidas preventivas. La Revisión de la Evaluación de los Riesgos no incluirá, a no ser que se especifiquen en la presente renovación, la realización de evaluaciones especificas determinados riesgos, tales como evaluaciones higiénicas, evaluaciones ergonómicas y psicosociales, análisis de adecuación de equipos de trabajo y análisis de instalaciones sometidas a reglamentación específica. Estas actuaciones serán propuestas y/o incluidas en la Planificación de la Actividad Preventiva y deberán ser contratadas adicionalmente.
+            </div>
+            <div class="col-xs-12">
+                ·  Diseño y elaboración de la <strong>Planificación de la Actividad Preventiva</strong>, gestionando ésta mediante una aplicación informática propia, y colaborando en el seguimiento de la implantación de las medidas correctoras y acciones propuestas: especificación en el informe técnico de las actividades preventivas a desarrollar, relacionadas con los riesgos identificados y valorados; incluyendo su priorización, propuesta de designación de responsables de su ejecución y recursos económicos.
+            </div>
+            <div class="col-xs-12">
+                ·  Análisis de las posibles situaciones de emergencia y las medidas necesarias a adoptar en materia de primeros auxilios, lucha contra incendios y evacuación de los trabajadores.
+            </div>
+            <div class="col-xs-12">
+                ·  Verificación de la Eficacia de las Medidas Preventivas: verificación, en función de la entidad de los riesgos y del tamaño de la empresa, del grado de implantación de las medidas programadas, mediante comprobación de las condiciones de seguridad del centro de trabajo y del seguimiento y control del sistema de gestión de prevención de riesgos laborales.
+            </div>
+            <div class="col-xs-12">
+                ·  Se excluyen en estos precios los gastos correspondientes al laboratorio por analíticas de contaminantes en higiene industrial y estudios específicos de ergonomia y psicosociología aplicada.
+            </div>
+            <div class="col-xs-12">
+                ·  Información a los trabajadores sobre los riesgos para la seguridad y salud en el trabajo, sobre las medidas y actividades de protección y prevención y sobre las medidas de emergencia. Queda incluido lo concerniente a la formación inicial de los trabajadores.
+            </div>
+            <div class="col-xs-12">
+                ·  Asesoramiento y apoyo para definir las necesidades formativas de los trabajadores, de manera que se puedan incluir en un plan de formación general que elabore la Empresa Contratante, de acuerdo a la evaluación de riesgos.
+            </div>
+            <div class="col-xs-12">
+                ·  Asesoramiento en el control y gestión de seguridad en el sector de actividad que corresponda, así como en los aspectos relativos a la coordinación de actividades empresariales.
+            </div>
+            <div class="col-xs-12">
+                ·  Elaboración de la <strong>Memoria Anual</strong> a la finalización de la actividad, como resumen de las actividades de Prevención Técnica desarrolladas por PREVEA. Dado su carácter recapitulativo, se entregará transcurrido el período anual de referencia.
+            </div>
+            <div class="col-xs-12">
+                ·  Asesoramiento y apoyo para el cumplimiento de la obligación de realizar la investigación de accidentes e incidentes, siempre que sea requerido por la Empresa Contratante.
+            </div>
+            <div class="col-xs-12">
+                ·  Evaluación de riesgos de las instalaciones fijas estipuladas en el presente contrato-concierto, incluyendo estudio ergonómico, de higiene industrial y psicología aplicada de dichas instalaciones.
+            </div>
+            <div class="col-xs-12">
+                ·  Asesoría y asistencia jurídica relacionada con las especialidades preventivas contratadas.
+            </div>
+            <div class="col-xs-12">
+                ·  Asesoramiento ante posibles inspecciones que se pudieran presentar a la Empresa Contratante relacionadas con las especialidades contratadas.
+            </div>
+            <div class="col-xs-12">
+                ·  Asesoramiento para la integración de la prevención de riesgos laborales en el conjunto de actividades y decisiones de la Empresa Contratante, así como para la elaboración de un Sistema de Gestión de prevención de riesgos laborales.
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row" style="text-align: center;">
+            <div class="col-xs-12 sectionReportBox" style="background: white; color: black">
+                VIGILANCIA DE LA SALUD
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-xs-12">
+                · <strong>Planificación de Vigilancia de la Salud:</strong> planificación de las acciones necesarias para un eficaz control de los riesgos laborales sobre la salud de los trabajadores y establecimiento de las prioridades de las actividades sanitarias a realizar en función de la magnitud de los riesgos, del número de trabajadores expuestos y de la posible patología laboral asociada a los mismos.
+            </div>
+            <div class="col-xs-12">
+                · <strong>Estudio descriptivo de los resultados obtenidos de los Exámenes de Salud Específicos,</strong> con la finalidad de identificar problemas de salud abordables o modificables mediante intervenciones colectivas. Se elaborará un informe cuando se hayan realizado un mínimo de 10 Exámenes de Salud Específicos. Dado su carácter recapitulativo, podrá entregarse transcurrido el período anual de referencia.
+            </div>
+            <div class="col-xs-12">
+                · <strong>Memoria Anual de Vigilancia de la Salud:</strong> resumen de las actividades preventivas desarrolladas por PREVEA en la empresa. Dado su carácter recapitulativo, podrá entregarse transcurrido el período anual de referencia.
+            </div>
+            <div class="col-xs-12">
+                · <strong>Exámenes de Salud Específicos:</strong> práctica de exámenes de salud relacionados con los riesgos laborales que darán lugar a la elaboración de un informe médico personalizado que se entregará al trabajador, y a la valoración de la aptitud del trabajador para su puesto de trabajo, indicando, en su caso, la necesidad de adoptar medidas preventivas complementarias.
+            </div>
+            <div class="col-xs-12">
+                Los exámenes de Salud están compuestos de:
+            </div>
+            <div class="col-xs-12">
+                &nbsp;&nbsp;&nbsp;&nbsp;o <strong>Analítica:</strong> Análisis de una muestra biológica de un trabajador (Sangre y Orina), mediante un proceso técnico, obteniéndose un resultado
+            </div>
+            <div class="col-xs-12">
+                &nbsp;&nbsp;&nbsp;&nbsp;que facilita la valoración de su estado de salud.
+            </div>
+            <div class="col-xs-12">
+                &nbsp;&nbsp;&nbsp;&nbsp;o <strong>Pruebas Complementarias:</strong>
+            </div>
+            <div class="col-xs-12">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Control Visión:</strong> Determinación de la Agudeza Visual tanto cercana como lejana y un test de cromatografía.
+            </div>
+            <div class="col-xs-12">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Audiometría:</strong> Valoración de la agudeza auditiva de los trabajadores realizada en una cabina audiométrica analizando las siguientes
+            </div>
+            <div class="col-xs-12">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frecuencias en ambos oídos: 250 Hz, 500 Hz, 1000 Hz, 2000 Hz, 3000Hz, 4000 Hz, 6000 Hz y 8000 Hz.
+            </div>
+            <div class="col-xs-12">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Espirometría:</strong> Determinación de la Capacidad Vital Forzada de los trabajadores, las curvas de Flujo-Volumen y de Volumen-Tiempo.
+            </div>
+            <div class="col-xs-12">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Electrocardigrama:</strong> Según protocolo o criterio medico.
+            </div>
+            <div class="col-xs-12">
+                &nbsp;&nbsp;&nbsp;&nbsp;o <strong>Examen Médico:</strong>
+            </div>
+            <div class="col-xs-12">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Estudio Biométrico de los trabajadores:</strong> Peso, Talla, Índice de Masa Corporal, Tensión Arterial, Pulso.
+            </div>
+            <div class="col-xs-12">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Hábitos e Historia Médica</strong>
+            </div>
+            <div class="col-xs-12">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Inspección general y por aparatos:</strong> Oro-faringe, Tórax, Auscultación Pulmonar y Cardiaca, Abdomen, Sistema Músculo Esquelético,
+            </div>
+            <div class="col-xs-12">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sistema Venoso Periférico, Piel y Lesiones Dérmicas, Sistema Nervioso, Otoscopia.
+            </div>
+        </div>
+
+        <div style="page-break-after: always;"></div>
+
+        @{
+            var totalAmountTecniques = 0.0m;
+            var totalAmountHealthVigilance = 0.0m;
+            var totalAmountMedicalExamination = 0.0m;
+            decimal total;
+            if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService != null)
+            {
+                if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques != null)
+                {
+                    totalAmountTecniques = (decimal)Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques * Model.SimulationCompanyActive.Simulation.NumberEmployees;
+                }
+                if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance != null)
+                {
+                    totalAmountHealthVigilance = (decimal)Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance * Model.SimulationCompanyActive.Simulation.NumberEmployees;
+                }
+                if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination != null)
+                {
+                    totalAmountMedicalExamination = (decimal)Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination * Model.SimulationCompanyActive.Simulation.NumberEmployees;
+                }
+            }
+
+            total = totalAmountTecniques * Convert.ToDecimal(ViewBag.IVA) + totalAmountHealthVigilance * Convert.ToDecimal(ViewBag.IVA) + totalAmountMedicalExamination;
+            total = Math.Round(total, 2);
+        }
+
+
+        <div class="row" style="text-align: center;">
+            <div class="col-xs-12 sectionReportBox">
+                PRESUPUESTO
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row" style="text-align: center;">
+            <div class="col-xs-12 sectionReportBox" style="background: white; color: black">
+                PRECIO
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-xs-12">
+                Como contraprestación económica por las citadas actividades, la Empresa Contratante abonará a PREVEA las siguientes cantidades:
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-xs-offset-2 col-xs-4" style="background: #ccccff">
+                ESPECIALIDADES TÉCNICAS
+            </div>
+            <div class="col-xs-2" style="background: #ccccff">
+                @totalAmountTecniques €
+            </div>
+            <div class="col-xs-4" style="background: #ccccff">
+                (IVA NO INCLUIDO)
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-xs-offset-2 col-xs-4" style="background: #ccccff">
+                VIGILANCIA DE LA SALUD
+            </div>
+            <div class="col-xs-2" style="background: #ccccff">
+                @totalAmountHealthVigilance €
+            </div>
+            <div class="col-xs-4" style="background: #ccccff">
+                (IVA NO INCLUIDO)
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-xs-offset-2 col-xs-4" style="background: #ccccff">
+                REC. MÉDICO REALIZADO EN CLÍNICA
+            </div>
+            <div class="col-xs-2" style="background: #ccccff">
+                @totalAmountMedicalExamination €
+            </div>
+            <div class="col-xs-4" style="background: #ccccff">
+                (EXENTO DE IVA)
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-offset-2 col-xs-9">
+                (Los reconocimientos médicos se facturarán una vez realizados)
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row" style="text-align: center;">
+            <div class="col-xs-12 sectionReportBox" style="background: white; color: black">
+                FORMA DE PAGO
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-xs-12">
+                La forma de pago de las especialidades técnicas y vigilancia de la salud, se realizará mediante pago @Model.PaymentMethod.ModePaymentMedicalExamination.Description por la cantidad:
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-xs-offset-4 col-xs-2">
+                <strong>TOTAL:</strong>
+            </div>
+            <div class="col-xs-2" style="background: #ccccff; border-color: black">
+                @total €
+            </div>
+            <div class="col-xs-2">
+                (IVA INCLUIDO)
+            </div>
+        </div>
+
+        <br />
+        <br />
+
+        <div class="row" style="text-align: center;">
+            <div class="col-xs-12 sectionReportBox">
+                ACEPTACIÓN DE PRESUPUESTO
+            </div>
+        </div>
+
+        <br />
+        <br />
+
+        <div class="row">
+            <div class="col-xs-8">
+                <div class="row">
+                    <div class="col-xs-4">
+                        EMPRESA
+                    </div>
+                    <div class="col-xs-4">
+                        @Model.Name
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        NOMBRE
+                    </div>
+                    <div class="col-xs-4">
+                        @Model.ContactPersons.FirstOrDefault().User.FirstName  @Model.ContactPersons.FirstOrDefault().User.LastName
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        CARGO
+                    </div>
+                    <div class="col-xs-4">
+                        @Model.ContactPersons.FirstOrDefault().User.WorkStation
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        FIRMA Y SELLO
+                    </div>
+                    <div class="col-xs-8">
+                        PREVEA CONSULTORES Y PORYECTOS S.L.
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-4">
+                <img src="~/Images/companySeal.png" style="text-align: center" alt="Firma de Empresa" />
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-xs-offset-8 col-xs-2">
+                FECHA
+            </div>
+            <div class="col-xs-2">
+                @DateTime.Now.ToString("dd/MM/yyyy")
+            </div>
+        </div>
+
     </div>
-     
 </div>
+
+<br />
+<br />
+
+<div id="print" class="form-actions" style="text-align: right">
+    <a id="btnPrint" class="btn btn-prevea" role="button" onclick="GeneralData.printDocument('pageOfferSPAReport', '@ViewBag.fileName');"> Imprimir</a>
+</div>
+
+<br />
+<br />

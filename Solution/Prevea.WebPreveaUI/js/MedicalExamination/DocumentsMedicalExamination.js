@@ -36,8 +36,9 @@
                         UrlRelative: { type: "string" },
                         AreaId: { type: "number" },
                         AreaDescription: { type: "string" },
-                        RequestMedicalExaminationEmployeeId: { type: "number", defaultValue: this.id },
-                        Date: { type: "date" }
+                        RequestMedicalExaminationEmployeeId: { type: "number", defaultValue: DocumentsMedicalExamination.id },
+                        Date: { type: "date" },
+                        AreaStoreInServer: { type: "boolean" }
                     }
                 }
             },
@@ -264,7 +265,15 @@
         var html = "<div style='display: inline-block; margin-left: 37px;'>";
 
         if (data.UrlRelative.match(/pdf/)) {
-            html += kendo.format("<a toggle='tooltip' title='Abrir Documento' onclick='GeneralData.goToOpenFile(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>&nbsp;&nbsp;", data.Id);
+            if (data.AreaStoreInServer === false) {
+                html += kendo.format(
+                    "<a toggle='tooltip' title='Abrir Documento' onclick='DocumentsMedicalExamination.openMedicalExamination(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>&nbsp;&nbsp;",
+                    data.Id);
+            } else {
+                html += kendo.format(
+                    "<a toggle='tooltip' title='Abrir Documento' onclick='GeneralData.goToOpenFile(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>&nbsp;&nbsp;",
+                    data.Id);
+            }            
         } else {
             html += kendo.format("<a toggle='tooltip' title='Agregar Otro Documento' onclick='DocumentsMedicalExamination.goToAddDocument(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/unknown_opt.png'></a></div></a>&nbsp;&nbsp;&nbsp;", data.Id);
         }
@@ -335,5 +344,11 @@
         dataItem.UrlRelative = data.UrlRelative;
 
         grid.refresh();
+    },
+
+    openMedicalExamination: function (id) {
+        var win = window.open("", "_blank");
+        var url = kendo.format("/MedicalExamination/MedicalExaminationReport?documentId={0}", id);
+        win.location = url;
     }
 });

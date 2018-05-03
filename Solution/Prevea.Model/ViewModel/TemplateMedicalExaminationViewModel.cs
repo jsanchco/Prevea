@@ -21,6 +21,7 @@
         public DateTime? DocumentEndDate { get; set; }
         public int DocumentStateId { get; set; }
         public string DocumentName { get; set; }
+        public string DocumentExtension { get; set; }
         public List<InputTemplate> DocumentInputTemplates { get; set; }
         public string DocumentUrlRelative { get; set; }
         public string EmployeeName { get; set; }

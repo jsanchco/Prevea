@@ -1,25 +1,7 @@
 ﻿@model Company
 
 @{
-    var withButtonUpdate = true;
-    var controller = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
-    var actionName = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
-    if (controller == "Companies" && actionName == "DefaultReport")
-    {
-        Layout = "~/Views/Shared/_LayoutReport.cshtml";
-        withButtonUpdate = false;
-    }
-}
-
-@if (withButtonUpdate)
-{
-    <div class="row">
-        <div class="col-sm-offset-11 col-sm-1">
-            <a id="notifications" onclick="DefaultReport.goToDefaultView();" style="cursor: pointer;">
-                <i class="fa fa-rotate-left"></i>
-            </a>
-        </div>
-    </div>
+    Layout = "~/Views/Shared/_LayoutReport.cshtml";
 }
 
 <h2>Sin Desarrollar!!!</h2>

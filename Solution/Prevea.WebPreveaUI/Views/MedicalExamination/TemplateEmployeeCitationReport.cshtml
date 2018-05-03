@@ -4,10 +4,6 @@
     Layout = "~/Views/Shared/_LayoutReport.cshtml";
 }
 
-<script>
-    TemplateEmployeeCitationReport.init('pageEmployeeCitationReport', '@ViewBag.fileName');
-</script>
-
 <style>
     div {
         color: black;
@@ -127,7 +123,7 @@
                 }
                 if (Model.Employee.User.FirstName != null)
                 {
-                    fullName += string.Format("{0}, ", Model.Employee.User.FirstName.ToUpper());
+                    fullName += string.Format("{0}", Model.Employee.User.FirstName.ToUpper());
                 }
             }
             @fullName

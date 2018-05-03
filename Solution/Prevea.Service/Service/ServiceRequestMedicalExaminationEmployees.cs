@@ -838,6 +838,7 @@
             templateMedicalExaminationViewModel.DocumentBeginDate = document.BeginDate;
             templateMedicalExaminationViewModel.DocumentEndDate = document.EndDate;
             templateMedicalExaminationViewModel.DocumentName = document.Name;
+            templateMedicalExaminationViewModel.DocumentExtension = document.Extension;
             templateMedicalExaminationViewModel.DocumentStateId = (int)EnDocumentState.Pending;
             templateMedicalExaminationViewModel.DocumentUrlRelative = document.UrlRelative;
             templateMedicalExaminationViewModel.CompanyName = requestMedicalExaminationEmployee.Employee.Company.Name;
@@ -909,13 +910,18 @@
                     Document = GetDocumentByArea(16)
                 };
 
-                var documentUserOwners = requestMedicalExamination.Company.ContactPersons.Select(contactPerson => new DocumentUserOwner { UserId = contactPerson.UserId }).ToList();
-                documentUserOwners.Add(new DocumentUserOwner { UserId = requestMedicalExaminationEmployeeFind.Employee.UserId });
-                result = SaveDocument(medicalExaminationDocument.Document,
-                    false,
-                    new List<DocumentUserCreator> { new DocumentUserCreator { UserId = userId } },
-                    documentUserOwners,
-                    ".pdf");
+                result = SaveMedicalExaminationDocument(
+                    requestMedicalExaminationEmployeeFind.Id,
+                    medicalExaminationDocument.Document, 
+                    userId);
+
+                //var documentUserOwners = requestMedicalExamination.Company.ContactPersons.Select(contactPerson => new DocumentUserOwner { UserId = contactPerson.UserId }).ToList();
+                //documentUserOwners.Add(new DocumentUserOwner { UserId = requestMedicalExaminationEmployeeFind.Employee.UserId });
+                //result = SaveDocument(medicalExaminationDocument.Document,
+                //    false,
+                //    new List<DocumentUserCreator> { new DocumentUserCreator { UserId = userId } },
+                //    documentUserOwners,
+                //    ".pdf");
                 if (result.Status == Status.Error)
                 {
                     return new Result
@@ -925,6 +931,8 @@
                         Status = Status.Error
                     };
                 }
+
+                medicalExaminationDocument.Document = (Document)result.Object;
             }
 
             medicalExaminationDocument.Document.InputTemplatesJSON =
@@ -940,8 +948,7 @@
                     medicalExaminationDocument.Document.DocumentStateId = (int)EnDocumentState.Finished;
             }
 
-
-            //result = SaveMedicalExaminationDocument(medicalExaminationDocument);
+            result = UpdateDocument(medicalExaminationDocument.Document, false);
             if (result.Status == Status.Error)
             {
                 return new Result

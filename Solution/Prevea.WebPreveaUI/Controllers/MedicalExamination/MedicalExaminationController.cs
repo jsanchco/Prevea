@@ -302,7 +302,13 @@
                 if (result.Status != Status.Error)
                 {
                     if (result.Object is Document)
-                        return this.Jsonp(AutoMapper.Mapper.Map<DocumentViewModel>((Document)result.Object));
+                    {
+                        var data = AutoMapper.Mapper.Map<DocumentViewModel>((Document) result.Object);
+                        data.RequestMedicalExaminationEmployeeId =
+                            documentViewModel.RequestMedicalExaminationEmployeeId;
+
+                        return this.Jsonp(data);
+                    }
 
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
                 }
@@ -354,6 +360,77 @@
                 Status = Status.Ok,
                 Object = AutoMapper.Mapper.Map<DocumentViewModel>(result.Object)
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult MedicalExaminationReport(int documentId)
+        {
+            var requestMedicalExaminationEmployee =
+                Service.GetRequestMedicalExaminationEmployeesByDocumentId(documentId);
+            var data = Service.GetTemplateMedicalExaminationViewModel(requestMedicalExaminationEmployee.Id);
+            data.DocumentInputTemplates = JsonConvert.DeserializeObject<List<InputTemplate>>(data.DocumentInputTemplateJSON);
+
+            ViewBag.fileName = $"{data.DocumentName}{data.DocumentExtension}";
+
+            #region IMC
+            decimal height = 0;
+            var inme19 = data.DocumentInputTemplates.FirstOrDefault(x => x.Name == "me-19");
+            if (inme19 != null)
+            {
+                height = Convert.ToDecimal(!string.IsNullOrEmpty(inme19.Text) ? inme19.Text.Replace(".", ",") : inme19.DefaultText.Replace(".", ","));
+            }
+
+            decimal weight = 0;
+            var inme20 = data.DocumentInputTemplates.FirstOrDefault(x => x.Name == "me-20");
+            if (inme20 != null)
+            {
+                weight = Convert.ToDecimal(!string.IsNullOrEmpty(inme20.Text) ? inme20.Text.Replace(".", ",") : inme20.DefaultText.Replace(".", ","));
+            }
+
+            var imc = Math.Round(weight / (height * height), 2);
+            ViewBag.IMC = imc;
+            #endregion
+
+            #region FVC            
+            decimal value;
+            var percentage = 0;
+            int constant;
+            var inme49 =
+                data.DocumentInputTemplates.FirstOrDefault(x => x.Name == "me-49");
+            if (inme49 != null)
+            {
+                value = Convert.ToDecimal(!string.IsNullOrEmpty(inme49.Text) ? inme49.Text.Replace(".", ",") : inme49.DefaultText.Replace(".", ","));
+                constant = 5000;
+                percentage = Convert.ToInt32(value * 100 / constant);
+            }
+            ViewBag.FVC = percentage;
+            #endregion
+
+            #region FEV1
+            percentage = 0;
+            var inme50 = data.DocumentInputTemplates.FirstOrDefault(x => x.Name == "me-50");
+            if (inme50 != null)
+            {
+                value = Convert.ToDecimal(!string.IsNullOrEmpty(inme50.Text) ? inme50.Text.Replace(".", ",") : inme50.DefaultText.Replace(".", ","));
+                constant = 4181;
+                percentage = Convert.ToInt32(value * 100 / constant);
+            }
+            ViewBag.FEV1 = percentage;
+            #endregion
+
+            #region FEF
+            percentage = 0;
+            var inme52 = data.DocumentInputTemplates.FirstOrDefault(x => x.Name == "me-52");
+            if (inme52 != null)
+            {
+                value = Convert.ToDecimal(!string.IsNullOrEmpty(inme52.Text) ? inme52.Text.Replace(".", ",") : inme52.DefaultText.Replace(".", ","));
+                constant = 4691;
+                percentage = Convert.ToInt32(value * 100 / constant);
+            }
+            ViewBag.FEF = percentage;
+            #endregion
+
+            return View("~/Views/MedicalExamination/TemplateMedicalExaminationReport.cshtml", data);
         }
     }
 }

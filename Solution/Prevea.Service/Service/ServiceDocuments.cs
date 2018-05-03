@@ -441,11 +441,15 @@
                 if (contractualDocument == null)
                     return new Result { Status = Status.Error };
 
-                contractualDocument.UrlRelative += Path.GetExtension(fileOtherDocument.FileName);
+                contractualDocument.UrlRelative += Path.GetExtension(fileOtherDocument.FileName);                
 
                 var url = HttpContext.Current.Server.MapPath(contractualDocument.UrlRelative);
                 if (url == null)
                     return new Result { Status = Status.Error };
+
+                var directory = Path.GetDirectoryName(url);
+                if (directory != null)
+                    Directory.CreateDirectory(directory);
 
                 fileOtherDocument.SaveAs(url);
 
@@ -489,7 +493,7 @@
                     Edition = contractualDocument.Edition,
                     DocumentStateId = 1,
                     Description = $"{area.Description} Firmad@",
-                    IsFirmedDocument = true
+                    IsFirmedDocument = true,                    
                 };
 
                 var fileName = Path.GetFileName(contractualDocument.UrlRelative);
@@ -504,6 +508,10 @@
                 var url = HttpContext.Current.Server.MapPath(document.UrlRelative);
                 if (url == null)
                     return new Result { Status = Status.Error };
+
+                var directory = Path.GetDirectoryName(url);
+                if (directory != null)
+                    Directory.CreateDirectory(directory);
 
                 fileDocumentFirmed.SaveAs(url);
 

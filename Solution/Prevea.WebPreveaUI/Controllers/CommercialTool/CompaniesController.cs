@@ -713,12 +713,12 @@
                 if (result.Status == Status.Error)
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
 
-                document = Service.GetDocument(((Document)result.Object).Id);
-                if (document.AreaId == 9) // Otros documentos
-                    return this.Jsonp(AutoMapper.Mapper.Map<DocumentViewModel>(document));
+                //document = Service.GetDocument(((Document)result.Object).Id);
+                //if (document.AreaId == 9) // Otros documentos
+                //    return this.Jsonp(AutoMapper.Mapper.Map<DocumentViewModel>(document));
 
-                if (!CreatePdf(document, Constants.FooterPdf))  
-                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
+                //if (!CreatePdf(document, Constants.FooterPdf))  
+                //    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
 
                 return this.Jsonp(AutoMapper.Mapper.Map<DocumentViewModel>(document));
             }
@@ -754,6 +754,100 @@
             }
         }
         #endregion
+
+        [HttpGet]
+        public ActionResult ContractualDocumentReport(int documentId)
+        {
+            var document = Service.GetDocument(documentId);
+            ViewBag.fileName = $"{document.Name}{document.Extension}";
+
+            switch (document.AreaId)
+            {
+                #region OFE_SPA
+                case 6: // OFE_SPA
+                    ViewBag.ContractualDocumentId = documentId;
+                    ViewBag.ContractualDocumentEnrollment = document.Name;
+                    ViewBag.IVA = Service.GetTagValue("IVA");
+
+                    var workCenters = Service.GetWorkCentersByCompany((int)document.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
+                    ViewBag.NumberWorkCenters = workCenters.Count;
+
+                    var provincesWorkCenters = string.Empty;
+                    if (workCenters.Count > 0)
+                    {
+                        var distinctWorkCenters = workCenters
+                            .GroupBy(x => x.Province.Trim())
+                            .Select(g => new
+                            {
+                                Field = g.Key,
+                                Count = g.Count()
+                            }).ToList();
+
+
+                        if (distinctWorkCenters.Count == 1)
+                        {
+                            provincesWorkCenters = distinctWorkCenters[0].Count == 1 ?
+                                $"{distinctWorkCenters[0].Field.Trim()}." :
+                                $"{distinctWorkCenters[0].Field.Trim()}({distinctWorkCenters[0].Count}).";
+                        }
+                        else
+                        {
+                            for (var i = 0; i < distinctWorkCenters.Count; i++)
+                            {
+                                var workCenter = distinctWorkCenters[i];
+                                var newWorkCenter = workCenter.Field.Trim();
+                                if (newWorkCenter != string.Empty)
+                                {
+                                    if (i == distinctWorkCenters.Count - 1)
+                                    {
+                                        provincesWorkCenters += distinctWorkCenters[i].Count == 1 ?
+                                            $"{newWorkCenter}." :
+                                            $"{newWorkCenter}({distinctWorkCenters[i].Count}).";
+                                    }
+                                    else
+                                    {
+                                        provincesWorkCenters += distinctWorkCenters[i].Count == 1 ?
+                                            $"{newWorkCenter}, " :
+                                            $"{newWorkCenter}({distinctWorkCenters[i].Count}), ";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    ViewBag.ProvincesWorkCenters = provincesWorkCenters;
+                    
+                    return View("~/Views/CommercialTool/Companies/Reports/OfferSPAReport.cshtml", document.Company);
+                #endregion
+
+                #region OFE_FOR
+                case 7: // OFE_FOR
+                    return View("~/Views/CommercialTool/Companies/Reports/OfferTrainingReport.cshtml", document.Company);
+                #endregion
+
+                #region OFE_GES
+                case 8: // OFE_GES
+                    return View("~/Views/CommercialTool/Companies/Reports/OfferAgencyReport.cshtml", document.Company);
+                #endregion
+
+                #region CON_SPA
+                case 9: // CON_SPA
+                    return View("~/Views/CommercialTool/Companies/Reports/ContractSPAReport.cshtml", document.Company);
+                #endregion
+
+                #region CON_FOR
+                case 10: // CON_FOR
+                    return View("~/Views/CommercialTool/Companies/Reports/ContractTrainingReport.cshtml", document.Company);
+                #endregion
+
+                #region CON_GES
+                case 11: // CON_GES
+                    return View("~/Views/CommercialTool/Companies/Reports/ContractAgencyReport.cshtml", document.Company);
+                #endregion
+
+                default:
+                    return View("~/Views/Error/AccessDenied.cshtml");                                 
+            }
+        }
 
         [HttpGet]
         public ActionResult AddDocumentFirmed(int companyId, int contractualDocumentId)

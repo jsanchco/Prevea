@@ -686,7 +686,6 @@
     <Content Include="js\MedicalExamination\DoctorWorkSheet.js" />
     <Content Include="js\MedicalExamination\DocumentsMedicalExamination.js" />
     <Content Include="js\MedicalExamination\HistoricMedicalExamination.js" />
-    <Content Include="js\MedicalExamination\TemplateEmployeeCitationReport.js" />
     <Content Include="js\MedicalExamination\TemplateMedicalExamination.js" />
     <Content Include="js\Notifications\Notifications.js" />
     <Content Include="js\Profile\ChangePassword.js" />
