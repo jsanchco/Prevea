@@ -19,6 +19,8 @@
 
         public string Url { get; set; }
 
+        public bool StoreInServer { get; set; }
+
         [Required]
         public int EntityId { get; set; }
         public virtual Entity Entity { get; set; }

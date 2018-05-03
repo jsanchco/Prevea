@@ -68,28 +68,28 @@ namespace Prevea.ConsoleTestModel.Migrations
 
             var areas = new List<Area>
             {
-                new Area { Name = "ADM", Description = "Administración", EntityId = 1, Url = "~/App_Data/Library/ADM/" }, // 1
-                new Area { Name = "FOR", Description = "Formación", EntityId = 1, Url = "~/App_Data/Library/FOR/"  }, // 2
-                new Area { Name = "TEC", Description = "Técnicas", EntityId = 1, Url = "~/App_Data/Library/TEC/"  }, // 3
-                new Area { Name = "MET", Description = "Medicina trabajo", EntityId = 1, Url = "~/App_Data/Library/MET/"  }, // 4
-                new Area { Name = "COM", Description = "Comercial", EntityId = 1, Url = "~/App_Data/Library/COM/"  }, // 5
-                new Area { Name = "OFE_SPA", Description = "Oferta SPA", EntityId = 2, Url = "~/App_Data/Company/OFE/SPA/"  }, // 6
-                new Area { Name = "OFE_FOR", Description = "Oferta Formación", EntityId = 2, Url = "~/App_Data/Company/OFE/FOR/"  }, // 7
-                new Area { Name = "OFE_GES", Description = "Oferta Gestoría", EntityId = 2, Url = "~/App_Data/Company/OFE/GES/"  }, // 8
-                new Area { Name = "CON_SPA", Description = "Contrato SPA", EntityId = 2, Url = "~/App_Data/Company/CON/SPA/" }, // 9
-                new Area { Name = "CON_FOR", Description = "Contrato Formación", EntityId = 2, Url = "~/App_Data/Company/CON/FOR/" }, // 10
-                new Area { Name = "CON_GES", Description = "Contrato Gestoría", EntityId = 2, Url = "~/App_Data/Company/CON/GES/" }, // 11
-                new Area { Name = "ANX", Description = "Anexo", EntityId = 2, Url = "~/App_Data/Company/ANX/" }, // 12
-                new Area { Name = "OTR", Description = "Otros Documentos", EntityId = 2, Url = "~/App_Data/Company/OTR/" }, // 13
-                new Area { Name = "UNS", Description = "Baja Documento", EntityId = 2, Url = "~/App_Data/Company/UNS/" }, // 14
-                new Area { Name = "CIT", Description = "Citación", EntityId = 3, Url = "~/App_Data/MedicalExamination/CIT/" }, // 15
-                new Area { Name = "RCM", Description = "Reconocimiento Médico", EntityId = 3, Url = "~/App_Data/MedicalExamination/RCM/" }, // 16
-                new Area { Name = "BLT", Description = "Análitica de Sangre", EntityId = 3, Url = "~/App_Data/MedicalExamination/RCM/" }, // 17
-                new Area { Name = "ELT", Description = "Electrocardiograma", EntityId = 3, Url = "~/App_Data/MedicalExamination/RCM/" }, // 18
-                new Area { Name = "AUD", Description = "Informe Audiométrico", EntityId = 3, Url = "~/App_Data/MedicalExamination/RCM/" }, // 19
-                new Area { Name = "SPR", Description = "Espirometría", EntityId = 3, Url = "~/App_Data/MedicalExamination/RCM/" }, // 20
-                new Area { Name = "URA", Description = "Análitica de Orina", EntityId = 3, Url = "~/App_Data/MedicalExamination/RCM/" }, // 21
-                new Area { Name = "OTR", Description = "Otros", EntityId = 3, Url = "~/App_Data/MedicalExamination/RCM/" } // 22
+                new Area { Name = "ADM", Description = "Administración", EntityId = 1, Url = "~/App_Data/Library/ADM/", StoreInServer = true }, // 1
+                new Area { Name = "FOR", Description = "Formación", EntityId = 1, Url = "~/App_Data/Library/FOR/", StoreInServer = true }, // 2
+                new Area { Name = "TEC", Description = "Técnicas", EntityId = 1, Url = "~/App_Data/Library/TEC/", StoreInServer = true }, // 3
+                new Area { Name = "MET", Description = "Medicina trabajo", EntityId = 1, Url = "~/App_Data/Library/MET/", StoreInServer = true }, // 4
+                new Area { Name = "COM", Description = "Comercial", EntityId = 1, Url = "~/App_Data/Library/COM/", StoreInServer = true   }, // 5
+                new Area { Name = "OFE_SPA", Description = "Oferta SPA", EntityId = 2, Url = "~/App_Data/Company/OFE/SPA/", StoreInServer = false }, // 6
+                new Area { Name = "OFE_FOR", Description = "Oferta Formación", EntityId = 2, Url = "~/App_Data/Company/OFE/FOR/", StoreInServer = false }, // 7
+                new Area { Name = "OFE_GES", Description = "Oferta Gestoría", EntityId = 2, Url = "~/App_Data/Company/OFE/GES/", StoreInServer = false  }, // 8
+                new Area { Name = "CON_SPA", Description = "Contrato SPA", EntityId = 2, Url = "~/App_Data/Company/CON/SPA/", StoreInServer = false }, // 9
+                new Area { Name = "CON_FOR", Description = "Contrato Formación", EntityId = 2, Url = "~/App_Data/Company/CON/FOR/", StoreInServer = false }, // 10
+                new Area { Name = "CON_GES", Description = "Contrato Gestoría", EntityId = 2, Url = "~/App_Data/Company/CON/GES/", StoreInServer = false }, // 11
+                new Area { Name = "ANX", Description = "Anexo", EntityId = 2, Url = "~/App_Data/Company/ANX/", StoreInServer = true }, // 12
+                new Area { Name = "OTR", Description = "Otros Documentos", EntityId = 2, Url = "~/App_Data/Company/OTR/", StoreInServer = true }, // 13
+                new Area { Name = "UNS", Description = "Baja Documento", EntityId = 2, Url = "~/App_Data/Company/UNS/", StoreInServer = false }, // 14
+                new Area { Name = "CIT", Description = "Citación", EntityId = 3, Url = "~/App_Data/MedicalExamination/CIT/", StoreInServer = false }, // 15
+                new Area { Name = "RCM", Description = "Reconocimiento Médico", EntityId = 3, Url = "~/App_Data/MedicalExamination/RCM/", StoreInServer = false }, // 16
+                new Area { Name = "BLT", Description = "Análitica de Sangre", EntityId = 3, Url = "~/App_Data/MedicalExamination/RCM/", StoreInServer = true }, // 17
+                new Area { Name = "ELT", Description = "Electrocardiograma", EntityId = 3, Url = "~/App_Data/MedicalExamination/RCM/", StoreInServer = true }, // 18
+                new Area { Name = "AUD", Description = "Informe Audiométrico", EntityId = 3, Url = "~/App_Data/MedicalExamination/RCM/", StoreInServer = true }, // 19
+                new Area { Name = "SPR", Description = "Espirometría", EntityId = 3, Url = "~/App_Data/MedicalExamination/RCM/", StoreInServer = true }, // 20
+                new Area { Name = "URA", Description = "Análitica de Orina", EntityId = 3, Url = "~/App_Data/MedicalExamination/RCM/", StoreInServer = true }, // 21
+                new Area { Name = "OTR", Description = "Otros", EntityId = 3, Url = "~/App_Data/MedicalExamination/RCM/", StoreInServer = true } // 22
             };
             areas.ForEach(p => context.Areas.AddOrUpdate(s => s.Id, p));
             context.SaveChanges();

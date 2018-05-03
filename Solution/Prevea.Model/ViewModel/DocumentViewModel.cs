@@ -39,5 +39,6 @@
         public string SimulationName { get; set; }
         public int? DocumentFirmedId { get; set; }
         public int? RequestMedicalExaminationEmployeeId { get; set; }
+        public bool AreaStoreInServer { get; set; }
     }
 }
