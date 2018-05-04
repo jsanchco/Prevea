@@ -103,6 +103,27 @@
             return File(filedata, contentType);
         }
 
+        public ActionResult DownloadFileName(string fileName)
+        {
+            var document = Service.GetDocument(fileName);
+            if (User != null && document != null)
+            {
+                var historicDownloadDocument = new HistoricDownloadDocument
+                {
+                    UserId = User.Id,
+                    DocumentId = document.Id
+                };
+
+                var result = Service.SaveHistoricDownloadDocument(historicDownloadDocument);
+                if (result != null)
+                    return Json(new { resultStatus = Status.Ok }, JsonRequestBehavior.AllowGet);
+
+                return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
+        }
+
 
         //public ActionResult DownloadMedicalExamination(int id)
         //{

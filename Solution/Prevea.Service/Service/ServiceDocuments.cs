@@ -35,6 +35,11 @@
             return Repository.GetDocument(id);
         }
 
+        public Document GetDocument(string name)
+        {
+            return Repository.GetDocument(name);
+        }
+
         public List<Document> GetDocumentsContractualsByCompany(int? companyId)
         {
             return Repository.GetDocumentsContractualsByCompany(companyId);

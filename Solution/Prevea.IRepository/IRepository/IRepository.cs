@@ -40,6 +40,7 @@
 
         List<Document> GetDocuments();
         Document GetDocument(int id);
+        Document GetDocument(string name);
         Document SaveDocument(Document document);
         Document SaveDocumentWithParent(Document document);
         Document UpdateDocument(int id, Document document);        

@@ -340,6 +340,15 @@
                     fileName: fileName,
                     proxyURL: "https://demos.telerik.com/kendo-ui/service/export"
                 });
+
+                $.ajax({
+                    url: "/Base/DownloadFileName",
+                    data: {
+                        fileName: fileName
+                    },
+                    type: "post",
+                    dataType: "json"
+                });
             });
     }
 });

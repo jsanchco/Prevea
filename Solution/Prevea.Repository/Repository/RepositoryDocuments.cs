@@ -35,6 +35,16 @@
                 .FirstOrDefault(m => m.Id == id);
         }
 
+        public Document GetDocument(string name)
+        {
+            return Context.Documents
+                .Include(x => x.DocumentState)
+                .Include(x => x.Area)
+                .Include(x => x.Company)
+                .Include(x => x.Simulation)
+                .FirstOrDefault(m => m.UrlRelative.Contains(name));
+        }
+
         public Document SaveDocument(Document document)
         {
             using (var dbContextTransaction = Context.Database.BeginTransaction())

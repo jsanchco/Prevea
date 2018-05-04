@@ -26,6 +26,7 @@ namespace Prevea.IService.IService
         List<Document> GetDocumentsByParent(int id, int? parentId);
         List<Document> GetChildrenDocument(int parentId);
         Document GetDocument(int id);
+        Document GetDocument(string name);
         List<Document> GetDocumentsContractualsByCompany(int? companyId);
         string VerifyNewContractualDocument(Document document);        
         Result SaveOtherDocument(HttpPostedFileBase fileOtherDocument, int documentId);
