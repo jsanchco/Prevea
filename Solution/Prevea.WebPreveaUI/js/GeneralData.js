@@ -100,6 +100,14 @@
             case "medicalHealth|doctorWorkSheet":
                 url = "/DoctorWorkSheet/DoctorWorkSheet";
                 break;
+
+            case "myData|notifications":
+                url = "/Employees/Notifications";
+                break;  
+
+            case "myData|documents":
+                url = "/Employees/Documents";
+                break;                
                                 
             default:
                 break;

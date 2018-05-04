@@ -941,7 +941,13 @@
                 //if (!CreatePdf(document, Constants.FooterPdf))  
                 //    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Documento" });
 
-                return this.Jsonp(AutoMapper.Mapper.Map<DocumentViewModel>(document));
+                if (((Document) result.Object).SimulationId != null)
+                    ((Document) result.Object).Simulation =
+                        Service.GetSimulation((int)((Document) result.Object).SimulationId);
+
+                var data = AutoMapper.Mapper.Map<DocumentViewModel>(document);
+
+                return this.Jsonp(data);
             }
             catch (Exception e)
             {

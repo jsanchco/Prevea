@@ -178,6 +178,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DoctorsController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
+    <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MedicalExamination\DoctorWorkSheetController.cs" />
@@ -1176,6 +1177,8 @@
     <Content Include="Views\MedicalExamination\TemplateEmployeeCitationReport.cshtml" />
     <Content Include="Views\MedicalExamination\AddDocument.cshtml" />
     <Content Include="Views\User\ContactAs.cshtml" />
+    <Content Include="Views\Employees\EmployeesDocuments.cshtml" />
+    <Content Include="Views\Employees\EmployeesNotifications.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
