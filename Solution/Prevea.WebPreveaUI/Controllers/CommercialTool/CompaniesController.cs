@@ -426,15 +426,7 @@
             {
                 employee.CompanyId = companyId;
             }
-            //var employeesByCompany = Service.GetEmployeesByCompany(companyId);
-            //var data = AutoMapper.Mapper.Map<List<User>, List<UserViewModel>>(employeesByCompany, opt => opt.AfterMap((src, dest) => 
-            //{
-            //    foreach (var item in dest)
-            //    {
-            //        item.CompanyId = companyId;
-            //    }
-            //} ));
-
+ 
             return this.Jsonp(data);
         }
 
@@ -450,6 +442,68 @@
 
                 var data = AutoMapper.Mapper.Map<User>(employee);
                 var result = Service.SaveEmployeeCompany((int)EnRole.Employee, (int)employee.CompanyId, data);
+
+                if (result.Status != Status.Error)
+                {
+                    var user = result.Object as User;
+                    if (user != null)
+                    {
+                        employee.Id = user.Id;
+
+                        var notification = new Model.Model.Notification
+                        {
+                            DateCreation = DateTime.Now,
+                            NotificationTypeId = (int)EnNotificationType.FromUser,
+                            NotificationStateId = (int)EnNotificationState.Assigned,
+                            Observations =
+                                $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}]"
+                        };
+
+                        var userNotification = Service.GetUser(User.Id);
+                        var company = Service.GetCompany((int)employee.CompanyId);
+                        if (userNotification.UserRoles.FirstOrDefault().RoleId == (int)EnRole.ContactPerson)
+                        {
+                            notification.ToUserId = company.GestorId;
+                            var resultNotification = Service.SaveNotification(notification);
+                            if (resultNotification.Status == Status.Error)
+                                return this.Jsonp(new { Errors = resultNotification });
+
+                            notification = new Model.Model.Notification
+                            {
+                                DateCreation = DateTime.Now,
+                                NotificationTypeId = (int)EnNotificationType.FromUser,
+                                NotificationStateId = (int)EnNotificationState.Assigned,
+                                Observations =
+                                    $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}]"
+                            };
+                            var userGestor = Service.GetUser(company.GestorId);
+                            notification.ToUserId = userGestor.UserParentId;
+                            resultNotification = Service.SaveNotification(notification);
+                            if (resultNotification.Status == Status.Error)
+                                return this.Jsonp(new { Errors = resultNotification });
+                        }
+                        else
+                        {
+                            foreach (var contactPerson in company.ContactPersons)
+                            {
+                                notification = new Model.Model.Notification
+                                {
+                                    DateCreation = DateTime.Now,
+                                    NotificationTypeId = (int)EnNotificationType.FromUser,
+                                    NotificationStateId = (int)EnNotificationState.Assigned,
+                                    Observations =
+                                        $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}]"
+                                };
+                                notification.ToUserId = contactPerson.UserId;
+                                var resultNotification = Service.SaveNotification(notification);
+                                if (resultNotification.Status == Status.Error)
+                                    return this.Jsonp(new { Errors = resultNotification });
+                            }
+                        }
+                    }
+
+                    return this.Jsonp(employee);
+                }
 
                 return result.Status != Status.Error ? this.Jsonp(employee) : this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Trabajador" });
             }
@@ -475,6 +529,63 @@
 
                 if (result.Status != Status.Error)
                 {
+                    var user = result.Object as User;
+                    if (user != null)
+                    {
+                        employee.Id = user.Id;
+
+                        var notification = new Model.Model.Notification
+                        {
+                            DateCreation = DateTime.Now,
+                            NotificationTypeId = (int)EnNotificationType.FromUser,
+                            NotificationStateId = (int)EnNotificationState.Assigned,
+                            Observations =
+                                $"{Service.GetUser(User.Id).Initials} - Eliminado el Trabajador [{user.Initials}]"
+                        };
+
+                        var userNotification = Service.GetUser(User.Id);
+                        var company = Service.GetCompany((int)employee.CompanyId);
+                        if (userNotification.UserRoles.FirstOrDefault().RoleId == (int)EnRole.ContactPerson)
+                        {
+                            notification.ToUserId = company.GestorId;
+                            var resultNotification = Service.SaveNotification(notification);
+                            if (resultNotification.Status == Status.Error)
+                                return this.Jsonp(new { Errors = resultNotification });
+
+                            notification = new Model.Model.Notification
+                            {
+                                DateCreation = DateTime.Now,
+                                NotificationTypeId = (int)EnNotificationType.FromUser,
+                                NotificationStateId = (int)EnNotificationState.Assigned,
+                                Observations =
+                                    $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}]"
+                            };
+                            var userGestor = Service.GetUser(company.GestorId);
+                            notification.ToUserId = userGestor.UserParentId;
+                            resultNotification = Service.SaveNotification(notification);
+                            if (resultNotification.Status == Status.Error)
+                                return this.Jsonp(new { Errors = resultNotification });
+                        }
+                        else
+                        {
+                            foreach (var contactPerson in company.ContactPersons)
+                            {
+                                notification = new Model.Model.Notification
+                                {
+                                    DateCreation = DateTime.Now,
+                                    NotificationTypeId = (int)EnNotificationType.FromUser,
+                                    NotificationStateId = (int)EnNotificationState.Assigned,
+                                    Observations =
+                                        $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}]"
+                                };
+                                notification.ToUserId = contactPerson.UserId;
+                                var resultNotification = Service.SaveNotification(notification);
+                                if (resultNotification.Status == Status.Error)
+                                    return this.Jsonp(new { Errors = resultNotification });
+                            }
+                        }
+                    }
+
                     return this.Jsonp(employee);
                 }
 
@@ -504,7 +615,60 @@
                 {
                     var user = result.Object as User;
                     if (user != null)
+                    { 
                         employee.Id = user.Id;
+
+                        var notification = new Model.Model.Notification
+                        {
+                            DateCreation = DateTime.Now,
+                            NotificationTypeId = (int)EnNotificationType.FromUser,
+                            NotificationStateId = (int)EnNotificationState.Assigned,
+                            Observations =
+                                $"{Service.GetUser(User.Id).Initials} - Alta del Trabajador [{user.Initials}]"
+                        };
+
+                        var userNotification = Service.GetUser(User.Id);
+                        var company = Service.GetCompany((int)employee.CompanyId);
+                        if (userNotification.UserRoles.FirstOrDefault().RoleId == (int) EnRole.ContactPerson)
+                        {
+                            notification.ToUserId = company.GestorId;
+                            var resultNotification = Service.SaveNotification(notification);
+                            if (resultNotification.Status == Status.Error)
+                                return this.Jsonp(new { Errors = resultNotification });
+
+                            notification = new Model.Model.Notification
+                            {
+                                DateCreation = DateTime.Now,
+                                NotificationTypeId = (int)EnNotificationType.FromUser,
+                                NotificationStateId = (int)EnNotificationState.Assigned,
+                                Observations =
+                                    $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}]"
+                            };
+                            var userGestor = Service.GetUser(company.GestorId);
+                            notification.ToUserId = userGestor.UserParentId;
+                            resultNotification = Service.SaveNotification(notification);
+                            if (resultNotification.Status == Status.Error)
+                                return this.Jsonp(new {Errors = resultNotification});
+                        }
+                        else
+                        {                            
+                            foreach (var contactPerson in company.ContactPersons)
+                            {
+                                notification = new Model.Model.Notification
+                                {
+                                    DateCreation = DateTime.Now,
+                                    NotificationTypeId = (int)EnNotificationType.FromUser,
+                                    NotificationStateId = (int)EnNotificationState.Assigned,
+                                    Observations =
+                                        $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}]"
+                                };
+                                notification.ToUserId = contactPerson.UserId;
+                                var resultNotification = Service.SaveNotification(notification);
+                                if (resultNotification.Status == Status.Error)
+                                    return this.Jsonp(new { Errors = resultNotification });
+                            }                            
+                        }   
+                    }   
 
                     return this.Jsonp(employee);
                 }
@@ -525,6 +689,63 @@
             try
             {
                 var result = Service.SubscribeEmployeeCompany(companyId, userId, subscribe);
+                if (result.Status != Status.Error)
+                {
+                    var user = result.Object as User;
+                    if (user != null)
+                    {
+                        var notification = new Model.Model.Notification
+                        {
+                            DateCreation = DateTime.Now,
+                            NotificationTypeId = (int) EnNotificationType.FromUser,
+                            NotificationStateId = (int) EnNotificationState.Assigned,
+                            Observations =
+                                $"{Service.GetUser(User.Id).Initials} - Baja del Trabajador [{user.Initials}]"
+                        };
+
+                        var userNotification = Service.GetUser(User.Id);
+                        var company = Service.GetCompany(companyId);
+                        if (userNotification.UserRoles.FirstOrDefault().RoleId == (int) EnRole.ContactPerson)
+                        {
+                            notification.ToUserId = company.GestorId;
+                            var resultNotification = Service.SaveNotification(notification);
+                            if (resultNotification.Status == Status.Error)
+                                return this.Jsonp(new {Errors = resultNotification});
+
+                            notification = new Model.Model.Notification
+                            {
+                                DateCreation = DateTime.Now,
+                                NotificationTypeId = (int)EnNotificationType.FromUser,
+                                NotificationStateId = (int)EnNotificationState.Assigned,
+                                Observations =
+                                    $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}]"
+                            };
+                            var userGestor = Service.GetUser(company.GestorId);
+                            notification.ToUserId = userGestor.UserParentId;
+                            resultNotification = Service.SaveNotification(notification);
+                            if (resultNotification.Status == Status.Error)
+                                return this.Jsonp(new { Errors = resultNotification });
+                        }
+                        else
+                        {                            
+                            foreach (var contactPerson in company.ContactPersons)
+                            {
+                                notification = new Model.Model.Notification
+                                {
+                                    DateCreation = DateTime.Now,
+                                    NotificationTypeId = (int)EnNotificationType.FromUser,
+                                    NotificationStateId = (int)EnNotificationState.Assigned,
+                                    Observations =
+                                        $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}]"
+                                };
+                                notification.ToUserId = contactPerson.UserId;
+                                var resultNotification = Service.SaveNotification(notification);
+                                if (resultNotification.Status == Status.Error)
+                                    return this.Jsonp(new {Errors = resultNotification});
+                            }
+                        }
+                    }
+                }
 
                 return Json(result);
             }

@@ -150,7 +150,7 @@
         });
         kendo.bind($("#" + this.gridNotificationsId), this);
 
-        if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {
+        if (GeneralData.userRoleId !== Constants.role.Super) {
             var grid = $("#" + this.gridNotificationsId).data("kendoGrid");
             grid.hideColumn("NotificationTypeDescription");
             grid.hideColumn("ToUserInitials");
@@ -184,18 +184,8 @@
 
     getColumnTemplateCommands: function (data) {
         var html = "";
-        if (data.SimulationAssignedTo === GeneralData.userId) {
-            html = "<div align='center'>";
-
-            html += kendo.format(
-                "<a toggle='tooltip' title='Ir a Simulación' onclick='Notifications.goToSimulationFromNotification(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='fa fa-share-square' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
-                data.SimulationId);
-            html += kendo.format("</div>");
-
-            return html;
-
-        } else {
-            if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {
+        if (data.SimulationId != null && data.SimulationId !== 0) {
+            if (GeneralData.userRoleId !== Constants.role.ContactPerson) {
                 html = "<div align='center'>";
 
                 html += kendo.format(
@@ -208,6 +198,7 @@
                 return html;
             }
         }
+        return html;
     },
 
     goToNotifications: function() {

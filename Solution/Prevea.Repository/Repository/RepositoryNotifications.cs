@@ -118,6 +118,14 @@
                         .OrderByDescending(x => x.DateCreation)
                         .Where(x => x.ToUserId == userId)
                         .ToList();
+                case (int)EnRole.ContactPerson:
+                    return Context.Notifications
+                        .Include(x => x.NotificationType)
+                        .Include(x => x.ToUser)
+                        .Include(x => x.ToRole)
+                        .OrderByDescending(x => x.DateCreation)
+                        .Where(x => x.ToUserId == userId)
+                        .ToList();
                 default:
                     return Context.Notifications
                         .Include(x => x.NotificationType)
