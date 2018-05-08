@@ -102,7 +102,7 @@
                 break;
 
             case "myData|notifications":
-                url = "/Employees/Notifications";
+                url = "/Notifications/Notifications";
                 break;  
 
             case "myData|documents":
@@ -333,31 +333,33 @@
     },
 
     printDocument: function (divName, fileName) {
-        kendo.drawing.drawDOM($("#" + divName))
-            .then(function (group) {
-                // Render the result as a PDF file
-                return kendo.drawing.exportPDF(group, {
-                    paperSize: "auto",
-                    margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" }
-                });
-            })
-            .done(function (data) {
-                // Save the PDF file
-                kendo.saveAs({
-                    dataURI: data,
-                    fileName: fileName,
-                    proxyURL: "https://demos.telerik.com/kendo-ui/service/export"
-                });
+        window.print();
 
-                $.ajax({
-                    url: "/Base/DownloadFileName",
-                    data: {
-                        fileName: fileName
-                    },
-                    type: "post",
-                    dataType: "json"
-                });
-            });
+        //kendo.drawing.drawDOM($("#" + divName))
+        //    .then(function (group) {
+        //        // Render the result as a PDF file
+        //        return kendo.drawing.exportPDF(group, {
+        //            paperSize: "auto",
+        //            margin: { left: "1cm", top: "1cm", right: "1cm", bottom: "1cm" }
+        //        });
+        //    })
+        //    .done(function (data) {
+        //        // Save the PDF file
+        //        kendo.saveAs({
+        //            dataURI: data,
+        //            fileName: fileName,
+        //            proxyURL: "https://demos.telerik.com/kendo-ui/service/export"
+        //        });
+
+        //        $.ajax({
+        //            url: "/Base/DownloadFileName",
+        //            data: {
+        //                fileName: fileName
+        //            },
+        //            type: "post",
+        //            dataType: "json"
+        //        });
+        //    });
     }
 });
 

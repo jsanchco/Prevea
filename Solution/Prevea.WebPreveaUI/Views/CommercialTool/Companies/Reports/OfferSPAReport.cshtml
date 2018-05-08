@@ -5,8 +5,15 @@
 }
 
 <style>
-    div {
+    @@page {
+        margin: 0; 
+    }
+
+    body {
+        margin: 1.6cm;
         color: black;
+        font-size: 14px;
+        font-family: Arial;
     }
 </style>
 
@@ -19,7 +26,7 @@
                 </a>
             </div>
 
-            <div class="col-xs-offset-8 col-sm-2">
+            <div class="col-xs-offset-6 col-sm-4">
                 <div class="row" style="font-size: 12px;">
                     <div>PREVEA SPA</div>
                     <div>C/ Abad Juan Catalán, 38 28032-Madrid</div>
@@ -33,12 +40,12 @@
         <br />
 
         <div class="row">
-            <div class="col-xs-3" style="font-size: large; font-weight: bold; text-align: left">OFERTA DE SERVICIO</div>
-            <div class="col-xs-offset-6 col-xs-3">
+            <div class="col-xs-4" style="font-size: large; font-weight: bold; text-align: left">OFERTA DE SERVICIO</div>
+            <div class="col-xs-offset-4 col-xs-4">
                 <div class="row" style="font-size: 12px; border-style: solid; border-width: thin; background: #ccccff;">
                     <div style="display: inline-block">
-                        <div>Nº OFERTA</div>
-                        <div>FECHA</div>
+                        <div>&nbsp;Nº OFERTA</div>
+                        <div>&nbsp;FECHA</div>
                     </div>
                     <div style="display: inline-block">
                         <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@ViewBag.ContractualDocumentEnrollment</div>
@@ -66,7 +73,7 @@
             <div class="col-xs-3">
                 <span style="font-weight: bold;">RAZÓN SOCIAL/AUTÓNOMO</span>
             </div>
-            <div class="col-xs-5">
+            <div class="col-xs-7">
                 <span style="">
                     @Model.Name
                 </span>
@@ -77,7 +84,7 @@
             <div class="col-xs-3">
                 <span style="font-weight: bold;">CIF/NIF</span>
             </div>
-            <div class="col-xs-5">
+            <div class="col-xs-7">
                 <span style="">
                     @Model.NIF
                 </span>
@@ -88,7 +95,7 @@
             <div class="col-xs-3">
                 <span style="font-weight: bold;">DOMICILIO SOCIAL</span>
             </div>
-            <div class="col-xs-5">
+            <div class="col-xs-7">
                 <span style="">
                     @Model.Address
                 </span>
@@ -99,7 +106,7 @@
             <div class="col-xs-3">
                 <span style="font-weight: bold;">ACTIVIDAD</span>
             </div>
-            <div class="col-xs-5">
+            <div class="col-xs-7">
                 <span style="">
                     @Model.Cnae.Name
                 </span>
@@ -110,7 +117,7 @@
             <div class="col-xs-3">
                 <span style="font-weight: bold;">PERSONA de CONTACTO</span>
             </div>
-            <div class="col-xs-5">
+            <div class="col-xs-7">
                 <span style="">
                     @{
                         var contactPerson = Model.ContactPersons.FirstOrDefault();
@@ -132,7 +139,7 @@
             <div class="col-xs-3">
                 <span style="font-weight: bold;">CARGO</span>
             </div>
-            <div class="col-xs-5">
+            <div class="col-xs-7">
                 <span style="">
                     @if (contactPerson != null)
                     {
@@ -146,7 +153,7 @@
             <div class="col-xs-3">
                 <span style="font-weight: bold;">TELÉFONO</span>
             </div>
-            <div class="col-xs-5">
+            <div class="col-xs-7">
                 <span style="">
                     @if (contactPerson != null)
                     {
@@ -160,7 +167,7 @@
             <div class="col-xs-3">
                 <span style="font-weight: bold;">E-MAIL</span>
             </div>
-            <div class="col-xs-5">
+            <div class="col-xs-7">
                 <span style="">
                     @if (contactPerson != null)
                     {
@@ -282,6 +289,10 @@
 
         <br />
         <br />
+        <br />
+        <br />
+        <br />
+        <br />
 
         <div class="row" style="text-align: center;">
             <div class="col-xs-12 sectionReportBox">
@@ -392,6 +403,28 @@
             <div class="col-xs-12">
                 ·  Asesoramiento en el control y gestión de seguridad en el sector de actividad que corresponda, así como en los aspectos relativos a la coordinación de actividades empresariales.
             </div>
+
+
+            <div class="col-xs-12">
+                &nbsp;
+            </div>
+            <div class="col-xs-12">
+                &nbsp;
+            </div>
+            <div class="col-xs-12">
+                &nbsp;
+            </div>
+            <div class="col-xs-12">
+                &nbsp;
+            </div>
+            <div class="col-xs-12">
+                &nbsp;
+            </div>
+            <div class="col-xs-12">
+                &nbsp;
+            </div>
+
+
             <div class="col-xs-12">
                 ·  Elaboración de la <strong>Memoria Anual</strong> a la finalización de la actividad, como resumen de las actividades de Prevención Técnica desarrolladas por PREVEA. Dado su carácter recapitulativo, se entregará transcurrido el período anual de referencia.
             </div>
@@ -471,6 +504,26 @@
             <div class="col-xs-12">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Hábitos e Historia Médica</strong>
             </div>
+
+            <div class="col-xs-12">
+                &nbsp;
+            </div>
+            <div class="col-xs-12">
+                &nbsp;
+            </div>
+            <div class="col-xs-12">
+                &nbsp;
+            </div>
+            <div class="col-xs-12">
+                &nbsp;
+            </div>
+            <div class="col-xs-12">
+                &nbsp;
+            </div>
+            <div class="col-xs-12">
+                &nbsp;
+            </div>
+
             <div class="col-xs-12">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Inspección general y por aparatos:</strong> Oro-faringe, Tórax, Auscultación Pulmonar y Cardiaca, Abdomen, Sistema Músculo Esquelético,
             </div>
@@ -506,6 +559,8 @@
             total = Math.Round(total, 2);
         }
 
+        <br />
+        <br />
 
         <div class="row" style="text-align: center;">
             <div class="col-xs-12 sectionReportBox">
@@ -673,13 +728,3 @@
 
     </div>
 </div>
-
-<br />
-<br />
-
-<div id="print" class="form-actions" style="text-align: right">
-    <a id="btnPrint" class="btn btn-prevea" role="button" onclick="GeneralData.printDocument('pageOfferSPAReport', '@ViewBag.fileName');"> Imprimir</a>
-</div>
-
-<br />
-<br />

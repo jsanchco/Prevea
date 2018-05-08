@@ -5,12 +5,18 @@
 }
 
 <style>
-    div {
+   @@page {
+        margin: 0; 
+   }
+
+   body {
+        margin: 1.6cm;
         color: black;
         font-size: 14px;
         font-family: Arial;
-    }
+   }
 </style>
+
 
 <div id="pageEmployeeCitationReport">
     <div class="row">
@@ -260,13 +266,3 @@
     </div>
 
 </div>
-
-<br />
-<br />
-
-<div id="print" class="form-actions" style="text-align: right">
-    <a id="btnPrint" class="btn btn-prevea" role="button" onclick="GeneralData.printDocument('pageEmployeeCitationReport', '@ViewBag.fileName');"> Imprimir</a>
-</div>
-
-<br />
-<br />

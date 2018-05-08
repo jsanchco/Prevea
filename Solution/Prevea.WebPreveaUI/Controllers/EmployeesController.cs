@@ -18,15 +18,9 @@
         #endregion
 
         [HttpGet]
-        public ActionResult Notifications()
-        {
-            return PartialView("~/Views/Employees/EmployeesNotifications.cshtml");
-        }
-
-        [HttpGet]
         public ActionResult Documents()
         {
-            return PartialView("~/Views/Employees/EmployeesDocuments.cshtml");
+            return PartialView("~/Views/Employees/EmployeeDocuments.cshtml");
         }
     }
 }
