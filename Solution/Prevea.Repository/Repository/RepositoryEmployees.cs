@@ -28,6 +28,14 @@
                 .FirstOrDefault(x => x.Id == id);
         }
 
+        public Employee GetEmployeeByUser(int userId)
+        {
+            return Context.Employees
+                .Include(x => x.User)
+                .Include(x => x.Company)
+                .FirstOrDefault(x => x.UserId == userId);
+        }
+
         public List<Employee> GetEmployeesByCompany(int companyId)
         {
             return Context.Employees.Where(x => x.CompanyId == companyId)

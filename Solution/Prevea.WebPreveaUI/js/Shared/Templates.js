@@ -33,6 +33,17 @@
         return html;
     },
 
+    getColumnTemplateBold: function (text) {
+        if (text === null) {
+            return "";
+        }
+
+        var html = kendo.format("<div style='font-weight: bold'>{0}</div>",
+            text);
+
+        return html;
+    },
+
     getColumnTemplateIncreaseRight: function (text) {
         if (text === null) {
             return "";

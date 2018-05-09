@@ -22,6 +22,16 @@
                 .FirstOrDefault(x => x.Id == id);
         }
 
+        public List<RequestMedicalExaminationEmployee> GetRequestMedicalExaminationEmployeeByEmployeeId(int employeeId)
+        {
+            return Context.RequestMedicalExaminationsEmployees
+                .Include(x => x.Employee)
+                .Include(x => x.RequestMedicalExaminations)
+                .Include(x => x.DoctorsMedicalExaminationEmployee)
+                .Where(x => x.EmployeeId == employeeId)
+                .ToList();
+        }
+
         public RequestMedicalExaminationEmployee GetRequestMedicalExaminationEmployeeByEmployeeId(int requestMedicalExaminationsId,
             int employeeId)
         {

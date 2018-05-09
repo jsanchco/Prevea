@@ -19,6 +19,11 @@
             return Repository.GetRequestMedicalExaminationEmployeeById(id);
         }
 
+        public List<RequestMedicalExaminationEmployee> GetRequestMedicalExaminationEmployeeByEmployeeId(int employeeId)
+        {
+            return Repository.GetRequestMedicalExaminationEmployeeByEmployeeId(employeeId);
+        }
+
         public RequestMedicalExaminationEmployee GetRequestMedicalExaminationEmployeeByEmployeeId(int requestMedicalExaminationsId,
             int employeeId)
         {

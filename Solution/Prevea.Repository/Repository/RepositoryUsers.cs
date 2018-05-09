@@ -342,6 +342,13 @@
             }
         }
 
+        public User GetUserByEmployee(int employeeId)
+        {
+            return Context
+                .Employees
+                .FirstOrDefault(x => x.Id == employeeId)?.User;
+        }
+
         public List<User> GetUsersInRoles(List<string> roles)
         {
             var users = from ur in Context.UserRoles

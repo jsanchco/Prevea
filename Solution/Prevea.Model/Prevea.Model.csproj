@@ -65,6 +65,7 @@
     <Compile Include="Model\ContactPerson.cs" />
     <Compile Include="Model\DoctorMedicalExaminationEmployee.cs" />
     <Compile Include="Model\DoctorWorkSheet.cs" />
+    <Compile Include="Model\HeaderEmployeeDocuments.cs" />
     <Compile Include="Model\InputTemplate.cs" />
     <Compile Include="Model\MedicalExaminationDocuments.cs" />
     <Compile Include="Model\Document.cs" />

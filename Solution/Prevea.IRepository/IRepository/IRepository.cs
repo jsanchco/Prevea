@@ -34,6 +34,7 @@
         List<User> GetUsersByUser(int id);
         List<CustomRole> GetCustomRoles(List<int> listRoles);
         List<User> GetUsersByUserFromContactAs(int id);
+        User GetUserByEmployee(int employeeId);
         #endregion
 
         #region Document
@@ -134,6 +135,7 @@
         #region Employee
         List<Employee> GetEmployees();
         Employee GetEmployeeById(int id);
+        Employee GetEmployeeByUser(int userId);
         List<Employee> GetEmployeesByCompany(int companyId);
         Employee SaveEmployee(Employee employee);
         bool DeleteEmployee(Employee employee);
@@ -313,6 +315,7 @@
         #region RequestMedicalExamination Employee
 
         RequestMedicalExaminationEmployee GetRequestMedicalExaminationEmployeeById(int id);
+        List<RequestMedicalExaminationEmployee> GetRequestMedicalExaminationEmployeeByEmployeeId(int employeeId);
         RequestMedicalExaminationEmployee GetRequestMedicalExaminationEmployeeByEmployeeId(int requestMedicalExaminationsId, int employeeId);
         List<RequestMedicalExaminationEmployee> GetRequestMedicalExaminationEmployees();
         List<Employee> GetEmployeesByRequestMedicalExamination(int requestMedicalExaminationId);        

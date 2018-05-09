@@ -258,7 +258,7 @@
         {
             return Context.Documents
                 .Include(x => x.Area)
-                .Count(x => x.AreaId == areaId && x.DocumentStateId == 1);
+                .Count(x => x.AreaId == areaId);
         }
 
         public List<Document> GetDocumentsContractualsByCompany(int? companyId)

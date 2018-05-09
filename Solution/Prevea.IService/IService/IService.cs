@@ -1,6 +1,4 @@
-﻿using Prevea.Model.ViewModel;
-
-namespace Prevea.IService.IService
+﻿namespace Prevea.IService.IService
 {
     #region Using
 
@@ -9,6 +7,7 @@ namespace Prevea.IService.IService
     using System.Web;
     using Model.CustomModel;
     using System;
+    using Model.ViewModel;
 
     #endregion
 
@@ -60,6 +59,7 @@ namespace Prevea.IService.IService
         List<ContactPerson> GetContactPersons();
         List<Employee> GetEmployees();
         Employee GetEmployeeById(int id);
+        Employee GetEmployeeByUser(int userId);
         List<Employee> GetEmployeesByCompany(int companyId);
         List<User> GetUsersByUser(int id);
         Result SaveUser(int? roleId, User user);
@@ -73,6 +73,7 @@ namespace Prevea.IService.IService
         Result SubscribeUser(int userId, bool subscribe);
         List<CustomRole> GetCustomRoles(List<int> listRoles);
         List<User> GetUsersByUserFromContactAs(int id);
+        User GetUserByEmployee(int employeeId);
 
         #endregion
 
@@ -291,6 +292,7 @@ namespace Prevea.IService.IService
         #region RequestMedicalExamination Employee
 
         RequestMedicalExaminationEmployee GetRequestMedicalExaminationEmployeeById(int id);
+        List<RequestMedicalExaminationEmployee> GetRequestMedicalExaminationEmployeeByEmployeeId(int employeeId);
         RequestMedicalExaminationEmployee GetRequestMedicalExaminationEmployeeByEmployeeId(int requestMedicalExaminationsId, int employeeId);
         List<RequestMedicalExaminationEmployee> GetRequestMedicalExaminationEmployees();
         List<Employee> GetEmployeesByRequestMedicalExamination(int requestMedicalExaminationId);        
@@ -373,5 +375,10 @@ namespace Prevea.IService.IService
 
         #endregion
 
+        #region Employees
+
+        List<HeaderEmployeeDocuments> GetHeaderEmployeeDocuments(int employeeId);
+
+        #endregion
     }
 }
