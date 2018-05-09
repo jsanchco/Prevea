@@ -335,6 +335,15 @@
     printDocument: function (divName, fileName) {
         window.print();
 
+        $.ajax({
+            url: "/Base/DownloadFileName",
+            data: {
+                fileName: fileName
+            },
+            type: "post",
+            dataType: "json"
+        });
+
         //kendo.drawing.drawDOM($("#" + divName))
         //    .then(function (group) {
         //        // Render the result as a PDF file
