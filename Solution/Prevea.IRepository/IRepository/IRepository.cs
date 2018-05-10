@@ -376,5 +376,33 @@
             int requestMedicalExaminationEmployeeId, int areaId);
 
         #endregion
+
+        #region Sector
+
+        List<Sector> GetSectors();
+        Sector GetSectorById(int id);
+        Sector SaveSector(Sector sector);
+        bool DeleteSector(int id);
+
+        #endregion
+
+        #region WorkStations
+
+        List<WorkStation> GetWorkStations();
+        List<WorkStation> GetWorkStationsBySectorId(int sectorId);
+        WorkStation GetWorkStationById(int id);
+        WorkStation SaveWorkStation(WorkStation workStation);
+        bool DeleteWorkStation(int id);
+
+        #endregion
+
+        #region DeltaCodes
+
+        List<DeltaCode> GetDeltaCodes();
+        DeltaCode GetDeltaCodeById(int id);
+        DeltaCode SaveDeltaCode(DeltaCode deltaCode);
+        bool DeleteDeltaCode(int id);
+
+        #endregion
     }
 }

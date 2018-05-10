@@ -107,7 +107,19 @@
 
             case "myData|documents":
                 url = "/Employees/Documents";
-                break;                
+                break;                    
+
+            case "tecniques|workStations":
+                url = "/Tecniques/WorkStations";
+                break;    
+
+            case "tecniques|deltaCodes":
+                url = "/Tecniques/DeltaCodes";
+                break;   
+
+            case "tecniques|historic":
+                url = "/Tecniques/HistoricTecniques";
+                break;
                                 
             default:
                 break;

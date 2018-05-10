@@ -122,6 +122,15 @@
 
             AutoMapper.Mapper.CreateMap<User, DoctorViewModel>()
                 .ForMember(x => x.Name, x => x.MapFrom(y => y.FirstName + " " + y.LastName));
+
+            AutoMapper.Mapper.CreateMap<SectorViewModel, Sector>();
+            AutoMapper.Mapper.CreateMap<Sector, SectorViewModel>();
+
+            AutoMapper.Mapper.CreateMap<WorkStationViewModel, WorkStation>();
+            AutoMapper.Mapper.CreateMap<WorkStation, WorkStationViewModel>();
+
+            AutoMapper.Mapper.CreateMap<DeltaCodeViewModel, DeltaCode>();
+            AutoMapper.Mapper.CreateMap<DeltaCode, DeltaCodeViewModel>();
         }
     }
 }

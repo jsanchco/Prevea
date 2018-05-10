@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\ServiceContractualDocumentTypes.cs" />
+    <Compile Include="Service\ServiceDeltaCodes.cs" />
     <Compile Include="Service\ServiceEmployees.cs" />
     <Compile Include="Service\ServiceMedicalExaminationDocuments.cs" />
     <Compile Include="Service\Service.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Service\ServiceRequestMedicalExaminationEmployeeStates.cs" />
     <Compile Include="Service\ServiceRequestMedicalExaminations.cs" />
     <Compile Include="Service\ServiceRequestMedicalExaminationStates.cs" />
+    <Compile Include="Service\ServiceSectors.cs" />
     <Compile Include="Service\ServiceSimulations.cs" />
     <Compile Include="Service\ServiceStretchesAgencies.cs" />
     <Compile Include="Service\ServiceStretchesEmployees.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="Service\ServiceUsers.cs" />
     <Compile Include="Service\ServiceWorkCenters.cs" />
     <Compile Include="Service\ServiceWorkCentersCompany.cs" />
+    <Compile Include="Service\ServiceWorkStations.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Prevea.IRepository\Prevea.IRepository.csproj">

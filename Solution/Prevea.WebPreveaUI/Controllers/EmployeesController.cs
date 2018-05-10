@@ -1,17 +1,14 @@
-﻿using System.Linq;
-using Prevea.Model.ViewModel;
-
-namespace Prevea.WebPreveaUI.Controllers
+﻿namespace Prevea.WebPreveaUI.Controllers
 {
     #region Using
 
     using HelpersClass;
     using System.Web.Mvc;
-    using System;
     using System.Collections.Generic;
     using Kendo.Mvc.UI;
-    using Model.Model;
     using Common;
+    using System.Linq;
+    using Model.ViewModel;
 
     #endregion
 

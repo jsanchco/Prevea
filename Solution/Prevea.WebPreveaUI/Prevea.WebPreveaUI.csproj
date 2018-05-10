@@ -187,6 +187,7 @@
     <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\StartController.cs" />
+    <Compile Include="Controllers\TecniquesController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -708,6 +709,9 @@
     <Content Include="js\GeneralData.js" />
     <Content Include="js\Shared\Templates.js" />
     <Content Include="js\Start\Start.js" />
+    <Content Include="js\Tecniques\DeltaCodes.js" />
+    <Content Include="js\Tecniques\HistoricTecniques.js" />
+    <Content Include="js\Tecniques\WorkStations.js" />
     <Content Include="js\User\ContactAs.js" />
     <Content Include="js\User\Users.js" />
     <Content Include="Rotativa\wkhtmltopdf.exe" />
@@ -1179,6 +1183,9 @@
     <Content Include="Views\MedicalExamination\AddDocument.cshtml" />
     <Content Include="Views\User\ContactAs.cshtml" />
     <Content Include="Views\Employees\EmployeeDocuments.cshtml" />
+    <Content Include="Views\Tecniques\WorkStations.cshtml" />
+    <Content Include="Views\Tecniques\HistoricTecniques.cshtml" />
+    <Content Include="Views\Tecniques\DeltaCodes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

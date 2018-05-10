@@ -312,6 +312,40 @@ namespace Prevea.ConsoleTestModel.Migrations
             context.Configurations.Add(new Model.Model.Configuration { Tag = "PercentegeStretchAgencies", Value = "20" });
             context.Configurations.Add(new Model.Model.Configuration { Tag = "IVA", Value = "1,21" });
             context.SaveChanges();
+
+            context.DeltaCodes.Add(new DeltaCode { Id = 1, Name = "Caída de personas a distinto nivel" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 2, Name = "Caída de personas al mismo nivel" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 3, Name = "Caídas de objetos por desplome o derrumbamiento" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 4, Name = "Caídas de objetos por manipulación" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 5, Name = "Caídas por objetos desprendidos" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 6, Name = "Pisadas sobre objetos" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 7, Name = "Choques contra objetos inmóviles" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 8, Name = "Choques contra objetos móviles" });            
+            context.DeltaCodes.Add(new DeltaCode { Id = 9, Name = "Golpes por objetos o herramientas" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 10, Name = "Proyección de fragmentos o partículas" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 11, Name = "Atrapamiento por o entre objetos" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 12, Name = "Atrapamiento por vuelco de máquinas, tractores o vehículos" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 13, Name = "Sobreesfuerzos" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 14, Name = "Exposición a temperaturas ambientales extremas" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 15, Name = "Contactos térmicos" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 16, Name = "Exposición a contactos eléctricos" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 17, Name = "Exposición a sustancias nocivas" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 18, Name = "Contactos sustancias cáusticas y/o corrosivas" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 19, Name = "Exposición a radiaciones" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 20, Name = "Explosiones" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 21, Name = "Incendios" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 22, Name = "Accidentes causados por seres vivos" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 23, Name = "Atropellos o golpes con vehículos" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 24, Name = "Accidentes de tráfico" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 25, Name = "Causas naturales" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 26, Name = "Otras" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 27, Name = "Agentes químicos" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 28, Name = "Agentes físicos" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 29, Name = "Agentes biológicos" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 30, Name = "Otras circunstancias" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 31, Name = "Condiciones ergonómicas" });
+            context.DeltaCodes.Add(new DeltaCode { Id = 32, Name = "Factores psicosociales" });
+            context.SaveChanges();
         }
     }
 }
