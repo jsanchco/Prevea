@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomModel\GenericModelDropDown.cs" />
     <Compile Include="Model\Clinic.cs" />
     <Compile Include="CustomModel\CustomRole.cs" />
     <Compile Include="Helpers\HelperClass.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Model\RequestMedicalExaminationEmployeeState.cs" />
     <Compile Include="Model\RequestMedicalExaminations.cs" />
     <Compile Include="Model\RequestMedicalExaminationState.cs" />
+    <Compile Include="Model\RiskEvaluation.cs" />
     <Compile Include="Model\Sector.cs" />
     <Compile Include="Model\Simulation.cs" />
     <Compile Include="Model\SimulationCompany.cs" />
@@ -126,6 +128,7 @@
     <Compile Include="ViewModel\PaymentModeViewModel.cs" />
     <Compile Include="ViewModel\RequestMedicalExaminationEmployeeViewModel.cs" />
     <Compile Include="ViewModel\RequestMedicalExaminationsViewModel.cs" />
+    <Compile Include="ViewModel\RiskEvaluationViewModel.cs" />
     <Compile Include="ViewModel\SectorViewModel.cs" />
     <Compile Include="ViewModel\SimulationViewModel.cs" />
     <Compile Include="ViewModel\TemplateMedicalExaminationViewModel.cs" />

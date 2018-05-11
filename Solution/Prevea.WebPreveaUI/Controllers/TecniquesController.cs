@@ -1,4 +1,6 @@
-﻿namespace Prevea.WebPreveaUI.Controllers
+﻿using System.Linq;
+
+namespace Prevea.WebPreveaUI.Controllers
 {
     #region Using
 
@@ -12,6 +14,7 @@
     using Model.Model;
     using Model.ViewModel;
     using Common;
+    using Model.CustomModel;
 
     #endregion
 
@@ -26,8 +29,10 @@
         #endregion
 
         [HttpGet]
-        public ActionResult WorkStations()
+        public ActionResult WorkStations(int? sectorSelected)
         {
+            ViewBag.SectorSelected = sectorSelected;
+
             return PartialView();
         }
 
@@ -40,6 +45,20 @@
         [HttpGet]
         public ActionResult HistoricTecniques()
         {
+            return PartialView();
+        }
+
+        [HttpGet]
+        public ActionResult RiskEvaluation(int sectorId, int workStationId)
+        {
+            ViewBag.SectorId = sectorId;
+            ViewBag.WorkStationId = workStationId;
+
+            var workStation = Service.GetWorkStationById(workStationId);
+            ViewBag.WorkStation = workStation.Name;
+            if (!string.IsNullOrEmpty(workStation.ProfessionalCategory))
+                ViewBag.WorkStation = $"{ViewBag.WorkStation} ({workStation.ProfessionalCategory})";
+
             return PartialView();
         }
 
@@ -293,6 +312,180 @@
 
                 return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del DeltaCode" });
             }
+        }
+
+        [HttpGet]
+        public JsonResult RiskEvaluations_Read([DataSourceRequest] DataSourceRequest request, int sectorId, int workStationId)
+        {
+            var riskEvaluations = Service.GetRiskEvaluationsByWorkStation(workStationId);
+            var data = new List<RiskEvaluationViewModel>();
+            foreach (var riskEvaluation in riskEvaluations)
+            {
+                data.Add(UpdateRiskValues(riskEvaluation));
+            }
+ 
+            return this.Jsonp(data);
+        }
+
+        public ActionResult RiskEvaluations_Create()
+        {
+            try
+            {
+                var riskEvaluation = this.DeserializeObject<RiskEvaluationViewModel>("riskEvaluation");
+                if (riskEvaluation == null)
+                {
+                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del RiskEvaluation" });
+                }
+
+                var result = Service.SaveRiskEvaluation(AutoMapper.Mapper.Map<RiskEvaluation>(riskEvaluation));
+
+                if (result.Status != Status.Error)
+                {
+                    return this.Jsonp(UpdateRiskValues(Service.GetRiskEvaluationById(((RiskEvaluation)result.Object).Id)));
+                }
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del RiskEvaluation" });
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del RiskEvaluation" });
+            }
+        }
+
+        public JsonResult RiskEvaluations_Update()
+        {
+            try
+            {
+                var riskEvaluation = this.DeserializeObject<RiskEvaluation>("riskEvaluation");
+                if (riskEvaluation == null)
+                {
+                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del RiskEvaluation" });
+                }
+
+                var result = Service.SaveRiskEvaluation(riskEvaluation);
+
+                return result.Status != Status.Error ? this.Jsonp(UpdateRiskValues(Service.GetRiskEvaluationById(((RiskEvaluation)result.Object).Id))) : this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del RiskEvaluation" });
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del RiskEvaluation" });
+            }
+        }
+
+        public ActionResult RiskEvaluations_Destroy()
+        {
+            try
+            {
+                var riskEvaluation = this.DeserializeObject<RiskEvaluation>("riskEvaluation");
+                if (riskEvaluation == null)
+                {
+                    return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del RiskEvaluation" });
+                }
+
+                var result = Service.DeleteRiskEvaluation(riskEvaluation.Id);
+
+                if (result.Status == Status.Error)
+                {
+                    return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del RiskEvaluation" });
+                }
+
+                return this.Jsonp(AutoMapper.Mapper.Map<RiskEvaluationViewModel>(riskEvaluation));
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del RiskEvaluation" });
+            }
+        }
+
+        [HttpGet]
+        public JsonResult GetDeltaCodes([DataSourceRequest] DataSourceRequest request, int workStationId)
+        {
+            var workStation = Service.GetWorkStationById(workStationId);
+            var allDeltaCodes = Service.GetDeltaCodes().Except(workStation.RiskEvaluations.Select(x => x.DeltaCode));
+
+            var data = AutoMapper.Mapper.Map<List<DeltaCodeViewModel>>(allDeltaCodes);
+
+            return this.Jsonp(data);
+        }
+
+        [HttpGet]
+        public JsonResult GetProbabilities([DataSourceRequest] DataSourceRequest request)
+        {
+            var probabilities = new List<GenericModelDropDown>
+            {
+                new GenericModelDropDown { Id = 1, Name = "Baja" },
+                new GenericModelDropDown { Id = 2, Name = "Media" },
+                new GenericModelDropDown { Id = 3, Name = "Alta" }
+            };
+
+            return this.Jsonp(probabilities);
+        }
+
+        [HttpGet]
+        public JsonResult GetSeverities([DataSourceRequest] DataSourceRequest request)
+        {
+            var severities = new List<GenericModelDropDown>
+            {
+                new GenericModelDropDown { Id = 1, Name = "Ligeramente Dañino" },
+                new GenericModelDropDown { Id = 2, Name = "Dañino" },
+                new GenericModelDropDown { Id = 3, Name = "Extremadamente Dañino" }
+            };
+
+            return this.Jsonp(severities);
+        }
+
+        private RiskEvaluationViewModel UpdateRiskValues(RiskEvaluation riskEvaluation)
+        {
+            var riskEvaluationViewModel = AutoMapper.Mapper.Map<RiskEvaluationViewModel>(riskEvaluation);
+            var probabilities = new List<GenericModelDropDown>
+            {
+                new GenericModelDropDown { Id = 1, Name = "Baja" },
+                new GenericModelDropDown { Id = 2, Name = "Media" },
+                new GenericModelDropDown { Id = 3, Name = "Alta" }
+            };
+            var severities = new List<GenericModelDropDown>
+            {
+                new GenericModelDropDown { Id = 1, Name = "Ligeramente Dañino" },
+                new GenericModelDropDown { Id = 2, Name = "Dañino" },
+                new GenericModelDropDown { Id = 3, Name = "Extremadamente Dañino" }
+            };
+
+            riskEvaluationViewModel.ProbabilityName = probabilities.FirstOrDefault(x => x.Id == riskEvaluation.Probability)?.Name;
+            riskEvaluationViewModel.SeverityName = severities.FirstOrDefault(x => x.Id == riskEvaluation.Severity)?.Name;
+
+            if (riskEvaluationViewModel.RiskValue == 1)
+            {
+                riskEvaluationViewModel.RiskValueName = "Trivial";
+                riskEvaluationViewModel.PriorityName = "Baja";
+            }
+            if (riskEvaluationViewModel.RiskValue == 2)
+            {
+                riskEvaluationViewModel.RiskValueName = "Tolerable";
+                riskEvaluationViewModel.PriorityName = "Mediana";
+            }
+            if (riskEvaluationViewModel.RiskValue == 3)
+            {
+                riskEvaluationViewModel.RiskValueName = "Moderado";
+                riskEvaluationViewModel.PriorityName = "Mediana - Alta";
+            }
+            if (riskEvaluationViewModel.RiskValue == 4)
+            {
+                riskEvaluationViewModel.RiskValueName = "Importante";
+                riskEvaluationViewModel.PriorityName = "Alta";
+            }
+            if (riskEvaluationViewModel.RiskValue == 5)
+            {
+                riskEvaluationViewModel.RiskValueName = "Intolerable";
+                riskEvaluationViewModel.PriorityName = "Inmediata";
+            }
+
+            return riskEvaluationViewModel;
         }
     }
 }

@@ -1,11 +1,19 @@
 ﻿var WorkStations = kendo.observable({
 
+    sectorSelected: null,
+
     gridSectorsId: "gridSectors",
     confirmId: "confirm",
     sectorsDataSource: null,
 
-    init: function () {
+    init: function (sectorSelected) {
         kendo.culture("es-ES");
+
+        if (typeof sectorSelected !== "undefined") {
+            this.sectorSelected = sectorSelected;
+        } else {
+            this.sectorSelected = null;
+        }     
 
         this.createSectorsDataSource();
         this.createSectorsGrid();
@@ -14,7 +22,9 @@
     goToWorkStations: function () {
         var params = {
             url: "/Tecniques/WorkStations",
-            data: {}
+            data: {
+                sectorSelected: null
+            }
         };
         GeneralData.goToActionController(params);
     },
@@ -70,6 +80,16 @@
                         GeneralData.showNotification(Constants.ok, "", "success");
                     }
                 }
+                //if (e.type === "read" && e.response != null && WorkStations.sectorSelected != null) {
+                //    var grid = $("#" + WorkStations.gridSectorsId).data("kendoGrid");
+                //    var data = grid.dataSource.data();
+                //    for (var i = 0; i < data.length; i++) {
+                //        if (data[i].Id === WorkStations.sectorSelected) {
+                //            var select = grid.tbody.find('tr[data-uid="' + data[i].uid + '"]');
+                //            grid.expandRow(select);
+                //        }
+                //    }
+                //}
             },
             pageSize: 10
         });
@@ -161,6 +181,17 @@
                 html += "</div>";
 
                 commandCell.html(html);
+            },
+            dataBound: function () {
+                var grid = this;
+                grid.tbody.find(">tr").each(function () {
+                    var dataItem = grid.dataItem(this);
+                    if (dataItem.Id === WorkStations.sectorSelected) {
+                        var select = grid.tbody.find('tr[data-uid="' + dataItem.uid + '"]');
+                        grid.expandRow(select);
+                        WorkStations.sectorSelected = null;
+                    }
+                });
             }
         });
     },
@@ -403,8 +434,11 @@
 
     getColumnTemplateWorkStationsCommands: function (data) {
         var html = "<div align='center'>";
+
         html += kendo.format("<a toggle='tooltip' title='Editar' onclick='WorkStations.goToEditWorkStation(\"{0}\", \"{1}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id, data.SectorId);
         html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='WorkStations.goToDeleteWorkStation(\"{0}\", \"{1}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id, data.SectorId);
+        html += kendo.format("<a toggle='tooltip' title='Evaluación de Riesgos' onclick='WorkStations.goToRiskEvaluation(\"{0}\", \"{1}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-flash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id, data.SectorId);
+
         html += kendo.format("</div>");
 
         return html;
@@ -442,5 +476,16 @@
             ]
         });
         dialog.data("kendoDialog").open();
+    },
+
+    goToRiskEvaluation: function(id, sectorId) {
+        var params = {
+            url: "/Tecniques/RiskEvaluation",
+            data: {
+                sectorId: sectorId,
+                workStationId: id
+            }
+        };
+        GeneralData.goToActionController(params);
     }
 });

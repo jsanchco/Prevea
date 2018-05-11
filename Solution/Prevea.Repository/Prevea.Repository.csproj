@@ -78,6 +78,7 @@
     <Compile Include="Repository\RepositoryRequestMedicalExaminationEmployees.cs" />
     <Compile Include="Repository\RepositoryRequestMedicalExaminationEmployeeStates.cs" />
     <Compile Include="Repository\RepositoryRequestMedicalExaminationStates.cs" />
+    <Compile Include="Repository\RepositoryRiskEvaluations.cs" />
     <Compile Include="Repository\RepositorySectors.cs" />
     <Compile Include="Repository\RepositorySimulationCompanies.cs" />
     <Compile Include="Repository\RepositorySimulations.cs" />

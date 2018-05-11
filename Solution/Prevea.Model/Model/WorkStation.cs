@@ -3,6 +3,7 @@
     #region Using
 
     using System.ComponentModel.DataAnnotations;
+    using System.Collections.Generic;
 
     #endregion
 
@@ -19,5 +20,7 @@
 
         public int SectorId { get; set; }
         public virtual Sector Sector { get; set; }
+
+        public virtual ICollection<RiskEvaluation> RiskEvaluations { get; set; }
     }
 }

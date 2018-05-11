@@ -161,5 +161,14 @@
             text);
 
         return html;
+    },
+
+    editorReadOnly: function (container, options) {
+        container.removeClass("k-edit-cell");
+        var value = "";
+        if (options.model.get(options.field) !== "0")
+            value = options.model.get(options.field);
+
+        container.text(value);
     }
 });

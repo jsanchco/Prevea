@@ -131,6 +131,14 @@
 
             AutoMapper.Mapper.CreateMap<DeltaCodeViewModel, DeltaCode>();
             AutoMapper.Mapper.CreateMap<DeltaCode, DeltaCodeViewModel>();
+
+            AutoMapper.Mapper.CreateMap<RiskEvaluationViewModel, RiskEvaluation>();
+            AutoMapper.Mapper.CreateMap<RiskEvaluation, RiskEvaluationViewModel>()
+                .ForMember(x => x.WorkStationName, x => x.MapFrom(y => y.WorkStation.Name))
+                .ForMember(x => x.WorkStationDescription, x => x.MapFrom(y => y.WorkStation.Description))
+                .ForMember(x => x.DuplicateDeltaCodeId, x => x.MapFrom(y => y.DeltaCode.Id.ToString()))
+                .ForMember(x => x.DeltaCodeName, x => x.MapFrom(y => y.DeltaCode.Name))
+                .ForMember(x => x.DeltaCodeDescription, x => x.MapFrom(y => y.DeltaCode.Description));
         }
     }
 }

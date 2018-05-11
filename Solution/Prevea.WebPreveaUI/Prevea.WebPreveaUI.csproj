@@ -711,6 +711,7 @@
     <Content Include="js\Start\Start.js" />
     <Content Include="js\Tecniques\DeltaCodes.js" />
     <Content Include="js\Tecniques\HistoricTecniques.js" />
+    <Content Include="js\Tecniques\RiskEvaluation.js" />
     <Content Include="js\Tecniques\WorkStations.js" />
     <Content Include="js\User\ContactAs.js" />
     <Content Include="js\User\Users.js" />
@@ -1186,6 +1187,7 @@
     <Content Include="Views\Tecniques\WorkStations.cshtml" />
     <Content Include="Views\Tecniques\HistoricTecniques.cshtml" />
     <Content Include="Views\Tecniques\DeltaCodes.cshtml" />
+    <Content Include="Views\Tecniques\RiskEvaluation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
