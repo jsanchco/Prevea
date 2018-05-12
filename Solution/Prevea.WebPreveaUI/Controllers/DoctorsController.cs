@@ -64,7 +64,7 @@
             }
         }
 
-        public ActionResult Doctor_Destroy()
+        public JsonResult Doctor_Destroy()
         {
             try
             {
@@ -81,7 +81,7 @@
                     return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del Médico" });
                 }
 
-                return this.Jsonp(AutoMapper.Mapper.Map<UserViewModel>(doctor));
+                return this.Jsonp(new { result.Status });
             }
             catch (Exception e)
             {

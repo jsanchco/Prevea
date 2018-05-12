@@ -208,9 +208,8 @@
 
     getTemplateToolBar: function () {
         var html = "<div class='toolbar'>";
-        html += "<span name='create' class='k-grid-add'>";
         html += "<a id='createDoctor' class='btn btn-prevea k-grid-add' role='button'> Agregar nuevo</a>";
-        html += "</span></div>";
+        html += "</div>";
 
         return html;
     },
@@ -255,7 +254,7 @@
                 {
                     text: "Borrar", action: function ()
                     {
-                        var grid = $("#" + that.gridClinicsId).data("kendoGrid");
+                        var grid = $("#" + that.gridDoctorsId).data("kendoGrid");
                         var item = grid.dataSource.get(id);
                         var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
 

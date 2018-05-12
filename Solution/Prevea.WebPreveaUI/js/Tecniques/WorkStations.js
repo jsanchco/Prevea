@@ -80,16 +80,6 @@
                         GeneralData.showNotification(Constants.ok, "", "success");
                     }
                 }
-                //if (e.type === "read" && e.response != null && WorkStations.sectorSelected != null) {
-                //    var grid = $("#" + WorkStations.gridSectorsId).data("kendoGrid");
-                //    var data = grid.dataSource.data();
-                //    for (var i = 0; i < data.length; i++) {
-                //        if (data[i].Id === WorkStations.sectorSelected) {
-                //            var select = grid.tbody.find('tr[data-uid="' + data[i].uid + '"]');
-                //            grid.expandRow(select);
-                //        }
-                //    }
-                //}
             },
             pageSize: 10
         });
