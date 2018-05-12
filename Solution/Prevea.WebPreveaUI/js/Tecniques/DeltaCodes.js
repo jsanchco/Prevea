@@ -168,11 +168,21 @@
     },
 
     getColumnTemplateCommands: function (data) {
-        var html = "";
+        var html;
         if (data.Id > 32) {
             html = "<div align='center'>";
-            html += kendo.format("<a toggle='tooltip' title='Editar' onclick='DeltaCodes.goToEditDeltaCode(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
-            html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='DeltaCodes.goToDeleteDeltaCode(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+            html += kendo.format(
+                "<a toggle='tooltip' title='Editar' onclick='DeltaCodes.goToEditDeltaCode(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                data.Id);
+            html += kendo.format(
+                "<a toggle='tooltip' title='Borrar' onclick='DeltaCodes.goToDeleteDeltaCode(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                data.Id);
+            html += kendo.format("</div>");
+        } else {
+            html = "<div align='center'>";
+            html += kendo.format(
+                "<a toggle='tooltip' title='Editar' onclick='DeltaCodes.goToEditDeltaCode(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                data.Id);
             html += kendo.format("</div>");
         }
 

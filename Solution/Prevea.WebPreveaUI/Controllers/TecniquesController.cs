@@ -337,6 +337,12 @@ namespace Prevea.WebPreveaUI.Controllers
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del RiskEvaluation" });
                 }
 
+                var workStation = Service.GetWorkStationById(riskEvaluation.WorkStationId);
+                if (workStation.RiskEvaluations.FirstOrDefault(x => x.DeltaCodeId == riskEvaluation.DeltaCodeId) != null)
+                {
+                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del RiskEvaluation" });
+                }
+
                 var result = Service.SaveRiskEvaluation(AutoMapper.Mapper.Map<RiskEvaluation>(riskEvaluation));
 
                 if (result.Status != Status.Error)
@@ -360,6 +366,12 @@ namespace Prevea.WebPreveaUI.Controllers
             {
                 var riskEvaluation = this.DeserializeObject<RiskEvaluation>("riskEvaluation");
                 if (riskEvaluation == null)
+                {
+                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del RiskEvaluation" });
+                }
+
+                var workStation = Service.GetWorkStationById(riskEvaluation.WorkStationId);
+                if (workStation.RiskEvaluations.FirstOrDefault(x => x.DeltaCodeId == riskEvaluation.DeltaCodeId && x.Id != riskEvaluation.Id) != null)
                 {
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del RiskEvaluation" });
                 }
@@ -406,10 +418,7 @@ namespace Prevea.WebPreveaUI.Controllers
         [HttpGet]
         public JsonResult GetDeltaCodes([DataSourceRequest] DataSourceRequest request, int workStationId)
         {
-            var workStation = Service.GetWorkStationById(workStationId);
-            var allDeltaCodes = Service.GetDeltaCodes().Except(workStation.RiskEvaluations.Select(x => x.DeltaCode));
-
-            var data = AutoMapper.Mapper.Map<List<DeltaCodeViewModel>>(allDeltaCodes);
+            var data = AutoMapper.Mapper.Map<List<DeltaCodeViewModel>>(Service.GetDeltaCodes());
 
             return this.Jsonp(data);
         }
