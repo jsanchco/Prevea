@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Prevea.WebPreveaUI.Controllers
+﻿namespace Prevea.WebPreveaUI.Controllers
 {
     #region Using
 
@@ -15,6 +13,7 @@ namespace Prevea.WebPreveaUI.Controllers
     using Model.ViewModel;
     using Common;
     using Model.CustomModel;
+    using System.Linq;
 
     #endregion
 
@@ -29,9 +28,9 @@ namespace Prevea.WebPreveaUI.Controllers
         #endregion
 
         [HttpGet]
-        public ActionResult WorkStations(int? sectorSelected)
+        public ActionResult WorkStations(int? cnaeSelected)
         {
-            ViewBag.SectorSelected = sectorSelected;
+            ViewBag.CnaeSelected = cnaeSelected;
 
             return PartialView();
         }
@@ -49,9 +48,9 @@ namespace Prevea.WebPreveaUI.Controllers
         }
 
         [HttpGet]
-        public ActionResult RiskEvaluation(int sectorId, int workStationId)
+        public ActionResult RiskEvaluation(int cnaeId, int workStationId)
         {
-            ViewBag.SectorId = sectorId;
+            ViewBag.CnaeId = cnaeId;
             ViewBag.WorkStationId = workStationId;
 
             var workStation = Service.GetWorkStationById(workStationId);
@@ -63,93 +62,17 @@ namespace Prevea.WebPreveaUI.Controllers
         }
 
         [HttpGet]
-        public JsonResult Sectors_Read([DataSourceRequest] DataSourceRequest request)
+        public JsonResult Cnaes_Read([DataSourceRequest] DataSourceRequest request)
         {
-            var data = AutoMapper.Mapper.Map<List<SectorViewModel>>(Service.GetSectors());
+            var data = AutoMapper.Mapper.Map<List<CnaeViewModel>>(Service.GetCnaes());
 
             return this.Jsonp(data);
         }
 
-        public ActionResult Sectors_Create()
-        {
-            try
-            {
-                var sector = this.DeserializeObject<SectorViewModel>("sector");
-                if (sector == null)
-                {
-                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Sector" });
-                }
-
-                var result = Service.SaveSector(AutoMapper.Mapper.Map<Sector>(sector));
-
-                if (result.Status != Status.Error)
-                {
-                    return this.Jsonp(AutoMapper.Mapper.Map<SectorViewModel>(result.Object));
-                }
-
-                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Sector" });
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-
-                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Sector" });
-            }
-        }
-
-        public JsonResult Sectors_Update()
-        {
-            try
-            {
-                var sector = this.DeserializeObject<Sector>("sector");
-                if (sector == null)
-                {
-                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Sector" });
-                }
-
-                var result = Service.SaveSector(sector);
-
-                return result.Status != Status.Error ? this.Jsonp(AutoMapper.Mapper.Map<SectorViewModel>(sector)) : this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Sector" });
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-
-                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Sector" });
-            }
-        }
-
-        public ActionResult Sectors_Destroy()
-        {
-            try
-            {
-                var sector = this.DeserializeObject<Sector>("sector");
-                if (sector == null)
-                {
-                    return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del Sector" });
-                }
-
-                var result = Service.DeleteSector(sector.Id);
-
-                if (result.Status == Status.Error)
-                {
-                    return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del Sector" });
-                }
-
-                return this.Jsonp(AutoMapper.Mapper.Map<SectorViewModel>(sector));
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-
-                return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del Sector" });
-            }
-        }
-
         [HttpGet]
-        public JsonResult WorkStations_Read([DataSourceRequest] DataSourceRequest request, int sectorId)
+        public JsonResult WorkStations_Read([DataSourceRequest] DataSourceRequest request, int cnaeId)
         {
-            var data = AutoMapper.Mapper.Map<List<WorkStationViewModel>>(Service.GetWorkStationsBySectorId(sectorId));
+            var data = AutoMapper.Mapper.Map<List<WorkStationViewModel>>(Service.GetWorkStationsByCnaeId(cnaeId));
 
             return this.Jsonp(data);
         }
@@ -315,7 +238,7 @@ namespace Prevea.WebPreveaUI.Controllers
         }
 
         [HttpGet]
-        public JsonResult RiskEvaluations_Read([DataSourceRequest] DataSourceRequest request, int sectorId, int workStationId)
+        public JsonResult RiskEvaluations_Read([DataSourceRequest] DataSourceRequest request, int cnaeId, int workStationId)
         {
             var riskEvaluations = Service.GetRiskEvaluationsByWorkStation(workStationId);
             var data = new List<RiskEvaluationViewModel>();

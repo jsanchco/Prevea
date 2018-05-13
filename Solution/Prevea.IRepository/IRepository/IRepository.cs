@@ -111,6 +111,7 @@
         #region Cnae
 
         List<Cnae> GetCnaes();
+        List<WorkStation> GetWorkStationsByCnaeId(int cnaeId);
         Cnae GetCnae(int id);
 
         #endregion
@@ -377,19 +378,9 @@
 
         #endregion
 
-        #region Sector
-
-        List<Sector> GetSectors();
-        Sector GetSectorById(int id);
-        Sector SaveSector(Sector sector);
-        bool DeleteSector(int id);
-
-        #endregion
-
         #region WorkStations
 
         List<WorkStation> GetWorkStations();
-        List<WorkStation> GetWorkStationsBySectorId(int sectorId);
         WorkStation GetWorkStationById(int id);
         WorkStation SaveWorkStation(WorkStation workStation);
         bool DeleteWorkStation(int id);

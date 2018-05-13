@@ -15,6 +15,9 @@
             AutoMapper.Mapper.CreateMap<AreaViewModel, Area>();
             AutoMapper.Mapper.CreateMap<Area, AreaViewModel>();
 
+            AutoMapper.Mapper.CreateMap<CnaeViewModel, Cnae>();
+            AutoMapper.Mapper.CreateMap<Cnae, CnaeViewModel>();
+
             AutoMapper.Mapper.CreateMap<Document, DocumentViewModel>()
                 .ForMember(x => x.AreaId, x => x.MapFrom(y => y.Area.Id))
                 .ForMember(x => x.AreaName, x => x.MapFrom(y => y.Area.Name))
@@ -122,9 +125,6 @@
 
             AutoMapper.Mapper.CreateMap<User, DoctorViewModel>()
                 .ForMember(x => x.Name, x => x.MapFrom(y => y.FirstName + " " + y.LastName));
-
-            AutoMapper.Mapper.CreateMap<SectorViewModel, Sector>();
-            AutoMapper.Mapper.CreateMap<Sector, SectorViewModel>();
 
             AutoMapper.Mapper.CreateMap<WorkStationViewModel, WorkStation>();
             AutoMapper.Mapper.CreateMap<WorkStation, WorkStationViewModel>();

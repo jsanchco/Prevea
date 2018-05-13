@@ -76,7 +76,6 @@
     <Compile Include="Service\ServiceRequestMedicalExaminations.cs" />
     <Compile Include="Service\ServiceRequestMedicalExaminationStates.cs" />
     <Compile Include="Service\ServiceRiskEvaluations.cs" />
-    <Compile Include="Service\ServiceSectors.cs" />
     <Compile Include="Service\ServiceSimulations.cs" />
     <Compile Include="Service\ServiceStretchesAgencies.cs" />
     <Compile Include="Service\ServiceStretchesEmployees.cs" />

@@ -16,22 +16,22 @@
         public List<WorkStation> GetWorkStations()
         {
             return Context.WorkStations
-                .Include(x => x.Sector)
+                .Include(x => x.Cnae)
                 .ToList();
         }
 
-        public List<WorkStation> GetWorkStationsBySectorId(int sectorId)
+        public List<WorkStation> GetWorkStationsByCnaeId(int cnaeId)
         {
             return Context.WorkStations
-                .Include(x => x.Sector)
-                .Where(x => x.SectorId == sectorId)
+                .Include(x => x.Cnae)
+                .Where(x => x.CnaeId == cnaeId)
                 .ToList();
         }
 
         public WorkStation GetWorkStationById(int id)
         {
             return Context.WorkStations
-                .Include(x => x.Sector)
+                .Include(x => x.Cnae)
                 .FirstOrDefault(x => x.Id == id);
         }
 

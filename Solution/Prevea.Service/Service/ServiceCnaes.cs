@@ -14,6 +14,11 @@
             return Repository.GetCnaes();
         }
 
+        public List<WorkStation> GetWorkStationsByCnaeId(int cnaeId)
+        {
+            return Repository.GetWorkStationsByCnaeId(cnaeId);
+        }
+
         public Cnae GetCnae(int id)
         {
             return Repository.GetCnae(id);

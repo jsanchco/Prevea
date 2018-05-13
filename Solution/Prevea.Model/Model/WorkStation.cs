@@ -18,8 +18,8 @@
 
         public string Description { get; set; }
 
-        public int SectorId { get; set; }
-        public virtual Sector Sector { get; set; }
+        public int CnaeId { get; set; }
+        public virtual Cnae Cnae { get; set; }
 
         public virtual ICollection<RiskEvaluation> RiskEvaluations { get; set; }
     }

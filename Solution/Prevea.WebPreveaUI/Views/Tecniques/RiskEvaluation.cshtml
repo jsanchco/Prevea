@@ -1,5 +1,5 @@
 ﻿<script>
-    RiskEvaluation.init('@ViewBag.SectorId', '@ViewBag.WorkStationId');
+    RiskEvaluation.init('@ViewBag.CnaeId', '@ViewBag.WorkStationId');
 </script>
 
 <div class="row" id="pageHistoricTecniques" style="margin: 8px">
@@ -16,7 +16,7 @@
                         </a>
                     </li>
                     <li class="active">
-                        <a id="br-tecniques|riskEvaluation" onclick="RiskEvaluation.goToRiskEvaluation('@ViewBag.SectorId', '@ViewBag.WorkStationId')" style="cursor: pointer;">
+                        <a id="br-tecniques|riskEvaluation" onclick="RiskEvaluation.goToRiskEvaluation('@ViewBag.CnaeId', '@ViewBag.WorkStationId')" style="cursor: pointer;">
                             <i class="fa fa-flash"></i>
                             <strong>Evaluación de Riesgos</strong>
                         </a>

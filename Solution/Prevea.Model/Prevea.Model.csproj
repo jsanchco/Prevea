@@ -88,7 +88,6 @@
     <Compile Include="Model\RequestMedicalExaminations.cs" />
     <Compile Include="Model\RequestMedicalExaminationState.cs" />
     <Compile Include="Model\RiskEvaluation.cs" />
-    <Compile Include="Model\Sector.cs" />
     <Compile Include="Model\Simulation.cs" />
     <Compile Include="Model\SimulationCompany.cs" />
     <Compile Include="Model\SimulationState.cs" />
@@ -109,6 +108,7 @@
     <Compile Include="ViewModel\AreaViewModel.cs" />
     <Compile Include="ViewModel\ChangePassword.cs" />
     <Compile Include="ViewModel\ClinicViewModel.cs" />
+    <Compile Include="ViewModel\CnaeViewModel.cs" />
     <Compile Include="ViewModel\CompanyViewModel.cs" />
     <Compile Include="ViewModel\DeltaCodeViewModel.cs" />
     <Compile Include="ViewModel\DoctorViewModel.cs" />
@@ -129,7 +129,6 @@
     <Compile Include="ViewModel\RequestMedicalExaminationEmployeeViewModel.cs" />
     <Compile Include="ViewModel\RequestMedicalExaminationsViewModel.cs" />
     <Compile Include="ViewModel\RiskEvaluationViewModel.cs" />
-    <Compile Include="ViewModel\SectorViewModel.cs" />
     <Compile Include="ViewModel\SimulationViewModel.cs" />
     <Compile Include="ViewModel\TemplateMedicalExaminationViewModel.cs" />
     <Compile Include="ViewModel\TrainingCourseTrainingServiceViewModel.cs" />

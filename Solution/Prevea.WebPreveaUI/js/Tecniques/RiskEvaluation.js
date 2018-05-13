@@ -1,6 +1,6 @@
 ﻿var RiskEvaluation = kendo.observable({
 
-    sectorId: null,
+    cnaeId: null,
     workStationId: null,
 
     gridRiskEvaluationId: "gridRiskEvaluation",
@@ -11,10 +11,10 @@
     probabilityDataSource: null,
     severityDataSource: null,
 
-    init: function (sectorId, workStationId) {
+    init: function (cnaeId, workStationId) {
         kendo.culture("es-ES");
 
-        this.sectorId = sectorId;
+        this.cnaeId = cnaeId;
         this.workStationId = workStationId;
 
         this.createRiskEvaluationDataSource();
@@ -29,7 +29,7 @@
         var params = {
             url: "/Tecniques/WorkStations",
             data: {
-                sectorSelected: this.sectorId 
+                cnaeSelected: this.cnaeId 
             }
         };
         GeneralData.goToActionController(params);
@@ -39,7 +39,7 @@
         var params = {
             url: "/Tecniques/RiskEvaluation",
             data: {
-                sectorId: this.sectorId,
+                cnaeId: this.cnaeId,
                 workStationId: this.workStationId
             }
         };
@@ -74,7 +74,7 @@
                     url: "/Tecniques/RiskEvaluations_Read",
                     dataType: "jsonp",
                     data: {
-                        sectorId: this.sectorId,
+                        cnaeId: this.cnaeId,
                         workStationId: this.workStationId
                     }
                 },
@@ -93,7 +93,7 @@
                 parameterMap: function (options, operation) {
                     if (operation === "read" && options) {
                         return {
-                            sectorId: options.sectorId,
+                            cnaeId: options.cnaeId,
                             workStationId: options.workStationId
                         };
                     }
@@ -191,7 +191,10 @@
                 },
                 {
                     field: "Preventive",
-                    title: "Medidas Preventivas"
+                    title: "Medidas Preventivas",
+                    //encoded: false
+                    //editor: RiskEvaluation.preventiveEditor,
+                    //template: "#= RiskEvaluation.getColumnTemplatePreventive(data.Preventive) #"
                 },
                 {
                     title: "Comandos",
@@ -376,6 +379,13 @@
         return html;
     },
 
+    getColumnTemplatePreventive: function (text) {
+        var html = kendo.format("<textarea rows='10'>{0}</textarea>",
+            text);
+
+        return html;
+    },
+
     createProbabilityDataSource: function () {
         this.probabilityDataSource = new kendo.data.DataSource({
             schema: {
@@ -443,6 +453,17 @@
                     e.sender.list.width("auto").find("li").css({ "white-space": "nowrap", "padding-right": "25px" });
                 }
             });
+    },
+
+    preventiveEditor: function (container, options) {
+        $("<input required name='" + options.field + "'/>")
+            .appendTo(container)
+            .kendoEditor({
+                resizable: {
+                    content: false,
+                    toolbar: true
+                }
+        });
     },
 
     getRiskValueAndPriority: function(data) {

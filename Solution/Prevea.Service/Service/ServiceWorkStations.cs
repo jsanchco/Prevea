@@ -16,11 +16,6 @@
             return Repository.GetWorkStations();
         }
 
-        public List<WorkStation> GetWorkStationsBySectorId(int sectorId)
-        {
-            return Repository.GetWorkStationsBySectorId(sectorId);
-        }
-
         public WorkStation GetWorkStationById(int id)
         {
             return Repository.GetWorkStationById(id);

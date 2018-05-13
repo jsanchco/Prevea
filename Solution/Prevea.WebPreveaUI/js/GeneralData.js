@@ -57,7 +57,7 @@
                 url = "/Simulations/Simulations";
                 break;
 
-            case "commercialTool|companies":
+            case "company|companies":
                 url = "/Companies/Companies";
                 break;
 

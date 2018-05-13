@@ -58,7 +58,6 @@
         public DbSet<Clinic> Clinics { get; set; }
         public DbSet<DoctorMedicalExaminationEmployee> DoctorMedicalExaminationEmployees { get; set; }
         public DbSet<MedicalExaminationDocuments> MedicalExaminationDocuments { get; set; }
-        public DbSet<Sector> Sectors { get; set; }
         public DbSet<WorkStation> WorkStations { get; set; }
         public DbSet<DeltaCode> DeltaCodes { get; set; }
         public DbSet<RiskEvaluation> RiskEvaluations { get; set; }
