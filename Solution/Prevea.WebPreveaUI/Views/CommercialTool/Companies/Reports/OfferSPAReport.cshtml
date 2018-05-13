@@ -4,19 +4,6 @@
     Layout = "~/Views/Shared/_LayoutReport.cshtml";
 }
 
-<style>
-    @@page {
-        margin: 0; 
-    }
-
-    body {
-        margin: 1.6cm;
-        color: black;
-        font-size: 14px;
-        font-family: Arial;
-    }
-</style>
-
 <div id="pageOfferSPAReport">
     <div style="font-size: 14px;">
         <div class="row">
@@ -73,7 +60,7 @@
             <div class="col-xs-3">
                 <span style="font-weight: bold;">RAZÓN SOCIAL/AUTÓNOMO</span>
             </div>
-            <div class="col-xs-7">
+            <div class="col-xs-9">
                 <span style="">
                     @Model.Name
                 </span>
@@ -84,7 +71,7 @@
             <div class="col-xs-3">
                 <span style="font-weight: bold;">CIF/NIF</span>
             </div>
-            <div class="col-xs-7">
+            <div class="col-xs-9">
                 <span style="">
                     @Model.NIF
                 </span>
@@ -95,7 +82,7 @@
             <div class="col-xs-3">
                 <span style="font-weight: bold;">DOMICILIO SOCIAL</span>
             </div>
-            <div class="col-xs-7">
+            <div class="col-xs-9">
                 <span style="">
                     @Model.Address
                 </span>
@@ -106,7 +93,7 @@
             <div class="col-xs-3">
                 <span style="font-weight: bold;">ACTIVIDAD</span>
             </div>
-            <div class="col-xs-7">
+            <div class="col-xs-9">
                 <span style="">
                     @Model.Cnae.Name
                 </span>
@@ -117,7 +104,7 @@
             <div class="col-xs-3">
                 <span style="font-weight: bold;">PERSONA de CONTACTO</span>
             </div>
-            <div class="col-xs-7">
+            <div class="col-xs-9">
                 <span style="">
                     @{
                         var contactPerson = Model.ContactPersons.FirstOrDefault();
@@ -139,7 +126,7 @@
             <div class="col-xs-3">
                 <span style="font-weight: bold;">CARGO</span>
             </div>
-            <div class="col-xs-7">
+            <div class="col-xs-9">
                 <span style="">
                     @if (contactPerson != null)
                     {
@@ -153,7 +140,7 @@
             <div class="col-xs-3">
                 <span style="font-weight: bold;">TELÉFONO</span>
             </div>
-            <div class="col-xs-7">
+            <div class="col-xs-9">
                 <span style="">
                     @if (contactPerson != null)
                     {
@@ -167,7 +154,7 @@
             <div class="col-xs-3">
                 <span style="font-weight: bold;">E-MAIL</span>
             </div>
-            <div class="col-xs-7">
+            <div class="col-xs-9">
                 <span style="">
                     @if (contactPerson != null)
                     {
