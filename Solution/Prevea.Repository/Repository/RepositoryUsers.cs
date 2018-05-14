@@ -21,6 +21,7 @@
             return Context.Users
                 .Include(x => x.UserState)
                 .Include(x => x.UserParent)
+                .Include(x => x.WorkStation)
                 .Include(x => x.UserRoles.Select(y => y.Role))
                 .ToList();
         }
@@ -30,6 +31,7 @@
             return Context.Users
                 .Include(x => x.UserState)
                 .Include(x => x.UserParent)
+                .Include(x => x.WorkStation)
                 .Include(x => x.UserRoles.Select(y => y.Role))
                 .FirstOrDefault((m => (m.Id == id)));
         }
@@ -239,6 +241,7 @@
             return (Context.Users
                 .Include(x => x.UserState)
                 .Include(x => x.UserRoles)
+                .Include(x => x.WorkStation)
                 .Include(x => x.UserRoles.Select(y => y.Role))
                 .FirstOrDefault((m => (m.Guid.ToString() == guid))));
         }

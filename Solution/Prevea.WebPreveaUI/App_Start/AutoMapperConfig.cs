@@ -1,4 +1,6 @@
-﻿namespace Prevea.WebPreveaUI.App_Start
+﻿using System;
+
+namespace Prevea.WebPreveaUI.App_Start
 {
     #region Using
 
@@ -54,6 +56,9 @@
                 .ForMember(x => x.RoleName, x => x.MapFrom(y => y.UserRoles.FirstOrDefault().Role.Name))
                 .ForMember(x => x.RoleDescription, x => x.MapFrom(y => y.UserRoles.FirstOrDefault().Role.Description))
                 .ForMember(x => x.UserStateName, x => x.MapFrom(y => y.UserState.Name))
+                .ForMember(x => x.WorkStationName, x => x.MapFrom(y => string.IsNullOrEmpty(y.WorkStation.ProfessionalCategory) 
+                    ? y.WorkStation.Name ?? string.Empty
+                    : $"{y.WorkStation.Name} ({y.WorkStation.ProfessionalCategory})"))
                 .ForMember(x => x.UserParentInitials, x => x.MapFrom(y => y.UserParent.Initials));
             AutoMapper.Mapper.CreateMap<UserViewModel, User>();
 

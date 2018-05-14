@@ -191,7 +191,7 @@
                 },
                 {
                     field: "Preventive",
-                    title: "Medidas Preventivas",
+                    title: "Medidas Preventivas"
                     //encoded: false
                     //editor: RiskEvaluation.preventiveEditor,
                     //template: "#= RiskEvaluation.getColumnTemplatePreventive(data.Preventive) #"

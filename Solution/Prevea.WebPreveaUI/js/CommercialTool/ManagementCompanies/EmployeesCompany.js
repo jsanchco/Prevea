@@ -6,6 +6,7 @@
     companyId: null,
 
     employeesCompanyDataSource: null,
+    workStationsDataSource: null,
 
     init: function (companyId) {
         kendo.culture("es-ES");
@@ -13,6 +14,7 @@
         this.companyId = companyId;
 
         this.createEmployeesCompanyDataSource();
+        this.createWorkStationsDataSource();
         this.createEmployeesCompanyGrid();
     },
 
@@ -59,13 +61,11 @@
                 width: 70,
                 groupable: "false"
             }, {
-                field: "WorkStation",
+                field: "WorkStationId",
                 title: "Puesto de Trabajo",
-                width: 160
-            }, {
-                field: "ProfessionalCategory",
-                title: "Categoría",
-                width: 160
+                width: 160,
+                editor: EmployeesCompany.workStationsDropDownEditor,
+                template: "#= EmployeesCompany.getColumnTemplateWorkStation(data.WorkStationName) #"
             }, {
                 title: "Comandos",
                 field: "Commands",
@@ -159,7 +159,6 @@
     },
 
     createEmployeesCompanyDataSource: function () {
-        var that = this;
         this.employeesCompanyDataSource = new kendo.data.DataSource({
             schema: {
                 model: {
@@ -175,10 +174,10 @@
                         ChargeDate: { type: "date" },
                         Email: { type: "string" },
                         DNI: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
-                        WorkStation: { type: "string" },
-                        ProfessionalCategory: { type: "string" },
+                        WorkStationName: { type: "string" },
+                        WorkStationId: { type: "number", defaulValue: null },
                         UserStateId: { type: "number", defaultValue: 1 },
-                        CompanyId: { type: "number", defaultValue: that.companyId }
+                        CompanyId: { type: "number", defaultValue: EmployeesCompany.companyId }
                     }
                 }
             },
@@ -230,6 +229,27 @@
         });
     },
 
+    createWorkStationsDataSource: function () {
+        this.workStationsDataSource = new kendo.data.DataSource({
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: { type: "number" },
+                        Name: { type: "string" }
+                    }
+                }
+            },
+            transport: {
+                read: {
+                    url: "/Companies/GetWorkStations",
+                    dataType: "jsonp",
+                    data: { companyId: this.companyId }
+                }
+            }
+        });
+    },
+
     getTemplateToolBar: function () {
         var html = "<div class='toolbar'>";
         html += "<span name='create' class='k-grid-add' id='createUser'>";
@@ -237,6 +257,13 @@
         html += "</span></div>";
 
         return html;
+    },
+
+    getColumnTemplateWorkStation: function (text) {
+        if (text == null) {
+            return "";
+        }
+        return text;
     },
 
     getColumnTemplateCommands: function (data) {
@@ -333,6 +360,20 @@
                 console.log(result);
             }
         });
-    }
+    },
 
+    workStationsDropDownEditor: function (container, options) {
+        EmployeesCompany.workStationsDataSource.read();
+
+        $("<input required name='" + options.field + "'/>")
+            .appendTo(container)
+            .kendoDropDownList({
+                dataTextField: "Name",
+                dataValueField: "Id",
+                dataSource: EmployeesCompany.workStationsDataSource,
+                dataBound: function (e) {
+                    e.sender.list.width("auto").find("li").css({ "white-space": "nowrap", "padding-right": "25px" });
+                }
+            });
+    }
 });

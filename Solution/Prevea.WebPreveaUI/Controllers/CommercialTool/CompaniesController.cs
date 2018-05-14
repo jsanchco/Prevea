@@ -1,4 +1,6 @@
-﻿namespace Prevea.WebPreveaUI.Controllers.CommercialTool
+﻿using Prevea.Model.CustomModel;
+
+namespace Prevea.WebPreveaUI.Controllers.CommercialTool
 {
     #region Using
 
@@ -425,6 +427,8 @@
             foreach (var employee in data)
             {
                 employee.CompanyId = companyId;
+                if (employee.WorkStationId == null)
+                    employee.WorkStationId = 0;
             }
  
             return this.Jsonp(data);
@@ -438,6 +442,12 @@
                 if (employee == null)
                 {
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Trabajador" });
+                }
+
+                if (employee.WorkStationId == 0)
+                {
+                    employee.WorkStationId = null;
+                    employee.WorkStationName = null;
                 }
 
                 var data = AutoMapper.Mapper.Map<User>(employee);
@@ -500,6 +510,14 @@
                                     return this.Jsonp(new { Errors = resultNotification });
                             }
                         }
+                    }
+
+                    if (employee.WorkStationId != null)
+                    {
+                        var workStation = Service.GetWorkStationById((int)employee.WorkStationId);
+                        employee.WorkStationName = string.IsNullOrEmpty(workStation.ProfessionalCategory)
+                            ? workStation.Name
+                            : $"{workStation.Name} ({workStation.ProfessionalCategory})";
                     }
 
                     return this.Jsonp(employee);
@@ -586,6 +604,14 @@
                         }
                     }
 
+                    if (employee.WorkStationId != null)
+                    {
+                        var workStation = Service.GetWorkStationById((int)employee.WorkStationId);
+                        employee.WorkStationName = string.IsNullOrEmpty(workStation.ProfessionalCategory)
+                            ? workStation.Name
+                            : $"{workStation.Name} ({workStation.ProfessionalCategory})";
+                    }
+
                     return this.Jsonp(employee);
                 }
 
@@ -607,6 +633,12 @@
                 if (employee == null)
                 {
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del Trabajador" });
+                }
+
+                if (employee.WorkStationId == 0)
+                {
+                    employee.WorkStationId = null;
+                    employee.WorkStationName = null;
                 }
 
                 var result = Service.SaveEmployeeCompany((int)EnRole.Employee, (int)employee.CompanyId, AutoMapper.Mapper.Map<User>(employee));
@@ -668,8 +700,16 @@
                                     return this.Jsonp(new { Errors = resultNotification });
                             }                            
                         }   
-                    }   
+                    }
 
+                    if (employee.WorkStationId != null)
+                    {
+                        var workStation = Service.GetWorkStationById((int)employee.WorkStationId);
+                        employee.WorkStationName = string.IsNullOrEmpty(workStation.ProfessionalCategory)
+                            ? workStation.Name
+                            : $"{workStation.Name} ({workStation.ProfessionalCategory})";
+                    }
+                    
                     return this.Jsonp(employee);
                 }
 
@@ -755,6 +795,25 @@
 
                 return Json(subscribe ? new { Errors = "Se ha producido un error al Dar de Alta del Trabajador" } : new { Errors = "Se ha producido un error al Dar de Baja del Trabajador" });
             }
+        }
+
+        [HttpGet]
+        public JsonResult GetWorkStations([DataSourceRequest] DataSourceRequest request, int companyId)
+        {
+            var company = Service.GetCompany(companyId);
+            var workStations = company.CnaeId != null ? Service.GetWorkStationsByCnaeId((int) company.CnaeId) : Service.GetWorkStations();
+            //var data = new List<GenericModelDropDown> { new GenericModelDropDown { Id = 0, Name = "Selecciona ..." } };
+            var data = new List<GenericModelDropDown>();
+            foreach (var workStation in workStations)
+            {
+                data.Add(new GenericModelDropDown
+                {
+                    Id = workStation.Id,
+                    Name = string.IsNullOrEmpty(workStation.ProfessionalCategory) ? workStation.Name : $"{workStation.Name} ({workStation.ProfessionalCategory})"
+                });
+            }
+
+            return this.Jsonp(data);
         }
 
         #endregion

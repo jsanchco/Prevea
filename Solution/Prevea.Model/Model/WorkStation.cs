@@ -22,5 +22,6 @@
         public virtual Cnae Cnae { get; set; }
 
         public virtual ICollection<RiskEvaluation> RiskEvaluations { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

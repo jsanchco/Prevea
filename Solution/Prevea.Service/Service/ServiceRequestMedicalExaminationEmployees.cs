@@ -851,7 +851,7 @@
             templateMedicalExaminationViewModel.EmployeeAddress = requestMedicalExaminationEmployee.Employee.User.Address;
             templateMedicalExaminationViewModel.EmployeeDNI = requestMedicalExaminationEmployee.Employee.User.DNI;
             templateMedicalExaminationViewModel.EmployeeProvince = requestMedicalExaminationEmployee.Employee.User.Province;
-            templateMedicalExaminationViewModel.EmployeeWorkStation = requestMedicalExaminationEmployee.Employee.User.WorkStation;
+            templateMedicalExaminationViewModel.EmployeeWorkStation = requestMedicalExaminationEmployee.Employee.User.WorkStation.Name;
             templateMedicalExaminationViewModel.EmployeeChargeDate = requestMedicalExaminationEmployee.Employee.User.ChargeDate;
             templateMedicalExaminationViewModel.EmployeePhoneNumber = requestMedicalExaminationEmployee.Employee.User.PhoneNumber;
 

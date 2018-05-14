@@ -40,6 +40,7 @@
         {
             return Context.Employees.Where(x => x.CompanyId == companyId)
                 .Include(x => x.User)
+                .Include(x => x.User.WorkStation)
                 .Include(x => x.Company)
                 .ToList();
         }
