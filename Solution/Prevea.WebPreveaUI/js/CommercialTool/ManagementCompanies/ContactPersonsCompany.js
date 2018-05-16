@@ -27,7 +27,7 @@
                         PhoneNumber: { type: "string" },
                         Email: { type: "string" },
                         DNI: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
-                        WorkStation: { type: "string" },
+                        WorkStationCustom: { type: "string" },
                         UserStateId: { type: "number", defaultValue: 1 },
                         CompanyId: { type: "number", defaultValue: that.companyId },
                         BirthDate: { type: "date", defaultValue:  new Date() },
@@ -111,7 +111,7 @@
                 width: 100,
                 groupable: "false"
             }, {
-                field: "WorkStation",
+                field: "WorkStationCustom",
                 title: "Puesto de Trabajo",
                 width: 160
             }, {

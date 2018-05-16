@@ -61,6 +61,8 @@
         public int? WorkStationId { get; set; }
         public WorkStation WorkStation { get; set; }
 
+        public string WorkStationCustom { get; set; }
+        public string ProfessionalCategoryCustom { get; set; }
         public string Email { get; set; }
         public string Nick { get; set; }
         public DateTime BirthDate { get; set; }

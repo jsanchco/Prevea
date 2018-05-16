@@ -158,6 +158,26 @@
                     new { resultStatus = Status.Error }, JsonRequestBehavior.AllowGet);
             }
 
+            if ((int)result.Object == (int) EnDocumentState.Finished)
+            {
+                var requestMedicalExaminationEmployee =
+                    Service.GetRequestMedicalExaminationEmployeeById(templateMedicalExaminationViewModel
+                        .RequestMedicalExaminationEmployeeId);
+                
+                var notification = new Model.Model.Notification
+                {
+                    DateCreation = DateTime.Now,
+                    NotificationTypeId = (int)EnNotificationType.FromSede,
+                    NotificationStateId = (int)EnNotificationState.Assigned,
+                    ToUserId = requestMedicalExaminationEmployee.Employee.UserId,
+                    Observations =
+                        $"{Service.GetUser(User.Id).Initials} - Reconocimiento Médico realizado [{requestMedicalExaminationEmployee.Date.ToLongDateString()}]"
+                };
+                var resultNotification = Service.SaveNotification(notification);
+                if (resultNotification.Status == Status.Error)
+                    return this.Jsonp(new { Errors = resultNotification });
+            }
+
             return Json(
                 new { resultStatus = Status.Ok, documentState = (int)result.Object },
                 JsonRequestBehavior.AllowGet);

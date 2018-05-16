@@ -150,10 +150,15 @@
         });
         kendo.bind($("#" + this.gridNotificationsId), this);
 
+        var grid = $("#" + this.gridNotificationsId).data("kendoGrid");
         if (GeneralData.userRoleId !== Constants.role.Super) {
-            var grid = $("#" + this.gridNotificationsId).data("kendoGrid");
+            
             grid.hideColumn("NotificationTypeDescription");
             grid.hideColumn("ToUserInitials");
+        }
+        if (GeneralData.userRoleId === Constants.role.Employee) {
+            grid.hideColumn("SimulationName");
+            grid.hideColumn("Commands");
         }
     },
 

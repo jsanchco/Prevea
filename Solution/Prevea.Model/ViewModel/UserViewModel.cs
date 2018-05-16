@@ -29,6 +29,8 @@
         public string PhoneNumber { get; set; }
         public int? WorkStationId { get; set; }
         public string WorkStationName { get; set; }
+        public string WorkStationCustom { get; set; }
+        public string ProfessionalCategoryCustom { get; set; }
         public string Address { get; set; }
         public string Province { get; set; }
         public string Email { get; set; }

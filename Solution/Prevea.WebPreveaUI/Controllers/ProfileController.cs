@@ -51,6 +51,12 @@
 
             ViewBag.SelectTabId = 0;
 
+            if (user.UserRoles.FirstOrDefault()?.RoleId == (int) EnRole.Employee)
+            {
+                user.WorkStationCustom = user.WorkStation.Name;
+                user.ProfessionalCategoryCustom = user.WorkStation.ProfessionalCategory;
+            }
+
             return PartialView(AutoMapper.Mapper.Map<UserViewModel>(user));
         }
 
@@ -92,9 +98,17 @@
         [HttpGet]
         public ActionResult PersonalDataProfile()
         {
-            var user = AutoMapper.Mapper.Map<UserViewModel>(Service.GetUser(User.Id));
+            var user = Service.GetUser(User.Id);
 
-            return PartialView("~/Views/Profile/PersonalDataProfile.cshtml", user);
+            if (user.UserRoles.FirstOrDefault()?.RoleId == (int)EnRole.Employee)
+            {
+                user.WorkStationCustom = user.WorkStation.Name;
+                user.ProfessionalCategoryCustom = user.WorkStation.ProfessionalCategory;
+            }
+
+            var data = AutoMapper.Mapper.Map<UserViewModel>(user);
+
+            return PartialView("~/Views/Profile/PersonalDataProfile.cshtml", data);
         }
 
         [HttpPost]
@@ -119,6 +133,13 @@
                 if (result.Status != Status.Error)
                 {
                     ViewBag.Notification = "Tu Perfil se ha actualizado correctamente";
+
+                    var userFind = Service.GetUser(User.Id);
+                    if (userFind.UserRoles.FirstOrDefault()?.RoleId == (int)EnRole.Employee)
+                    {
+                        user.WorkStationCustom = userFind.WorkStation.Name;
+                        user.ProfessionalCategoryCustom = userFind.WorkStation.ProfessionalCategory;
+                    }
 
                     return PartialView("~/Views/Profile/ProfileUser.cshtml", user);
                 }

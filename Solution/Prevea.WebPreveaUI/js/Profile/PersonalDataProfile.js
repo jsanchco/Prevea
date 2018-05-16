@@ -148,9 +148,9 @@
             error.push("Debes añadir un Nombre");
         }
 
-        if (GeneralData.validateDNI($("#" + this.textBoxDNIId).val()) === false) {
-            error.push("El formato del DNI/NIF no es correcto");
-        }
+        //if (GeneralData.validateDNI($("#" + this.textBoxDNIId).val()) === false) {
+        //    error.push("El formato del DNI/NIF no es correcto");
+        //}
 
         return error;
     },

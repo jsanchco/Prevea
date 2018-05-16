@@ -17,6 +17,8 @@
         {
             return Context.RequestMedicalExaminationsEmployees
                 .Include(x => x.Employee)
+                .Include(x => x.Employee.User)
+                .Include(x => x.Employee.User.WorkStation)
                 .Include(x => x.RequestMedicalExaminations)
                 .Include(x => x.DoctorsMedicalExaminationEmployee)
                 .FirstOrDefault(x => x.Id == id);
@@ -26,6 +28,8 @@
         {
             return Context.RequestMedicalExaminationsEmployees
                 .Include(x => x.Employee)
+                .Include(x => x.Employee.User)
+                .Include(x => x.Employee.User.WorkStation)
                 .Include(x => x.RequestMedicalExaminations)
                 .Include(x => x.DoctorsMedicalExaminationEmployee)
                 .Where(x => x.EmployeeId == employeeId)
@@ -37,6 +41,8 @@
         {
             return Context.RequestMedicalExaminationsEmployees
                 .Include(x => x.Employee)
+                .Include(x => x.Employee.User)
+                .Include(x => x.Employee.User.WorkStation)
                 .Include(x => x.RequestMedicalExaminations)
                 .Include(x => x.DoctorsMedicalExaminationEmployee)
                 .FirstOrDefault(x => x.EmployeeId == employeeId && x.RequestMedicalExaminationsId == requestMedicalExaminationsId);
@@ -46,6 +52,8 @@
         {
             return Context.RequestMedicalExaminationsEmployees
                 .Include(x => x.Employee)
+                .Include(x => x.Employee.User)
+                .Include(x => x.Employee.User.WorkStation)
                 .Include(x => x.RequestMedicalExaminations)
                 .ToList();
         }

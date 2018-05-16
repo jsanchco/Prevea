@@ -88,11 +88,11 @@
                     </div>
 
                     <div class="col-sm-4">
-                        @Html.TextBoxFor(model => model.WorkStation, new { @id = "textBoxWorkStation", @class = "form-control", style = "width:100%", placeholder = "Puesto de Trabajo" })
+                        @Html.TextBoxFor(model => model.WorkStationCustom, new { @id = "textBoxWorkStation", @class = "form-control", style = "width:100%", placeholder = "Puesto de Trabajo" })
                     </div>
 
                     <div class="col-sm-4">
-                        @Html.TextBoxFor(model => model.ProfessionalCategory, new { @id = "textBoxProfessionalCategory", @class = "form-control", style = "width:100%", placeholder = "Categoría Profesional" })
+                        @Html.TextBoxFor(model => model.ProfessionalCategoryCustom, new { @id = "textBoxProfessionalCategory", @class = "form-control", style = "width:100%", placeholder = "Categoría Profesional" })
                     </div>
 
                 </div>
@@ -111,8 +111,9 @@
 
                     @Html.HiddenFor(model => model.Id)
                     @Html.HiddenFor(model => model.RoleId)
+                    @Html.HiddenFor(model => model.ChargeDate)
 
-                    <input type="submit" id="btnValidate" value="Guardar" class="btn btn-prevea btn"/>
+                    <input type="submit" id="btnValidate" value="Guardar" class="btn btn-prevea btn" />
 
                 </div>
             </div>
