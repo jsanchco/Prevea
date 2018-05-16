@@ -206,7 +206,7 @@
             columns: [
                 {
                     field: "Name",
-                    title: "Nombre",
+                    title: "Puesto de Trabajo",
                     width: 200,
                     template: "#= Templates.getColumnTemplateBold(data.Name) #"
                 },
