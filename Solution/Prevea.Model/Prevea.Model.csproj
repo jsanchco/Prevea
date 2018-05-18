@@ -83,6 +83,7 @@
     <Compile Include="Model\NotificationState.cs" />
     <Compile Include="Model\NotificationType.cs" />
     <Compile Include="Model\PaymentMethod.cs" />
+    <Compile Include="Model\PreventivePlan.cs" />
     <Compile Include="Model\RequestMedicalExaminationEmployee.cs" />
     <Compile Include="Model\RequestMedicalExaminationEmployeeState.cs" />
     <Compile Include="Model\RequestMedicalExaminations.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="ViewModel\NotificationViewModel.cs" />
     <Compile Include="ViewModel\PaymentMethodViewModel.cs" />
     <Compile Include="ViewModel\PaymentModeViewModel.cs" />
+    <Compile Include="ViewModel\PreventivePlanViewModel.cs" />
     <Compile Include="ViewModel\RequestMedicalExaminationEmployeeViewModel.cs" />
     <Compile Include="ViewModel\RequestMedicalExaminationsViewModel.cs" />
     <Compile Include="ViewModel\RiskEvaluationViewModel.cs" />

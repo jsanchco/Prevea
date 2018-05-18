@@ -75,6 +75,8 @@
 
         public virtual ICollection<MedicalExaminationDocuments> MedicalExaminationDocuments { get; set; }
 
+        public virtual ICollection<PreventivePlan> PreventivePlans { get; set; }
+
         #region Constructor
 
         public Document()

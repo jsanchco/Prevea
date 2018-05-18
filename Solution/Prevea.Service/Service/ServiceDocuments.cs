@@ -60,6 +60,10 @@
                         Status = Status.Error
                     };
                 }
+
+                if (document.Area == null)
+                    document.Area = Repository.GetArea(document.AreaId);
+
                 if (!document.IsFirmedDocument && document.Area.EntityId != 3)
                     document = FillDataDocument(documentUserCreator.UserId, document, extension);
 

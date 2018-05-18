@@ -144,6 +144,13 @@ namespace Prevea.WebPreveaUI.App_Start
                 .ForMember(x => x.DuplicateDeltaCodeId, x => x.MapFrom(y => y.DeltaCode.Id.ToString()))
                 .ForMember(x => x.DeltaCodeName, x => x.MapFrom(y => y.DeltaCode.Name))
                 .ForMember(x => x.DeltaCodeDescription, x => x.MapFrom(y => y.DeltaCode.Description));
+
+            AutoMapper.Mapper.CreateMap<PreventivePlanViewModel, PreventivePlan>();
+            AutoMapper.Mapper.CreateMap<PreventivePlan, PreventivePlanViewModel>()
+                .ForMember(x => x.CompanyName, x => x.MapFrom(y => y.Company.Name))
+                .ForMember(x => x.CompanyEnrollment, x => x.MapFrom(y => y.Company.Enrollment))
+                .ForMember(x => x.DocumentBeginDate, x => x.MapFrom(y => y.Document.BeginDate))
+                .ForMember(x => x.DocumentEndDate, x => x.MapFrom(y => y.Document.EndDate));
         }
     }
 }

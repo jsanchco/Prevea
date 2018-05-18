@@ -410,5 +410,14 @@
         Result DeleteRiskEvaluation(int id);
 
         #endregion
+
+        #region PreventivePlans
+
+        List<PreventivePlan> GetPreventivePlans(int userId);
+        PreventivePlan GetPreventivePlanById(int id);
+        Result SavePreventivePlan(PreventivePlan preventivePlan);
+        Result DeletePreventivePlan(int id);
+
+        #endregion
     }
 }

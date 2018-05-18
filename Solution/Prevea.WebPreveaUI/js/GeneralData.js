@@ -120,6 +120,18 @@
             case "tecniques|historic":
                 url = "/Tecniques/HistoricTecniques";
                 break;
+
+            case "library|procedures":
+                alert("Sin desarrollar!!!");
+                break;
+
+            case "commercialTool|mailing":
+                alert("Sin desarrollar!!!");
+                break;
+
+            case "company|preventivePlan":
+                url = "/PreventivePlan/PreventivePlans";
+                break;
                                 
             default:
                 break;

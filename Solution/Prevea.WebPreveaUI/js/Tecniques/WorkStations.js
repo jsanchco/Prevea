@@ -36,7 +36,8 @@
                     id: "Id",
                     fields: {
                         Id: { type: "number", defaultValue: 0 },
-                        Name: { type: "string", validation: { required: { message: " Campo Obligatorio " } } }
+                        CustomKey: { type: "string" },
+                        Name: { type: "string" }
                     }
                 }
             },
@@ -52,6 +53,12 @@
     createCnaesGrid: function () {
         $("#" + this.gridCnaesId).kendoGrid({
             columns: [
+                {
+                    field: "CustomKey",
+                    title: "Código",
+                    width: 150,
+                    template: "#= Templates.getColumnTemplateIncrease(data.CustomKey) #"
+                },
                 {
                     field: "Name",
                     title: "Nombre",

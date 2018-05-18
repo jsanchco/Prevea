@@ -185,6 +185,7 @@
     <Compile Include="Controllers\MedicalExamination\HistoricMedicalExaminationController.cs" />
     <Compile Include="Controllers\MedicalExamination\MedicalExaminationController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
+    <Compile Include="Controllers\PreventivePlanController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\StartController.cs" />
     <Compile Include="Controllers\TecniquesController.cs" />
@@ -691,6 +692,8 @@
     <Content Include="js\MedicalExamination\HistoricMedicalExamination.js" />
     <Content Include="js\MedicalExamination\TemplateMedicalExamination.js" />
     <Content Include="js\Notifications\Notifications.js" />
+    <Content Include="js\PreventivePlans\DetailPreventivePlan.js" />
+    <Content Include="js\PreventivePlans\PreventivePlans.js" />
     <Content Include="js\Profile\ChangePassword.js" />
     <Content Include="js\Profile\ChoosePhoto.js" />
     <Content Include="js\Profile\DocumentsProfile.js" />
@@ -1188,6 +1191,8 @@
     <Content Include="Views\Tecniques\HistoricTecniques.cshtml" />
     <Content Include="Views\Tecniques\DeltaCodes.cshtml" />
     <Content Include="Views\Tecniques\RiskEvaluation.cshtml" />
+    <Content Include="Views\PreventivePlan\PreventivePlans.cshtml" />
+    <Content Include="Views\PreventivePlan\DetailPreventivePlan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

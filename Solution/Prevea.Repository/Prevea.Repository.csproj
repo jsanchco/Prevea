@@ -75,6 +75,7 @@
     <Compile Include="Repository\RepositoryNotifications.cs" />
     <Compile Include="Repository\RepositoryNotificationTypes.cs" />
     <Compile Include="Repository\RepositoryPaymentMethods.cs" />
+    <Compile Include="Repository\RepositoryPreventivePlans.cs" />
     <Compile Include="Repository\RepositoryRequestMedicalExaminationEmployees.cs" />
     <Compile Include="Repository\RepositoryRequestMedicalExaminationEmployeeStates.cs" />
     <Compile Include="Repository\RepositoryRequestMedicalExaminationStates.cs" />

@@ -74,5 +74,7 @@
         public virtual CompanyState CompanyState { get; set; }
 
         public virtual ICollection<RequestMedicalExaminations> RequestMedicalExaminations { get; set; }
+
+        public virtual ICollection<PreventivePlan> PreventivesPlans { get; set; }
     }
 }

@@ -71,6 +71,7 @@
     <Compile Include="Service\ServiceNotifications.cs" />
     <Compile Include="Service\ServiceNotificationTypes.cs" />
     <Compile Include="Service\ServicePaymentMethods.cs" />
+    <Compile Include="Service\ServicePreventivePlans.cs" />
     <Compile Include="Service\ServiceRequestMedicalExaminationEmployees.cs" />
     <Compile Include="Service\ServiceRequestMedicalExaminationEmployeeStates.cs" />
     <Compile Include="Service\ServiceRequestMedicalExaminations.cs" />
