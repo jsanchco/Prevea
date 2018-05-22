@@ -1,56 +1,18 @@
 ﻿var DetailPreventivePlan = kendo.observable({
-    titleId: "title",
-    navigationId: "navigation",
     tabStripDetailPreventivePlanId: "tabStripDetailPreventivePlan",
     inputTemplatePreventivePlanId: "inputTemplatePreventivePlan",
-    spanNotificationId: "spanNotification",
-    stretchCalculate: null,
-    subscribeNumberEmployees: null,
+    btnAddTemplateId: "btnAddTemplate",
 
     // Fields
     id: null,
     selectTabId: null,
-    notification: null,
 
-    // Datasources
-
-    init: function (id, selectTabId, notification) {
+    init: function (id, selectTabId) {
         this.id = id;
         this.selectTabId = selectTabId;
 
-        if (notification) {
-            this.notification = notification;
-        } else {
-            this.notification = null;
-        }
-
-        this.setUpPage();
-        this.createKendoWidgets();
-    },
-
-    setUpPage: function () {
-  
-    },
-
-    createKendoWidgets: function () {
-        if (this.notification) {
-            GeneralData.showNotification(Constants.ok, "", "success");
-        } else {
-            $("#" + this.spanNotificationId).hide();
-        }
-
-        this.createTabStripDetailPreventivePlan();
-    },
-
-    createTabStripDetailPreventivePlan: function () {
-        var tabStrip = $("#" + this.tabStripDetailPreventivePlanId).kendoTabStrip().data("kendoTabStrip");
-        tabStrip.append({
-            text: "OFERTAS",
-            //contentUrl: kendo.format("/Companies/SimulationsCompany?companyId={0}", this.id)
-        });   
-
-        tabStrip = $("#" + this.tabStripDetailPreventivePlanId).data("kendoTabStrip");
-        tabStrip.select(this.selectTabId);
+        $("#" + this.btnAddTemplateId).removeAttr("disabled");
+        $("#" + this.btnAddTemplateId).prop("disabled", true);
     },
 
     goToPreventivePlans: function () {
@@ -70,5 +32,27 @@
             }
         };
         GeneralData.goToActionController(params);
+    },
+
+    addTemplate: function () {
+        var dropdownlist = $("#" + this.inputTemplatePreventivePlanId).data("kendoDropDownList");
+        
+        var tabStrip = $("#" + this.tabStripDetailPreventivePlanId).kendoTabStrip().data("kendoTabStrip");
+        tabStrip.append({
+            text: dropdownlist.text(),
+            contentUrl: kendo.format("/PreventivePlan/EditorTemplatePreventivePlan?preventivePlan={0}&templateId={1}", this.id, dropdownlist.value())
+        });
+        tabStrip.select(tabStrip.items().length - 1);
+    },
+
+    onChangeTemplate: function() {
+        var dropdownlist = $("#" + DetailPreventivePlan.inputTemplatePreventivePlanId).data("kendoDropDownList");
+        if (dropdownlist.value() !== "") {
+            $("#" + DetailPreventivePlan.btnAddTemplateId).removeAttr("disabled");
+            $("#" + DetailPreventivePlan.btnAddTemplateId).prop("disabled", false);
+        } else {
+            $("#" + DetailPreventivePlan.btnAddTemplateId).removeAttr("disabled");
+            $("#" + DetailPreventivePlan.btnAddTemplateId).prop("disabled", true);
+        }
     }
 });

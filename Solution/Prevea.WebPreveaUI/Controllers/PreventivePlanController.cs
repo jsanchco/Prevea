@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Prevea.WebPreveaUI.Controllers
+﻿namespace Prevea.WebPreveaUI.Controllers
 {
     #region Using
 
@@ -14,6 +12,7 @@ namespace Prevea.WebPreveaUI.Controllers
     using Model.Model;
     using Model.ViewModel;
     using Common;
+    using System.Linq;
 
     #endregion
 
@@ -41,6 +40,16 @@ namespace Prevea.WebPreveaUI.Controllers
             ViewBag.SelectTabId = selectTabId;
 
             return PartialView(preventivePlan);
+        }
+
+        [HttpGet]
+        public ActionResult EditorTemplatePreventivePlan(int preventivePlan, int templateId)
+        {
+            ViewBag.TemplateId = templateId;
+            ViewBag.Snippets = Service.GetEditorSnippets(preventivePlan, templateId);
+
+
+            return PartialView(AutoMapper.Mapper.Map<PreventivePlanViewModel>(Service.GetPreventivePlanById(preventivePlan)));
         }
 
         [HttpGet]
@@ -143,6 +152,11 @@ namespace Prevea.WebPreveaUI.Controllers
 
             return Json(new { resultStatus = Status.Ok, contract = AutoMapper.Mapper.Map<DocumentViewModel>(contract) }, 
                 JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetTemplatesPreventivePlans()
+        {
+            return Json(Service.GetTemplatePreventivePlans(), JsonRequestBehavior.AllowGet);
         }
     }
 }

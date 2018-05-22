@@ -48,6 +48,23 @@
         }
 
         [HttpGet]
+        public ActionResult TemplatePreventivePlans()
+        {
+            return PartialView();
+        }
+
+        [HttpGet]
+        public ActionResult DetailTemplatePreventivePlan(int id)
+        {
+            var templatePreventivePlan = Service.GetTemplatePreventivePlanById(id);
+
+            ViewBag.TemplateId = id;
+            ViewBag.Title = templatePreventivePlan.Name;
+
+            return PartialView();
+        }
+
+        [HttpGet]
         public ActionResult RiskEvaluation(int cnaeId, int workStationId)
         {
             ViewBag.CnaeId = cnaeId;
@@ -58,6 +75,12 @@
             if (!string.IsNullOrEmpty(workStation.ProfessionalCategory))
                 ViewBag.WorkStation = $"{ViewBag.WorkStation} ({workStation.ProfessionalCategory})";
 
+            return PartialView();
+        }
+
+        [HttpGet]
+        public ActionResult ViewerHTML()
+        {
             return PartialView();
         }
 
@@ -418,6 +441,114 @@
             }
 
             return riskEvaluationViewModel;
+        }
+
+        [HttpGet]
+        public JsonResult TemplatePreventivePlans_Read([DataSourceRequest] DataSourceRequest request)
+        {
+            return this.Jsonp(Service.GetTemplatePreventivePlans());
+        }
+
+        public ActionResult TemplatePreventivePlans_Create()
+        {
+            try
+            {
+                var templatePreventivePlan = this.DeserializeObject<TemplatePreventivePlan>("templatePreventivePlan");
+                if (templatePreventivePlan == null)
+                {
+                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del TemplatePreventivePlan" });
+                }
+
+                templatePreventivePlan.CreateDate = DateTime.Now;
+                templatePreventivePlan.ModifyDate = DateTime.Now;
+                var result = Service.SaveTemplatePreventivePlan(templatePreventivePlan);
+
+                if (result.Status != Status.Error)
+                {
+                    return this.Jsonp(result.Object);
+                }
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del TemplatePreventivePlan" });
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del TemplatePreventivePlan" });
+            }
+        }
+
+        public JsonResult TemplatePreventivePlans_Update()
+        {
+            try
+            {
+                var templatePreventivePlan = this.DeserializeObject<TemplatePreventivePlan>("templatePreventivePlan");
+                if (templatePreventivePlan == null)
+                {
+                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del TemplatePreventivePlan" });
+                }
+
+                templatePreventivePlan.ModifyDate = DateTime.Now;
+                var result = Service.SaveTemplatePreventivePlan(templatePreventivePlan);
+
+                return result.Status != Status.Error ? this.Jsonp(result.Object) : this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del TemplatePreventivePlan" });
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del TemplatePreventivePlan" });
+            }
+        }
+
+        public ActionResult TemplatePreventivePlans_Destroy()
+        {
+            try
+            {
+                var templatePreventivePlan = this.DeserializeObject<TemplatePreventivePlan>("templatePreventivePlan");
+                if (templatePreventivePlan == null)
+                {
+                    return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del TemplatePreventivePlan" });
+                }
+
+                var result = Service.DeleteTemplatePreventivePlan(templatePreventivePlan.Id);
+
+                if (result.Status == Status.Error)
+                {
+                    return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del TemplatePreventivePlan" });
+                }
+
+                return this.Jsonp(templatePreventivePlan);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del TemplatePreventivePlan" });
+            }
+        }
+
+        public JsonResult SaveTemplate(int templateId, string text)
+        {
+            var template = Service.GetTemplatePreventivePlanById(templateId);
+            if (template == null)
+                return this.Jsonp(new { resultStatus = Status.Error });
+
+            template.ModifyDate = DateTime.Now;
+            template.Template = text;
+            //template.Template = HttpUtility.HtmlEncode(text);
+            var result = Service.SaveTemplatePreventivePlan(template);
+
+            return result.Status != Status.Error ? Json(new { resultStatus = Status.Ok }) : Json(new { Errors = "Se ha producido un error en la Grabación del TemplatePreventivePlan" });
+        }
+
+        public JsonResult GetTemplate(int templateId)
+        {
+            var template = Service.GetTemplatePreventivePlanById(templateId);
+            if (template == null)
+                return this.Jsonp(new { resultStatus = Status.Error });
+
+            return Json(new { resultStatus = Status.Ok, template = template.Template });
         }
     }
 }

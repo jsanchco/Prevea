@@ -62,6 +62,7 @@
         public DbSet<DeltaCode> DeltaCodes { get; set; }
         public DbSet<RiskEvaluation> RiskEvaluations { get; set; }
         public DbSet<PreventivePlan> PreventivesPlans { get; set; }
+        public DbSet<TemplatePreventivePlan> TemplatePreventivePlans { get; set; }
 
         #endregion
 

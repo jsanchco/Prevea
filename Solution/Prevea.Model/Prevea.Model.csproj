@@ -94,6 +94,7 @@
     <Compile Include="Model\SimulationState.cs" />
     <Compile Include="Model\StretchAgency.cs" />
     <Compile Include="Model\StretchEmployee.cs" />
+    <Compile Include="Model\TemplatePreventivePlan.cs" />
     <Compile Include="Model\TrainingCourseTrainingService.cs" />
     <Compile Include="Model\TrainingService.cs" />
     <Compile Include="Model\TrainingCourse.cs" />

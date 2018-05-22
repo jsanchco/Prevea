@@ -419,5 +419,15 @@
         Result DeletePreventivePlan(int id);
 
         #endregion
+
+        #region TemplatePreventivePlan
+
+        List<TemplatePreventivePlan> GetTemplatePreventivePlans();
+        TemplatePreventivePlan GetTemplatePreventivePlanById(int id);
+        Result SaveTemplatePreventivePlan(TemplatePreventivePlan templatePreventivePlan);
+        Result DeleteTemplatePreventivePlan(int id);
+        Dictionary<string, string> GetEditorSnippets(int preventivePlanId, int templateId);
+
+        #endregion
     }
 }

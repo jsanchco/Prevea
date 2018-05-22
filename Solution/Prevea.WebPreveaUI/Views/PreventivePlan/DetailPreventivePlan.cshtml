@@ -1,7 +1,7 @@
 ﻿@model PreventivePlanViewModel
 
 <script>
-    DetailPreventivePlan.init("@Model.Id", @ViewBag.SelectTabId, "@ViewBag.Notification");
+    DetailPreventivePlan.init("@Model.Id", @ViewBag.SelectTabId);
 </script>
 
 <style>
@@ -114,33 +114,37 @@
         </div>
     }
 
+    <br />
+
     <div>
         <div class="row">
-            <label class="col-sm-4" style="color: #4B4B4B; font-size: 15px; margin-top: 7px;">Seleciona una plantilla para añadir al Plan Preventivo</label>
+            <label class="col-sm-4 col-sm-offset-2" style="color: #4B4B4B; font-size: 15px; margin-top: 7px;">Seleciona una plantilla para añadir al Plan Preventivo</label>
             <div class="col-sm-2">
                 @(Html.Kendo().DropDownList()
-                      .Name("inputTemplatePreventivePlan")
-                      .OptionLabel("-- Seleccionar --")
-                      .DataTextField("Text")
-                      .DataValueField("Value")
-                      .DataSource(source =>
-                      {
-                          source.Read(read =>
-                          {
-                              read.Action("GetAreas", "Document");
-                          });
-                      })
-                      .Events(e =>
-                      {
-                          e.Change("AddDocument.onChangeComboBoxArea");
-                      })
-                      .HtmlAttributes(new { style = "width: 100%; margin-left: -50px;" }))
+                              .Name("inputTemplatePreventivePlan")
+                              .OptionLabel("Seleccionar ...")
+                              .DataTextField("Name")
+                              .DataValueField("Id")
+                              .DataSource(source =>
+                              {
+                                  source.Read(read =>
+                                  {
+                                      read.Action("GetTemplatesPreventivePlans", "PreventivePlan");
+                                  });
+                              })
+                              .Events(e =>
+                              {
+                                  e.Change("DetailPreventivePlan.onChangeTemplate");
+                              })
+                              .HtmlAttributes(new { style = "width: 100%; margin-left: -50px;" }))
             </div>
             <div class="col-sm-2">
-                <input type="button" id="btnCancel" value=" Agregar nuevo" class="btn btn-prevea" />
-            </div>            
+                <input type="button" id="btnAddTemplate" value=" Agregar nuevo" class="btn btn-prevea" onclick="DetailPreventivePlan.addTemplate();"/>
+            </div>
         </div>
     </div>
+
+    <br />
 
     <div class="row">
         <div class="col-sm-12">

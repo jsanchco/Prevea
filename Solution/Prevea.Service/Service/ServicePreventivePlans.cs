@@ -25,6 +25,16 @@
         {
             try
             {
+                if (Repository.ExistPreventivePlan(preventivePlan.CompanyId, preventivePlan.DocumentId))
+                {
+                    return new Result
+                    {
+                        Message = "Se ha producido un error en la Grabación del PreventivePlan",
+                        Object = null,
+                        Status = Status.Error
+                    };
+                }
+
                 preventivePlan = Repository.SavePreventivePlan(preventivePlan);
 
                 if (preventivePlan == null)

@@ -648,6 +648,7 @@
     <Content Include="Images\flags\flag-es.png" />
     <Content Include="Images\flags\flag-fr.png" />
     <Content Include="Images\flags\flag-uk.png" />
+    <Content Include="Images\HeaderPrevea1.png" />
     <Content Include="Images\image_not_found.png" />
     <Content Include="Images\loader-1.gif" />
     <Content Include="Images\loader-2.gif" />
@@ -694,6 +695,7 @@
     <Content Include="js\Notifications\Notifications.js" />
     <Content Include="js\PreventivePlans\DetailPreventivePlan.js" />
     <Content Include="js\PreventivePlans\PreventivePlans.js" />
+    <Content Include="js\PreventivePlans\EditorTemplatePreventivePlan.js" />
     <Content Include="js\Profile\ChangePassword.js" />
     <Content Include="js\Profile\ChoosePhoto.js" />
     <Content Include="js\Profile\DocumentsProfile.js" />
@@ -713,8 +715,10 @@
     <Content Include="js\Shared\Templates.js" />
     <Content Include="js\Start\Start.js" />
     <Content Include="js\Tecniques\DeltaCodes.js" />
+    <Content Include="js\Tecniques\DetailTemplatePreventivePlan.js" />
     <Content Include="js\Tecniques\HistoricTecniques.js" />
     <Content Include="js\Tecniques\RiskEvaluation.js" />
+    <Content Include="js\Tecniques\TemplatePreventivePlans.js" />
     <Content Include="js\Tecniques\WorkStations.js" />
     <Content Include="js\User\ContactAs.js" />
     <Content Include="js\User\Users.js" />
@@ -1193,6 +1197,10 @@
     <Content Include="Views\Tecniques\RiskEvaluation.cshtml" />
     <Content Include="Views\PreventivePlan\PreventivePlans.cshtml" />
     <Content Include="Views\PreventivePlan\DetailPreventivePlan.cshtml" />
+    <Content Include="Views\PreventivePlan\EditorTemplatePreventivePlan.cshtml" />
+    <Content Include="Views\Tecniques\TemplatePreventivePlans.cshtml" />
+    <Content Include="Views\Tecniques\DetailTemplatePreventivePlan.cshtml" />
+    <Content Include="Views\Tecniques\ViewerHTML.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

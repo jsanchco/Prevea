@@ -16,5 +16,10 @@
 
         public int DocumentId { get; set; }
         public virtual Document Document { get; set; }
+
+        public int TemplatePreventivePlanId { get; set; }
+        public TemplatePreventivePlan TemplatePreventivePlan { get; set; }
+
+        public string Text { get; set; }
     }
 }

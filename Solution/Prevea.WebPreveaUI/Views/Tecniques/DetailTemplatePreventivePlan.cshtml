@@ -1,0 +1,60 @@
+﻿@model TemplatePreventivePlan
+
+<script>
+    DetailTemplatePreventivePlan.init(@ViewBag.TemplateId);
+</script>
+
+<div class="row" id="pageDetailTemplatePreventivePlan" style="margin: 8px">
+
+    <div class="row">
+        <H1 id="title">Técnicas</H1>
+    </div><br />
+
+    <div id="navigation" class="row">
+        <div class="col-sm-12">
+
+            <!-- Breadcrumb 2 -->
+            <ol class="breadcrumb bc-2">
+                <li>
+                    <a onclick="DetailTemplatePreventivePlan.goToTemplatePreventivePlans()" style="cursor: pointer;">
+                        <i class="fa fa-cogs"></i>
+                        Planes Preventivos
+                    </a>
+                </li>
+                <li class="active">
+                    <a onclick="DetailTemplatePreventivePlan.goToDetailTemplatePreventivePlans()" style="cursor: pointer;">
+                        <strong>Detalle Plan Preventivo</strong>
+                    </a>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="tile-stats tile-blue">
+                <div class="num">
+                    @ViewBag.Title
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <textarea id="editorTemplateDetailPreventivePlan" rows="10" cols="30" style="height: 62vh; width: 100%"></textarea>
+        </div>
+    </div>     
+
+</div>
+
+<br />
+
+<div class="col-sm-12" style="text-align: right; margin-left: 10px;">
+    <input type="button" id="btnSave" value="Guardar" class="btn btn-prevea" onclick="DetailTemplatePreventivePlan.saveTemplate();" />
+</div>
+
+

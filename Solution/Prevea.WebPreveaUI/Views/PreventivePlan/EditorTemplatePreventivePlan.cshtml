@@ -1,0 +1,21 @@
+﻿@model PreventivePlanViewModel
+
+<script>
+    EditorTemplatePreventivePlan.init(@Model.Id, @ViewBag.TemplateId, @Html.Raw(Json.Encode(ViewBag.Snippets)));
+</script>
+
+<div class="row">
+    <div class="col-sm-12">
+        <textarea id="editorTemplate" rows="10" cols="30" style="height: 47vh; width: 100%">
+        </textarea>
+    </div>
+</div>
+
+<br />
+
+<div class="col-sm-12" style="text-align: right; margin-left: 10px;">
+    <input type="button" id="btnSavePreventivePlan" value="Guardar" class="btn btn-prevea" onclick="EditorTemplatePreventivePlan.saveTemplate();" />
+</div>
+
+
+

@@ -39,7 +39,7 @@
 
                 return new Result
                 {
-                    Message = "La Grabación del la Clínica se ha producido con éxito",
+                    Message = "La Grabación de la Clínica se ha producido con éxito",
                     Object = clinic,
                     Status = Status.Ok
                 };

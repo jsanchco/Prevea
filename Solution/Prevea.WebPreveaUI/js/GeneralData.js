@@ -132,6 +132,14 @@
             case "company|preventivePlan":
                 url = "/PreventivePlan/PreventivePlans";
                 break;
+
+            case "tecniques|templatePreventivePlans":
+                url = "/Tecniques/TemplatePreventivePlans";
+                break;
+
+            case "tecniques|viewerTemplates":
+                url = "/Tecniques/ViewerHTML";
+                break;
                                 
             default:
                 break;

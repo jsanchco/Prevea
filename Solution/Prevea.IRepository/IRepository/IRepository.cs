@@ -409,10 +409,21 @@
 
         #region PreventivePlans
 
+        List<PreventivePlan> GetPreventivePlans();
         List<PreventivePlan> GetPreventivePlans(int userId);
         PreventivePlan GetPreventivePlanById(int id);
+        bool ExistPreventivePlan(int companyId, int documentId);
         PreventivePlan SavePreventivePlan(PreventivePlan preventivePlan);
         bool DeletePreventivePlan(int id);
+
+        #endregion
+
+        #region TemplatePreventivePlan
+
+        List<TemplatePreventivePlan> GetTemplatePreventivePlans();
+        TemplatePreventivePlan GetTemplatePreventivePlanById(int id);
+        TemplatePreventivePlan SaveTemplatePreventivePlan(TemplatePreventivePlan templatePreventivePlan);
+        bool DeleteTemplatePreventivePlan(int id);
 
         #endregion
     }

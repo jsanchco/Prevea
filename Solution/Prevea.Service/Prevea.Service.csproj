@@ -80,6 +80,7 @@
     <Compile Include="Service\ServiceSimulations.cs" />
     <Compile Include="Service\ServiceStretchesAgencies.cs" />
     <Compile Include="Service\ServiceStretchesEmployees.cs" />
+    <Compile Include="Service\ServiceTemplatePreventivePlans.cs" />
     <Compile Include="Service\ServiceTrainingCourses.cs" />
     <Compile Include="Service\ServiceTrainingCoursesTrainingServices.cs" />
     <Compile Include="Service\ServiceTrainingServices.cs" />

@@ -84,6 +84,7 @@
     <Compile Include="Repository\RepositorySimulations.cs" />
     <Compile Include="Repository\RepositoryStretchesAgencies.cs" />
     <Compile Include="Repository\RepositoryStretchesEmployees.cs" />
+    <Compile Include="Repository\RepositoryTemplatePreventivePlans.cs" />
     <Compile Include="Repository\RepositoryTrainingCourses.cs" />
     <Compile Include="Repository\RepositoryTrainingCoursesTrainingServices.cs" />
     <Compile Include="Repository\RepositoryTrainingServices.cs" />

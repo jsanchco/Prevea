@@ -13,6 +13,15 @@
 
     public partial class Repository
     {
+        public List<PreventivePlan> GetPreventivePlans()
+        {
+            return Context.PreventivesPlans
+                .Include(x => x.Company)
+                .Include(x => x.Document)
+                .Include(x => x.TemplatePreventivePlan)
+                .ToList();
+        }
+
         public List<PreventivePlan> GetPreventivePlans(int userId)
         {
             var user = GetUser(userId);
@@ -22,6 +31,7 @@
                 return Context.PreventivesPlans
                     .Include(x => x.Company)
                     .Include(x => x.Document)
+                    .Include(x => x.TemplatePreventivePlan)
                     .ToList();
             }
             if (roleId == (int)EnRole.PreveaPersonal)
@@ -29,6 +39,7 @@
                 return Context.PreventivesPlans
                     .Include(x => x.Company)
                     .Include(x => x.Document)
+                    .Include(x => x.TemplatePreventivePlan)
                     .Where(x => x.Company.SimulationCompanies.FirstOrDefault().Simulation.UserAssignedId == userId)
                     .ToList();
             }
@@ -36,6 +47,7 @@
             return Context.PreventivesPlans
                 .Include(x => x.Company)
                 .Include(x => x.Document)
+                .Include(x => x.TemplatePreventivePlan)
                 .Where(x => x.Company.GestorId == userId)
                 .ToList();
         }
@@ -45,7 +57,13 @@
             return Context.PreventivesPlans
                 .Include(x => x.Company)
                 .Include(x => x.Document)
+                .Include(x => x.TemplatePreventivePlan)
                 .FirstOrDefault(x => x.Id == id);
+        }
+
+        public bool ExistPreventivePlan(int companyId, int documentId)
+        {
+            return Context.PreventivesPlans.FirstOrDefault(x => x.CompanyId == companyId && x.DocumentId == documentId) != null;
         }
 
         public PreventivePlan SavePreventivePlan(PreventivePlan preventivePlan)
