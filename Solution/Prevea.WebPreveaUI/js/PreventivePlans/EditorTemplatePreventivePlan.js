@@ -68,12 +68,16 @@
     },
 
     saveTemplate: function() {
-        var editor = $("#" + this.editorTemplateDetailPreventivePlanId).data("kendoEditor");
+        var editor = $("#" + this.editorTemplateId).data("kendoEditor");
         var text = editor.value();
 
         $.ajax({
-            url: "/Tecniques/SaveTemplate",
-            data: JSON.stringify({ "templateId": DetailTemplatePreventivePlan.id, "text": text }),
+            url: "/PreventivePlan/SaveTemplatePreventivePlan",
+            data: JSON.stringify({
+                    "preventivePlanId": EditorTemplatePreventivePlan.id,
+                    "templateId": EditorTemplatePreventivePlan.templateId,
+                    "text": text
+                }),
             contentType: "application/json; charset=utf-8",
             type: "post",
             dataType: "json",

@@ -44,6 +44,7 @@
                 },
                 parameterMap: function (options, operation) {
                     if (operation !== "read" && options) {
+                        options.Template = "";
                         return { templatePreventivePlan: kendo.stringify(options) };
                     }
 

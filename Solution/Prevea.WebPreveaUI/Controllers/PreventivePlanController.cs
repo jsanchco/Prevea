@@ -139,7 +139,10 @@
         [HttpGet]
         public JsonResult Companies_Read([DataSourceRequest] DataSourceRequest request)
         {
-            var data = AutoMapper.Mapper.Map<List<CompanyViewModel>>(Service.GetCompaniesByUser(User.Id));
+            var companies = Service.GetCompaniesByUser(User.Id).Select(x =>
+                x.SimulationCompanyActive.Simulation.StateForeignPreventionService == true);
+
+            var data = AutoMapper.Mapper.Map<List<CompanyViewModel>>(companies);
 
             return this.Jsonp(data);
         }
@@ -157,6 +160,21 @@
         public JsonResult GetTemplatesPreventivePlans()
         {
             return Json(Service.GetTemplatePreventivePlans(), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult SaveTemplatePreventivePlan(int preventivePlanId, int templateId, string text)
+        {
+            var preventivePlan = Service.GetPreventivePlanById(preventivePlanId);
+            if (preventivePlan == null)
+                return this.Jsonp(new { resultStatus = Status.Error });
+
+            var template = Service.GetTemplatePreventivePlanById(templateId);
+            if (template == null)
+                return this.Jsonp(new { resultStatus = Status.Error });
+
+            var result = Service.SaveTemplatePreventivePlan(template);
+
+            return result.Status != Status.Error ? Json(new { resultStatus = Status.Ok }) : Json(new { Errors = "Se ha producido un error en la Grabación del TemplatePreventivePlan" });
         }
     }
 }

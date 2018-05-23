@@ -18,7 +18,6 @@
             return Context.PreventivesPlans
                 .Include(x => x.Company)
                 .Include(x => x.Document)
-                .Include(x => x.TemplatePreventivePlan)
                 .ToList();
         }
 
@@ -31,7 +30,6 @@
                 return Context.PreventivesPlans
                     .Include(x => x.Company)
                     .Include(x => x.Document)
-                    .Include(x => x.TemplatePreventivePlan)
                     .ToList();
             }
             if (roleId == (int)EnRole.PreveaPersonal)
@@ -39,7 +37,6 @@
                 return Context.PreventivesPlans
                     .Include(x => x.Company)
                     .Include(x => x.Document)
-                    .Include(x => x.TemplatePreventivePlan)
                     .Where(x => x.Company.SimulationCompanies.FirstOrDefault().Simulation.UserAssignedId == userId)
                     .ToList();
             }
@@ -47,7 +44,6 @@
             return Context.PreventivesPlans
                 .Include(x => x.Company)
                 .Include(x => x.Document)
-                .Include(x => x.TemplatePreventivePlan)
                 .Where(x => x.Company.GestorId == userId)
                 .ToList();
         }
@@ -57,7 +53,6 @@
             return Context.PreventivesPlans
                 .Include(x => x.Company)
                 .Include(x => x.Document)
-                .Include(x => x.TemplatePreventivePlan)
                 .FirstOrDefault(x => x.Id == id);
         }
 

@@ -36,6 +36,9 @@
 
     addTemplate: function () {
         var dropdownlist = $("#" + this.inputTemplatePreventivePlanId).data("kendoDropDownList");
+
+
+
         
         var tabStrip = $("#" + this.tabStripDetailPreventivePlanId).kendoTabStrip().data("kendoTabStrip");
         tabStrip.append({

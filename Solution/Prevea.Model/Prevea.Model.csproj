@@ -84,6 +84,7 @@
     <Compile Include="Model\NotificationType.cs" />
     <Compile Include="Model\PaymentMethod.cs" />
     <Compile Include="Model\PreventivePlan.cs" />
+    <Compile Include="Model\PreventivePlanTemplatePreventivePlan.cs" />
     <Compile Include="Model\RequestMedicalExaminationEmployee.cs" />
     <Compile Include="Model\RequestMedicalExaminationEmployeeState.cs" />
     <Compile Include="Model\RequestMedicalExaminations.cs" />

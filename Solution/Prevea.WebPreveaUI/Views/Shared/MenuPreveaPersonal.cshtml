@@ -48,7 +48,7 @@
     <li class="has-sub">
         <a id="commercialTool">
             <i class="glyphicon glyphicon-th-list"></i>
-            <span class="title">Herramienta Comercial</span>
+            <span class="title">Gestión Comercial</span>
         </a>
         <ul>
             <li>
@@ -74,31 +74,63 @@
             <li>
                 <a id="company|companies" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
                     <i class="icon-folder"></i>
-                    <span class="title">Empresas</span>
+                    <span class="title">Contratación</span>
                 </a>
             </li>
             <li>
                 <a id="company|preventivePlan" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
                     <i class="fa fa-cogs"></i>
-                    <span class="title">Planes Preventivos</span>
+                    <span class="title">Gestión Preventiva</span>
                 </a>
             </li>
         </ul>
     </li>
     @*<li class="has-sub">
-        <a id="courses">
-            <i class="fa fa-superscript"></i>
-            <span class="title">Cursos</span>
+            <a id="courses">
+                <i class="fa fa-superscript"></i>
+                <span class="title">Cursos</span>
+            </a>
+            <ul>
+                <li>
+                    <a id="courses|management" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                        <i class="fa fa-folder-o"></i>
+                        <span class="title">Gestión de Cursos</span>
+                    </a>
+                </li>
+            </ul>
+        </li>*@
+    <li class="has-sub">
+        <a id="tecniques">
+            <i class="fa fa-gear"></i>
+            <span class="title">Técnicas</span>
         </a>
         <ul>
             <li>
-                <a id="courses|management" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
-                    <i class="fa fa-folder-o"></i>
-                    <span class="title">Gestión de Cursos</span>
+                <a id="tecniques|workStations" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                    <i class="glyphicon glyphicon-asterisk"></i>
+                    <span class="title">Puestos de Trabajo</span>
                 </a>
             </li>
+            <li>
+                <a id="tecniques|deltaCodes" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                    <i class="fa fa-play fa-rotate-270"></i>
+                    <span class="title">Códigos de Riesgo</span>
+                </a>
+            </li>
+            <li>
+                <a id="tecniques|templatePreventivePlans" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                    <i class="fa fa-file-text-o"></i>
+                    <span class="title">Plantillas de Planes Preventivos</span>
+                </a>
+            </li>
+            @*<li>
+                    <a id="tecniques|historic" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
+                        <i class="fa fa-sort-amount-asc"></i>
+                        <span class="title">Histórico</span>
+                    </a>
+                </li>*@
         </ul>
-    </li>*@
+    </li>
     <li class="has-sub">
         <a id="healthSurveillance">
             <i class="fa fa-medkit"></i>
@@ -131,38 +163,6 @@
                     <span class="title">Médicos</span>
                 </a>
             </li>
-        </ul>
-    </li>
-    <li class="has-sub">
-        <a id="tecniques">
-            <i class="fa fa-gear"></i>
-            <span class="title">Técnicas</span>
-        </a>
-        <ul>
-            <li>
-                <a id="tecniques|workStations" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
-                    <i class="glyphicon glyphicon-asterisk"></i>
-                    <span class="title">Puestos de Trabajo</span>
-                </a>
-            </li>
-            <li>
-                <a id="tecniques|deltaCodes" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
-                    <i class="fa fa-play fa-rotate-270"></i>
-                    <span class="title">Códigos de Riesgo</span>
-                </a>
-            </li>
-            <li>
-                <a id="tecniques|templatePreventivePlans" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
-                    <i class="fa fa-file-text-o"></i>
-                    <span class="title">Plantillas de Planes Preventivos</span>
-                </a>
-            </li>
-            @*<li>
-                <a id="tecniques|historic" onclick="GeneralData.loadPage(this)" style="cursor: pointer;">
-                    <i class="fa fa-sort-amount-asc"></i>
-                    <span class="title">Histórico</span>
-                </a>
-            </li>*@
         </ul>
     </li>
 </ul>

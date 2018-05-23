@@ -488,6 +488,9 @@
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del TemplatePreventivePlan" });
                 }
 
+                var templatePreventivePlanFind = Service.GetTemplatePreventivePlanById(templatePreventivePlan.Id);
+
+                templatePreventivePlan.Template = templatePreventivePlanFind.Template;
                 templatePreventivePlan.ModifyDate = DateTime.Now;
                 var result = Service.SaveTemplatePreventivePlan(templatePreventivePlan);
 
@@ -536,7 +539,6 @@
 
             template.ModifyDate = DateTime.Now;
             template.Template = text;
-            //template.Template = HttpUtility.HtmlEncode(text);
             var result = Service.SaveTemplatePreventivePlan(template);
 
             return result.Status != Status.Error ? Json(new { resultStatus = Status.Ok }) : Json(new { Errors = "Se ha producido un error en la Grabación del TemplatePreventivePlan" });

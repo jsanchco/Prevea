@@ -3,6 +3,7 @@
     #region Using
 
     using System.ComponentModel.DataAnnotations;
+    using System.Collections.Generic;
 
     #endregion
 
@@ -17,9 +18,6 @@
         public int DocumentId { get; set; }
         public virtual Document Document { get; set; }
 
-        public int TemplatePreventivePlanId { get; set; }
-        public TemplatePreventivePlan TemplatePreventivePlan { get; set; }
-
-        public string Text { get; set; }
+        public virtual ICollection<PreventivePlanTemplatePreventivePlan> PreventivePlanTemplatePreventivePlans { get; set; }
     }
 }

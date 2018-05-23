@@ -63,7 +63,7 @@
                 <li>
                     <a onclick="DetailPreventivePlan.goToPreventivePlans()" style="cursor: pointer;">
                         <i class="fa fa-cogs"></i>
-                        Planes Preventivos
+                        Gestión Preventiva
                     </a>
                 </li>
                 <li class="active">
@@ -119,10 +119,10 @@
     <div>
         <div class="row">
             <label class="col-sm-4 col-sm-offset-2" style="color: #4B4B4B; font-size: 15px; margin-top: 7px;">Seleciona una plantilla para añadir al Plan Preventivo</label>
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                 @(Html.Kendo().DropDownList()
                               .Name("inputTemplatePreventivePlan")
-                              .OptionLabel("Seleccionar ...")
+                              .OptionLabel("-- Seleccionar --")
                               .DataTextField("Name")
                               .DataValueField("Id")
                               .DataSource(source =>

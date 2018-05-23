@@ -19,6 +19,6 @@
         public DateTime ModifyDate { get; set; }
         public string Template { get; set; }
 
-        public virtual ICollection<PreventivePlan> PreventivePlans { get; set; }
+        public virtual ICollection<PreventivePlanTemplatePreventivePlan> PreventivePlanTemplatePreventivePlans { get; set; }
     }
 }
