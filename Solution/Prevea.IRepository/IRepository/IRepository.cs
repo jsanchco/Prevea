@@ -426,5 +426,17 @@
         bool DeleteTemplatePreventivePlan(int id);
 
         #endregion
+
+        #region PreventivePlanTemplatePreventivePlan
+
+        List<PreventivePlanTemplatePreventivePlan> GetPreventivePlanTemplatePreventivePlans();
+        List<PreventivePlanTemplatePreventivePlan> GetPreventivePlanTemplatePreventivePlansByPreventivePlanId(int preventivePlanId);
+        PreventivePlanTemplatePreventivePlan ExistPreventivePlanTemplatePreventivePlan(int preventivePlanId, int templatePreventivePlanId);
+        PreventivePlanTemplatePreventivePlan GetPreventivePlanTemplatePreventivePlanById(int id);
+        PreventivePlanTemplatePreventivePlan SavePreventivePlanTemplatePreventivePlan(PreventivePlanTemplatePreventivePlan preventivePlanTemplatePreventivePlan);
+        bool DeletePreventivePlanTemplatePreventivePlan(int id);
+
+        #endregion
+
     }
 }

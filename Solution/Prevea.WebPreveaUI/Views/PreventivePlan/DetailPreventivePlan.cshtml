@@ -1,7 +1,7 @@
 ﻿@model PreventivePlanViewModel
 
 <script>
-    DetailPreventivePlan.init("@Model.Id", @ViewBag.SelectTabId);
+    DetailPreventivePlan.init("@Model.Id", @ViewBag.SelectTabId, @Html.Raw(Json.Encode(ViewBag.ListTemplates)));
 </script>
 
 <style>
@@ -51,11 +51,11 @@
 
     <span id="spanNotification" style="display: none;"></span>
 
-    <div class="row">
+    <div id="titlePage" class="row">
         <H1 id="title">Gestión de Empresas</H1>
     </div><br />
 
-    <div id="navigation" class="row">
+    <div id="navigationPage" class="row">
         <div class="col-sm-12">
 
             <!-- Breadcrumb 2 -->
@@ -68,7 +68,7 @@
                 </li>
                 <li class="active">
                     <a onclick="DetailPreventivePlan.goToDetailPlanPreventive()" style="cursor: pointer;">
-                        <strong>Detalle Plan Preventivo</strong>
+                        <strong>Detalle</strong>
                     </a>
                 </li>
             </ol>
@@ -80,7 +80,7 @@
         var descriptionContract = string.Format(" [Contrato del {0} al {1}]", Model.DocumentBeginDate.ToShortDateString(), Model.DocumentEndDate.ToShortDateString());
     }
 
-    <div class="row">
+    <div class="row" id="panelDescriptionDetailPreventivePlan">
         <div class="col-sm-12">
 
             <div class="tile-stats tile-blue">
@@ -98,27 +98,11 @@
     </div>
 
     <br />
-
-    @if (ViewBag.Error != null)
-    {
-        <div id="errorFromBack" class="alert alert-danger alert-dismissable" style="">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <ul>
-                @foreach (var error in ViewBag.Error)
-                {
-                    <li>
-                        @error
-                    </li>
-                }
-            </ul>
-        </div>
-    }
-
     <br />
 
-    <div>
+    <div id="selectTemplateDetailPreventivePlan">
         <div class="row">
-            <label class="col-sm-4 col-sm-offset-2" style="color: #4B4B4B; font-size: 15px; margin-top: 7px;">Seleciona una plantilla para añadir al Plan Preventivo</label>
+            <label class="col-sm-5 col-sm-offset-1" style="color: #4B4B4B; font-size: 15px; margin-top: 7px;">Seleciona una plantilla para añadir a la Gestión Preventiva de la Empresa</label>
             <div class="col-sm-3">
                 @(Html.Kendo().DropDownList()
                               .Name("inputTemplatePreventivePlan")
@@ -139,19 +123,27 @@
                               .HtmlAttributes(new { style = "width: 100%; margin-left: -50px;" }))
             </div>
             <div class="col-sm-2">
-                <input type="button" id="btnAddTemplate" value=" Agregar nuevo" class="btn btn-prevea" onclick="DetailPreventivePlan.addTemplate();"/>
+                <input type="button" id="btnAddTemplate" value=" Agregar nuevo" class="btn btn-prevea" onclick="DetailPreventivePlan.addTemplate();" />
             </div>
         </div>
     </div>
+
+    <div id="confirm"></div>
 
     <br />
 
     <div class="row">
         <div class="col-sm-12">
-
             <div id="tabStripDetailPreventivePlan"></div>
-
         </div>
     </div>
 
+    <br />
+
+    <div class="row" id="buttonsDetailPreventivePlan">
+        <div class="col-sm-12" style="text-align: right;">
+            <input type="button" id="btnDeletePreventivePlanTemplate" value=" Borrar" class="btn btn-prevea" onclick="DetailPreventivePlan.deletePreventivePlanTemplate();" />&nbsp;&nbsp;
+            <input type="button" id="btnSavePreventivePlanTemplate" value=" Guardar" class="btn btn-prevea" onclick="DetailPreventivePlan.savePreventivePlanTemplate();" />
+        </div>
+    </div>
 </div>

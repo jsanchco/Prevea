@@ -1,16 +1,43 @@
 ﻿var EditorTemplatePreventivePlan = kendo.observable({
 
     id: null,
-    templateId: null,
     snippets: null,
-    editorTemplateId: "editorTemplate",
 
-    init: function (id, templateId, snippets) {
+    init: function (id, snippets) {
         this.id = id;
-        this.templateId = templateId;
         this.snippets = snippets;   
 
-        this.createKendoWidgets();
+        $.ajax({
+            url: "/Tecniques/GetTemplate",
+            data: JSON.stringify({ "templateId": DetailTemplatePreventivePlan.id }),
+            contentType: "application/json; charset=utf-8",
+            type: "post",
+            dataType: "json",
+            beforeSend: function () {
+                kendo.ui.progress($("#pageDetailTemplatePreventivePlan"), true);
+            },
+            success: function (response) {
+                if (response.resultStatus === Constants.resultStatus.Ok) {
+                    if (response.template == null) {
+                        EditorTemplatePreventivePlan.template = "";
+                    } else {
+                        EditorTemplatePreventivePlan.template = response.template;
+                    }
+                    EditorTemplatePreventivePlan.createKendoWidgets();
+
+                    kendo.ui.progress($("#pageDetailTemplatePreventivePlan"), false);
+                } else {
+                    GeneralData.showNotification(error, "", "error");
+
+                    kendo.ui.progress($("#pageDetailTemplatePreventivePlan"), false);
+                }
+            },
+            error: function (xhr, status, error) {
+                GeneralData.showNotification(error, "", "error");
+
+                kendo.ui.progress($("#pageDetailTemplatePreventivePlan"), false);
+            }
+        });
     },
 
     createKendoWidgets: function () {

@@ -1,4 +1,6 @@
-﻿namespace Prevea.WebPreveaUI.Controllers
+﻿using Prevea.Model.CustomModel;
+
+namespace Prevea.WebPreveaUI.Controllers
 {
     #region Using
 
@@ -35,11 +37,14 @@
         [HttpGet]
         public ActionResult DetailPreventivePlan(int id, int selectTabId)
         {
-            var preventivePlan = AutoMapper.Mapper.Map<PreventivePlanViewModel>(Service.GetPreventivePlanById(id));
+            var preventivePlan = Service.GetPreventivePlanById(id);           
 
+            ViewBag.ListTemplates = preventivePlan.PreventivePlanTemplatePreventivePlans.Select(preventivePlanPreventivePlan => preventivePlanPreventivePlan.TemplatePreventivePlanId).ToList();
             ViewBag.SelectTabId = selectTabId;
 
-            return PartialView(preventivePlan);
+            var data = AutoMapper.Mapper.Map<PreventivePlanViewModel>(Service.GetPreventivePlanById(id));
+
+            return PartialView(data);
         }
 
         [HttpGet]
@@ -139,8 +144,8 @@
         [HttpGet]
         public JsonResult Companies_Read([DataSourceRequest] DataSourceRequest request)
         {
-            var companies = Service.GetCompaniesByUser(User.Id).Select(x =>
-                x.SimulationCompanyActive.Simulation.StateForeignPreventionService == true);
+            var companies = Service.GetCompaniesByUser(User.Id).Where(x =>
+                x.SimulationCompanyActive.Simulation.StateForeignPreventionService);
 
             var data = AutoMapper.Mapper.Map<List<CompanyViewModel>>(companies);
 
@@ -159,22 +164,81 @@
 
         public JsonResult GetTemplatesPreventivePlans()
         {
-            return Json(Service.GetTemplatePreventivePlans(), JsonRequestBehavior.AllowGet);
+            var templatePreventivePlans = Service.GetTemplatePreventivePlans();
+
+            var templates = new List<GenericModelDropDown>();
+            foreach (var templatePreventivePlan in templatePreventivePlans)
+            {
+                templates.Add(new GenericModelDropDown { Id = templatePreventivePlan.Id, Name = templatePreventivePlan.Name });
+            }
+
+            return Json(templates, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult CanSaveTemplatePreventivePlan(int preventivePlanId, int templateId)
+        {
+            if (Service.ExistPreventivePlanTemplatePreventivePlan(preventivePlanId, templateId) != null)
+                return Json(new { exist = true });
+
+            var template = Service.GetTemplatePreventivePlanById(templateId);
+
+            return Json(new { exist = false, text = template.Template });
+        }
+
+        public JsonResult GetEditorSnippets(int preventivePlanId, int templateId)
+        {
+            return Json(new { snippets = Service.GetEditorSnippets(preventivePlanId, templateId) });
         }
 
         public JsonResult SaveTemplatePreventivePlan(int preventivePlanId, int templateId, string text)
         {
-            var preventivePlan = Service.GetPreventivePlanById(preventivePlanId);
-            if (preventivePlan == null)
-                return this.Jsonp(new { resultStatus = Status.Error });
+            var preventivePlanTemplatePreventivePlan =
+                Service.ExistPreventivePlanTemplatePreventivePlan(preventivePlanId, templateId);
 
-            var template = Service.GetTemplatePreventivePlanById(templateId);
-            if (template == null)
-                return this.Jsonp(new { resultStatus = Status.Error });
+            if (preventivePlanTemplatePreventivePlan == null)
+            {
+                preventivePlanTemplatePreventivePlan = new PreventivePlanTemplatePreventivePlan
+                {
+                    PreventivePlanId = preventivePlanId,
+                    TemplatePreventivePlanId = templateId,
+                    Text = text
+                };
+            }
+            else
+            {
+                preventivePlanTemplatePreventivePlan.Text = text;
+            }
 
-            var result = Service.SaveTemplatePreventivePlan(template);
+            var result = Service.SavePreventivePlanTemplatePreventivePlan(preventivePlanTemplatePreventivePlan);
 
             return result.Status != Status.Error ? Json(new { resultStatus = Status.Ok }) : Json(new { Errors = "Se ha producido un error en la Grabación del TemplatePreventivePlan" });
+        }
+
+        public JsonResult GetDataFromPreventivePlanTemplatePreventivePlan(int preventivePlanId, int templateId)
+        {
+            var preventivePlanTemplatePreventivePlan =
+                Service.ExistPreventivePlanTemplatePreventivePlan(preventivePlanId, templateId);
+
+            return Json(new
+            {
+                title = preventivePlanTemplatePreventivePlan.TemplatePreventivePlan.Name,
+                text = preventivePlanTemplatePreventivePlan.Text
+            });
+        }
+
+        public JsonResult DeleteTemplatePreventivePlan(int preventivePlanId, int templateId)
+        {
+            var preventivePlanTemplatePreventivePlan =
+                Service.ExistPreventivePlanTemplatePreventivePlan(preventivePlanId, templateId);
+            if (preventivePlanTemplatePreventivePlan != null)
+            {
+                var result =
+                    Service.DeletePreventivePlanTemplatePreventivePlan(preventivePlanTemplatePreventivePlan.Id);
+
+                return Json(new { resultStatus = result.Status });
+            }
+
+            return Json(new { resultStatus = Status.Ok });
         }
     }
 }

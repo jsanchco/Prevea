@@ -21,6 +21,11 @@
             return Repository.GetPreventivePlanById(id);
         }
 
+        public bool ExistPreventivePlan(int companyId, int documentId)
+        {
+            return Repository.ExistPreventivePlan(companyId, documentId);
+        }
+
         public Result SavePreventivePlan(PreventivePlan preventivePlan)
         {
             try

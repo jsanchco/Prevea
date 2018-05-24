@@ -141,6 +141,7 @@
             coverPage += "</td>";
             coverPage += "</tr>";
             coverPage += "</table>";
+            coverPage += "<br/><br/>";
 
             return coverPage;
         }

@@ -232,6 +232,8 @@
     },
 
     goToDetailPreventivePlan: function (id) {
+        kendo.ui.progress($("#pagePreventivePlans"), true);
+
         var params = {
             url: "/PreventivePlan/DetailPreventivePlan",
             data: {

@@ -415,6 +415,7 @@
 
         List<PreventivePlan> GetPreventivePlans(int userId);
         PreventivePlan GetPreventivePlanById(int id);
+        bool ExistPreventivePlan(int companyId, int documentId);
         Result SavePreventivePlan(PreventivePlan preventivePlan);
         Result DeletePreventivePlan(int id);
 
@@ -427,6 +428,17 @@
         Result SaveTemplatePreventivePlan(TemplatePreventivePlan templatePreventivePlan);
         Result DeleteTemplatePreventivePlan(int id);
         Dictionary<string, string> GetEditorSnippets(int preventivePlanId, int templateId);
+
+        #endregion
+
+        #region PreventivePlanTemplatePreventivePlan
+
+        List<PreventivePlanTemplatePreventivePlan> GetPreventivePlanTemplatePreventivePlans();
+        List<PreventivePlanTemplatePreventivePlan> GetPreventivePlanTemplatePreventivePlansByPreventivePlanId(int preventivePlanId);
+        PreventivePlanTemplatePreventivePlan ExistPreventivePlanTemplatePreventivePlan(int preventivePlanId, int templatePreventivePlanId);
+        PreventivePlanTemplatePreventivePlan GetPreventivePlanTemplatePreventivePlanById(int id);
+        Result SavePreventivePlanTemplatePreventivePlan(PreventivePlanTemplatePreventivePlan preventivePlanTemplatePreventivePlan);
+        Result DeletePreventivePlanTemplatePreventivePlan(int id);
 
         #endregion
     }

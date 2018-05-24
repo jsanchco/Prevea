@@ -1,12 +1,16 @@
 ﻿@model PreventivePlanViewModel
 
 <script>
-    EditorTemplatePreventivePlan.init(@Model.Id, @ViewBag.TemplateId, @Html.Raw(Json.Encode(ViewBag.Snippets)));
+    EditorTemplatePreventivePlan.init(@Model.Id, @Html.Raw(Json.Encode(ViewBag.Snippets)));
 </script>
+
+@{
+    var idEditor = ViewBag.TemplateId + "_editorTemplate";
+}
 
 <div class="row">
     <div class="col-sm-12">
-        <textarea id="editorTemplate" rows="10" cols="30" style="height: 47vh; width: 100%">
+        <textarea id="@idEditor" rows="10" cols="30" style="height: 47vh; width: 100%">
         </textarea>
     </div>
 </div>
