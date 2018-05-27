@@ -25,6 +25,8 @@
                         Id: { type: "number", defaultValue: 0 },
                         MailingId: { type: "number", defaultValue: DataMails.mailingId },
                         EMail: { type: "string", editable: false },
+                        CreatorId: { type: "int", editable: false },
+                        CreatorInitials: { type: "string", editable: false },
                         Observations: { type: "string" },
                         Data: { type: "string" },
                         DataMailStateId: { type: "number", defaultValue: 1 },
@@ -89,14 +91,22 @@
                 field: "EMail",
                 title: "EMail",
                 width: 200,
+                groupable: "false",
                 template: "#= DataMails.getColumnTemplateEMail(data) #"
+            }, {
+                field: "CreatorInitials",
+                title: "Creador",
+                width: 150,
+                template: "#= Templates.getColumnTemplateBold(data.CreatorInitials) #"
             }, {
                 field: "Observations",
                 title: "Observaciones",
+                groupable: "false",
                 width: 250
             }, {
                 field: "Data",
                 title: "Datos",
+                groupable: "false",
                 width: 300
             }, {
                 title: "Comandos",
@@ -154,6 +164,11 @@
             editable: {
                 mode: "inline",
                 confirmation: false
+            },
+            groupable: {
+                messages: {
+                    empty: "Arrastre un encabezado de columna y póngalo aquí para agrupar por ella"
+                }
             },
             resizable: true,
             autoScroll: true,
@@ -322,15 +337,16 @@
                 
             var data = "";
             for (var j = 0; j < fields.length; j++) {
-                if (j === 0) {
+                if (j === 0 || j=== 1) {
                     continue;
                 } else {
-                    var nameColumn = kendo.format("[Columna{0}]", j);
+                    var nameColumn = kendo.format("[Columna{0}]", j - 1);
                     data += nameColumn + fields[j];
                 }                
             }
             this.dataMailsDataSource.add({
                 "EMail": fields[0],
+                "CreatorId": parseInt(fields[1]),
                 "Data": data,
                 "MailingId": this.mailingId,
                 "DataMailStateId": 1
@@ -349,6 +365,7 @@
             var dataMail = {
                 MailingId: item.MailingId,
                 EMail: item.EMail,
+                CreatorId: item.CreatorId,
                 Data: item.Data,
                 Observations: item.Observations,
                 DataMailStateId: item.DataMailStateId

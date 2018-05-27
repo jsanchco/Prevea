@@ -89,5 +89,6 @@
         public virtual ICollection<DoctorMedicalExaminationEmployee> DoctorsMedicalExaminationEmployee { get; set; }
         public virtual ICollection<DocumentUserCreator> DocumentUserCreators { get; set; }
         public virtual ICollection<DocumentUserOwner> DocumentUserOwners { get; set; }
+        public virtual ICollection<DataMail> DataMails { get; set; }
     }
 }

@@ -157,7 +157,8 @@ namespace Prevea.WebPreveaUI.App_Start
 
             AutoMapper.Mapper.CreateMap<DataMailViewModel, DataMail>();
             AutoMapper.Mapper.CreateMap<DataMail, DataMailViewModel>()
-                .ForMember(x => x.DataMailStateDescription, x => x.MapFrom(y => y.DataMailState.Description));
+                .ForMember(x => x.DataMailStateDescription, x => x.MapFrom(y => y.DataMailState.Description))
+                .ForMember(x => x.CreatorInitials, x => x.MapFrom(y => y.Creator.Initials));
         }
     }
 }

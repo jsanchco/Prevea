@@ -17,6 +17,7 @@
         {
             return Context.DataMails
                 .Include(x => x.Mailing)
+                .Include(x => x.Creator)
                 .Include(x => x.DataMailState)
                 .ToList();
         }
@@ -25,6 +26,7 @@
         {
             return Context.DataMails
                 .Include(x => x.Mailing)
+                .Include(x => x.Creator)
                 .Include(x => x.DataMailState)
                 .Where(x => x.MailingId == mailingId)
                 .ToList();
@@ -34,6 +36,7 @@
         {
             return Context.DataMails
                 .Include(x => x.Mailing)
+                .Include(x => x.Creator)
                 .Include(x => x.DataMailState)
                 .FirstOrDefault(x => x.Id == id);
         }

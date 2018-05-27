@@ -14,6 +14,9 @@
         public int MailingId { get; set; }
         public virtual Mailing Mailing { get; set; }
 
+        public int? CreatorId { get; set; }
+        public virtual User Creator { get; set; }
+
         public string EMail { get; set; }
         public string Data { get; set; }
         public string Observations { get; set; }
