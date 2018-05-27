@@ -268,7 +268,10 @@
                 dataTextField: "RoleDescription",
                 optionLabel: "Selecciona ...",
                 dataValueField: "RoleId",
-                dataSource: Users.rolesDataSource
+                dataSource: Users.rolesDataSource,
+                dataBound: function (e) {
+                    e.sender.list.width("auto").find("li").css({ "white-space": "nowrap", "padding-right": "25px" });
+                }
             });
     },
 
