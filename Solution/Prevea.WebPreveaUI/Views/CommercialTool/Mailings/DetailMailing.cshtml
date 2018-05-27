@@ -1,0 +1,164 @@
+﻿@model Mailing
+
+<script>
+    DetailMailing.init(@Model.Id, "@Model.Sent");
+</script>
+
+<style>
+    .k-dropdown .k-input, .k-dropdown .k-state-focused .k-input, .k-menu .k-popup {
+        color: #999999;
+        height: 31px;
+        padding: 6px;
+    }
+
+    .k-autocomplete.k-state-default, .k-dropdown-wrap.k-state-default, .k-numeric-wrap.k-state-default, .k-picker-wrap.k-state-default {
+        border: 1px solid #ebebeb;
+        border-radius: 3px;
+    }
+
+    #tabStripDetailMailing {
+        border-width: 0;
+    }
+
+        #tabStripDetailMailing .k-panelbar > li.k-state-default > .k-link, .k-tabstrip-items .k-state-default .k-link {
+            font-weight: bold;
+            font-size: 15px;
+            padding: 0.8em;
+        }
+
+        #tabStripDetailMailing .k-panelbar .k-tabstrip-top .k-tabstrip-items .k-state-active, .k-tabstrip-top .k-tabstrip-items .k-state-active {
+            border-bottom-width: 6px;
+            border-top-width: 0;
+            border-left-width: 0;
+            border-right-width: 0;
+        }
+
+        #tabStripDetailMailing .k-animation-container, .k-animation-container *, .k-animation-container ::after, .k-block .k-header, .k-list-container, .k-widget, .k-widget *, .k-widget ::before {
+            box-sizing: border-box;
+        }
+
+    .k-multiselect-wrap {
+        height: 31px;
+    }
+
+    .k-dropdown .k-input, .k-dropdown .k-state-focused .k-input, .k-menu .k-popup {
+        color: #555555;
+    }
+
+    #circleError {
+        width: 20px;
+        height: 20px;
+        -webkit-border-radius: 25px;
+        -moz-border-radius: 25px;
+        border-radius: 25px;
+        background: #CC2424
+    }
+
+    #circleWarning {
+        width: 20px;
+        height: 20px;
+        -webkit-border-radius: 25px;
+        -moz-border-radius: 25px;
+        border-radius: 25px;
+        background: #F89406
+    }
+
+    #circleSuccess {
+        width: 20px;
+        height: 20px;
+        -webkit-border-radius: 25px;
+        -moz-border-radius: 25px;
+        border-radius: 25px;
+        background: #00A651
+    }
+
+    #circleDataEmailStateError {
+        width: 10px;
+        height: 10px;
+        -webkit-border-radius: 25px;
+        -moz-border-radius: 25px;
+        border-radius: 25px;
+        background: #CC2424
+    }
+
+    #circleDataEmailStateWarning {
+        width: 10px;
+        height: 10px;
+        -webkit-border-radius: 25px;
+        -moz-border-radius: 25px;
+        border-radius: 25px;
+        background: #F89406
+    }
+
+    #circleDataEmailStateSuccess {
+        width: 10px;
+        height: 10px;
+        -webkit-border-radius: 25px;
+        -moz-border-radius: 25px;
+        border-radius: 25px;
+        background: #00A651
+    }
+
+</style>
+
+<div class="row" id="pageDetailMailing" style="margin: 8px">
+
+    <div class="row">
+        <H1 id="title">Gestión Comercial</H1>
+    </div><br />
+
+    <div id="navigation" class="row">
+        <div class="col-sm-12">
+
+            <!-- Breadcrumb 2 -->
+            <ol class="breadcrumb bc-2">
+                <li>
+                    <a onclick="DetailMailing.goToMailings()" style="cursor: pointer;">
+                        <i class="fa fa-cogs"></i>
+                        Mailings
+                    </a>
+                </li>
+                <li class="active">
+                    <a onclick="DetailMailing.goToDetailMailing()" style="cursor: pointer;">
+                        <strong>Detalle Mailing</strong>
+                    </a>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            
+            <div class="tile-stats tile-blue">
+                <div class="row">                    
+                    <div class="num col-sm-8" style="margin-left: 15px;">
+                        @Model.Name
+                    </div>  
+                    <div class="col-sm-4" id="iconMailingState" style="margin-left: -15px;"></div>                  
+                </div>                
+
+                @{
+                    var description = Model.Sent ?
+                        string.Format("El Mailing se ha hecho a {0} personas", Model.DataMails.Count) :
+                        string.Format("Mailing preparado para {0} personas", Model.DataMails.Count);
+                }
+     
+                <div class="row">
+                    <div id="numberDataMails" class="col-sm-6" style="color: white; font-weight: bold">
+                        @description
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="tabStripDetailMailing" class="col-sm-12"></div>
+    </div>
+
+</div>
+
+<div id="confirm"></div>

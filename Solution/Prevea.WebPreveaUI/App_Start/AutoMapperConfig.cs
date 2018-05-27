@@ -151,6 +151,13 @@ namespace Prevea.WebPreveaUI.App_Start
                 .ForMember(x => x.CompanyEnrollment, x => x.MapFrom(y => y.Company.Enrollment))
                 .ForMember(x => x.DocumentBeginDate, x => x.MapFrom(y => y.Document.BeginDate))
                 .ForMember(x => x.DocumentEndDate, x => x.MapFrom(y => y.Document.EndDate));
+
+            AutoMapper.Mapper.CreateMap<MailingViewModel, Mailing>();
+            AutoMapper.Mapper.CreateMap<Mailing, MailingViewModel>();
+
+            AutoMapper.Mapper.CreateMap<DataMailViewModel, DataMail>();
+            AutoMapper.Mapper.CreateMap<DataMail, DataMailViewModel>()
+                .ForMember(x => x.DataMailStateDescription, x => x.MapFrom(y => y.DataMailState.Description));
         }
     }
 }

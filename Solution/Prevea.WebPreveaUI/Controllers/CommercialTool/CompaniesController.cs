@@ -1,6 +1,4 @@
-﻿using Prevea.Model.CustomModel;
-
-namespace Prevea.WebPreveaUI.Controllers.CommercialTool
+﻿namespace Prevea.WebPreveaUI.Controllers.CommercialTool
 {
     #region Using
 
@@ -17,6 +15,7 @@ namespace Prevea.WebPreveaUI.Controllers.CommercialTool
     using Common;
     using System.Diagnostics;
     using System.Web;
+    using Prevea.Model.CustomModel;
 
     #endregion
 

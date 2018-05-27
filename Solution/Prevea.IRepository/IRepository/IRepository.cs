@@ -438,5 +438,24 @@
 
         #endregion
 
+        #region Mailings
+
+        List<Mailing> GetMailings();
+        Mailing GetMailingById(int id);
+        Mailing SaveMailing(Mailing mailing);
+        bool DeleteMailing(int id);
+        bool DeleteAllDataMails(int mailingId);
+
+        #endregion
+
+        #region DataMails
+
+        List<DataMail> GetDataMails();
+        List<DataMail> GetDataMailsByMailing(int mailingId);
+        DataMail GetDataMailById(int id);
+        DataMail SaveDataMail(DataMail dataMail);
+        bool DeleteDataMail(int id);
+
+        #endregion
     }
 }

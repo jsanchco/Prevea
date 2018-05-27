@@ -46,8 +46,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\ServiceContractualDocumentTypes.cs" />
+    <Compile Include="Service\ServiceDataMails.cs" />
     <Compile Include="Service\ServiceDeltaCodes.cs" />
     <Compile Include="Service\ServiceEmployees.cs" />
+    <Compile Include="Service\ServiceMailings.cs" />
     <Compile Include="Service\ServiceMedicalExaminationDocuments.cs" />
     <Compile Include="Service\Service.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

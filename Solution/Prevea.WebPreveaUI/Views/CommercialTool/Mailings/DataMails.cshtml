@@ -1,0 +1,11 @@
+﻿<script>
+    DataMails.init(@ViewBag.MailingId);
+</script>
+
+<div id="gridDataMails" style="height: 53vh; width: 100%;"></div>
+
+<br />
+
+<div class="col-sm-12" style="text-align: right; margin-left: 10px;">
+    <input type="button" id="btnSendMailing" value="Enviar" class="btn btn-prevea" onclick="DataMails.sendMailing();" />
+</div>

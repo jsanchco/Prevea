@@ -1,0 +1,76 @@
+﻿<script>
+    Mailings.init();
+</script>
+
+<style>
+    html .k-grid tr:hover {
+        background: transparent;
+    }
+
+    #circleError {
+        width: 20px;
+        height: 20px;
+        -webkit-border-radius: 25px;
+        -moz-border-radius: 25px;
+        border-radius: 25px;
+        background: #CC2424
+    }
+
+    #circleWarning {
+        width: 20px;
+        height: 20px;
+        -webkit-border-radius: 25px;
+        -moz-border-radius: 25px;
+        border-radius: 25px;
+        background: #F89406
+    }
+
+    #circleSuccess {
+        width: 20px;
+        height: 20px;
+        -webkit-border-radius: 25px;
+        -moz-border-radius: 25px;
+        border-radius: 25px;
+        background: #00A651
+    }
+
+    #circleDeleted {
+        width: 20px;
+        height: 20px;
+        -webkit-border-radius: 25px;
+        -moz-border-radius: 25px;
+        border-radius: 25px;
+        background: black
+    }
+</style>
+
+<div class="row" id="pageMailings" style="margin: 8px">
+    
+    <div id="headerPartialView">
+        <div class="row"><H1>Herramienta Comercial</H1></div><br />
+        <div class="row">
+            <div class="col-sm-12">
+                <ol class="breadcrumb bc-2" id="breadcrumbMailings">
+                    <li class="active">
+                        <a id="br-mailings" onclick="Mailings.goToMailings()" style="cursor: pointer;">
+                            <i class="icon-mail"></i>
+                            <strong>Mailings</strong>
+                        </a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    
+    <div id="confirm"></div>
+    
+    <div id="contentPartialView">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="gridMailings" style="height: 77vh;"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

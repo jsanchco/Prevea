@@ -64,6 +64,9 @@
         public DbSet<PreventivePlan> PreventivesPlans { get; set; }
         public DbSet<TemplatePreventivePlan> TemplatePreventivePlans { get; set; }
         public DbSet<PreventivePlanTemplatePreventivePlan> PreventivePlanTemplatePreventivePlans { get; set; }
+        public DbSet<Mailing> Mailings { get; set; }
+        public DbSet<DataMail> DataMails { get; set; }
+        public DbSet<DataMailState> DataMailStates { get; set; }
 
         #endregion
 

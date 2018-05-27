@@ -169,6 +169,10 @@
                     return "Otros";
                 case "Blocked":
                     return "Bloqueada";
+                case "Sent":
+                    return "Enviado";
+                case "Error":
+                    return "Error";
 
                 default:
                     return name;

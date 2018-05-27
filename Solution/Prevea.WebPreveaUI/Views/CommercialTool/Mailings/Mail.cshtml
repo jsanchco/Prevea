@@ -1,0 +1,16 @@
+﻿<script>
+    Mail.init(@ViewBag.MailingId);
+</script>
+
+@{
+    ViewBag.Title = "Mail";
+}
+
+<textarea id="editorBodyMail" rows="10" cols="30" style="height: 47vh; width: 100%"></textarea>
+
+<br />
+
+<div class="col-sm-12" style="text-align: right; margin-left: 10px;">
+    <input type="button" id="btnSaveBodyMail" value="Guardar" class="btn btn-prevea" onclick="Mail.saveBodyMail();" />
+</div>
+

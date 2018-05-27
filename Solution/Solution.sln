@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prevea.Model", "Prevea.Model\Prevea.Model.csproj", "{92421E54-5D72-4CA0-969C-E1CA7FD2367C}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prevea.Service", "Prevea.Service\Prevea.Service.csproj", "{D1D8766E-9610-40E1-92A2-299CEF919F93}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prevea.ConsoleTestWebApi", "Prevea.ConsoleTestWebApi\Prevea.ConsoleTestWebApi.csproj", "{2A76E5FF-3572-4321-A5DC-3FDD113CCEAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prevea.ConsoleTestMail", "Prevea.ConsoleTestMail\Prevea.ConsoleTestMail.csproj", "{5DCFD134-8355-46B8-96D9-5887036AC413}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,8 +59,15 @@ Global
 		{2A76E5FF-3572-4321-A5DC-3FDD113CCEAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A76E5FF-3572-4321-A5DC-3FDD113CCEAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A76E5FF-3572-4321-A5DC-3FDD113CCEAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DCFD134-8355-46B8-96D9-5887036AC413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DCFD134-8355-46B8-96D9-5887036AC413}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DCFD134-8355-46B8-96D9-5887036AC413}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DCFD134-8355-46B8-96D9-5887036AC413}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9CC714F5-A074-4002-B0C8-ABE19F5C0524}
 	EndGlobalSection
 EndGlobal

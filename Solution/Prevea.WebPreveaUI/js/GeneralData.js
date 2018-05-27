@@ -126,7 +126,7 @@
                 break;
 
             case "commercialTool|mailing":
-                alert("Sin desarrollar!!!");
+                url = "/Mailings/Mailings";
                 break;
 
             case "company|preventivePlan":
@@ -139,7 +139,7 @@
 
             case "tecniques|viewerTemplates":
                 url = "/Tecniques/ViewerHTML";
-                break;
+                break;            
                                 
             default:
                 break;

@@ -441,5 +441,26 @@
         Result DeletePreventivePlanTemplatePreventivePlan(int id);
 
         #endregion
+
+        #region Mailings
+
+        List<Mailing> GetMailings();
+        Mailing GetMailingById(int id);
+        Result SaveMailing(Mailing mailing);
+        Result DeleteMailing(int id);
+        bool SendEmail(int dataMailId, string emailTo, string subject, string body, string data);
+
+        #endregion
+
+        #region DataMails
+
+        List<DataMail> GetDataMails();
+        List<DataMail> GetDataMailsByMailing(int mailingId);
+        DataMail GetDataMailById(int id);
+        Result SaveDataMail(DataMail dataMail);
+        Result DeleteDataMail(int id);
+        Result UpdateDataMails(int mailingId, List<DataMail> dataMails);
+
+        #endregion
     }
 }

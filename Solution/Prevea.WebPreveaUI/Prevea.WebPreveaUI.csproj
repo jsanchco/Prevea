@@ -173,6 +173,7 @@
     <Compile Include="Common\JsonpResult.cs" />
     <Compile Include="Controllers\ClinicsController.cs" />
     <Compile Include="Controllers\CommercialTool\CompaniesController.cs" />
+    <Compile Include="Controllers\CommercialTool\MailingsController.cs" />
     <Compile Include="Controllers\CommercialTool\SimulationsController.cs" />
     <Compile Include="Controllers\Courses\ManagementCoursesController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
@@ -662,6 +663,10 @@
     <Content Include="Images\user_13_firm.gif" />
     <Content Include="Images\xls_opt.png" />
     <Content Include="js\Clinics\Clinics.js" />
+    <Content Include="js\CommercialTool\Mailings\DataMails.js" />
+    <Content Include="js\CommercialTool\Mailings\DetailMailing.js" />
+    <Content Include="js\CommercialTool\Mailings\Mail.js" />
+    <Content Include="js\CommercialTool\Mailings\Mailings.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\AddOtherDocument.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\AddDocumentFirmed.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\AgencyCompany.js" />
@@ -1201,6 +1206,10 @@
     <Content Include="Views\Tecniques\TemplatePreventivePlans.cshtml" />
     <Content Include="Views\Tecniques\DetailTemplatePreventivePlan.cshtml" />
     <Content Include="Views\Tecniques\ViewerHTML.cshtml" />
+    <Content Include="Views\CommercialTool\Mailings\Mailings.cshtml" />
+    <Content Include="Views\CommercialTool\Mailings\DetailMailing.cshtml" />
+    <Content Include="Views\CommercialTool\Mailings\DataMails.cshtml" />
+    <Content Include="Views\CommercialTool\Mailings\Mail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

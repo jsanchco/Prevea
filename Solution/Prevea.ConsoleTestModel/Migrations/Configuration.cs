@@ -300,6 +300,13 @@ namespace Prevea.ConsoleTestModel.Migrations
             }
             context.SaveChanges();
 
+            var dataMailStates = (EnDataMailState[])Enum.GetValues(typeof(EnDataMailState));
+            foreach (var type in dataMailStates)
+            {
+                context.DataMailStates.AddOrUpdate(new DataMailState { Name = type.ToString() });
+            }
+            context.SaveChanges();
+
             context.TrainingCourses.Add(new TrainingCourse
             {
                 IsRoot = true
