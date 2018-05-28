@@ -14,6 +14,21 @@
         this.createDataMailsGrid();
 
         this.updateButtons();
+
+        $("#pageDetailMailing").addEventListener("paste", handlePaste);
+    },
+
+    handlePaste: function (e) {
+        // Stop data actually being pasted into div
+        e.stopPropagation();
+        e.preventDefault();
+
+        // Get pasted data via clipboard API
+        var clipboardData = e.clipboardData || window.clipboardData;
+        var pastedData = clipboardData.getData("Text");
+
+        // Do whatever with pasteddata
+        alert(pastedData);
     },
 
     createDataMailsDataSource: function () {
