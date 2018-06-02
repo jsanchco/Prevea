@@ -160,7 +160,7 @@
                 }
             },
             dataSource: this.dataMailsDataSource,
-            toolbar: this.getTemplateToolBar(),
+            //toolbar: this.getTemplateToolBar(),
             editable: {
                 mode: "inline",
                 confirmation: false
@@ -186,7 +186,41 @@
 
                 commandCell.html(html);
             }
+        }).on("focusin", function (e) {
+            if (DetailMailing.mailingState === "true") {
+                return;
+            }
+            var offset = $(this).offset();
+            var textarea = $("<textarea>");
+            textarea.css({
+                    position: "absolute",
+                    opacity: 0,
+                    top: offset.top + 80,
+                    left: offset.left,
+                    border: "none",
+                    width: 350,
+                    height: $(this).height() - 80
+                })
+                .appendTo("body")
+                .on("paste", function () {
+                    setTimeout(function () {
+                        var value = $.trim(textarea.val());
+                        if (value != null && value !== "") {
+                            DataMails.pasteData(value);
+                        }
+                    });
+                }).on("focusout", function () {
+                    $(this).remove();
+                });
+            setTimeout(function () {
+                textarea.focus();
+            });
         });
+
+        if (DetailMailing.mailingState === "false") {
+            var grid = $("#" + this.gridDataMailsId).data("kendoGrid");
+            grid.hideColumn("Commands");
+        }
     },
 
     getColumnTemplateCommands: function (data) {
@@ -328,7 +362,7 @@
     pasteData: function (text) {
         this.dataMailsDataSource.data([]);
 
-        var lines = text.split("\r\n");
+        var lines = text.split("\n");
         for (var i = 0; i < lines.length; i++) {
             var fields = lines[i].split("\t");
             if (fields.length > 0 && (fields[0] == null || fields[0] === "")) {
@@ -431,6 +465,7 @@
                 DataMails.updateButtons();
 
                 var grid = $("#" + DataMails.gridDataMailsId).data("kendoGrid");
+                grid.showColumn("Commands");
                 grid.refresh();
             },
             error: function (xhr, status, error) {

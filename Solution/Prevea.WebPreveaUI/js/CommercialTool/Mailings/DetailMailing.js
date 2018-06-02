@@ -21,6 +21,10 @@
             text: "PERSONAS para ENVIAR",
             contentUrl: kendo.format("/Mailings/DataMails?mailingId={0}", this.id)
         });
+        //tabStrip.append({
+        //    text: "EXCEL",
+        //    contentUrl: kendo.format("/Mailings/ExcelMails?mailingId={0}", this.id)
+        //});
         tabStrip.append({
             text: "CONTENIDO del MAIL",
             contentUrl: kendo.format("/Mailings/Mail?mailingId={0}", this.id)

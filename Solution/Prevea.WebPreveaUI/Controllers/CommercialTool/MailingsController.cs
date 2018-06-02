@@ -48,6 +48,15 @@
         }
 
         [AppAuthorize(Roles = "Super,PreveaPersonal")]
+        public ActionResult ExcelMails(int mailingId)
+        {
+            ViewBag.MailingId = mailingId;
+
+            return PartialView("~/Views/CommercialTool/Mailings/ExcelMails.cshtml");
+        }
+
+
+        [AppAuthorize(Roles = "Super,PreveaPersonal")]
         public ActionResult Mail(int mailingId)
         {
             ViewBag.MailingId = mailingId;
