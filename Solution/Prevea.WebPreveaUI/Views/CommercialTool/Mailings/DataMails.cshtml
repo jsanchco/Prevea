@@ -2,10 +2,22 @@
     DataMails.init(@ViewBag.MailingId);
 </script>
 
-<div id="gridDataMails" style="height: 53vh; width: 100%;"></div>
+<div>
+    <input type="button" id="btnSaveDataMails" value=" Guardar" class="btn btn-prevea" onclick="DataMails.goToSaveDataMails();" />
+</div>
 
 <br />
 
-<div class="col-sm-12" style="text-align: right; margin-left: 10px;">
+<div style="color: #00639e; font-size: x-small">
+    Copia los datos (Ctrl + c) desde una Hoja Excel respetando la primera columna (EMail) y la segunda (Creador) y pégalos (Ctrl + v) en la lista de abajo
+</div>
+
+<br />
+
+<div id="gridDataMails" style="height: 47vh; width: 100%;"></div>
+
+<br />
+
+<div style="text-align: right; margin-left: 15px;">
     <input type="button" id="btnSendMailing" value="Enviar" class="btn btn-prevea" onclick="DataMails.sendMailing();" />
 </div>
