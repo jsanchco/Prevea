@@ -462,5 +462,15 @@
         Result UpdateDataMails(int mailingId, List<DataMail> dataMails);
 
         #endregion
+
+        #region Incidences
+
+        List<Incidence> GetIncidences();
+        List<Incidence> GetIncidencesByUserId(int userId);
+        Incidence GetIncidenceById(int id);
+        Result SaveIncidence(Incidence incidence);
+        Result DeleteIncidence(int id);
+
+        #endregion
     }
 }

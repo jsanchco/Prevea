@@ -1,4 +1,7 @@
-﻿namespace Prevea.WebPreveaUI.Controllers
+﻿using Prevea.IService.IService;
+using Prevea.Model.Model;
+
+namespace Prevea.WebPreveaUI.Controllers
 {
     #region Using
 
@@ -43,6 +46,22 @@
             notification.DateModification = DateTime.Now;
             notification.ToUserId = User.Id;
 
+            var result = Service.SaveNotification(notification);
+
+            result.Object = AutoMapper.Mapper.Map<NotificationViewModel>(result.Object);
+
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ReadNotification(int id, bool read)
+        {
+            var notification = Service.GetNotification(id);
+            if (notification == null)
+            {
+                return Json(new { resultStatus = Status.Error });
+            }
+
+            notification.Read = read;
             var result = Service.SaveNotification(notification);
 
             result.Object = AutoMapper.Mapper.Map<NotificationViewModel>(result.Object);

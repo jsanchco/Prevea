@@ -21,6 +21,7 @@
         public string Observations { get; set; }
         public DateTime DateCreation { get; set; }
         public DateTime? DateModification { get; set; }
+        public bool Read { get; set; }
         public string ToUserInitials { get; set; }
         public string ToRolName { get; set; }
         public int? SimulationAssignedTo { get; set; }

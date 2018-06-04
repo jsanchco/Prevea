@@ -22,6 +22,8 @@
                 .Include(x => x.UserState)
                 .Include(x => x.UserParent)
                 .Include(x => x.WorkStation)
+                .Include(x => x.DataMails)
+                .Include(x => x.Incidences)
                 .Include(x => x.UserRoles.Select(y => y.Role))
                 .ToList();
         }
@@ -32,6 +34,8 @@
                 .Include(x => x.UserState)
                 .Include(x => x.UserParent)
                 .Include(x => x.WorkStation)
+                .Include(x => x.DataMails)
+                .Include(x => x.Incidences)
                 .Include(x => x.UserRoles.Select(y => y.Role))
                 .FirstOrDefault((m => (m.Id == id)));
         }
@@ -242,6 +246,8 @@
                 .Include(x => x.UserState)
                 .Include(x => x.UserRoles)
                 .Include(x => x.WorkStation)
+                .Include(x => x.DataMails)
+                .Include(x => x.Incidences)
                 .Include(x => x.UserRoles.Select(y => y.Role))
                 .FirstOrDefault((m => (m.Guid.ToString() == guid))));
         }

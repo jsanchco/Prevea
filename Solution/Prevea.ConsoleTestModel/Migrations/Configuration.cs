@@ -351,6 +351,13 @@ namespace Prevea.ConsoleTestModel.Migrations
             context.DeltaCodes.Add(new DeltaCode { Id = 31, Name = "Condiciones ergonómicas" });
             context.DeltaCodes.Add(new DeltaCode { Id = 32, Name = "Factores psicosociales" });
             context.SaveChanges();
+
+            var incidencesStates = (EnIncidenceState[])Enum.GetValues(typeof(EnIncidenceState));
+            foreach (var type in incidencesStates)
+            {
+                context.IncidenceStates.AddOrUpdate(new IncidenceState { Name = type.ToString() });
+            }
+            context.SaveChanges();
         }
     }
 }

@@ -15,6 +15,8 @@
         public int RequestMedicalExaminationStateId { get; set; }
         public string RequestMedicalExaminationStateDescription { get; set; }
         public int CompanyId { get; set; }
+        public string CompanyName { get; set; }
         public string ListEmployees { get; set; }
+        public int NumberEmployees { get; set; }
     }
 }

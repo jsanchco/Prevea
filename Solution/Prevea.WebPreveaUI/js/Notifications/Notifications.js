@@ -25,7 +25,8 @@
                         DateCreation: { type: "date" },
                         DateModification: { type: "date" },
                         SimulationAssignedTo: { type: "number" },
-                        SimulationName: { type: "string" }
+                        SimulationName: { type: "string" },
+                        Read: { type: "boolean" }
                     }
                 }
             },
@@ -50,6 +51,12 @@
     createGridNotifications: function() {
         $("#" + this.gridNotificationsId).kendoGrid({
             columns: [
+                {
+                    field: "Read",
+                    title: "Leído",
+                    width: 90,
+                    template: "#= Notifications.getColumnTemplateRead(data) #"
+                },
                 {
                     field: "NotificationTypeDescription",
                     title: "Tipo de Notificación",
@@ -128,6 +135,7 @@
                     }
                 }
             },
+            //persistSelection: true,
             dataSource: this.notificationsDataSource,
             toolbar: this.getTemplateToolBar(),
             editable: {
@@ -171,6 +179,18 @@
         html += "</span>";
 
         html += "</div>";
+
+        return html;
+    },
+
+    getColumnTemplateRead: function(data) {
+        var html = "<div align='center'>";
+        if (data.Read === true) {
+            html += kendo.format("<input id='check_{0}' type='checkbox' class='checkbox' onchange='Notifications.onchangeRead(\"{0}\");' checked />", data.Id);
+        } else {
+            html += kendo.format("<input id='check_{0}' type='checkbox' class='checkbox' onchange='Notifications.onchangeRead(\"{0}\");' />", data.Id);
+        }
+        html += kendo.format("</div>");
 
         return html;
     },
@@ -273,5 +293,30 @@
         };
 
         return filter;
-    }
+    },
+
+    onchangeRead: function (checkId) {
+        var read = false;
+        if ($("#check_" + checkId).is(':checked')) {
+            read = true;
+        }
+        $.ajax({
+            url: "/Notifications/ReadNotification",
+            data: JSON.stringify({
+                "id": checkId,
+                "read": read
+            }),
+            contentType: "application/json; charset=utf-8",
+            type: "post",
+            dataType: "json",
+            success: function (response) {
+                if (response.result.Status === Constants.resultStatus.Error) {
+                    GeneralData.showNotification(Constants.ko, "", "error");
+                } 
+            },
+            error: function (xhr, status, error) {
+                GeneralData.showNotification(error, "", "error");
+            }
+        });
+    }        
 });

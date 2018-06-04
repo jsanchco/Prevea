@@ -290,6 +290,11 @@
     },
 
     contractualDocumentTypeDropDownEditor: function (container, options) {
+        //if (options.model.Id !== 0) {
+        //    $("<div>" + options.model.AreaDescription + "</div>").appendTo(container);
+        //    return;
+        //}
+
         $("<input required name='" + options.field + "'/>")
             .appendTo(container)
             .kendoDropDownList({
@@ -380,7 +385,7 @@
         }
 
         if (GeneralData.userRoleId !== Constants.role.ContactPerson) {
-            html += kendo.format("<a toggle='tooltip' title='Editar' onclick='ContractualsDocumentsCompany.goToEditContractualsDocumentsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+//            html += kendo.format("<a toggle='tooltip' title='Editar' onclick='ContractualsDocumentsCompany.goToEditContractualsDocumentsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
             html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='ContractualsDocumentsCompany.goToDeleteContractualsDocumentsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>", data.Id);
         }
  

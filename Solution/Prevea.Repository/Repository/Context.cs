@@ -67,6 +67,8 @@
         public DbSet<Mailing> Mailings { get; set; }
         public DbSet<DataMail> DataMails { get; set; }
         public DbSet<DataMailState> DataMailStates { get; set; }
+        public DbSet<Incidence> Incidences { get; set; }
+        public DbSet<IncidenceState> IncidenceStates { get; set; }
 
         #endregion
 

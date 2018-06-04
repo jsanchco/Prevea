@@ -213,6 +213,9 @@
             var listEmployees = new List<RequestMedicalExaminationEmployeeViewModel>();            
             foreach(var employee in employeesByCompany)
             {
+                if (employee.User.WorkStationId == null)
+                    continue;
+
                 var name = string.Empty;
                 if (employee.User.FirstName != null)
                     name += $"{employee.User.FirstName} ";

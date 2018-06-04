@@ -41,7 +41,7 @@
             return PartialView();
         }
 
-        [AppAuthorize(Roles = "Super,Admin,Library,Basic")]
+        [AppAuthorize(Roles = "Super,Admin,Library,PreveaPersonal,PreveaCommercial")]
         public JsonResult Documents_Read([DataSourceRequest] DataSourceRequest request, int documentStateId)
         {
             var documents = Service.GetDocuments(1).Where(x => x.Area.EntityId == 1).ToList();

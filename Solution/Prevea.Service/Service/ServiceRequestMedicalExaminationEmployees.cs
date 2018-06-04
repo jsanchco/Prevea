@@ -387,7 +387,7 @@
                 {
                     Name = "me-5",
                     Type = (int) EnInputTemplateType.TextArea,
-                    DefaultText = $"{requestMedicalExaminationEmployee.Employee.User.WorkStation} [meses]"
+                    DefaultText = $"{requestMedicalExaminationEmployee.Employee.User.WorkStation.Name} [meses]"
                 },
                 new InputTemplate
                 {
@@ -795,7 +795,7 @@
                     Type = (int) EnInputTemplateType.Single,
                     DefaultValue = 0,
                     DefaultText = "Seleccionar ...",
-                    DataSource = new List<string> { "Seleccionar ...", "Apto", "No Apto" }
+                    DataSource = new List<string> { "Seleccionar ...", "Apto", "Apto Condicionado", "No Apto" }
                 },
                 new InputTemplate
                 {
@@ -854,6 +854,7 @@
             templateMedicalExaminationViewModel.EmployeeWorkStation = requestMedicalExaminationEmployee.Employee.User.WorkStation.Name;
             templateMedicalExaminationViewModel.EmployeeChargeDate = requestMedicalExaminationEmployee.Employee.User.ChargeDate;
             templateMedicalExaminationViewModel.EmployeePhoneNumber = requestMedicalExaminationEmployee.Employee.User.PhoneNumber;
+            templateMedicalExaminationViewModel.EmployeeBirthDate = requestMedicalExaminationEmployee.Employee.User.BirthDate;
 
             templateMedicalExaminationViewModel.EmployeeName = string.Empty;
             if (requestMedicalExaminationEmployee.Employee.User.LastName != null)

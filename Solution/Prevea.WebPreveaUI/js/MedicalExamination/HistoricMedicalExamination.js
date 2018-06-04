@@ -33,7 +33,9 @@
                         Observations: { type: "string" },
                         RequestMedicalExaminationStateId: { type: "number", defaultValue: Constants.requestMedicalExaminationState.Pending },
                         RequestMedicalExaminationStateDescription: { type: "string", editable: false, defaultValue: "Pendiente" },                        
-                        CompanyId: { type: "number", defaultValue: HistoricMedicalExamination.companyId }
+                        CompanyId: { type: "number", defaultValue: HistoricMedicalExamination.companyId },
+                        CompanyName: { type: "string" },
+                        NumberEmployees: { type: "number", editable: false, defaultValue: 0 }
                     }
                 }
             },
@@ -92,6 +94,15 @@
                 title: "Fecha Posible",
                 width: 150,
                 template: "#= Templates.getColumnTemplateDateIncrease(data.Date) #"
+            }, {
+                field: "CompanyName",
+                title: "Empresa",
+                width: 200
+            }, {
+                field: "NumberEmployees",
+                title: "Nº Trabajadores",
+                width: 170,
+                template: "#= Templates.getColumnTemplateIncreaseRight(data.NumberEmployees) #"
             }, {
                 field: "Observations",
                 title: "Observaciones"
@@ -190,7 +201,11 @@
                 });
             }
         });
-        kendo.bind($("#" + this.gridRequestHistoricMedicalExaminationsId), this);
+
+        var grid = $("#" + this.gridRequestHistoricMedicalExaminationsId).data("kendoGrid");
+        if (GeneralData.userRoleId === Constants.role.ContactPerson) {
+            grid.hideColumn("CompanyName");
+        }
     },
 
     getColumnTemplateRequestMedicalState: function (data) {
@@ -606,6 +621,7 @@
                     var dataItem = HistoricMedicalExamination.historicRequestMedicalExaminationsDataSource.get(response.requestMedicalExamination.Id);
                     dataItem.RequestMedicalExaminationStateId = response.requestMedicalExamination.RequestMedicalExaminationStateId;
                     dataItem.RequestMedicalExaminationStateDescription = response.requestMedicalExamination.RequestMedicalExaminationStateDescription;
+                    dataItem.NumberEmployees = response.requestMedicalExamination.NumberEmployees;
 
                     var gridRequestHistoricMedicalExaminations =
                         $("#" + HistoricMedicalExamination.gridRequestHistoricMedicalExaminationsId).data("kendoGrid");
@@ -618,6 +634,7 @@
                             return $.inArray($(row).data("uid"), expanded) >= 0;
                         }));
                     });
+                    
                     gridRequestHistoricMedicalExaminations.refresh();
 
                     GeneralData.showNotification(Constants.ok, "", "success");

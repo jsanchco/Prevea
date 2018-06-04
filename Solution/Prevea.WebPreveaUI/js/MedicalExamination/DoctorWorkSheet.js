@@ -148,7 +148,7 @@
                         SamplerNumber: { type: "string" },
                         Date: { type: "date", format: "{hh:mm}", editable: false },
                         RequestMedicalExaminationsId: { type: "number" },
-                        MedicalExaminationStateId: { type: "number" },
+                        MedicalExaminationStateId: { type: "number", editable: false },
                         MedicalExaminationStateDescription: { type: "string" },
                         EmployeeDNI: { type: "string", editable: false }
                     }

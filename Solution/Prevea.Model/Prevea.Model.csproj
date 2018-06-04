@@ -70,6 +70,8 @@
     <Compile Include="Model\DoctorMedicalExaminationEmployee.cs" />
     <Compile Include="Model\DoctorWorkSheet.cs" />
     <Compile Include="Model\HeaderEmployeeDocuments.cs" />
+    <Compile Include="Model\Incidence.cs" />
+    <Compile Include="Model\IncidenceState.cs" />
     <Compile Include="Model\InputTemplate.cs" />
     <Compile Include="Model\Mailing.cs" />
     <Compile Include="Model\MedicalExaminationDocuments.cs" />
@@ -129,6 +131,7 @@
     <Compile Include="ViewModel\EngagementTypeViewModel.cs" />
     <Compile Include="ViewModel\EstablishmentTypeViewModel.cs" />
     <Compile Include="ViewModel\HistoricDownloadDocumentViewModel.cs" />
+    <Compile Include="ViewModel\IncidenceViewModel.cs" />
     <Compile Include="ViewModel\MailingViewModel.cs" />
     <Compile Include="ViewModel\MedicalExaminationDocumentsViewModel.cs" />
     <Compile Include="ViewModel\NotificationViewModel.cs" />

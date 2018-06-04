@@ -457,5 +457,15 @@
         bool DeleteDataMail(int id);
 
         #endregion
+
+        #region Incidences
+
+        List<Incidence> GetIncidences();
+        List<Incidence> GetIncidencesByUserId(int userId);
+        Incidence GetIncidenceById(int id);
+        Incidence SaveIncidence(Incidence incidence);
+        bool DeleteIncidence(int id);
+
+        #endregion
     }
 }

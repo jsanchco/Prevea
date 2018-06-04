@@ -483,7 +483,7 @@
                                 NotificationTypeId = (int)EnNotificationType.FromUser,
                                 NotificationStateId = (int)EnNotificationState.Assigned,
                                 Observations =
-                                    $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}]"
+                                    $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}] de la Empresa [{company.Name}]"
                             };
                             var userGestor = Service.GetUser(company.GestorId);
                             notification.ToUserId = userGestor.UserParentId;
@@ -501,7 +501,7 @@
                                     NotificationTypeId = (int)EnNotificationType.FromUser,
                                     NotificationStateId = (int)EnNotificationState.Assigned,
                                     Observations =
-                                        $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}]"
+                                        $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}] de la Empresa [{company.Name}]"
                                 };
                                 notification.ToUserId = contactPerson.UserId;
                                 var resultNotification = Service.SaveNotification(notification);
@@ -551,17 +551,17 @@
                     {
                         employee.Id = user.Id;
 
+                        var company = Service.GetCompany((int)employee.CompanyId);
                         var notification = new Model.Model.Notification
                         {
                             DateCreation = DateTime.Now,
                             NotificationTypeId = (int)EnNotificationType.FromUser,
                             NotificationStateId = (int)EnNotificationState.Assigned,
                             Observations =
-                                $"{Service.GetUser(User.Id).Initials} - Eliminado el Trabajador [{user.Initials}]"
+                                $"{Service.GetUser(User.Id).Initials} - Eliminado el Trabajador [{user.Initials}] de la Empresa [{company.Name}]"
                         };
 
-                        var userNotification = Service.GetUser(User.Id);
-                        var company = Service.GetCompany((int)employee.CompanyId);
+                        var userNotification = Service.GetUser(User.Id);                        
                         if (userNotification.UserRoles.FirstOrDefault().RoleId == (int)EnRole.ContactPerson)
                         {
                             notification.ToUserId = company.GestorId;
@@ -575,7 +575,7 @@
                                 NotificationTypeId = (int)EnNotificationType.FromUser,
                                 NotificationStateId = (int)EnNotificationState.Assigned,
                                 Observations =
-                                    $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}]"
+                                    $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}] de la Empresa [{company.Name}"
                             };
                             var userGestor = Service.GetUser(company.GestorId);
                             notification.ToUserId = userGestor.UserParentId;
@@ -593,7 +593,7 @@
                                     NotificationTypeId = (int)EnNotificationType.FromUser,
                                     NotificationStateId = (int)EnNotificationState.Assigned,
                                     Observations =
-                                        $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}]"
+                                        $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}] de la Empresa [{company.Name}"
                                 };
                                 notification.ToUserId = contactPerson.UserId;
                                 var resultNotification = Service.SaveNotification(notification);
@@ -649,17 +649,17 @@
                     { 
                         employee.Id = user.Id;
 
+                        var company = Service.GetCompany((int)employee.CompanyId);
                         var notification = new Model.Model.Notification
                         {
                             DateCreation = DateTime.Now,
                             NotificationTypeId = (int)EnNotificationType.FromUser,
                             NotificationStateId = (int)EnNotificationState.Assigned,
                             Observations =
-                                $"{Service.GetUser(User.Id).Initials} - Alta del Trabajador [{user.Initials}]"
+                                $"{Service.GetUser(User.Id).Initials} - Alta del Trabajador [{user.Initials}] de la Empresa [{company.Name}"
                         };
 
-                        var userNotification = Service.GetUser(User.Id);
-                        var company = Service.GetCompany((int)employee.CompanyId);
+                        var userNotification = Service.GetUser(User.Id);                        
                         if (userNotification.UserRoles.FirstOrDefault().RoleId == (int) EnRole.ContactPerson)
                         {
                             notification.ToUserId = company.GestorId;
@@ -673,7 +673,7 @@
                                 NotificationTypeId = (int)EnNotificationType.FromUser,
                                 NotificationStateId = (int)EnNotificationState.Assigned,
                                 Observations =
-                                    $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}]"
+                                    $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}] de la Empresa [{company.Name}"
                             };
                             var userGestor = Service.GetUser(company.GestorId);
                             notification.ToUserId = userGestor.UserParentId;
@@ -691,7 +691,7 @@
                                     NotificationTypeId = (int)EnNotificationType.FromUser,
                                     NotificationStateId = (int)EnNotificationState.Assigned,
                                     Observations =
-                                        $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}]"
+                                        $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}] de la Empresa [{company.Name}"
                                 };
                                 notification.ToUserId = contactPerson.UserId;
                                 var resultNotification = Service.SaveNotification(notification);
@@ -733,17 +733,17 @@
                     var user = result.Object as User;
                     if (user != null)
                     {
+                        var company = Service.GetCompany(companyId);
                         var notification = new Model.Model.Notification
                         {
                             DateCreation = DateTime.Now,
                             NotificationTypeId = (int) EnNotificationType.FromUser,
                             NotificationStateId = (int) EnNotificationState.Assigned,
                             Observations =
-                                $"{Service.GetUser(User.Id).Initials} - Baja del Trabajador [{user.Initials}]"
+                                $"{Service.GetUser(User.Id).Initials} - Baja del Trabajador [{user.Initials}] de la Empresa [{company.Name}"
                         };
 
-                        var userNotification = Service.GetUser(User.Id);
-                        var company = Service.GetCompany(companyId);
+                        var userNotification = Service.GetUser(User.Id);                        
                         if (userNotification.UserRoles.FirstOrDefault().RoleId == (int) EnRole.ContactPerson)
                         {
                             notification.ToUserId = company.GestorId;
@@ -757,7 +757,7 @@
                                 NotificationTypeId = (int)EnNotificationType.FromUser,
                                 NotificationStateId = (int)EnNotificationState.Assigned,
                                 Observations =
-                                    $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}]"
+                                    $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}] de la Empresa [{company.Name}"
                             };
                             var userGestor = Service.GetUser(company.GestorId);
                             notification.ToUserId = userGestor.UserParentId;
@@ -775,7 +775,7 @@
                                     NotificationTypeId = (int)EnNotificationType.FromUser,
                                     NotificationStateId = (int)EnNotificationState.Assigned,
                                     Observations =
-                                        $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}]"
+                                        $"{Service.GetUser(User.Id).Initials} - Actualizado el Trabajador [{user.Initials}] de la Empresa [{company.Name}"
                                 };
                                 notification.ToUserId = contactPerson.UserId;
                                 var resultNotification = Service.SaveNotification(notification);

@@ -173,6 +173,12 @@
                     return "Enviado";
                 case "Error":
                     return "Error";
+                case "Open":
+                    return "Abierta";
+                case "ReOpen":
+                    return "Re-Abierta";
+                case "Close":
+                    return "Cerrada";
 
                 default:
                     return name;

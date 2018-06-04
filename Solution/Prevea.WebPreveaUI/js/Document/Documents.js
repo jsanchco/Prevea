@@ -173,7 +173,7 @@
     },
 
     getColumnTemplateCommands: function (data) {
-        var html = "<div align='right'>";
+        var html = "<div align='center'>";
         if (data.DocumentStateId === 3) {
             html += kendo.format("<a toggle='tooltip' title='Dar de Alta' onclick='Documents.goToSubscribeDocument(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-thumbs-up' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
         }        

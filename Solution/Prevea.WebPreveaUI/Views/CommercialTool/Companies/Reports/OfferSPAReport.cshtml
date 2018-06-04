@@ -130,7 +130,7 @@
                 <span style="">
                     @if (contactPerson != null)
                     {
-                        @contactPerson.User.WorkStation
+                        @contactPerson.User.WorkStationCustom
                     }
                 </span>
             </div>
@@ -362,7 +362,7 @@
 
         <br />
 
-        <div class="row">
+        <div class="row" style="text-align: justify;">
             <div class="col-xs-12">
                 ·  Diseño y elaboración del <strong>Plan de Prevención</strong>, colaborando en el seguimiento del mismo: análisis de las necesidades relativas a la estructura organizativa de prevención de acuerdo con la legislación vigente y las características de ésta, con objeto de definir un sistema organizativo y los procedimientos que permitan gestionar la prevención de los riesgos laborales de una forma integral, eficaz, efectiva y fiable, mediante la programación de actividades.
             </div>
@@ -442,7 +442,7 @@
 
         <br />
 
-        <div class="row">
+        <div class="row" style="text-align: justify;">
             <div class="col-xs-12">
                 · <strong>Planificación de Vigilancia de la Salud:</strong> planificación de las acciones necesarias para un eficaz control de los riesgos laborales sobre la salud de los trabajadores y establecimiento de las prioridades de las actividades sanitarias a realizar en función de la magnitud de los riesgos, del número de trabajadores expuestos y de la posible patología laboral asociada a los mismos.
             </div>
@@ -542,7 +542,14 @@
                 }
             }
 
-            total = totalAmountTecniques * Convert.ToDecimal(ViewBag.IVA) + totalAmountHealthVigilance * Convert.ToDecimal(ViewBag.IVA) + totalAmountMedicalExamination;
+            if (Model.PaymentMethod.ModePaymentMedicalExaminationId == (int) EnModePaymentMedicalExamination.ALaFirmaDelContrato)
+            {
+                total = totalAmountTecniques * Convert.ToDecimal(ViewBag.IVA) + totalAmountHealthVigilance * Convert.ToDecimal(ViewBag.IVA) + totalAmountMedicalExamination;
+            }
+            else
+            {
+                total = totalAmountTecniques * Convert.ToDecimal(ViewBag.IVA) + totalAmountHealthVigilance * Convert.ToDecimal(ViewBag.IVA);
+            }            
             total = Math.Round(total, 2);
         }
 
@@ -615,7 +622,18 @@
 
         <div class="row">
             <div class="col-xs-offset-2 col-xs-9">
-                (Los reconocimientos médicos se facturarán una vez realizados)
+                @{
+                    var textModePaymentMedicalExamination = string.Empty;
+                    if (Model.PaymentMethod.ModePaymentMedicalExaminationId == (int) EnModePaymentMedicalExamination.ALaFirmaDelContrato)
+                    {
+                        textModePaymentMedicalExamination = "(Los reconocimientos médicos se facturarán a la firma del contrato)";
+                    }
+                    if (Model.PaymentMethod.ModePaymentMedicalExaminationId == (int) EnModePaymentMedicalExamination.ALaRealizacion)
+                    {
+                        textModePaymentMedicalExamination = "(Los reconocimientos médicos se facturarán una vez realizados)";
+                    }                    
+                }
+                @textModePaymentMedicalExamination
             </div>
         </div>
 
@@ -684,7 +702,7 @@
                         CARGO
                     </div>
                     <div class="col-xs-4">
-                        @Model.ContactPersons.FirstOrDefault().User.WorkStation
+                        @Model.ContactPersons.FirstOrDefault().User.WorkStationCustom
                     </div>
                 </div>
                 <div class="row">
@@ -692,7 +710,7 @@
                         FIRMA Y SELLO
                     </div>
                     <div class="col-xs-8">
-                        PREVEA CONSULTORES Y PORYECTOS S.L.
+                        &nbsp;
                     </div>
                 </div>
             </div>

@@ -90,5 +90,6 @@
         public virtual ICollection<DocumentUserCreator> DocumentUserCreators { get; set; }
         public virtual ICollection<DocumentUserOwner> DocumentUserOwners { get; set; }
         public virtual ICollection<DataMail> DataMails { get; set; }
+        public virtual ICollection<Incidence> Incidences { get; set; }
     }
 }

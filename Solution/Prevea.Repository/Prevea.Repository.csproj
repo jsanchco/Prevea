@@ -69,6 +69,7 @@
     <Compile Include="Repository\RepositoryEstablishmentTypes.cs" />
     <Compile Include="Repository\RepositoryForeignPreventionServices.cs" />
     <Compile Include="Repository\RepositoryHistoricDownloadDocuments.cs" />
+    <Compile Include="Repository\RepositoryIncidences.cs" />
     <Compile Include="Repository\RepositoryMailings.cs" />
     <Compile Include="Repository\RepositoryMedicalExaminationDocuments.cs" />
     <Compile Include="Repository\RepositoryModesPayment.cs" />

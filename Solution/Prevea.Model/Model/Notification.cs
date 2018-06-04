@@ -25,6 +25,7 @@
         public string Observations { get; set; }
         public DateTime DateCreation { get; set; }
         public DateTime? DateModification { get; set; }
+        public bool Read { get; set; }
 
         [NotMapped]
         public User FromUser
