@@ -24,6 +24,8 @@
                         Enrollment: { type: "string", editable: false },
                         Name: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         Address: { type: "string", editable: false },
+                        Location: { type: "string" },
+                        PostalCode: { type: "string" },
                         NIF: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         ContactPersonName: { type: "string", editable: false },
                         ContactPersonPhoneNumber: { type: "string" },
@@ -99,7 +101,9 @@
                 }, {
                     field: "Address",
                     title: "Dirección",
-                    groupable: "false"
+                    groupable: "false",
+                    width: 350,
+                    template: "#= Companies.getColumnTemplateFullAddress(data) #"
                 }, {
                     field: "ContactPersonName",
                     title: "Persona de Contacto",
@@ -225,6 +229,12 @@
 
     getColumnTemplateEnrollment: function (data) {
         var html = kendo.format("<div style='text-align: center; font-size: 16px; font-weight: bold;'>{0}</div>", data.Enrollment);
+
+        return html;
+    },
+
+    getColumnTemplateFullAddress: function (data) {
+        var html = kendo.format("<div>{0} {1} {2}</div>", data.Address, data.Location, data.PostalCode);
 
         return html;
     },
