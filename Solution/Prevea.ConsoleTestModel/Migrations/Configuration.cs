@@ -31,8 +31,9 @@ namespace Prevea.ConsoleTestModel.Migrations
                 new User { FirstName = "Jesús", LastName = "Sánchez Corzo", Email = "jsanchco@gmail.com", DNI = "50963841G", Nick = "SU-50963841G"},
                 new User { FirstName = "Juan Manuel", LastName = "Carrasco Martínez", Email = "jmcarrasco@preveaspa.com", DNI = "1828925B", Nick = "SU-1828925B"},
                 new User { FirstName = "Virgilio", LastName = "Carrasco Martínez", Email = "vcarrasco@preveaspa.com", DNI = "1899945P", Nick = "SU-1899945P"},
+                new User { FirstName = "Virgilio", LastName = "Carrasco Martínez", Email = "vcarrasco@preveaspa.com", DNI = "1899945P", Nick = "PP-1899945P", UserParentId = 3},
+                new User { FirstName = "Virgilio", LastName = "Carrasco Martínez", Email = "vcarrasco@preveaspa.com", DNI = "1899945P", Nick = "CP-1899945P", UserParentId = 4},
                 new User { FirstName = "Rafael", LastName = "Fernández Sánchez", Email = "rfernandez@prevespa.com", DNI = "51642026B", Nick = "PP-51642026B", UserParentId = 3},
-                new User { FirstName = "Virginia", LastName = "Pérez Prusiel", Email = "vprusiel@gmail.com", DNI = "22222222B", Nick = "CP-22222222B", UserParentId = 4}                
             };
             users.ForEach(p => context.Users.AddOrUpdate(s => s.Id, p));
             context.SaveChanges();
@@ -50,7 +51,8 @@ namespace Prevea.ConsoleTestModel.Migrations
                 new UserRole { UserId = 2, RoleId = (int) EnRole.Super },
                 new UserRole { UserId = 3, RoleId = (int) EnRole.Super },
                 new UserRole { UserId = 4, RoleId = (int) EnRole.PreveaPersonal },
-                new UserRole { UserId = 5, RoleId = (int) EnRole.PreveaCommercial }
+                new UserRole { UserId = 5, RoleId = (int) EnRole.PreveaCommercial },
+                new UserRole { UserId = 6, RoleId = (int) EnRole.PreveaPersonal },
             };
             userroles.ForEach(p => context.UserRoles.AddOrUpdate(s => s.Id, p));
             context.SaveChanges();
