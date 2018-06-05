@@ -177,8 +177,16 @@
                     return "Abierta";
                 case "ReOpen":
                     return "Re-Abierta";
-                case "Close":
+                case "Closed":
                     return "Cerrada";
+                case "Low":
+                    return "Baja";
+                case "Middle":
+                    return "Media";
+                case "High":
+                    return "Alta";
+                case "Critical":
+                    return "Crítica";
 
                 default:
                     return name;

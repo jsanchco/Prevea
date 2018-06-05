@@ -139,7 +139,12 @@
 
             case "tecniques|viewerTemplates":
                 url = "/Tecniques/ViewerHTML";
+                break;  
+
+            case "incidences":
+                url = "/Incidences/Incidences";
                 break;            
+
                                 
             default:
                 break;

@@ -163,7 +163,8 @@
             AutoMapper.Mapper.CreateMap<IncidenceViewModel, Incidence>();
             AutoMapper.Mapper.CreateMap<Incidence, IncidenceViewModel>()
                 .ForMember(x => x.UserInitials, x => x.MapFrom(y => y.User.Initials))
-                .ForMember(x => x.IncidenceStateDescription, x => x.MapFrom(y => y.IncidenceState.Description));
+                .ForMember(x => x.IncidenceStateDescription, x => x.MapFrom(y => y.IncidenceState.Description))
+                .ForMember(x => x.CriticalNivelDescription, x => x.MapFrom(y => y.CriticalNivel.Description));
         }
     }
 }

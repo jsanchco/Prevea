@@ -466,6 +466,9 @@
         Incidence SaveIncidence(Incidence incidence);
         bool DeleteIncidence(int id);
 
+        List<IncidenceState> GetIncidenceStates();
+        List<CriticalNivel> GetCriticalNivels();
+  
         #endregion
     }
 }

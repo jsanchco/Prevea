@@ -69,6 +69,7 @@
         public DbSet<DataMailState> DataMailStates { get; set; }
         public DbSet<Incidence> Incidences { get; set; }
         public DbSet<IncidenceState> IncidenceStates { get; set; }
+        public DbSet<CriticalNivel> CriticalNivels { get; set; }
 
         #endregion
 

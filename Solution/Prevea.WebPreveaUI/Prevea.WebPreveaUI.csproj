@@ -181,6 +181,7 @@
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\IncidencesController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MedicalExamination\DoctorWorkSheetController.cs" />
     <Compile Include="Controllers\MedicalExamination\HistoricMedicalExaminationController.cs" />
@@ -691,6 +692,7 @@
     <Content Include="js\Courses\ManagementCourses\ManagementCourses.js" />
     <Content Include="js\Doctors\Doctors.js" />
     <Content Include="js\EmployeeDocuments\EmployeeDocuments.js" />
+    <Content Include="js\Incidences\Incidences.js" />
     <Content Include="js\MedicalExamination\AddDocument.js" />
     <Content Include="js\MedicalExamination\DetailMedicalExamination.js" />
     <Content Include="js\MedicalExamination\DoctorWorkSheet.js" />
@@ -1210,6 +1212,7 @@
     <Content Include="Views\CommercialTool\Mailings\DetailMailing.cshtml" />
     <Content Include="Views\CommercialTool\Mailings\DataMails.cshtml" />
     <Content Include="Views\CommercialTool\Mailings\Mail.cshtml" />
+    <Content Include="Views\Incidences\Incidences.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

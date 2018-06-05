@@ -93,5 +93,15 @@
                 };
             }
         }
+
+        public List<IncidenceState> GetIncidenceStates()
+        {
+            return Repository.GetIncidenceStates();
+        }
+
+        public List<CriticalNivel> GetCriticalNivels()
+        {
+            return Repository.GetCriticalNivels();
+        }
     }
 }

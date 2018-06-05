@@ -13,12 +13,15 @@
         public string Screen { get; set; }
         public string Description { get; set; }
         public DateTime BeginDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         public int UserId { get; set; }
         public string UserInitials { get; set; }
 
         public int IncidenceStateId { get; set; }
         public string IncidenceStateDescription { get; set; }
+
+        public int CriticalNivelId { get; set; }
+        public string CriticalNivelDescription { get; set; }
     }
 }

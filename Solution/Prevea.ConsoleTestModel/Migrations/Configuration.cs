@@ -358,6 +358,13 @@ namespace Prevea.ConsoleTestModel.Migrations
                 context.IncidenceStates.AddOrUpdate(new IncidenceState { Name = type.ToString() });
             }
             context.SaveChanges();
+
+            var criticalNivelStates = (EnCriticalNivel[])Enum.GetValues(typeof(EnCriticalNivel));
+            foreach (var type in criticalNivelStates)
+            {
+                context.CriticalNivels.AddOrUpdate(new CriticalNivel { Name = type.ToString() });
+            }
+            context.SaveChanges();
         }
     }
 }
