@@ -45,6 +45,8 @@
 
         public string Address { get; set; }
         public string Province { get; set; }
+        public string Location { get; set; }
+        public string PostalCode { get; set; }
         public DateTime Date { get; set; }
         public bool FromSimulation { get; set; }
         public int EmployeesNumber { get; set; }

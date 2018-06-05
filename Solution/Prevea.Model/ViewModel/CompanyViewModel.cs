@@ -8,6 +8,8 @@
         public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
+        public string Location { get; set; }
+        public string PostalCode { get; set; }
         public string NIF { get; set; }
         public string CnaeName { get; set; }
         public int EmployeesNumber { get; set; }
