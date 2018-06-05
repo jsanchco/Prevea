@@ -30,9 +30,9 @@ namespace Prevea.ConsoleTestModel.Migrations
             {
                 new User { FirstName = "Jesús", LastName = "Sánchez Corzo", Email = "jsanchco@gmail.com", DNI = "50963841G", Nick = "SU-50963841G"},
                 new User { FirstName = "Juan Manuel", LastName = "Carrasco Martínez", Email = "jmcarrasco@preveaspa.com", DNI = "1828925B", Nick = "SU-1828925B"},
-                new User { FirstName = "Virgilio", LastName = "Carrasco Martínez", Email = "vcarrasco@preveaspa.com", DNI = "1899945P", Nick = "SU-1899945P"},
-                new User { FirstName = "Virgilio", LastName = "Carrasco Martínez", Email = "vcarrasco@preveaspa.com", DNI = "1899945P", Nick = "PP-1899945P", UserParentId = 3},
-                new User { FirstName = "Virgilio", LastName = "Carrasco Martínez", Email = "vcarrasco@preveaspa.com", DNI = "1899945P", Nick = "CP-1899945P", UserParentId = 4},
+                new User { FirstName = "Virgilio", LastName = "Carrasco Martínez", Email = "vcarrasco@preveaspa.com", DNI = "51919038B", Nick = "SU-51919038B"},
+                new User { FirstName = "Virgilio", LastName = "Carrasco Martínez", Email = "vcarrasco@preveaspa.com", DNI = "51919038B", Nick = "PP-51919038B", UserParentId = 3},
+                new User { FirstName = "Virgilio", LastName = "Carrasco Martínez", Email = "vcarrasco@preveaspa.com", DNI = "51919038B", Nick = "CP-51919038B", UserParentId = 4},
                 new User { FirstName = "Rafael", LastName = "Fernández Sánchez", Email = "rfernandez@prevespa.com", DNI = "51642026B", Nick = "PP-51642026B", UserParentId = 3},
             };
             users.ForEach(p => context.Users.AddOrUpdate(s => s.Id, p));
