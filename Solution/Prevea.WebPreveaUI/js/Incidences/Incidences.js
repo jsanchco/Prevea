@@ -151,13 +151,15 @@
                 title: "Estado",
                 width: 100,
                 editor: Incidences.incidenceStateDropDownEditor,
-                template: "#= IncidenceStateDescription #"
+                template: "#= IncidenceStateDescription #",
+                groupHeaderTemplate: "Agrupado : #= Incidences.getIncidenceStateDescription(value) #"
             }, {
                 field: "CriticalNivelId",
                 title: "Criticidad",
                 width: 100,
                 editor: Incidences.criticalNivelDropDownEditor,
-                template: "#= CriticalNivelDescription #"
+                template: "#= CriticalNivelDescription #",
+                groupHeaderTemplate: "Agrupado : #= Incidences.getCriticalNivelDescription(value) #"
             }, {
                 title: "Comandos",
                 field: "Commands",
@@ -284,6 +286,30 @@
         html += kendo.format("</div>");
 
         return html;
+    },
+
+    getIncidenceStateDescription: function (incidenceStateId) {
+        if (Incidences.incidenceStatesDataSorce.data().length === 0) {
+            Incidences.incidenceStatesDataSorce.read();
+        }
+        for (var index = 0; index < Incidences.incidenceStatesDataSorce.data().length; index++) {
+            if (Incidences.incidenceStatesDataSorce.data()[index].Id === incidenceStateId) {
+                return Incidences.incidenceStatesDataSorce.data()[index].Name;
+            }
+        }
+        return "";
+    },
+
+    getCriticalNivelDescription: function (criticalNivelId) {
+        if (Incidences.criticalNivelsDataSorce.data().length === 0) {
+            Incidences.criticalNivelsDataSorce.read();
+        }
+        for (var index = 0; index < Incidences.criticalNivelsDataSorce.data().length; index++) {
+            if (Incidences.criticalNivelsDataSorce.data()[index].Id === criticalNivelId) {
+                return Incidences.criticalNivelsDataSorce.data()[index].Name;
+            }
+        }
+        return "";
     },
 
     goToEditIncidence: function (id) {
