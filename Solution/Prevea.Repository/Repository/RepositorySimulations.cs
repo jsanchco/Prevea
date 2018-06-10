@@ -120,6 +120,23 @@ namespace Prevea.Repository.Repository
                     {
                         notification.Simulation = null;
                     }
+
+                    var foreignPreventionService = GetForeignPreventionService(id);
+                    if (foreignPreventionService != null)
+                    {
+                        Context.ForeignPreventionServices.Remove(foreignPreventionService);
+                    }
+                    var trainingService = GetTrainingService(id);
+                    if (trainingService != null)
+                    {
+                        Context.TrainingServices.Remove(trainingService);
+                    }
+                    var agencyService = GetAgencyService(id);
+                    if (agencyService != null)
+                    {
+                        Context.AgencyServices.Remove(agencyService);
+                    }
+
                     Context.Simulations.Remove(simulationFind);
 
 
