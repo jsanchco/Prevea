@@ -26,6 +26,8 @@
                         Address: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         Province: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         Description: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
+                        Location: { type: "string" },
+                        PostalCode: { type: "string" },
                         CompanyId: { type: "number", defaultValue: WorkCentersCompany.companyId },
                         EstablishmentTypeId: { type: "number", defaultValue: 1 },
                         EstablishmentTypeName: { type: "string" },
@@ -115,6 +117,14 @@
             }, {
                 field: "Province",
                 title: "Provincia",
+                width: 100
+            }, {
+                field: "Location",
+                title: "Localidad",
+                width: 100
+            }, {
+                field: "PostalCode",
+                title: "Código Postal",
                 width: 100
             },{
                 field: "Description",

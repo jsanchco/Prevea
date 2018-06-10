@@ -6,9 +6,9 @@
     pendingsNotificationsId: "pendingsNotifications",
 
     init: function (numberNotifications, userId, userInitials, userRoleId, userRoleName, userRoleDescription) {
-        $("#" + this.numberNotificationsId).text(numberNotifications);
+        //$("#" + this.numberNotificationsId).text(numberNotifications);
 
-        this.numberNotifications = numberNotifications;
+        //this.numberNotifications = numberNotifications;
 
         GeneralData.userId = userId;
         GeneralData.userInitials = userInitials;

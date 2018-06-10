@@ -53,6 +53,10 @@
                     url: "/Simulations/Simulations_Read",
                     dataType: "jsonp"
                 },
+                update: {
+                    url: "/Simulations/Simulations_Update",
+                    dataType: "jsonp"
+                },
                 destroy: {
                     url: "/Simulations/Simulations_Destroy",
                     dataType: "jsonp"
@@ -101,6 +105,7 @@
                 {
                     field: "CompanyName",
                     title: "Razón Social",
+                    width: 200,
                     groupable: "false",
                     template: "#= Templates.getColumnTemplateIncrease(data.CompanyName) #"
                 }, {
@@ -130,6 +135,7 @@
                 }, {
                     title: "Estado",
                     field: "SimulationStateDescription",
+                    width: 150,
                     template: "#= Simulations.getTemplateSimulationState(data) #"
                 }, {
                     title: "Comandos",
@@ -223,7 +229,6 @@
             }
 
         });
-        kendo.bind($("#" + this.gridSimulationsId), this);
 
         var grid = $("#" + this.gridSimulationsId).data("kendoGrid");
         if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {            
@@ -284,14 +289,20 @@
                 "<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
                 data.Id);
         } else {
+            html += kendo.format("<a toggle='tooltip' title='Editar' onclick='Simulations.goToEditSimulation(\"{0}\", \"{1}\", \"{2}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                gridId,
+                data.Id,
+                data.SimulationParentId);
+
             if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {
                 html += kendo.format(
                     "<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
                     data.Id);
                 html += kendo.format(
-                    "<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\", \"{1}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                    "<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\", \"{1}\", \"{2}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
                     gridId,
-                    data.Id);
+                    data.Id,
+                    data.SimulationParentId);
             }
             if (GeneralData.userRoleId === Constants.role.Super) {
                 if (GeneralData.userId !== data.UserAssignedId &&
@@ -305,9 +316,10 @@
                     data.Id);
                 if (data.SimulationStateId !== Constants.simulationState.Deleted) {
                     html += kendo.format(
-                        "<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\", \"{1}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                        "<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\", \"{1}\", \"{2}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
                         gridId,
-                        data.Id);
+                        data.Id,
+                        data.SimulationParentId);
                 }
             }
             if (GeneralData.userRoleId === Constants.role.PreveaPersonal) {
@@ -335,6 +347,20 @@
         GeneralData.goToActionController(params);
     },
 
+    goToEditSimulation: function (gridId, simulationId, simulationParent) {
+        var grid;
+        if (gridId === Simulations.gridSimulationsId) {
+            grid = $("#" + Simulations.gridSimulationsId).data("kendoGrid");
+        } else {
+            grid = $("#gridSimulationsChildren").find(simulationParent + "gridSimulationsChildren").prevObject.data("kendoGrid");
+        }
+
+        var item = grid.dataSource.get(simulationId);
+        var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
+
+        grid.editRow(tr);
+    },
+
     goToDetailSimulation: function(id) {
         var params = {
             url: "/Simulations/DetailSimulation",
@@ -346,7 +372,7 @@
         GeneralData.goToActionController(params);
     },
 
-    goToDeleteSimulation: function(gridId, simulationId) {
+    goToDeleteSimulation: function (gridId, simulationId, simulationParent) {
         var dialog = $("#" + this.confirmId);
         dialog.kendoDialog({
             width: "400px",
@@ -361,8 +387,14 @@
                 },
                 {
                     text: "Borrar",
-                    action: function() {
-                        var grid = $("#" + gridId).data("kendoGrid");
+                    action: function () {
+                        var grid;
+                        if (gridId === Simulations.gridSimulationsId) {
+                            grid = $("#" + Simulations.gridSimulationsId).data("kendoGrid");
+                        } else {
+                            grid = $("#gridSimulationsChildren").find(simulationParent + "gridSimulationsChildren").prevObject.data("kendoGrid");
+                        }
+
                         var item = grid.dataSource.get(simulationId);
                         var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
 
@@ -441,6 +473,10 @@
                     url: "/Simulations/Simulations_Destroy",
                     dataType: "jsonp"
                 },
+                update: {
+                    url: "/Simulations/Simulations_Update",
+                    dataType: "jsonp"
+                },
                 create: {
                     url: "/Simulations/Simulations_Create",
                     dataType: "jsonp"
@@ -475,6 +511,10 @@
         });
 
         var detailRow = e.detailRow;
+        var classGridDetail =
+            kendo.format("{0}gridSimulationsChildren", e.data.id);
+        detailRow.find(".gridSimulationsChildren").addClass(classGridDetail);
+
         detailRow.find(".gridSimulationsChildren").kendoGrid({
             columns: [
                 {
@@ -583,7 +623,11 @@
             $("#btnCreateChildrenSimulation").prop("disabled", true);
         }
 
-        $("#templateGridSimulationsChildren").css("border-color", "#BFBFBF");
+        $("*[id*=templateGridSimulationsChildren]").each(function () {
+            $(this).css("border-color", "#BFBFBF");
+        });
+
+        //$("#templateGridSimulationsChildren").css("border-color", "#BFBFBF");
     },
 
     getTemplateChildren: function () {

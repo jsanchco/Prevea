@@ -209,7 +209,11 @@
                 var economicDataView = detailRow.find(".economicDataView");
                 economicDataView.html(result);
 
-                $("#templateEconomicDataSimulation").css("border-color", "#BFBFBF");
+                $("*[id*=templateEconomicDataSimulation]").each(function () {
+                    $(this).css("border-color", "#BFBFBF");
+                });
+
+                //$("#templateEconomicDataSimulation").css("border-color", "#BFBFBF");
             }
         });
     }

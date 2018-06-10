@@ -13,7 +13,8 @@
 
         public string Address  { get; set; }
         public string Province { get; set; }
-
+        public string Location { get; set; }
+        public string PostalCode { get; set; }
         public string Description { get; set; }
 
         public int EstablishmentTypeId { get; set; }

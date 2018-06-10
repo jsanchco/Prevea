@@ -114,7 +114,7 @@
             var hasContractGES = false;
             var hasContractFOR = false;
 
-            if (company.SimulationCompanyActive.Simulation.Original)
+            //if (company.SimulationCompanyActive.Simulation.Original)
             {
                 if (company.SimulationCompanyActive.Simulation.ForeignPreventionService != null)
                 {

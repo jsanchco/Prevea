@@ -105,6 +105,53 @@
             }
         }
 
+        public JsonResult Simulations_Update()
+        {
+            const string errorSimulation = "Se ha producido un error en la Actualización de la Simulación";
+
+            try
+            {
+                var simulation = this.DeserializeObject<SimulationViewModel>("simulation");
+                if (simulation == null)
+                {
+                    return this.Jsonp(new { Errors = errorSimulation });
+                }
+
+                var data = AutoMapper.Mapper.Map<Simulation>(simulation);
+
+                data.UserId = User.Id;
+                data.SimulationStateId = (int)EnSimulationState.ValidationPending;
+                var result = Service.SaveSimulation(data, simulation.CompanyId);
+
+                if (result.Status == Status.Error)
+                    return this.Jsonp(new { Errors = errorSimulation });
+
+                var user = Service.GetUser(User.Id);
+                simulation.Id = data.Id;
+                var notification = new Model.Model.Notification
+                {
+                    DateCreation = DateTime.Now,
+                    NotificationTypeId = (int)EnNotificationType.FromSimulation,
+                    NotificationStateId = (int)EnNotificationState.Assigned,
+                    SimulationId = simulation.Id,
+                    ToUserId = user.UserParentId,
+                    Observations =
+                        $"{Service.GetUser(User.Id).Initials} - Modificada la Simulación [{simulation.CompanyName}]"
+                };
+                var resultNotification = Service.SaveNotification(notification);
+                if (resultNotification.Status == Status.Error)
+                    return this.Jsonp(new { Errors = resultNotification });
+
+                return this.Jsonp(simulation);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+                return this.Jsonp(new { Errors = errorSimulation });
+            }
+        }
+
         [AppAuthorize(Roles = "Super,PreveaPersonal,PreveaCommercial")]
         public ActionResult DetailSimulation(int simulationId, int selectTabId)
         {
@@ -264,7 +311,8 @@
                     return this.Jsonp(new {Errors = "Se ha producido un error en el Borrado de la Simulación"});
                 }
 
-                var resultSimulation = Service.SubscribeSimulation(simulation.Id, false);
+                //var resultSimulation = Service.SubscribeSimulation(simulation.Id, false);
+                var resultSimulation = Service.DeleteSimulation(simulation.Id);
                 if (resultSimulation.Status == Status.Error)
                     return Json(new { result = resultSimulation }, JsonRequestBehavior.AllowGet);
 
@@ -273,7 +321,6 @@
                     DateCreation = DateTime.Now,
                     NotificationTypeId = (int)EnNotificationType.FromSimulation,
                     NotificationStateId = (int)EnNotificationState.Issued,
-                    SimulationId = simulation.Id,
                     ToUserId = simulation.UserAssignedId,
                     Observations =
                         $"{Service.GetUser(User.Id).Initials} - Borrada la Simulación [{simulation.CompanyName}]"

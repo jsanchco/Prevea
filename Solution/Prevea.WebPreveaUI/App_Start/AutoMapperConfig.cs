@@ -47,7 +47,13 @@
                 .ForMember(x => x.ContactPersonEmail,
                     x => x.MapFrom(y => y.ContactPersons.FirstOrDefault() != null
                         ? y.ContactPersons.FirstOrDefault().User.Email
-                        : string.Empty));
+                        : string.Empty))
+                .ForMember(x => x.Address,
+                    x => x.MapFrom(y => string.IsNullOrEmpty(y.Address) ? string.Empty : y.Address))
+                .ForMember(x => x.Location,
+                    x => x.MapFrom(y => string.IsNullOrEmpty(y.Location) ? string.Empty : y.Location))
+                .ForMember(x => x.PostalCode,
+                    x => x.MapFrom(y => string.IsNullOrEmpty(y.PostalCode) ? string.Empty : y.PostalCode));                
 
             AutoMapper.Mapper.CreateMap<User, UserViewModel>()
                 .ForMember(x => x.RoleId, x => x.MapFrom(y => y.UserRoles.FirstOrDefault().Role.Id))

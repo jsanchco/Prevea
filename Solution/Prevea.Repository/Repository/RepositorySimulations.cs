@@ -1,4 +1,6 @@
-﻿namespace Prevea.Repository.Repository
+﻿using System.Data.Entity.Migrations;
+
+namespace Prevea.Repository.Repository
 {
     #region Using
 
@@ -60,7 +62,7 @@
             {
                 try
                 {
-                    Context.Simulations.Add(simulation);
+                    Context.Simulations.AddOrUpdate(simulation);
                     Context.SaveChanges();
 
                     dbContextTransaction.Commit();
@@ -89,7 +91,7 @@
 
                     Context.Entry(simulationFind).CurrentValues.SetValues(simulation);
                     Context.SaveChanges();
-
+                   
                     dbContextTransaction.Commit();
 
                     return GetSimulation(simulation.Id);
@@ -114,7 +116,12 @@
                     if (simulationFind == null)
                         return false;
 
+                    foreach (var notification in simulationFind.Notifications)
+                    {
+                        notification.Simulation = null;
+                    }
                     Context.Simulations.Remove(simulationFind);
+
 
                     Context.SaveChanges();
 

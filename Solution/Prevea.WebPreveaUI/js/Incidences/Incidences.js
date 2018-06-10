@@ -124,7 +124,13 @@
 
     createIncidencesGrid: function () {
         $("#" + this.gridIncidencesId).kendoGrid({
-            columns: [{
+            columns: [
+            {
+                field: "Id",
+                title: "Id",
+                width: 80
+            },
+            {
                 field: "Screen",
                 title: "Pantalla",
                 width: 200
