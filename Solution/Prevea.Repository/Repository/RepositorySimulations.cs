@@ -139,7 +139,6 @@ namespace Prevea.Repository.Repository
 
                     Context.Simulations.Remove(simulationFind);
 
-
                     Context.SaveChanges();
 
                     dbContextTransaction.Commit();

@@ -20,7 +20,7 @@
                 model: {
                     id: "Id",
                     fields: {
-                        Id: { type: "number", defaultValue: 0 },
+                        Id: { type: "number", editable: false },
                         Screen: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         Description: { type: "string", validation: { required: { message: " Campo Obligatorio " } } },
                         BeginDate: { type: "date", format: "{0:dd/MM/yyyy}", defaultValue: new Date(), editable: false },
@@ -74,7 +74,7 @@
                     }
                 }
             },
-            pageSize: 10
+            pageSize: 20
         });
     },
 
@@ -128,7 +128,8 @@
             {
                 field: "Id",
                 title: "Id",
-                width: 80
+                width: 80,
+                template: "#= Incidences.getColumnTemplateId(data.Id) #"
             },
             {
                 field: "Screen",
@@ -176,7 +177,7 @@
             }],
             pageable: {
                 buttonCount: 2,
-                pageSizes: [10, 20, "all"],
+                pageSizes: [20, 40, "all"],
                 refresh: true,
                 messages: {
                     display: "Elementos mostrados {0} - {1} de {2}",
@@ -260,35 +261,47 @@
         return html;
     },
 
+    getColumnTemplateId: function (id) {
+        var html = "<div style='font-size: 15px; font-weight: bold'>";
+        if (id === 0) {
+            html += "";
+        } else {
+            html += id;
+        }
+        html += kendo.format("</div>");
+
+        return html;
+    },
+
     getColumnTemplateCommands: function (data) {
         var html = "<div align='center'>";
 
         switch (data.IncidenceStateId) {
-            case 1:
+        case 1:
+            html += kendo.format("<a toggle='tooltip' title='Editar' onclick='Incidences.goToEditIncidence(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+            html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='Incidences.goToDeleteIncidence(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+            break;
+
+        case 3:
+            if (GeneralData.userRoleId === Constants.role.Super) {
                 html += kendo.format("<a toggle='tooltip' title='Editar' onclick='Incidences.goToEditIncidence(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
-                html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='Incidences.goToDeleteIncidence(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
-                break;
+            }
+            break;
 
-            case 3:
-                if (GeneralData.userRoleId === Constants.role.Super) {
-                    html += kendo.format("<a toggle='tooltip' title='Editar' onclick='Incidences.goToEditIncidence(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
-                }
-                break;
-
-            case 2:
-            case 4:
-                if (GeneralData.userRoleId === Constants.role.Super) {
-                    html += kendo.format(
-                        "<a toggle='tooltip' title='Editar' onclick='Incidences.goToEditIncidence(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
-                        data.Id);
-                    html += kendo.format(
-                        "<a toggle='tooltip' title='Borrar' onclick='Incidences.goToDeleteIncidence(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
-                        data.Id);
-                } 
-                break;
+        case 2:
+        case 4:
+            if (GeneralData.userRoleId === Constants.role.Super) {
+                html += kendo.format(
+                    "<a toggle='tooltip' title='Editar' onclick='Incidences.goToEditIncidence(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                    data.Id);
+                html += kendo.format(
+                    "<a toggle='tooltip' title='Borrar' onclick='Incidences.goToDeleteIncidence(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                    data.Id);
+            }
+            break;
 
         }
-        
+
         html += kendo.format("</div>");
 
         return html;
