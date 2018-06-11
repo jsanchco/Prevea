@@ -283,9 +283,10 @@
         });
         kendo.bind($("#" + this.gridContractualsDocumentsCompanyId), this);
 
-        if (GeneralData.userRoleId === Constants.role.ContactPerson) {
+        if (GeneralData.userRoleId === Constants.role.ContactPerson ||
+            GeneralData.userRoleId === Constants.role.PreveaCommercial) {
             $("#" + this.createContractualDocumentId).removeAttr("disabled");
-            $("#" + this.createContractualDocumentId).prop("disabled", true);
+            $("#" + this.createContractualDocumentId).prop("disabled", true);            
         }
     },
 
@@ -359,7 +360,7 @@
 
     getTemplateToolBar: function () {
        var html = "<div class='toolbar'>";
-        html += "<span name='create' class='k-grid-add'>";
+        html += "<span name='create'>";
         html += "<a id='createContractualDocument' class='btn btn-prevea k-grid-add' role='button'> Agregar nuevo</a>";
         html += "</span></div>";
 
@@ -384,7 +385,7 @@
             html += kendo.format("<a toggle='tooltip' title='Agregar Otro Documento' onclick='ContractualsDocumentsCompany.goToAddOtherDocument(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/unknown_opt.png'></a></div></a>&nbsp;&nbsp;&nbsp;", data.Id);
         }
 
-        if (GeneralData.userRoleId !== Constants.role.ContactPerson) {
+        if (GeneralData.userRoleId === Constants.role.PreveaPersonal) {
 //            html += kendo.format("<a toggle='tooltip' title='Editar' onclick='ContractualsDocumentsCompany.goToEditContractualsDocumentsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
             html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='ContractualsDocumentsCompany.goToDeleteContractualsDocumentsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>", data.Id);
         }

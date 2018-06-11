@@ -305,12 +305,12 @@
                     data.SimulationParentId);
             }
             if (GeneralData.userRoleId === Constants.role.Super) {
-                if (GeneralData.userId !== data.UserAssignedId &&
-                    data.SimulationStateId !== Constants.simulationState.Deleted) {
-                    html += kendo.format(
-                        "<a toggle='tooltip' title='Asignar' onclick='Simulations.goToAssignSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-hand-o-left' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
-                        data.Id);
-                }
+                //if (GeneralData.userId !== data.UserAssignedId &&
+                //    data.SimulationStateId !== Constants.simulationState.Deleted) {
+                //    html += kendo.format(
+                //        "<a toggle='tooltip' title='Asignar' onclick='Simulations.goToAssignSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-hand-o-left' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                //        data.Id);
+                //}
                 html += kendo.format(
                     "<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
                     data.Id);
@@ -641,8 +641,8 @@
 
     getTemplateChildrenToolBar: function () {
         var html = "<div class='toolbar'>";
-        html += "<span name='create' class='k-grid-add' id='createChildrenSimulation'>";
-        html += "<a class='btn btn-prevea' role='button' id='btnCreateChildrenSimulation'> Agregar nuevo</a>";
+        html += "<span name='create' id='createChildrenSimulation'>";
+        html += "<a class='btn btn-prevea k-grid-add' role='button' id='btnCreateChildrenSimulation'> Agregar nuevo</a>";
         html += "</span></div>";
 
         return html;

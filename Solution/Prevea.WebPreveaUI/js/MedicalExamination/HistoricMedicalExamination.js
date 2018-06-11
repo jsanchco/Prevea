@@ -240,7 +240,7 @@
 
     getTemplateToolBar: function () {
         var html = "<div class='toolbar'>";
-        html += "<span name='create' class='k-grid-add' id='createRequestHistoricMedicalExamination'>";
+        html += "<span name='create' id='createRequestHistoricMedicalExamination'>";
 
         if (GeneralData.userRoleId === Constants.role.ContactPerson) {
             html += "<a class='btn btn-prevea k-grid-add' role='button'> Agregar nuevo</a>";

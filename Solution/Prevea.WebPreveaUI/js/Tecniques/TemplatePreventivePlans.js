@@ -193,7 +193,7 @@
 
     getTemplateToolBar: function () {
         var html = "<div class='toolbar'>";
-        html += "<span name='create' class='k-grid-add' id='createTemplatePreventivePlan'>";
+        html += "<span name='create' id='createTemplatePreventivePlan'>";
         html += "<a class='btn btn-prevea k-grid-add' role='button'> Agregar nuevo</a>";
         html += "</span></div>";
 
