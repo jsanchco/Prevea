@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prevea.ConsoleTestWebApi", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prevea.ConsoleTestMail", "Prevea.ConsoleTestMail\Prevea.ConsoleTestMail.csproj", "{5DCFD134-8355-46B8-96D9-5887036AC413}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prevea.WebTestSignaturePad", "Prevea.WebTestSignaturePad\Prevea.WebTestSignaturePad.csproj", "{E8E0CEA2-32E0-4406-BCFD-9305357FA381}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{5DCFD134-8355-46B8-96D9-5887036AC413}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DCFD134-8355-46B8-96D9-5887036AC413}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DCFD134-8355-46B8-96D9-5887036AC413}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8E0CEA2-32E0-4406-BCFD-9305357FA381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8E0CEA2-32E0-4406-BCFD-9305357FA381}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8E0CEA2-32E0-4406-BCFD-9305357FA381}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8E0CEA2-32E0-4406-BCFD-9305357FA381}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

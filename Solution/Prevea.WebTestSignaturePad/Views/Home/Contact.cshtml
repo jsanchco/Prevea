@@ -1,0 +1,46 @@
+﻿@model Prevea.WebTestSignaturePad.Models.MyDummyModel
+
+@{
+    ViewBag.Title = "Contact";
+}
+
+@section Scripts {
+    <script src="~/Scripts/signature_pad.min.js"></script>
+    <script src="~/Scripts/SignaturePadInit.js"></script>
+}
+
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<address>
+    One Microsoft Way<br />
+    Redmond, WA 98052-6399<br />
+    <abbr title="Phone">P:</abbr>
+    425.555.0100
+</address>
+
+<address>
+    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
+    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+</address>
+
+<br />
+<br />
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-xs-12">
+            Add Signature
+        </div>
+        <div class="col-xs-12">
+            @Html.DisplayFor(model => model.MySignature)
+            @Html.EditorFor(model => model.MySignature)
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <input type="submit" value="Guardar" id="btnValidate" class="btn btn-danger btn" />
+    </div>
+    
+}
