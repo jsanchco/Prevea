@@ -10,13 +10,14 @@
     using System;
     using IService.IService;
     using Model.Model;
+    using IRepository.IRepository;
 
     #endregion
 
     public class ManagementCoursesController : BaseController
     {
         #region Constructor
-        public ManagementCoursesController(IService service) : base(service)
+        public ManagementCoursesController(IRepository repository) : base(repository)
         {
         }
         #endregion

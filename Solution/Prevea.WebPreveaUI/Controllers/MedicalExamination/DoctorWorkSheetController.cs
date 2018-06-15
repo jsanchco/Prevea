@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
+﻿namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
 {
     #region Using
 
@@ -14,6 +12,8 @@ namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
     using Model.ViewModel;
     using System.Diagnostics;
     using IService.IService;
+    using IRepository.IRepository;
+    using System.Linq;
 
     #endregion
 
@@ -21,7 +21,7 @@ namespace Prevea.WebPreveaUI.Controllers.MedicalExamination
     {
         #region Constructor
 
-        public DoctorWorkSheetController(IService service) : base(service)
+        public DoctorWorkSheetController(IRepository repository) : base(repository)
         {
         }
 

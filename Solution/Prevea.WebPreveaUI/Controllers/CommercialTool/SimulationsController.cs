@@ -13,6 +13,7 @@
     using HelpersClass;
     using Model.ViewModel;
     using System.Diagnostics;
+    using IRepository.IRepository;
 
     #endregion
 
@@ -20,7 +21,7 @@
     {
         #region Constructor
 
-        public SimulationsController(IService service) : base(service)
+        public SimulationsController(IRepository repository) : base(repository)
         {
         }
 

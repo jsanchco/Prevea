@@ -1,6 +1,4 @@
-﻿using Prevea.Model.Model;
-
-namespace Prevea.WebPreveaUI.Controllers
+﻿namespace Prevea.WebPreveaUI.Controllers
 {
     #region Using
 
@@ -12,7 +10,7 @@ namespace Prevea.WebPreveaUI.Controllers
     using System.Web;
     using Newtonsoft.Json;
     using Security;
-    using IService.IService;
+    using IRepository.IRepository;
 
     #endregion
 
@@ -20,7 +18,7 @@ namespace Prevea.WebPreveaUI.Controllers
     {
         #region Constructor
 
-        public LoginController(IService service) : base(service)
+        public LoginController(IRepository repository) : base(repository)
         {
         }
 

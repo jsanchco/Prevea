@@ -1,7 +1,4 @@
-﻿using Prevea.IService.IService;
-using Prevea.Model.Model;
-
-namespace Prevea.WebPreveaUI.Controllers
+﻿namespace Prevea.WebPreveaUI.Controllers
 {
     #region Using
 
@@ -12,6 +9,8 @@ namespace Prevea.WebPreveaUI.Controllers
     using Model.ViewModel;
     using Common;
     using System;
+    using Prevea.IService.IService;
+    using IRepository.IRepository;
 
     #endregion
 
@@ -19,7 +18,7 @@ namespace Prevea.WebPreveaUI.Controllers
     {
         #region Constructor
 
-        public NotificationsController(IService.IService.IService service) : base(service)
+        public NotificationsController(IRepository repository) : base(repository)
         {
         }
 

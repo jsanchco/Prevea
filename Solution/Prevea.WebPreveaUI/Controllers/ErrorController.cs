@@ -13,7 +13,7 @@
     {
         #region Constructor
 
-        public ErrorController(IService service) : base(service)
+        public ErrorController(IRepository repository) : base(repository)
         {
         }
 

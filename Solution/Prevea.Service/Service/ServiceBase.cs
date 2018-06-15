@@ -7,6 +7,7 @@
     using System.IO;
     using System.Linq;
     using System.Web;
+    using IRepository.IRepository;
 
     #endregion
 
@@ -15,7 +16,7 @@
         #region Members
 
         private bool _disposed;
-        protected IRepository.IRepository.IRepository Repository;
+        protected IRepository Repository;
 
         public string TmpUpload => "~/App_Data/TMP";
 
@@ -23,10 +24,7 @@
 
         #region Constructor
 
-        public ServiceBase()
-        {
-            Repository = new Repository.Repository.Repository();
-        }
+        public ServiceBase(IRepository repository) => Repository = repository;
 
         #endregion
 

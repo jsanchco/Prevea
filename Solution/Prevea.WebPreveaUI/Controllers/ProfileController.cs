@@ -15,6 +15,7 @@
     using Kendo.Mvc.UI;
     using Common;
     using System.Diagnostics;
+    using IRepository.IRepository;
 
     #endregion
 
@@ -28,7 +29,7 @@
 
         #region Construtor
 
-        public ProfileController(IService service) : base(service)
+        public ProfileController(IRepository repository) : base(repository)
         {
         }
 

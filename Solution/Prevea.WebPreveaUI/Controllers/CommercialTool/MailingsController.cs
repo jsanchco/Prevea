@@ -12,13 +12,14 @@
     using Model.ViewModel;
     using Common;
     using System.Diagnostics;
+    using IRepository.IRepository;
 
     #endregion
 
     public class MailingsController : BaseController
     {
         #region Constructor
-        public MailingsController(IService service) : base(service)
+        public MailingsController(IRepository repository) : base(repository)
         {
         }
         #endregion

@@ -5,7 +5,7 @@
     using System.Web.Mvc;
     using HelpersClass;
     using System.Linq;
-    using IService.IService;
+    using IRepository.IRepository;
 
     #endregion
 
@@ -13,7 +13,7 @@
     {
         #region Constructor
 
-        public StartController(IService service) : base(service)
+        public StartController(IRepository repository) : base(repository)
         {
 
         }

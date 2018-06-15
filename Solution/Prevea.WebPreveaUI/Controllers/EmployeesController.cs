@@ -9,6 +9,7 @@
     using Common;
     using System.Linq;
     using Model.ViewModel;
+    using IRepository.IRepository;
 
     #endregion
 
@@ -16,7 +17,7 @@
     {
         #region Constructor
 
-        public EmployeesController(IService.IService.IService service) : base(service)
+        public EmployeesController(IRepository repository) : base(repository)
         {
         }
 

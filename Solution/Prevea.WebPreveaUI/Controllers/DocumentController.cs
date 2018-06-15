@@ -14,6 +14,7 @@
     using Common;
     using IService.IService;
     using Model.ViewModel;
+    using IRepository.IRepository;
 
     #endregion
 
@@ -21,7 +22,7 @@
     {
         #region Constructor
 
-        public DocumentController(IService service) : base(service)
+        public DocumentController(IRepository repository) : base(repository)
         {
         }
 

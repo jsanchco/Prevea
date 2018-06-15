@@ -14,6 +14,7 @@
     using Common;
     using Model.CustomModel;
     using System.Linq;
+    using IRepository.IRepository;
 
     #endregion
 
@@ -21,7 +22,7 @@
     {
         #region Constructor
 
-        public TecniquesController(IService service) : base(service)
+        public TecniquesController(IRepository repository) : base(repository)
         {
         }
 

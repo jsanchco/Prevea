@@ -6,17 +6,16 @@
     using HelpersClass;
     using Model.ViewModel;
     using System;
-    using System.Diagnostics;
-    using System.IO;
+    using System.Diagnostics;    
     using Model.Model;
-    using System.Collections.Generic;
-    using Rotativa.MVC;
+    using System.Collections.Generic;    
     using IService.IService;
     using Newtonsoft.Json;
     using System.Linq;
     using Kendo.Mvc.UI;
     using Common;
     using System.Web;
+    using IRepository.IRepository;
 
     #endregion
 
@@ -24,7 +23,7 @@
     {
         #region Constructor
 
-        public MedicalExaminationController(IService service) : base(service)
+        public MedicalExaminationController(IRepository repository) : base(repository)
         {
         }
 

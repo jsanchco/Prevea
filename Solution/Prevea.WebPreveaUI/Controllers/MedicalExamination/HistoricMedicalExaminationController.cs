@@ -13,13 +13,14 @@
     using System;
     using System.Diagnostics;
     using System.Linq;
+    using IRepository.IRepository;
 
     #endregion
 
     public class HistoricMedicalExaminationController : BaseController
     {
         #region Constructor
-        public HistoricMedicalExaminationController(IService service) : base(service)
+        public HistoricMedicalExaminationController(IRepository repository) : base(repository)
         {
         }
         #endregion

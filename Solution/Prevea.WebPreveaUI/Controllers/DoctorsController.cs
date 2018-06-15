@@ -12,6 +12,7 @@
     using Model.Model;
     using Model.ViewModel;
     using Common;
+    using IRepository.IRepository;
 
     #endregion
 
@@ -19,7 +20,7 @@
     {
         #region Constructor
 
-        public DoctorsController(IService service) : base(service)
+        public DoctorsController(IRepository repository) : base(repository)
         {
         }
 

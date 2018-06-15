@@ -68,8 +68,8 @@ namespace Prevea.WebPreveaUI.App_Start
         /// </summary>
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
-        {
-            kernel.Bind<IService>().To<Service>();
+        {            
+            kernel.Bind<IRepository>().To<Repository>();
         }        
     }
 }

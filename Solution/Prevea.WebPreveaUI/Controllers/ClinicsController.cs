@@ -12,13 +12,14 @@
     using Model.Model;
     using Model.ViewModel;
     using Common;
+    using IRepository.IRepository;
 
     #endregion
 
     public class ClinicsController : BaseController
     {
         #region Controller
-        public ClinicsController(IService service) : base(service)
+        public ClinicsController(IRepository repository) : base(repository)
         {
         }
         #endregion

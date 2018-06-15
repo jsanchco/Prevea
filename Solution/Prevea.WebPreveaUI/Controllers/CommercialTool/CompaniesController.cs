@@ -15,14 +15,15 @@
     using Common;
     using System.Diagnostics;
     using System.Web;
-    using Prevea.Model.CustomModel;
+    using Model.CustomModel;
+    using IRepository.IRepository;
 
     #endregion
 
     public class CompaniesController : BaseController
     {
         #region Constructor
-        public CompaniesController(IService service) : base(service)
+        public CompaniesController(IRepository repository) : base(repository)
         {
         }
         #endregion

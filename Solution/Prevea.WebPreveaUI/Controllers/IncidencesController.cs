@@ -1,6 +1,4 @@
-﻿using Prevea.Model.CustomModel;
-
-namespace Prevea.WebPreveaUI.Controllers
+﻿namespace Prevea.WebPreveaUI.Controllers
 {
     #region Using
 
@@ -14,6 +12,8 @@ namespace Prevea.WebPreveaUI.Controllers
     using Model.Model;
     using Model.ViewModel;
     using Common;
+    using IRepository.IRepository;
+    using Model.CustomModel;
 
     #endregion
 
@@ -21,7 +21,7 @@ namespace Prevea.WebPreveaUI.Controllers
     {
         #region Constructor
 
-        public IncidencesController(IService service) : base(service)
+        public IncidencesController(IRepository repository) : base(repository)
         {
         }
 

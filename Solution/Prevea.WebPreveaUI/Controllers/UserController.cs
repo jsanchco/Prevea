@@ -13,6 +13,7 @@
     using Common;
     using System.Linq;
     using Model.CustomModel;
+    using IRepository.IRepository;
 
     #endregion
 
@@ -20,7 +21,7 @@
     {
         #region Constructor
 
-        public UserController(IService service) : base(service)
+        public UserController(IRepository repository) : base(repository)
         {
         }
 

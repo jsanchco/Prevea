@@ -13,6 +13,8 @@
     using System;
     using System.Diagnostics;
     using Rotativa.MVC;
+    using IRepository.IRepository;
+    using Service.Service;
 
     #endregion
 
@@ -22,9 +24,9 @@
 
         #region Construtor
 
-        public BaseController(IService service)
+        public BaseController(IRepository repository)
         {
-            Service = service;
+            Service = new Service(repository);
         }
 
         #endregion
