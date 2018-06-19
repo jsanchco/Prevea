@@ -212,6 +212,37 @@
             }
         }
 
+        public Document SaveSignature(int documentId, byte[] signature)
+        {
+            using (var dbContextTransaction = Context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var documentFind = GetDocument(documentId);
+
+                    if (documentFind == null)
+                        return null;
+
+                    documentFind.Signature = signature;
+                    documentFind.HasFirm = true;
+
+                    Context.Entry(documentFind).CurrentValues.SetValues(documentFind);
+                    Context.SaveChanges();
+
+                    dbContextTransaction.Commit();
+
+                    return documentFind;
+                }
+                catch (Exception ex)
+                {
+                    dbContextTransaction.Rollback();
+
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return null;
+                }
+            }
+        }
+
         #endregion
 
         public List<Document> GetDocumentsByState(int documentStateId)

@@ -1,8 +1,39 @@
-﻿@model Company
+﻿@model Document
 
 @{
     Layout = "~/Views/Shared/_LayoutReport.cshtml";
 }
+
+@section script {
+    <script src="~/Scripts/signature_pad.min.js"></script>
+}
+
+<script>
+    $(document).ready(function () {
+        var wrapper = document.querySelector(".signature-pad");
+        var canvas = wrapper.querySelector("canvas");
+        var hiddenInput = wrapper.querySelector('input[type="hidden"]');
+
+        this.signaturePad = new SignaturePad(canvas);
+
+        // Read base64 string from hidden input
+        var base64str = hiddenInput.value;
+
+        if (base64str) {
+            this.signaturePad.fromDataURL("data:image/png;base64," + base64str);
+        }
+
+        if (hiddenInput.disabled) {
+            this.signaturePad.off();
+        } else {
+            this.signaturePad.onEnd = function () {
+                base64str = AddSignature.signaturePad.toDataURL().split(",")[1];
+                hiddenInput.value = base64str;
+            };
+        }
+    });
+</script>
+
 
 <div id="pageOfferSPAReport">
     <div style="font-size: 14px;">
@@ -73,7 +104,7 @@
             </div>
             <div class="col-xs-9">
                 <span style="">
-                    @Model.NIF
+                    @Model.Company.NIF
                 </span>
             </div>
         </div>
@@ -84,7 +115,7 @@
             </div>
             <div class="col-xs-9">
                 <span style="">
-                    @Model.Address
+                    @Model.Company.Address
                 </span>
             </div>
         </div>
@@ -95,7 +126,7 @@
             </div>
             <div class="col-xs-9">
                 <span style="">
-                    @Model.Cnae.Name
+                    @Model.Company.Cnae.Name
                 </span>
             </div>
         </div>
@@ -107,7 +138,7 @@
             <div class="col-xs-9">
                 <span style="">
                     @{
-                        var contactPerson = Model.ContactPersons.FirstOrDefault();
+                        var contactPerson = Model.Company.ContactPersons.FirstOrDefault();
                         var name = string.Empty;
                         if (contactPerson != null)
                         {
@@ -179,14 +210,14 @@
             var tecniches = "No";
             var health = "No";
 
-            if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService != null)
+            if (Model.Company.SimulationCompanyActive.Simulation.ForeignPreventionService != null)
             {
-                if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques != null)
+                if (Model.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques != null)
                 {
                     tecniches = "Si";
                 }
-                if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance != null &&
-                    Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination != null)
+                if (Model.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance != null &&
+                    Model.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination != null)
                 {
                     health = "Si";
                 }
@@ -262,7 +293,7 @@
 
         <div class="row">
             <div class="col-xs-12">
-                TRABAJADORES DECLARADOS POR LA EMPRESA: @Model.Employees.Count
+                TRABAJADORES DECLARADOS POR LA EMPRESA: @Model.Company.Employees.Count
             </div>
         </div>
 
@@ -297,14 +328,14 @@
                 <span style="">
                     @{
                         var paymentMethod = string.Empty;
-                        if (Model.PaymentMethod.SinglePayment)
+                        if (Model.Company.PaymentMethod.SinglePayment)
                         {
                             paymentMethod = "Pago único";
                         }
                         else
                         {
                             var months = new[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
-                            foreach (var month in Model.PaymentMethod.SplitPayment)
+                            foreach (var month in Model.Company.PaymentMethod.SplitPayment)
                             {
                                 paymentMethod += string.Format("{0}, ", months[month - 1]);
                             }
@@ -319,7 +350,7 @@
             </div>
             <div class="col-xs-2">
                 <span style="">
-                    @Model.PaymentMethod.ModePayment.Description
+                    @Model.Company.PaymentMethod.ModePayment.Description
                 </span>
             </div>
             <div class="col-xs-2">
@@ -327,7 +358,7 @@
             </div>
             <div class="col-xs-2">
                 <span style="">
-                    @Model.PaymentMethod.ModePaymentMedicalExamination.Description
+                    @Model.Company.PaymentMethod.ModePaymentMedicalExamination.Description
                 </span>
             </div>
         </div>
@@ -338,7 +369,7 @@
             </div>
             <div class="col-xs-3">
                 <span style="">
-                    @Model.PaymentMethod.AccountNumber
+                    @Model.Company.PaymentMethod.AccountNumber
                 </span>
             </div>
         </div>
@@ -526,30 +557,30 @@
             var totalAmountHealthVigilance = 0.0m;
             var totalAmountMedicalExamination = 0.0m;
             decimal total;
-            if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService != null)
+            if (Model.Company.SimulationCompanyActive.Simulation.ForeignPreventionService != null)
             {
-                if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques != null)
+                if (Model.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques != null)
                 {
-                    totalAmountTecniques = (decimal)Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques * Model.SimulationCompanyActive.Simulation.NumberEmployees;
+                    totalAmountTecniques = (decimal)Model.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques * Model.Company.SimulationCompanyActive.Simulation.NumberEmployees;
                 }
-                if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance != null)
+                if (Model.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance != null)
                 {
-                    totalAmountHealthVigilance = (decimal)Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance * Model.SimulationCompanyActive.Simulation.NumberEmployees;
+                    totalAmountHealthVigilance = (decimal)Model.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance * Model.Company.SimulationCompanyActive.Simulation.NumberEmployees;
                 }
-                if (Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination != null)
+                if (Model.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination != null)
                 {
-                    totalAmountMedicalExamination = (decimal)Model.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination * Model.SimulationCompanyActive.Simulation.NumberEmployees;
+                    totalAmountMedicalExamination = (decimal)Model.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination * Model.Company.SimulationCompanyActive.Simulation.NumberEmployees;
                 }
             }
 
-            if (Model.PaymentMethod.ModePaymentMedicalExaminationId == (int) EnModePaymentMedicalExamination.ALaFirmaDelContrato)
+            if (Model.Company.PaymentMethod.ModePaymentMedicalExaminationId == (int)EnModePaymentMedicalExamination.ALaFirmaDelContrato)
             {
                 total = totalAmountTecniques * Convert.ToDecimal(ViewBag.IVA) + totalAmountHealthVigilance * Convert.ToDecimal(ViewBag.IVA) + totalAmountMedicalExamination;
             }
             else
             {
                 total = totalAmountTecniques * Convert.ToDecimal(ViewBag.IVA) + totalAmountHealthVigilance * Convert.ToDecimal(ViewBag.IVA);
-            }            
+            }
             total = Math.Round(total, 2);
         }
 
@@ -624,14 +655,14 @@
             <div class="col-xs-offset-2 col-xs-9">
                 @{
                     var textModePaymentMedicalExamination = string.Empty;
-                    if (Model.PaymentMethod.ModePaymentMedicalExaminationId == (int) EnModePaymentMedicalExamination.ALaFirmaDelContrato)
+                    if (Model.Company.PaymentMethod.ModePaymentMedicalExaminationId == (int)EnModePaymentMedicalExamination.ALaFirmaDelContrato)
                     {
                         textModePaymentMedicalExamination = "(Los reconocimientos médicos se facturarán a la firma del contrato)";
                     }
-                    if (Model.PaymentMethod.ModePaymentMedicalExaminationId == (int) EnModePaymentMedicalExamination.ALaRealizacion)
+                    if (Model.Company.PaymentMethod.ModePaymentMedicalExaminationId == (int)EnModePaymentMedicalExamination.ALaRealizacion)
                     {
                         textModePaymentMedicalExamination = "(Los reconocimientos médicos se facturarán una vez realizados)";
-                    }                    
+                    }
                 }
                 @textModePaymentMedicalExamination
             </div>
@@ -649,7 +680,7 @@
 
         <div class="row">
             <div class="col-xs-12">
-                La forma de pago de las especialidades técnicas y vigilancia de la salud, se realizará mediante pago @Model.PaymentMethod.ModePaymentMedicalExamination.Description por la cantidad:
+                La forma de pago de las especialidades técnicas y vigilancia de la salud, se realizará mediante pago @Model.Company.PaymentMethod.ModePaymentMedicalExamination.Description por la cantidad:
             </div>
         </div>
 
@@ -694,7 +725,7 @@
                         NOMBRE
                     </div>
                     <div class="col-xs-4">
-                        @Model.ContactPersons.FirstOrDefault().User.FirstName  @Model.ContactPersons.FirstOrDefault().User.LastName
+                        @Model.Company.ContactPersons.FirstOrDefault().User.FirstName  @Model.Company.ContactPersons.FirstOrDefault().User.LastName
                     </div>
                 </div>
                 <div class="row">
@@ -702,7 +733,7 @@
                         CARGO
                     </div>
                     <div class="col-xs-4">
-                        @Model.ContactPersons.FirstOrDefault().User.WorkStationCustom
+                        @Model.Company.ContactPersons.FirstOrDefault().User.WorkStationCustom
                     </div>
                 </div>
                 <div class="row">
@@ -714,8 +745,14 @@
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="col-xs-4">
+        <div class="row">
+            <div class="col-xs-offset-2 col-xs-4 signature-pad">
+                <canvas class="panel panel-default" style="border-color: transparent;"></canvas>
+                @Html.HiddenFor(model => model.Signature)
+            </div>
+            <div class="col-xs-offset-2 col-xs-4">
                 <img src="~/Images/companySeal.png" style="text-align: center" alt="Firma de Empresa" />
             </div>
         </div>

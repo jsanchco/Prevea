@@ -1,0 +1,39 @@
+﻿@model Signature
+
+<script src="~/Scripts/signature_pad.min.js"></script>
+
+<script>
+    AddSignature.init(1, @Model.DocumentId);
+</script>
+
+<style>
+    .k-window-titlebar {
+        height: 30px;
+    }
+
+    .k-window-content .k-content {
+        position: static;
+    }
+
+    .k-block > .k-header, .k-window-titlebar {
+        position: static;
+    }
+
+</style>
+
+<div id="signature-pad" class="row signature-pad" style="width: 99%;">
+    <div class="col-xs-11">
+        <canvas class="panel panel-default" style="border-color: transparent;"></canvas>
+    </div>
+    
+    <div class="row">
+        <div class="col-xs-6" style="text-align: left; display: inline; margin-left: 16px; width: 45%;">
+            <button id="btn_signatureClear" type="button" class="btn btn-prevea btn-clear-canvas">Limpiar</button>
+        </div> 
+        <div class="col-xs-6" style="text-align: right; display: inline; padding-right: 0px;">
+            <button id="btn_signatureSave" type="button" class="btn btn-prevea" onclick="AddSignature.goToSaveSignature();">Guardar</button>
+        </div> 
+    </div>
+
+    @Html.HiddenFor(model => model.MySignature)
+</div>

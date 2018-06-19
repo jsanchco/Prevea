@@ -51,6 +51,8 @@
         public bool HasFirm { get; set; }
         public bool IsFirmedDocument { get; set; }
 
+        public byte[] Signature { get; set; }
+
         public string InputTemplatesJSON { get; set; }
 
         [NotMapped]

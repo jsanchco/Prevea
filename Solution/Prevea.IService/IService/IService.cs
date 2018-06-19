@@ -31,6 +31,7 @@
         Result SaveOtherDocument(HttpPostedFileBase fileOtherDocument, int documentId);
         Result SaveContractualDocumentFirmed(HttpPostedFileBase fileDocumentFirmed, int companyId, int documentId, int userId);
         Document GetDocumentByArea(int areaId);
+        Result SaveSignature(int documentId, byte[] signature);
 
         void RestoreFile(int userId, string urlRelative);
         void SaveFileTmp(int userId, HttpPostedFileBase files);

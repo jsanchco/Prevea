@@ -1102,7 +1102,7 @@
                     }
                     ViewBag.ProvincesWorkCenters = provincesWorkCenters;
                     
-                    return View("~/Views/CommercialTool/Companies/Reports/OfferSPAReport.cshtml", document.Company);
+                    return View("~/Views/CommercialTool/Companies/Reports/OfferSPAReport.cshtml", document);
                 #endregion
 
                 #region OFE_FOR
@@ -1153,6 +1153,25 @@
             var contractualDocument = Service.GetDocument(contractualDocumentId);
 
             return PartialView("~/Views/CommercialTool/Companies/AddOtherDocument.cshtml", contractualDocument);
+        }
+
+        [HttpGet]
+        public ActionResult AddSignature(int contractualDocumentId)
+        {
+            var document = Service.GetDocument(contractualDocumentId);
+            var signature = new Signature
+            {
+                DocumentId = contractualDocumentId,
+                MySignature = document.Signature
+            };
+
+            return PartialView("~/Views/Shared/AddSignature.cshtml", signature);
+        }
+
+        [HttpPost]
+        public ActionResult AddSignature(Signature signature)
+        {
+            return PartialView(signature);
         }
 
         [HttpPost]

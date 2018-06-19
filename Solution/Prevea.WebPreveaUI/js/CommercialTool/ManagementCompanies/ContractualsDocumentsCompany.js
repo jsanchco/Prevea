@@ -11,6 +11,8 @@
     addDocumentFirmedId: "addDocumentFirmed",
     addOtherDocumentWindow: null,
     addOtherDocumentId: "addOtherDocument",
+    addSignatureWindow: null,
+    addSignatureId: "addSignature",
 
     contractualsDocumentsCompanyDataSource: null,
     contractualDocumentTypeDataSource: null,
@@ -56,6 +58,21 @@
         });
     },
 
+    setUpAddSignatureWindow: function (contractualDocumentId) {
+        var url = kendo.format("/Companies/AddSignature?contractualDocumentId={0}", contractualDocumentId);
+        this.addSignatureWindow = $("#" + this.addSignatureId);
+        this.addSignatureWindow.kendoWindow({
+            width: "315px",
+            title: "Agregar Firma",
+            visible: false,
+            modal: true,
+            actions: [
+                "Close"
+            ],
+            content: url
+        });
+    },
+
     createContractualsDocumentsCompanyDataSource: function () {
         var beginDate = new Date();
         var endDate = new Date();
@@ -84,7 +101,8 @@
                         Date: { type: "date", defaultValue: new Date() },
                         DocumentFirmedId: { type: "number", defaultValue: null },
                         IsFirmedDocument: { type: "boolean" },
-                        AreaStoreInServer: { type: "boolean" }
+                        AreaStoreInServer: { type: "boolean" },
+                        HasFirm: { type: "boolean" }
                     }
                 }
             },
@@ -401,9 +419,19 @@
             if (data.Id !== 0) {
                 html = "<div style='text-align: center'>";
                 html += "<div style='text-align: left'>";
-                html += kendo.format(
-                    "<div id='circleFirmPending' toggle='tooltip' title='Agregar Documento Firmado' onclick='ContractualsDocumentsCompany.goToAddContractualDocumentFirmed(\"{0}\")' style='cursor: pointer; float: left; text-align: left;'>",
-                    data.Id);
+                //html += kendo.format(
+                //    "<div id='circleFirmPending' toggle='tooltip' title='Agregar Documento Firmado' onclick='ContractualsDocumentsCompany.goToAddContractualDocumentFirmed(\"{0}\")' style='cursor: pointer; float: left; text-align: left;'>",
+                //    data.Id);
+                if (data.HasFirm === true) {
+                    html += kendo.format(
+                        "<div id='circleSuccess' toggle='tooltip' title='Ver Firma' onclick='ContractualsDocumentsCompany.goToAddSignature(\"{0}\")' style='cursor: pointer; float: left; text-align: left;'>",
+                        data.Id);
+                } else {
+                    html += kendo.format(
+                        "<div id='circleFirmPending' toggle='tooltip' title='Agregar Firma' onclick='ContractualsDocumentsCompany.goToAddSignature(\"{0}\")' style='cursor: pointer; float: left; text-align: left;'>",
+                        data.Id);
+                }
+         
                 html += "</div></div>";
                 html += kendo.format("<div style='font-size: 16px; font-weight: bold;'>{0}", data.Name);
                 html += "</div></div>";
@@ -498,6 +526,11 @@
     goToAddOtherDocument: function (contractualDocumentId) {
         this.setUpAddOtherDocumentWindow(contractualDocumentId);
         this.addOtherDocumentWindow.data("kendoWindow").center().open();
+    },
+
+    goToAddSignature: function (contractualDocumentId) {
+        this.setUpAddSignatureWindow(contractualDocumentId);
+        this.addSignatureWindow.data("kendoWindow").center().open();
     },
 
     goToDeleteContractualDocumentCompanyFirmed: function (documentFirmedId) {

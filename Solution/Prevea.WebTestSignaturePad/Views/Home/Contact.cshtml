@@ -34,7 +34,8 @@
             Add Signature
         </div>
         <div class="col-xs-12">
-            @Html.DisplayFor(model => model.MySignature)
+            @Html.DisplayFor(model => model.MySignature,
+                new { htmlAttributes = new { style = "border-color: transparent;" } })
             @Html.EditorFor(model => model.MySignature)
         </div>
     </div>

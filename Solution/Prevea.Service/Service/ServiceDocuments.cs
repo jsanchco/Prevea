@@ -603,6 +603,40 @@
             return document;
         }
 
+        public Result SaveSignature(int documentId, byte[] signature)
+        {
+            try
+            {
+                var document = Repository.SaveSignature(documentId, signature);
+
+                if (document == null)
+                {
+                    return new Result
+                    {
+                        Message = "Se ha producido un error en la grabacion del Documento",
+                        Object = null,
+                        Status = Status.Error
+                    };
+                }
+
+                return new Result
+                {
+                    Message = "La Grabación del Documento se ha producido con éxito",
+                    Object = document,
+                    Status = Status.Ok
+                };
+            }
+            catch (Exception)
+            {
+                return new Result
+                {
+                    Message = "Se ha producido un error en la grabacion del Documento",
+                    Object = null,
+                    Status = Status.Error
+                };
+            }           
+        }
+
         private Document FillDataDocument(int userId, Document document, string extension)
         {
             var area = Repository.GetArea(document.AreaId);

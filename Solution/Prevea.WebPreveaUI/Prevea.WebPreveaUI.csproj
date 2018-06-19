@@ -674,8 +674,6 @@
     <Content Include="js\CommercialTool\ManagementCompanies\DetailCompany.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\ContractualsDocumentsCompany.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\EconomicDataCompany.js" />
-    <Content Include="js\CommercialTool\ManagementCompanies\Reports\DefaultReport.js" />
-    <Content Include="js\CommercialTool\ManagementCompanies\Reports\OfferSPAReport.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\SimulationsCompany.js" />
     <Content Include="js\CommercialTool\ManagementCompanies\WorkCentersCompany.js" />
     <Content Include="js\CommercialTool\Simulations\AgencyService.js" />
@@ -709,6 +707,7 @@
     <Content Include="js\Profile\EconomicTrackingProfile.js" />
     <Content Include="js\Profile\PersonalDataProfile.js" />
     <Content Include="js\Profile\Profile.js" />
+    <Content Include="js\Shared\AddSignature.js" />
     <Content Include="js\Shared\Constants.js" />
     <Content Include="js\Document\AddDocument.js" />
     <Content Include="js\Document\AddDocumentWithParent.js" />
@@ -1099,6 +1098,8 @@
     <Content Include="Scripts\rickshaw\vendor\d3.v3.js" />
     <Content Include="Scripts\select2\select2.min.js" />
     <Content Include="Scripts\selectboxit\jquery.selectBoxIt.min.js" />
+    <Content Include="Scripts\signature_pad.js" />
+    <Content Include="Scripts\signature_pad.min.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\typeahead.min.js" />
     <None Include="Scripts\_references.js" />
@@ -1213,6 +1214,9 @@
     <Content Include="Views\CommercialTool\Mailings\DataMails.cshtml" />
     <Content Include="Views\CommercialTool\Mailings\Mail.cshtml" />
     <Content Include="Views\Incidences\Incidences.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\SignaturePad.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SignaturePad.cshtml" />
+    <Content Include="Views\Shared\AddSignature.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

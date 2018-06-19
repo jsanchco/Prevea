@@ -214,5 +214,19 @@
             }
             base.Dispose(disposing);
         }
+
+        public JsonResult SaveSignature(int? documentId, int? userId, byte[] data)
+        {
+            if (documentId != null)
+            {
+                var result = Service.SaveSignature((int)documentId, data);
+
+                return Json(result.Status == Status.Ok ? 
+                    new { result = new Result { Status = Status.Ok } } : 
+                    new { result = new Result { Status = Status.Error } }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { result = new Result { Status = Status.Error } }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

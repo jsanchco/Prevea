@@ -150,9 +150,7 @@
     <script src="~/js/Error/ErrorPage.js"></script>
     <script src="~/js/Shared/Templates.js"></script>
     <script src="~/js/Shared/Constants.js"></script>
-
-    <script src="~/js/CommercialTool/ManagementCompanies/Reports/DefaultReport.js"></script>
-    <script src="~/js/CommercialTool/ManagementCompanies/Reports/OfferSPAReport.js"></script>
+    <script src="~/js/Shared/AddSignature.js"></script>    
 
     @RenderSection("script", required: false)
 
@@ -188,16 +186,16 @@
                     <div class="sui-normal">
                         <a class="user-link" href="#">
                             @{
-                            var pathPhoto = "image_not_found.png";
-                            var name = "";
-                            if (Model != null)
-                            {
-                                if (File.Exists(string.Format("{0}/user_{1}.png", Server.MapPath("~/Images"), Model.Id)))
+                                var pathPhoto = "image_not_found.png";
+                                var name = "";
+                                if (Model != null)
                                 {
-                                    pathPhoto = string.Format("user_{0}.png", Model.Id);
+                                    if (File.Exists(string.Format("{0}/user_{1}.png", Server.MapPath("~/Images"), Model.Id)))
+                                    {
+                                        pathPhoto = string.Format("user_{0}.png", Model.Id);
+                                    }
+                                    name = string.Format("{0} {1}", Model.FirstName, Model.LastName);
                                 }
-                                name = string.Format("{0} {1}", Model.FirstName, Model.LastName);
-                            }
                             }
                             <img id="photoProfileSideBar" width="55" class="img-circle" alt="" src="~/Images/@pathPhoto">
                             <span>Hola,</span>
@@ -261,6 +259,7 @@
         <div id="addOtherDocument"></div>
         <div id="changePassword"></div>
         <div id="addDocument"></div>
+        <div id="addSignature"></div>
 
     </div>
     

@@ -26,6 +26,7 @@
         public int DocumentStateId { get; set; }
         public bool HasFirm { get; set; }
         public bool IsFirmedDocument { get; set; }
+        public byte[] Signature { get; set; }
         public int? DocumentParentId { get; set; }
         public int? CompanyId { get; set; }
         public int? SimulationId { get; set; }

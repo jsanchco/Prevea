@@ -48,6 +48,7 @@
         Document UnsubscribeDocument(int id);
         Document SubscribeDocument(int id);
         bool DeleteDocument(int id);
+        Document SaveSignature(int documentId, byte[] signature);
 
         List<Document> GetDocumentsByState(int documentStateId);
         List<Document> GetDocumentsByParent(int id, int? parentId);

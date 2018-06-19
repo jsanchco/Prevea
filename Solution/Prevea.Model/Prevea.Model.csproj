@@ -96,6 +96,7 @@
     <Compile Include="Model\RequestMedicalExaminations.cs" />
     <Compile Include="Model\RequestMedicalExaminationState.cs" />
     <Compile Include="Model\RiskEvaluation.cs" />
+    <Compile Include="Model\Signature.cs" />
     <Compile Include="Model\Simulation.cs" />
     <Compile Include="Model\SimulationCompany.cs" />
     <Compile Include="Model\SimulationState.cs" />
