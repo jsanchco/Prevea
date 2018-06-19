@@ -1293,9 +1293,9 @@
             ViewBag.ProvincesWorkCenters = provincesWorkCenters;
             
             if (isPartialView)
-                return PartialView("~/Views/CommercialTool/Companies/Reports/OfferSPAReport.cshtml", contractualDocument.Company);
+                return PartialView("~/Views/CommercialTool/Companies/Reports/OfferSPAReport.cshtml", contractualDocument);
 
-            return View("~/Views/CommercialTool/Companies/Reports/OfferSPAReport.cshtml", contractualDocument.Company);
+            return View("~/Views/CommercialTool/Companies/Reports/OfferSPAReport.cshtml", contractualDocument);
         }
 
         [HttpGet]

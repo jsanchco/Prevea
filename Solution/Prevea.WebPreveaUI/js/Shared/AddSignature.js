@@ -1,12 +1,13 @@
 ﻿var AddSignature = kendo.observable({
 
-    documentId: null,
     type: null,
+    documentId: null,    
     userId: null,
     btn_signatureClearId: "btn_signatureClear",
     btn_signatureSaveId: "btn_signatureSave",
 
     signaturePad: null,
+    hiddenInput: null,
 
     init: function (type, id) {
         this.type = type;
@@ -33,31 +34,31 @@
         var wrapper = document.querySelector(".signature-pad");
         var canvas = wrapper.querySelector("canvas");
         var clearButton = wrapper.querySelector(".btn-clear-canvas");
-        var hiddenInput = wrapper.querySelector('input[type="hidden"]');
+        this.hiddenInput = wrapper.querySelector('input[type="hidden"]');
 
         this.signaturePad = new SignaturePad(canvas);
 
         // Read base64 string from hidden input
-        var base64str = hiddenInput.value;
+        var base64str = this.hiddenInput.value;
 
         if (base64str) {
             // Draws signature image from data URL
             this.signaturePad.fromDataURL("data:image/png;base64," + base64str);
         }
 
-        if (hiddenInput.disabled) {
+        if (this.hiddenInput.disabled) {
             this.signaturePad.off();
         } else {
             this.signaturePad.onEnd = function () {
                 // Returns signature image as data URL and set it to hidden input
                 base64str = AddSignature.signaturePad.toDataURL().split(",")[1];
-                hiddenInput.value = base64str;
+                AddSignature.hiddenInput.value = base64str;
             };
 
             clearButton.addEventListener("click", function () {
                 // Clear the canvas and hidden input
                 AddSignature.signaturePad.clear();
-                hiddenInput.value = "";
+                AddSignature.hiddenInput.value = "";
             });
         }
     },
@@ -80,6 +81,16 @@
             dataType: "json",
             success: function (response) {
                 if (response.result.Status === Constants.resultStatus.Ok) {
+                    if (AddSignature.type === 1) {
+                        var isEmpty = false;
+                        if (AddSignature.hiddenInput.value === "") {
+                            isEmpty = true;
+                        }
+
+                        ContractualsDocumentsCompany.updateRowFromSignature(AddSignature.documentId, isEmpty);
+                        ContractualsDocumentsCompany.addSignatureWindow.data("kendoWindow").close();
+                    }
+
                     GeneralData.showNotification(Constants.ok, "", "success");
                 } else {
                     GeneralData.showNotification(error, "", "error");

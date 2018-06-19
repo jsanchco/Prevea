@@ -124,8 +124,16 @@
                     if (operation === "read") {
                         return { companyId: options.companyId };
                     }
-                    if (operation !== "read" && options) {
+
+                    if (operation === "create" && options) {
                         return { document: kendo.stringify(options) };
+                    }
+
+                    if (operation === "destroy" && options) {
+                        options.Signature = null;
+                        return {                            
+                            document: kendo.stringify(options)
+                        };
                     }
 
                     return null;
@@ -135,7 +143,7 @@
                 if ((e.type === "update" || e.type === "destroy" || e.type === "create") && e.response !== null) {
                     var grid = $("#" + ContractualsDocumentsCompany.gridContractualsDocumentsCompanyId).data("kendoGrid");
                     if (typeof e.response.Errors !== "undefined") {
-                        GeneralData.showNotification(e.response.Errors, "", "error");                        
+                        GeneralData.showNotification(e.response.Errors, "", "error");
                         if (e.type === "create") {
                             this.data().remove(this.data().at(0));
 
@@ -143,9 +151,9 @@
                         } else {
                             if (e.type === "destroy") {
                                 ContractualsDocumentsCompany.contractualsDocumentsCompanyDataSource.read();
-                            }                            
+                            }
                             this.cancelChanges();
-                        }                                   
+                        }
                     } else {
                         if (e.type === "create") {
                             kendo.ui.progress(grid.element, false);
@@ -156,10 +164,10 @@
                         }
                         GeneralData.showNotification(Constants.ok, "", "success");
                     }
-                }                
+                }
             },
             pageSize: 10
-        });        
+        });
     },
 
     createContractualDocumentTypeDataSource: function () {
@@ -304,7 +312,7 @@
         if (GeneralData.userRoleId === Constants.role.ContactPerson ||
             GeneralData.userRoleId === Constants.role.PreveaCommercial) {
             $("#" + this.createContractualDocumentId).removeAttr("disabled");
-            $("#" + this.createContractualDocumentId).prop("disabled", true);            
+            $("#" + this.createContractualDocumentId).prop("disabled", true);
         }
     },
 
@@ -337,8 +345,8 @@
                             url: "/Companies/GetContractualDocumentTypes",
                             dataType: "jsonp",
                             data: {
-                                 companyId: ContractualsDocumentsCompany.companyId,
-                                 simulationId: ContractualsDocumentsCompany.simulationId
+                                companyId: ContractualsDocumentsCompany.companyId,
+                                simulationId: ContractualsDocumentsCompany.simulationId
                             }
                         },
                         parameterMap: function (options, operation) {
@@ -377,7 +385,7 @@
     },
 
     getTemplateToolBar: function () {
-       var html = "<div class='toolbar'>";
+        var html = "<div class='toolbar'>";
         html += "<span name='create'>";
         html += "<a id='createContractualDocument' class='btn btn-prevea k-grid-add' role='button'> Agregar nuevo</a>";
         html += "</span></div>";
@@ -397,17 +405,17 @@
                 html += kendo.format(
                     "<a toggle='tooltip' title='Abrir Documento' onclick='GeneralData.goToOpenFile(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>&nbsp;&nbsp;",
                     data.Id);
-            }            
+            }
             //html += kendo.format("<a toggle='tooltip' title='Abrir Documento' onclick='GeneralData.goToOpenFile(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>&nbsp;&nbsp;", data.Id);
         } else {
             html += kendo.format("<a toggle='tooltip' title='Agregar Otro Documento' onclick='ContractualsDocumentsCompany.goToAddOtherDocument(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/unknown_opt.png'></a></div></a>&nbsp;&nbsp;&nbsp;", data.Id);
         }
 
         if (GeneralData.userRoleId === Constants.role.PreveaPersonal) {
-//            html += kendo.format("<a toggle='tooltip' title='Editar' onclick='ContractualsDocumentsCompany.goToEditContractualsDocumentsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+            //            html += kendo.format("<a toggle='tooltip' title='Editar' onclick='ContractualsDocumentsCompany.goToEditContractualsDocumentsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
             html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='ContractualsDocumentsCompany.goToDeleteContractualsDocumentsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>", data.Id);
         }
- 
+
         html += kendo.format("</div>");
 
         return html;
@@ -431,7 +439,7 @@
                         "<div id='circleFirmPending' toggle='tooltip' title='Agregar Firma' onclick='ContractualsDocumentsCompany.goToAddSignature(\"{0}\")' style='cursor: pointer; float: left; text-align: left;'>",
                         data.Id);
                 }
-         
+
                 html += "</div></div>";
                 html += kendo.format("<div style='font-size: 16px; font-weight: bold;'>{0}", data.Name);
                 html += "</div></div>";
@@ -449,15 +457,15 @@
             html += "<div style='cursor: pointer; float: left; text-align: left; margin-top: -10px;'>";
             html += kendo.format("<img toggle='tooltip' title='Ver Documento Firmado' onclick='GeneralData.goToOpenFile(\"{0}\")' target='_blank' src='../../Images/pdf_opt_little.jpg'>&nbsp;&nbsp;", data.DocumentFirmedId);
             html += removeDocumentFirmed;
-            html += "</div>";            
+            html += "</div>";
             html += "</div>";
             html += kendo.format("<div style='font-size: 16px; font-weight: bold;'>{0}", data.Name);
             html += "</div></div>";
         }
-        
+
         return html;
     },
-    
+
     getColumnTemplateSimulationName: function (data) {
         var html = "<div align='center'>";
         if (GeneralData.userRoleId !== Constants.role.ContactPerson) {
@@ -555,7 +563,7 @@
                             type: "post",
                             dataType: "json",
                             success: function (data) {
-                                if (data.Status === Constants.resultStatus.Ok){
+                                if (data.Status === Constants.resultStatus.Ok) {
                                     GeneralData.showNotification(Constants.ok, "", "success");
 
                                     ContractualsDocumentsCompany.updateRow(data.Object);
@@ -576,7 +584,7 @@
     },
 
     updateRow: function (contractualDocument) {
-        var grid = $("#" + this.gridContractualsDocumentsCompanyId).data("kendoGrid");           
+        var grid = $("#" + this.gridContractualsDocumentsCompanyId).data("kendoGrid");
         var dataItem = grid.dataSource.get(contractualDocument.Id);
         dataItem.DocumentFirmedId = contractualDocument.DocumentFirmedId;
         dataItem.IsFirmedDocument = contractualDocument.IsFirmedDocument;
@@ -598,5 +606,18 @@
         var win = window.open("", "_blank");
         var url = kendo.format("/Companies/ContractualDocumentReport?documentId={0}", id);
         win.location = url;
+    },
+
+    updateRowFromSignature: function(contractualDocumentId, isEmpty) {
+        var grid = $("#" + this.gridContractualsDocumentsCompanyId).data("kendoGrid");
+        var dataItem = grid.dataSource.get(contractualDocumentId);
+
+        if (isEmpty === false) {
+            dataItem.HasFirm = true;
+        } else {
+            dataItem.HasFirm = false;
+        }
+        
+        grid.refresh();
     }
 });
