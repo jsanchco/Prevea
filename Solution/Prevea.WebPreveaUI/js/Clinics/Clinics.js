@@ -83,7 +83,7 @@
             }, {
                 field: "Province",
                 title: "Provincia",
-                width: 100
+                width: 140
             }, {
                 field: "PhoneNumber",
                 title: "Nº de Teléfono",

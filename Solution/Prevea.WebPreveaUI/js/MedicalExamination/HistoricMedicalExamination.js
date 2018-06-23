@@ -105,7 +105,8 @@
                 template: "#= Templates.getColumnTemplateIncreaseRight(data.NumberEmployees) #"
             }, {
                 field: "Observations",
-                title: "Observaciones"
+                title: "Observaciones",
+                width: 200
             }, {
                 field: "RequestMedicalExaminationStateDescription",
                 title: "Estado de la Petición",

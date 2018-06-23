@@ -117,15 +117,15 @@
             }, {
                 field: "Province",
                 title: "Provincia",
-                width: 100
+                width: 120
             }, {
                 field: "Location",
                 title: "Localidad",
-                width: 100
+                width: 120
             }, {
                 field: "PostalCode",
                 title: "Código Postal",
-                width: 100
+                width: 150
             },{
                 field: "Description",
                 title: "Descripción",
@@ -134,7 +134,7 @@
             }, {
                 field: "EstablishmentTypeId",
                 title: "Establecimiento",
-                width: "90px",
+                width: 160,
                 editor: WorkCentersCompany.establishmentTypesDropDownEditor,
                 template: "#= WorkCentersCompany.getEstablishmentTypeDescription(data.EstablishmentTypeId) #",
                 groupHeaderTemplate: "Agrupado : #= WorkCentersCompany.getEstablishmentTypeDescription(value) #"

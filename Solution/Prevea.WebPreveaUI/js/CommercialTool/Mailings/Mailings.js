@@ -81,19 +81,19 @@
             }, {
                 field: "CreateDate",
                 title: "Fecha de Creación",
-                width: 130,
+                width: 180,
                 groupable: "true",
                 template: "#= Templates.getColumnTemplateDateWithHour(data.CreateDate) #"
             }, {
                 field: "SendDate",
                 title: "Fecha de Envío",
-                width: 130,
+                width: 180,
                 groupable: "true",
                 template: "#= Templates.getColumnTemplateDateWithHour(data.SendDate) #"
             }, {
                 field: "Sent",
                 title: "Enviado",
-                width: 130,
+                width: 180,
                 groupable: "true",
                 template: "#= Mailings.getTemplateSent(data.Sent) #"
             }, {

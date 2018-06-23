@@ -211,21 +211,24 @@
                 }, {
                     field: "AreaId",
                     title: "Tipo",
-                    width: "150px",
+                    width: 150,
                     editor: ContractualsDocumentsCompany.contractualDocumentTypeDropDownEditor,
                     template: "#= ContractualsDocumentsCompany.getContractualDocumentTypeDescription(data.AreaId) #",
                     groupHeaderTemplate: "Agrupado : #= ContractualsDocumentsCompany.getContractualDocumentTypeDescription(value) #"
                 }, {
                     field: "BeginDate",
                     title: "Fecha Inicio",
+                    width: 150,
                     template: "#= Templates.getColumnTemplateDate(data.BeginDate) #"
                 }, {
                     field: "EndDate",
                     title: "Fecha Fin",
+                    width: 150,
                     template: "#= Templates.getColumnTemplateDate(data.EndDate) #"
                 }, {
                     field: "Observations",
                     title: "Observaciones",
+                    width: 200,
                     groupable: "false"
                 }, {
                     title: "Comandos",

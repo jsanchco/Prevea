@@ -24,7 +24,7 @@
             columns: [{
                 field: "FirstName",
                 title: "Nombre",
-                width: 80
+                width: 120
             }, {
                 field: "LastName",
                 title: "Apellidos",
@@ -33,27 +33,27 @@
             }, {
                 field: "PhoneNumber",
                 title: "Teléfono",
-                width: 80,
+                width: 120,
                 groupable: "false"
             }, {
                 field: "Address",
                 title: "Dirección",
-                width: 150,
+                width: 180,
                 groupable: "false"
             }, {
                 field: "Province",
                 title: "Provincia",
-                width: 100
+                width: 120
             }, {
                 field: "BirthDate",
                 title: "Fecha de Nacimiento",
-                width: 130,
+                width: 200,
                 groupable: "false",
                 template: "#= Templates.getColumnTemplateDate(data.BirthDate) #"
             }, {
                 field: "Email",
                 title: "Email",
-                width: 100,
+                width: 140,
                 groupable: "false"
             }, {
                 field: "DNI",
@@ -63,7 +63,7 @@
             }, {
                 field: "WorkStationId",
                 title: "Puesto de Trabajo",
-                width: 160,
+                width: 180,
                 editor: EmployeesCompany.workStationsDropDownEditor,
                 template: "#= EmployeesCompany.getColumnTemplateWorkStation(data.WorkStationName) #"
             }, {

@@ -122,13 +122,13 @@
             }, {
                 field: "DocumentBeginDate",
                 title: "Fecha de Inicio",
-                width: 130,
+                width: 150,
                 groupable: "false",
                 template: "#= Templates.getColumnTemplateDate(data.DocumentBeginDate) #"
             }, {
                 field: "DocumentEndDate",
                 title: "Fecha Final",
-                width: 130,
+                width: 150,
                 groupable: "false",
                 template: "#= Templates.getColumnTemplateDate(data.DocumentEndDate) #"
             }, {

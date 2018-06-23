@@ -101,13 +101,13 @@
             }, {
                 field: "CreateDate",
                 title: "Fecha de Creación",
-                width: 130,
+                width: 200,
                 groupable: "false",
                 template: "#= Templates.getColumnTemplateDateWithHour(data.CreateDate) #"
             }, {
                 field: "ModifyDate",
                 title: "Fecha de Modificación",
-                width: 130,
+                width: 200,
                 groupable: "false",
                 template: "#= Templates.getColumnTemplateDateWithHour(data.ModifyDate) #"
             }, {

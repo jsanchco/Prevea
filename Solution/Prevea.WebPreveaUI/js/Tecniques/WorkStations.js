@@ -65,17 +65,6 @@
                     template: "#= Templates.getColumnTemplateIncrease(data.Name) #"
                 }
             ],
-            pageable: {
-                //buttonCount: 2,
-                //pageSizes: [10, 20, "all"],
-                refresh: true,
-                messages: {
-                    display: "Elementos mostrados {2}",
-                    //itemsPerPage: "Elementos por página",
-                    //allPages: "Todos",
-                    empty: "No existen registros para mostrar"
-                }
-            },
             filterable: {
                 messages: {
                     info: "Filtrar por: ",

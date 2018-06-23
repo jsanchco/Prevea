@@ -101,15 +101,17 @@
             columns: [{                
                 field: "FirstName",
                 title: "Nombre",
-                width: 300,
+                width: 150,
                 template: "#= Templates.getColumnTemplateIncrease(data.FirstName) #"
             }, {
                 field: "LastName",
                 title: "Apellidos",
+                width: 200,
                 template: "#= Templates.getColumnTemplateIncrease(data.LastName) #"
             }, {
                 field: "CollegiateNumber",
                 title: "Nº de Colegiado",
+                width: 200,
                 template: "#= Templates.getColumnTemplateIncrease(data.CollegiateNumber) #"
             }, {
                 field: "DNI",

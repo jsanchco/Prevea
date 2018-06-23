@@ -89,7 +89,7 @@
             columns: [{
                 field: "FirstName",
                 title: "Nombre",
-                width: 80
+                width: 120
             }, {
                 field: "LastName",
                 title: "Apellidos",
@@ -98,12 +98,12 @@
             }, {
                 field: "PhoneNumber",
                 title: "Teléfono",
-                width: 80,
+                width: 120,
                 groupable: "false"
             }, {
                 field: "Email",
                 title: "Email",
-                width: 100,
+                width: 160,
                 groupable: "false"
             }, {
                 field: "DNI",
@@ -113,7 +113,7 @@
             }, {
                 field: "WorkStationCustom",
                 title: "Puesto de Trabajo",
-                width: 160
+                width: 180
             }, {
                 title: "Comandos",
                 field: "Commands",

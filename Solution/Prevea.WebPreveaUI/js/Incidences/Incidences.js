@@ -146,12 +146,12 @@
             }, {
                 field: "BeginDate",
                 title: "Fecha de Creación",
-                width: 150,
+                width: 170,
                 template: "#= Templates.getColumnTemplateDateWithHour(data.BeginDate) #"
             }, {
                 field: "EndDate",
                 title: "Fecha de Cierre",
-                width: 150,
+                width: 170,
                 template: "#= Templates.getColumnTemplateDateWithHour(data.EndDate) #"
             }, {
                 field: "IncidenceStateId",
@@ -163,7 +163,7 @@
             }, {
                 field: "CriticalNivelId",
                 title: "Criticidad",
-                width: 100,
+                width: 140,
                 editor: Incidences.criticalNivelDropDownEditor,
                 template: "#= CriticalNivelDescription #",
                 groupHeaderTemplate: "Agrupado : #= Incidences.getCriticalNivelDescription(value) #"
