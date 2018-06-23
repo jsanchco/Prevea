@@ -50,7 +50,7 @@
             columns: [{
                 field: "FirstName",
                 title: "Nombre",
-                width: 80,
+                width: 120,
                 groupable: "false"
             }, {
                 field: "LastName",
@@ -66,7 +66,7 @@
             }, {
                 field: "RoleDescription",
                 title: "Rol",
-                width: 90
+                width: 140
             }, {
                 field: "CompanyName",
                 title: "Empresa",
@@ -74,7 +74,7 @@
             }, {
                 field: "CompanyEnrollment",
                 title: "Nº Empresa",
-                width: 110
+                width: 140
             }, {
                 title: "Comandos",
                 field: "Commands",

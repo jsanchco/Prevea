@@ -116,7 +116,7 @@
             columns: [{
                 field: "FirstName",
                 title: "Nombre",
-                width: 80,
+                width: 120,
                 groupable: "false"
             }, {
                 field: "LastName",
@@ -132,18 +132,18 @@
             }, {
                 field: "RoleId",
                 title: "Rol",
-                width: 90,
+                width: 140,
                 editor: Users.rolesDropDownEditor,
                 template: "#=RoleDescription#",
                 groupHeaderTemplate: "Agrupado : #= Users.getRoleDescription(value) #"
             }, {
                 field: "UserParentInitials",
                 title: "Creado por",
-                width: 90
+                width: 140
             }, {
                 field: "PhoneNumber",
                 title: "Teléfono",
-                width: 80,
+                width: 140,
                 groupable: "false"
             }, {
                 field: "Address",
@@ -153,11 +153,11 @@
             }, {
                 field: "Province",
                 title: "Provincia",
-                width: 100
+                width: 120
             }, {
                 field: "Email",
                 title: "Email",
-                width: 100,
+                width: 150,
                 groupable: "false"
             }, {
                 field: "DNI",

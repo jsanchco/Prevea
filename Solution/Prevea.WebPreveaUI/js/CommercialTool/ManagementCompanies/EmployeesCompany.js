@@ -58,7 +58,7 @@
             }, {
                 field: "DNI",
                 title: "DNI",
-                width: 70,
+                width: 100,
                 groupable: "false"
             }, {
                 field: "WorkStationId",
