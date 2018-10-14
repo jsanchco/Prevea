@@ -10,6 +10,9 @@
     simulationStateId: null,
     selectTabId: null,
 
+    existAgencyService: false,
+    existTrainingService: false,
+
     init: function (simulationId, simulationStateId, selectTabId) {
         this.simulationId = simulationId;
         this.simulationStateId = simulationStateId;
@@ -64,14 +67,18 @@
             text: "SERVICIO de PREVENCIÓN AJENO",
             contentUrl: kendo.format("/Simulations/ForeignPreventionService?simulationId={0}", this.simulationId)
         });
-        tabStrip.append({
-            text: "GESTORÍA",
-            contentUrl: kendo.format("/Simulations/AgencyService?simulationId={0}", this.simulationId)
-        });
-        tabStrip.append({
-            text: "FORMACIÓN",
-            contentUrl: kendo.format("/Simulations/TrainingService?simulationId={0}", this.simulationId)
-        });
+        if (this.existAgencyService === true) {
+            tabStrip.append({
+                text: "GESTORÍA",
+                contentUrl: kendo.format("/Simulations/AgencyService?simulationId={0}", this.simulationId)
+            });
+        }
+        if (this.existTrainingService === true) {
+            tabStrip.append({
+                text: "FORMACIÓN",
+                contentUrl: kendo.format("/Simulations/TrainingService?simulationId={0}", this.simulationId)
+            });
+        }
 
         tabStrip = $("#" + this.tabStripDetailSimulationId).data("kendoTabStrip");
 

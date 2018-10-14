@@ -145,6 +145,7 @@
     <Compile Include="ViewModel\RiskEvaluationViewModel.cs" />
     <Compile Include="ViewModel\SimulationViewModel.cs" />
     <Compile Include="ViewModel\TemplateMedicalExaminationViewModel.cs" />
+    <Compile Include="ViewModel\TemplatePreventivePlanViewModel.cs" />
     <Compile Include="ViewModel\TrainingCourseTrainingServiceViewModel.cs" />
     <Compile Include="ViewModel\TrainingCourseViewModel.cs" />
     <Compile Include="ViewModel\UserFromContactAsViewModel.cs" />

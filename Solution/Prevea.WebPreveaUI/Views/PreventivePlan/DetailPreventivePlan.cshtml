@@ -114,7 +114,8 @@
                                   source.Read(read =>
                                   {
                                       read.Action("GetTemplatesPreventivePlans", "PreventivePlan");
-                                  });
+                                  })
+                                  .ServerFiltering(true);
                               })
                               .Events(e =>
                               {

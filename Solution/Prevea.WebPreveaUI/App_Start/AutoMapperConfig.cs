@@ -171,6 +171,9 @@
                 .ForMember(x => x.UserInitials, x => x.MapFrom(y => y.User.Initials))
                 .ForMember(x => x.IncidenceStateDescription, x => x.MapFrom(y => y.IncidenceState.Description))
                 .ForMember(x => x.CriticalNivelDescription, x => x.MapFrom(y => y.CriticalNivel.Description));
+
+            AutoMapper.Mapper.CreateMap<TemplateMedicalExaminationViewModel, TemplatePreventivePlan>();
+            AutoMapper.Mapper.CreateMap<TemplatePreventivePlan, TemplatePreventivePlanViewModel>();
         }
     }
 }

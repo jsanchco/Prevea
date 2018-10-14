@@ -447,7 +447,9 @@
         [HttpGet]
         public JsonResult TemplatePreventivePlans_Read([DataSourceRequest] DataSourceRequest request)
         {
-            return this.Jsonp(Service.GetTemplatePreventivePlans());
+            var data = AutoMapper.Mapper.Map<List<TemplatePreventivePlanViewModel>>(Service.GetTemplatePreventivePlans());
+
+            return this.Jsonp(data);
         }
 
         public ActionResult TemplatePreventivePlans_Create()

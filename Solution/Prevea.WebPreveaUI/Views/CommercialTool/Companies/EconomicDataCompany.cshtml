@@ -1,5 +1,5 @@
 ﻿@model SimulationCompany
-    
+
 <script>
     EconomicDataCompany.init(
         @Model.CompanyId,
@@ -18,16 +18,16 @@
     </div>
 
     <div class="col-sm-12" style="text-align: center">
-        
+
         <div class="row">
             <div class="col-sm-9">
                 <H2>
                     <strong>Servicio de Prevención Ajeno</strong>
                 </H2>
-            </div>      
+            </div>
         </div>
-    
-        <br/>
+
+        <br />
 
         @{
             var totalAmountTecniques = 0.0m;
@@ -37,19 +37,19 @@
             {
                 if (Model.Simulation.ForeignPreventionService.AmountTecniques != null)
                 {
-                    totalAmountTecniques = (decimal) Model.Simulation.ForeignPreventionService.AmountTecniques * Model.Simulation.NumberEmployees;
+                    totalAmountTecniques = (decimal)Model.Simulation.ForeignPreventionService.AmountTecniques * Model.Simulation.NumberEmployees;
                 }
                 if (Model.Simulation.ForeignPreventionService.AmountHealthVigilance != null)
                 {
-                    totalAmountHealthVigilance = (decimal) Model.Simulation.ForeignPreventionService.AmountHealthVigilance * Model.Simulation.NumberEmployees;
+                    totalAmountHealthVigilance = (decimal)Model.Simulation.ForeignPreventionService.AmountHealthVigilance * Model.Simulation.NumberEmployees;
                 }
                 if (Model.Simulation.ForeignPreventionService.AmountMedicalExamination != null)
                 {
-                    totalAmountMedicalExamination = (decimal) Model.Simulation.ForeignPreventionService.AmountMedicalExamination * Model.Simulation.NumberEmployees;
+                    totalAmountMedicalExamination = (decimal)Model.Simulation.ForeignPreventionService.AmountMedicalExamination * Model.Simulation.NumberEmployees;
                 }
             }
         }
-        
+
         @if (Model.Simulation.ForeignPreventionService != null)
         {
             <div class="row">
@@ -58,7 +58,7 @@
                 <div class="col-sm-4 control-label" style="text-align: left">(IVA no incluído)</div>
             </div>
 
-            <br/>
+            <br />
 
             <div class="row">
                 <div class="col-sm-offset-1 col-sm-4 control-label" style="text-align: left">Vigilancia de la Salud</div>
@@ -66,7 +66,7 @@
                 <div class="col-sm-4 control-label" style="text-align: left">(IVA no incluído)</div>
             </div>
 
-            <br/>
+            <br />
 
             <div class="row">
                 <div class="col-sm-offset-1 col-sm-4 control-label" style="text-align: left">Rec. Médico realizado en clínica</div>
@@ -81,38 +81,64 @@
 
     </div>
 
-    <div class="row">
-        <div class="col-sm-offset-1 col-sm-8">
-            <hr />
-        </div>
-    </div>
-
-    <br />
-    <br />
-
-    <div class="col-sm-12" style="text-align: center">
+    @if (Model.Simulation.AgencyService != null)
+    {
         <div class="row">
-            <div class="col-sm-9">
-                <H2>
-                    <strong>Gestoría</strong>
-                </H2>
-            </div> 
+            <div class="col-sm-offset-1 col-sm-8">
+                <hr />
+            </div>
         </div>
 
-        <div class="row">
-            @if (Model.Simulation.AgencyService != null)
-            {
+        <br />
+        <br />
+
+        <div class="col-sm-12" style="text-align: center">
+            <div class="row">
+                <div class="col-sm-9">
+                    <H2>
+                        <strong>Gestoría</strong>
+                    </H2>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-sm-offset-1 col-sm-4 control-label" style="text-align: left">Servicios de Gestoría</div>
                 <div class="col-sm-2 control-label" style="text-align: left; font-weight: bold;">@Model.Simulation.AgencyService.Total €</div>
                 <div class="col-sm-4 control-label" style="text-align: left">(IVA no incluído)</div>
-            }
-            else
-            {
-                <div class="col-sm-offset-2 col-sm-8 control-label" style="text-align: left;">No tiene contratada Gestoría</div>
-            }
+            </div>
+
+        </div>
+    }
+
+    @if (Model.Simulation.TrainingService != null)
+    {
+        <div class="row">
+            <div class="col-sm-offset-2 col-sm-8">
+                <hr />
+            </div>
         </div>
 
-    </div>
+        <br />
+        <br />
+
+        <div class="col-sm-12" style="text-align: center">
+            <div class="row">
+                <div class="col-sm-9">
+                    <H2>
+                        <strong>Formación</strong>
+                    </H2>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-offset-2 col-sm-8">
+                    <div id="gridTrainingCourses" style="height: 40vh;"></div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <br />
 
     <div class="row">
         <div class="col-sm-offset-2 col-sm-8">
@@ -120,46 +146,10 @@
         </div>
     </div>
 
-    <br />
-    <br />
-
-    <div class="col-sm-12" style="text-align: center">
-        <div class="row">
-            <div class="col-sm-9">
-                <H2>
-                    <strong>Formación</strong>
-                </H2>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-offset-2 col-sm-8">
-                @if (Model.Simulation.TrainingService != null)
-                {
-                    <div id="gridTrainingCourses" style="height: 40vh;"></div>
-                }
-                else
-                {
-                    <div id="gridTrainingCourses" style="height: 40vh; display: none"></div>
-                    <div class="control-label" style="text-align: left;">No tiene contratada Formación</div>
-                }
-            </div>
-        </div>
-
-        <br />
-
-        <div class="row">
-            <div class="col-sm-offset-2 col-sm-8">
-                <hr />
-            </div>
-        </div>
-
-        <div class="row" style="text-align: left">
-            <div class="col-sm-offset-1 col-sm-4 control-label" style="font-size: large; color: #00639e; font-weight: bold">Total</div>
-            <div class="col-sm-2 control-label" style="font-size: large; color: #00639e; font-weight: bold">@ViewBag.Total €</div>
-            <div class="col-sm-4 control-label" style="font-size: large; color: #00639e; text-align: left">(IVA incluído)</div>
-        </div>
-
+    <div class="row" style="text-align: left">
+        <div class="col-sm-offset-1 col-sm-4 control-label" style="font-size: large; color: #00639e; font-weight: bold">Total</div>
+        <div class="col-sm-2 control-label" style="font-size: large; color: #00639e; font-weight: bold">@ViewBag.Total €</div>
+        <div class="col-sm-4 control-label" style="font-size: large; color: #00639e; text-align: left">(IVA incluído)</div>
     </div>
 
 </div>

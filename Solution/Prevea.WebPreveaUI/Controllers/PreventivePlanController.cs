@@ -162,6 +162,7 @@
                 JsonRequestBehavior.AllowGet);
         }
 
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public JsonResult GetTemplatesPreventivePlans()
         {
             var templatePreventivePlans = Service.GetTemplatePreventivePlans();
