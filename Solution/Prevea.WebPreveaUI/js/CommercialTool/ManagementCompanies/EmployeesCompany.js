@@ -225,7 +225,8 @@
                     }
                 }
             },
-            pageSize: 10
+            pageSize: 10,
+            resizable: true
         });
     },
 
@@ -289,36 +290,58 @@
 
     goToDeleteEmployeeCompany: function (userId) {
         var that = this;
+        var dialog = null;
 
-        var dialog = $("#" + this.confirmId);
-        dialog.kendoDialog({
-            width: "400px",
-            title: "Empresas",
-            closable: false,
-            modal: true,
-            content: "¿Quieres <strong>Dar de Baja/Borrar</strong> al Trabajador?",
-            actions: [
-                {
-                    text: "Cancelar", primary: true
-                },
-                {
-                    text: "Dar de Baja", action: function () {
-                        that.goToSubscribeEmployeeCompany(userId, false);
-                    }
-                },
-                {
-                    text: "Borrar", action: function ()
+        if (GeneralData.userRoleId === Constants.role.ContactPerson) {
+            dialog = $("#" + this.confirmId);
+            dialog.kendoDialog({
+                width: "400px",
+                title: "Empresas",
+                closable: false,
+                modal: true,
+                content: "¿Quieres <strong>Dar de Baja/Borrar</strong> al Trabajador?",
+                actions: [
                     {
-                        var grid = $("#" + EmployeesCompany.gridEmployeesCompanyId).data("kendoGrid");
-                        var item = grid.dataSource.get(userId);
-                        var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
-
-                        grid.removeRow(tr);
+                        text: "Cancelar", primary: true
+                    },
+                    {
+                        text: "Dar de Baja", action: function () {
+                            that.goToSubscribeEmployeeCompany(userId, false);
+                        }
                     }
-                }
-            ]
-        });
-        dialog.data("kendoDialog").open();
+                ]
+            });
+            dialog.data("kendoDialog").open();
+        } else {
+            dialog = $("#" + this.confirmId);
+            dialog.kendoDialog({
+                width: "400px",
+                title: "Empresas",
+                closable: false,
+                modal: true,
+                content: "¿Quieres <strong>Dar de Baja/Borrar</strong> al Trabajador?",
+                actions: [
+                    {
+                        text: "Cancelar", primary: true
+                    },
+                    {
+                        text: "Dar de Baja", action: function () {
+                            that.goToSubscribeEmployeeCompany(userId, false);
+                        }
+                    },
+                    {
+                        text: "Borrar", action: function () {
+                            var grid = $("#" + EmployeesCompany.gridEmployeesCompanyId).data("kendoGrid");
+                            var item = grid.dataSource.get(userId);
+                            var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
+
+                            grid.removeRow(tr);
+                        }
+                    }
+                ]
+            });
+            dialog.data("kendoDialog").open();
+        }        
     },
 
     goToSubscribeEmployeeCompany: function (userId, subscribe) {
