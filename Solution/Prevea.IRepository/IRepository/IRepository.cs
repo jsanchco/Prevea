@@ -185,6 +185,7 @@
         #endregion
 
         List<Simulation> GetSimulationByUser(int userId);
+        bool CheckDuplicitySimulation(Simulation simulation);
 
         #endregion
 

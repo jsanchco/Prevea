@@ -422,8 +422,12 @@
             {
                 var simulations = GetSimulationsByCompany((int)companyId);
                 simulation.Name = $"Anexo {simulations.Count}";
-            }
-            
+            }            
+        }
+
+        public bool CheckDuplicitySimulation(Simulation simulation)
+        {
+            return Repository.CheckDuplicitySimulation(simulation);
         }
     }
 }

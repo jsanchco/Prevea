@@ -172,6 +172,7 @@
         Result SendToCompanies(int simulationId);
         decimal GetTotalSimulation(int simulationId);
         Simulation GetSimulationActive(int companyId);
+        bool CheckDuplicitySimulation(Simulation simulation);
 
         #endregion
 

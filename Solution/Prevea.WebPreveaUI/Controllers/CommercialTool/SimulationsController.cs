@@ -62,23 +62,26 @@
         public JsonResult Simulations_Create()
         {
             const string errorSimulation = "Se ha producido un error en la Grabación de la Simulación";
+            const string errorCheckSimulation = "Se ha producido un error en la Grabación de la Simulación. Simulación Duplicada";
 
             try
             {
                 var simulation = this.DeserializeObject<SimulationViewModel>("simulation");
                 if (simulation == null)
                 {
-                    return this.Jsonp(new {Errors = errorSimulation});
+                    return this.Jsonp(new { Errors = errorSimulation });
                 }
-
+                
                 var data = AutoMapper.Mapper.Map<Simulation>(simulation);
+                if (!Service.CheckDuplicitySimulation(data))
+                    return this.Jsonp(new { Errors = errorCheckSimulation });
 
                 data.UserId = User.Id;
                 data.SimulationStateId = (int) EnSimulationState.ValidationPending;
                 var result = Service.SaveSimulation(data, simulation.CompanyId);
 
                 if (result.Status == Status.Error)
-                    return this.Jsonp(new {Errors = errorSimulation});
+                    return this.Jsonp(new { Errors = errorSimulation });
 
                 var user = Service.GetUser(User.Id);
                 simulation.Id = data.Id;

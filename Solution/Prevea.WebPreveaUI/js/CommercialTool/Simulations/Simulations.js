@@ -77,7 +77,7 @@
                 if ((e.type === "update" || e.type === "destroy" || e.type === "create") &&
                     e.response !== null) {
                     if (typeof e.response.Errors !== "undefined") {
-                        GeneralData.showNotification(Constants.ko, "", "error");
+                        GeneralData.showNotification(e.response.Errors, "", "error");
                         if (e.type === "create") {
                             this.data().remove(this.data().at(0));
                         } else {

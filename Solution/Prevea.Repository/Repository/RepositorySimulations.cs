@@ -1,6 +1,4 @@
-﻿using System.Data.Entity.Migrations;
-
-namespace Prevea.Repository.Repository
+﻿namespace Prevea.Repository.Repository
 {
     #region Using
 
@@ -9,6 +7,7 @@ namespace Prevea.Repository.Repository
     using System.Linq;
     using System.Data.Entity;
     using System;
+    using System.Data.Entity.Migrations;
 
     #endregion
 
@@ -209,6 +208,17 @@ namespace Prevea.Repository.Repository
                         .Where(x => x.UserId == userId && x.SimulationStateId != (int)EnSimulationState.Deleted)
                         .ToList();
             }
+        }
+
+        public bool CheckDuplicitySimulation(Simulation simulation)
+        {
+            if (Context.Simulations.Where(x => x.CompanyName == simulation.CompanyName).Count() > 0)
+                return false;
+
+            if (Context.Simulations.Where(x => x.NIF == simulation.NIF).Count() > 0)
+                return false;
+
+            return true;
         }
     }
 }
