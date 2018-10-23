@@ -88,7 +88,8 @@
                     }
                 }
             },
-            pageSize: 20
+            pageSize: 20,
+            resizable: true
         });
     },
 
@@ -289,12 +290,11 @@
                 "<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
                 data.Id);
         } else {
-            html += kendo.format("<a toggle='tooltip' title='Editar' onclick='Simulations.goToEditSimulation(\"{0}\", \"{1}\", \"{2}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
-                gridId,
-                data.Id,
-                data.SimulationParentId);
-
             if (GeneralData.userRoleId === Constants.role.PreveaCommercial) {
+                html += kendo.format("<a toggle='tooltip' title='Editar' onclick='Simulations.goToEditSimulation(\"{0}\", \"{1}\", \"{2}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                    gridId,
+                    data.Id,
+                    data.SimulationParentId);
                 html += kendo.format(
                     "<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
                     data.Id);
@@ -305,32 +305,40 @@
                     data.SimulationParentId);
             }
             if (GeneralData.userRoleId === Constants.role.Super) {
-                //if (GeneralData.userId !== data.UserAssignedId &&
-                //    data.SimulationStateId !== Constants.simulationState.Deleted) {
-                //    html += kendo.format(
-                //        "<a toggle='tooltip' title='Asignar' onclick='Simulations.goToAssignSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-hand-o-left' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
-                //        data.Id);
-                //}
-                html += kendo.format(
-                    "<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
-                    data.Id);
-                if (data.SimulationStateId !== Constants.simulationState.Deleted) {
+                if (data.StateForeignPreventionService) {
                     html += kendo.format(
-                        "<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\", \"{1}\", \"{2}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
-                        gridId,
-                        data.Id,
-                        data.SimulationParentId);
-                }
+                        "<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                        data.Id);
+                    if (data.SimulationStateId !== Constants.simulationState.Deleted) {
+                        html += kendo.format(
+                            "<a toggle='tooltip' title='Borrar' onclick='Simulations.goToDeleteSimulation(\"{0}\", \"{1}\", \"{2}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                            gridId,
+                            data.Id,
+                            data.SimulationParentId);
+                    }
+                } else {
+                    html += "<div style='float: left; text-align: left; display: inline;'>No Completa</div>";
+                    html += kendo.format("<div id='circleError' style='float: right; text-align: right;'></div></div>");
+                }  
             }
             if (GeneralData.userRoleId === Constants.role.PreveaPersonal) {
                 if (GeneralData.userId === data.UserAssignedId) {
+                    html += kendo.format("<a toggle='tooltip' title='Editar' onclick='Simulations.goToEditSimulation(\"{0}\", \"{1}\", \"{2}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                        gridId,
+                        data.Id,
+                        data.SimulationParentId);
                     html += kendo.format(
                         "<a toggle='tooltip' title='Detalle' onclick='Simulations.goToDetailSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
                         data.Id);
                 } else {
-                    html += kendo.format(
-                        "<a toggle='tooltip' title='Asignar' onclick='Simulations.goToAssignSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-hand-o-left' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
-                        data.Id);
+                    if (data.StateForeignPreventionService) {
+                        html += kendo.format(
+                            "<a toggle='tooltip' title='Asignar' onclick='Simulations.goToAssignSimulation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='fa fa-hand-o-left' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                            data.Id);
+                    } else {
+                        html += "<div style='float: left; text-align: left; display: inline;'>No Completa</div>";
+                        html += kendo.format("<div id='circleError' style='float: right; text-align: right;'></div></div>");
+                    }  
                 }
             }
         }

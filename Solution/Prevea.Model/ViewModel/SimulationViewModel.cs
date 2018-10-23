@@ -30,5 +30,6 @@
         public DateTime Date { get; set; }
         public decimal Total { get; set; }
         public bool Active { get; set; }
+        public bool StateForeignPreventionService { get; set; }
     }
 }
