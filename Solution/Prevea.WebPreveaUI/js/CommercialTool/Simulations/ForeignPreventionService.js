@@ -59,22 +59,22 @@
     setKendoUIWidgets: function() {
         $("#" + this.textAmountTecniquesId).kendoNumericTextBox({
             format: "c",
-            decimals: 1,
+            decimals: 2,
             change: ForeignPreventionService.onChangeTextAmountTecniques
         });
         $("#" + this.textAmountHealthVigilanceId).kendoNumericTextBox({
             format: "c",
-            decimals: 1,
+            decimals: 2,
             change: ForeignPreventionService.onChangeTextAmountHealthVigilance
         });
         $("#" + this.textAmountMedicalExaminationId).kendoNumericTextBox({
             format: "c",
-            decimals: 1,
+            decimals: 2,
             change: ForeignPreventionService.onChangeTextAmountMedicalExamination
         });
         $("#" + this.textTotalId).kendoNumericTextBox({
             format: "c",
-            decimals: 1,
+            decimals: 2,
             change: ForeignPreventionService.onChangeTextTotal
         });
 
@@ -100,7 +100,7 @@
     },
 
     onChangeTextAmountTecniques: function (fromStretchCalculateByNumberEmployees) {
-        var value = parseFloat($("#" + ForeignPreventionService.textAmountTecniquesId).val());
+        var value = parseFloat($("#" + ForeignPreventionService.textAmountTecniquesId).val().replace(",", "."));
         if (isNaN(value)) {
             return;
         } 
@@ -155,7 +155,7 @@
     },
 
     onChangeTextAmountHealthVigilance: function (fromStretchCalculateByNumberEmployees) {
-        var value = parseFloat($("#" + ForeignPreventionService.textAmountHealthVigilanceId).val());
+        var value = parseFloat($("#" + ForeignPreventionService.textAmountHealthVigilanceId).val().replace(",", "."));
         if (isNaN(value)) {
             return;
         }
@@ -208,7 +208,7 @@
     },
 
     onChangeTextAmountMedicalExamination: function (fromStretchCalculateByNumberEmployees) {
-        var value = parseFloat($("#" + ForeignPreventionService.textAmountMedicalExaminationId).val());
+        var value = parseFloat($("#" + ForeignPreventionService.textAmountMedicalExaminationId).val().replace(",", "."));
         if (isNaN(value)) {
             return;
         }
