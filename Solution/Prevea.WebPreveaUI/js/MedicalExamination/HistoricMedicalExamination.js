@@ -445,7 +445,7 @@
                     template: "#= HistoricMedicalExamination.getClinicName(data.ClinicId) #"
                 }, {
                     field: "SplitDoctors",
-                    title: "Médicos",
+                    title: "Facultativos",
                     width: 200,
                     editor: HistoricMedicalExamination.doctorsDropDownEditor,
                     template: "#= HistoricMedicalExamination.getDoctorsName(data.Doctors) #"
