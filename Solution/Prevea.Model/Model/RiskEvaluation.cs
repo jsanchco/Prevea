@@ -24,6 +24,7 @@
         public int Severity { get; set; }
         public int RiskValue { get; set; }
         public int Priority { get; set; }
-        public string Preventive { get; set; }
+        public string RiskDetected { get; set; }
+
     }
 }

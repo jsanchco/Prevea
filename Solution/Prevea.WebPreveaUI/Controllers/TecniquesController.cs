@@ -74,7 +74,7 @@
             var workStation = Service.GetWorkStationById(workStationId);
             ViewBag.WorkStation = workStation.Name;
             if (!string.IsNullOrEmpty(workStation.ProfessionalCategory))
-                ViewBag.WorkStation = $"{ViewBag.WorkStation} ({workStation.ProfessionalCategory})";
+                ViewBag.WorkStation = $"[{workStation.Cnae.Key}] {workStation.Cnae.Name} / {ViewBag.WorkStation} ({workStation.ProfessionalCategory})";
 
             return PartialView();
         }
@@ -83,6 +83,27 @@
         public ActionResult ViewerHTML()
         {
             return PartialView();
+        }
+
+        [HttpGet]
+        public ActionResult DetailRiskEvaluation(int riskEvaluationId, int cnaeId, int workStationId)
+        {
+            ViewBag.RiskEvaluationId = riskEvaluationId;
+            ViewBag.CnaeId = cnaeId;
+            ViewBag.WorkStationId = workStationId;
+
+            var workStation = Service.GetWorkStationById(workStationId);
+            ViewBag.WorkStation = workStation.Name;
+            if (!string.IsNullOrEmpty(workStation.ProfessionalCategory))
+                ViewBag.WorkStation = $"[{workStation.Cnae.Key}] {workStation.Cnae.Name} / {ViewBag.WorkStation} ({workStation.ProfessionalCategory})";
+
+            return PartialView();
+        }
+
+        [HttpGet]
+        public ActionResult RiskDetected(int riskEvaluationId)
+        {            
+            return PartialView(Service.GetRiskEvaluationById(riskEvaluationId));
         }
 
         [HttpGet]
@@ -554,6 +575,31 @@
                 return this.Jsonp(new { resultStatus = Status.Error });
 
             return Json(new { resultStatus = Status.Ok, template = template.Template });
+        }
+
+        [HttpPost]
+        public ActionResult UpdateRiskEvaluation(RiskEvaluation riskEvaluation)
+        {
+            try
+            {
+                var result = Service.UpdateRiskEvaluation(riskEvaluation.Id, riskEvaluation);
+
+                if (result.Status != Status.Error)
+                {
+                    ViewBag.Notification = "La Evaluación del Riesgo de ja actualizado correctamente";
+
+                    return PartialView("~/Views/Tecniques/RiskDetected.cshtml", Service.GetRiskEvaluationById(riskEvaluation.Id));
+                }
+
+                ViewBag.Error = new List<string> { result.Message };
+                return PartialView("~/Views/Tecniques/RiskDetected.cshtml", Service.GetRiskEvaluationById(riskEvaluation.Id));
+            }
+            catch (Exception e)
+            {
+                ViewBag.Error = new List<string> { e.Message };
+
+                return PartialView("~/Views/Tecniques/RiskDetected.cshtml", Service.GetRiskEvaluationById(riskEvaluation.Id));
+            }
         }
     }
 }

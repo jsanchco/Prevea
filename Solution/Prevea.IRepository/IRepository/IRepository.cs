@@ -405,6 +405,7 @@
         List<RiskEvaluation> GetRiskEvaluationsByDeltaCode(int deltaCodeId);
         RiskEvaluation GetRiskEvaluationById(int id);
         RiskEvaluation SaveRiskEvaluation(RiskEvaluation riskEvaluation);
+        RiskEvaluation UpdateRiskEvaluation(int id, RiskEvaluation riskEvaluation);
         bool DeleteRiskEvaluation(int id);
 
         #endregion

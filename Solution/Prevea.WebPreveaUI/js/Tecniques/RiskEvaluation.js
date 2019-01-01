@@ -64,8 +64,7 @@
                         RiskValue: { type: "number" },
                         RiskValueName: { type: "string", validation: { required: { message: " Campo Obligatorio " } }, editable: false },
                         Priority: { type: "number" },
-                        PriorityName: { type: "string", validation: { required: { message: " Campo Obligatorio " } }, editable: false },
-                        Preventive: { type: "string" }
+                        PriorityName: { type: "string", validation: { required: { message: " Campo Obligatorio " } }, editable: false }
                     }
                 }
             },
@@ -284,8 +283,9 @@
     getColumnTemplateCommands: function (data) {
         var html;
 
-        html = "<div align='center'>";
+        html = "<div align='center'>";        
         html += kendo.format("<a toggle='tooltip' title='Editar' onclick='RiskEvaluation.goToEditRiskEvaluation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+        html += kendo.format("<a toggle='tooltip' title='Detalle' onclick='RiskEvaluation.goToDetailRiskEvaluation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-list' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id, this.cnaeId, this.workStationId);
         html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='RiskEvaluation.goToDeleteRiskEvaluation(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
         html += kendo.format("</div>");
 
@@ -298,6 +298,18 @@
         var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
 
         grid.editRow(tr);
+    },
+
+    goToDetailRiskEvaluation: function (id) {
+        var params = {
+            url: "/Tecniques/DetailRiskEvaluation",
+            data: {
+                riskEvaluationId: id,
+                cnaeId: RiskEvaluation.cnaeId, 
+                workStationId: RiskEvaluation.workStationId
+            }
+        };
+        GeneralData.goToActionController(params);
     },
 
     goToDeleteRiskEvaluation: function (id) {

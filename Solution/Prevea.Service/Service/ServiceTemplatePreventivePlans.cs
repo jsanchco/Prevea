@@ -246,7 +246,7 @@
                     tables += "S/COSTE";
                     tables += "</td>";
                     tables += "<td style='text-align: justify; border: 1px solid black; padding: 6px;'>";
-                    tables += riskEvaluation.Preventive;
+                    tables += riskEvaluation.RiskDetected;
                     tables += "</td>";
                     tables += "</tr>";
                 }

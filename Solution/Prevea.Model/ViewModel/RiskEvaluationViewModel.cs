@@ -18,6 +18,6 @@
         public string RiskValueName { get; set; }
         public int Priority { get; set; }
         public string PriorityName { get; set; }
-        public string Preventive { get; set; }
+        public string RiskDetected { get; set; }
     }
 }

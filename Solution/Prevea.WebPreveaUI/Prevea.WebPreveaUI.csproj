@@ -721,8 +721,10 @@
     <Content Include="js\Shared\Templates.js" />
     <Content Include="js\Start\Start.js" />
     <Content Include="js\Tecniques\DeltaCodes.js" />
+    <Content Include="js\Tecniques\DetailRiskEvaluation.js" />
     <Content Include="js\Tecniques\DetailTemplatePreventivePlan.js" />
     <Content Include="js\Tecniques\HistoricTecniques.js" />
+    <Content Include="js\Tecniques\RiskDetected.js" />
     <Content Include="js\Tecniques\RiskEvaluation.js" />
     <Content Include="js\Tecniques\TemplatePreventivePlans.js" />
     <Content Include="js\Tecniques\WorkStations.js" />
@@ -1217,6 +1219,8 @@
     <Content Include="Views\Shared\EditorTemplates\SignaturePad.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SignaturePad.cshtml" />
     <Content Include="Views\Shared\AddSignature.cshtml" />
+    <Content Include="Views\Tecniques\DetailRiskEvaluation.cshtml" />
+    <Content Include="Views\Tecniques\RiskDetected.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
