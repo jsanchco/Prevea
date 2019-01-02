@@ -86,11 +86,13 @@
         }
 
         [HttpGet]
-        public ActionResult DetailRiskEvaluation(int riskEvaluationId, int cnaeId, int workStationId)
+        public ActionResult DetailRiskEvaluation(int riskEvaluationId, int cnaeId, int workStationId, int selectTabId, string notification)
         {
             ViewBag.RiskEvaluationId = riskEvaluationId;
             ViewBag.CnaeId = cnaeId;
             ViewBag.WorkStationId = workStationId;
+            ViewBag.SelectTabId = selectTabId;
+            ViewBag.Notification = notification;
 
             var workStation = Service.GetWorkStationById(workStationId);
             ViewBag.WorkStation = workStation.Name;
@@ -584,21 +586,36 @@
             {
                 var result = Service.UpdateRiskEvaluation(riskEvaluation.Id, riskEvaluation);
 
+                ViewBag.RiskEvaluationId = riskEvaluation.Id;
+                if (riskEvaluation.WorkStation == null)
+                {
+                    var workStation = Service.GetWorkStationById(riskEvaluation.WorkStationId);
+                    if (workStation != null)
+                        ViewBag.CnaeId = workStation.CnaeId;
+                }
+                else
+                {
+                    ViewBag.CnaeId = riskEvaluation.WorkStation.CnaeId;
+                }
+                
+                ViewBag.WorkStationId = riskEvaluation.WorkStationId;
+                ViewBag.SelectTabId = 0;
+
                 if (result.Status != Status.Error)
                 {
-                    ViewBag.Notification = "La Evaluación del Riesgo de ja actualizado correctamente";
+                    ViewBag.Notification = "La Evaluación del Riesgo de ha actualizado correctamente";
 
-                    return PartialView("~/Views/Tecniques/RiskDetected.cshtml", Service.GetRiskEvaluationById(riskEvaluation.Id));
+                    return PartialView("~/Views/Tecniques/DetailRiskEvaluation.cshtml", Service.GetRiskEvaluationById(riskEvaluation.Id));
                 }
 
                 ViewBag.Error = new List<string> { result.Message };
-                return PartialView("~/Views/Tecniques/RiskDetected.cshtml", Service.GetRiskEvaluationById(riskEvaluation.Id));
+                return PartialView("~/Views/Tecniques/DetailRiskEvaluation.cshtml", Service.GetRiskEvaluationById(riskEvaluation.Id));
             }
             catch (Exception e)
             {
                 ViewBag.Error = new List<string> { e.Message };
 
-                return PartialView("~/Views/Tecniques/RiskDetected.cshtml", Service.GetRiskEvaluationById(riskEvaluation.Id));
+                return PartialView("~/Views/Tecniques/DetailRiskEvaluation.cshtml", Service.GetRiskEvaluationById(riskEvaluation.Id));
             }
         }
     }

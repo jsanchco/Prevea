@@ -306,7 +306,9 @@
             data: {
                 riskEvaluationId: id,
                 cnaeId: RiskEvaluation.cnaeId, 
-                workStationId: RiskEvaluation.workStationId
+                workStationId: RiskEvaluation.workStationId,
+                selectTabId: 0,
+                notification: ""
             }
         };
         GeneralData.goToActionController(params);

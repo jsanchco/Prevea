@@ -1,5 +1,5 @@
 ﻿<script>
-    DetailRiskEvaluation.init(@ViewBag.RiskEvaluationId, @ViewBag.CnaeId, @ViewBag.WorkStationId);
+    DetailRiskEvaluation.init(@ViewBag.RiskEvaluationId, @ViewBag.CnaeId, @ViewBag.WorkStationId, @ViewBag.SelectTabId, '@ViewBag.Notification');
 </script>
 
 <style>
@@ -52,8 +52,12 @@
 
 <div class="row" id="pageDetailRiskEvaluation" style="margin: 8px">
 
+    <span id="spanNotification" style="display: none;"></span>
+
     <div id="headerPartialView">
-        <div class="row"><H1>Técnicas</H1></div><br />
+        <div class="row">
+            <H1>Técnicas</H1>
+        </div><br />
         <div class="row">
             <div class="col-sm-12">
                 <ol class="breadcrumb bc-2">
@@ -70,7 +74,7 @@
                         </a>
                     </li>
                     <li class="active">
-                        <a id="br-tecniques|riskEvaluation" onclick="DetailRiskEvaluation.goToDetailRiskEvaluation('@ViewBag.RiskEvaluationId', '@ViewBag.CnaeId', '@ViewBag.WorkStationId')" style="cursor: pointer;">                            
+                        <a id="br-tecniques|riskEvaluation" onclick="DetailRiskEvaluation.goToDetailRiskEvaluation('@ViewBag.RiskEvaluationId', '@ViewBag.CnaeId', '@ViewBag.WorkStationId')" style="cursor: pointer;">
                             <i class="glyphicon glyphicon-list"></i>
                             <strong>Medidas Preventivas de los Puestos de Trabajo</strong>
                         </a>
@@ -79,7 +83,7 @@
                 </ol>
             </div>
         </div>
-    </div>  
+    </div>
 
     <div id="contentPartialView">
         <div class="row">
@@ -87,8 +91,8 @@
                 <H3>@ViewBag.WorkStation</H3>
             </div>
         </div>
-       
-        <br/>
+
+        <br />
 
         <div class="row">
             <div class="col-sm-12">
@@ -96,5 +100,20 @@
             </div>
         </div>
     </div>
+    
+    @if (ViewBag.Error != null)
+    {
+        <div id="errorFromBack" class="alert alert-danger alert-dismissable" style="">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <ul>
+                @foreach (var error in ViewBag.Error)
+                {
+                    <li>
+                        @error
+                    </li>
+                }
+            </ul>
+        </div>
+    }
 
 </div>

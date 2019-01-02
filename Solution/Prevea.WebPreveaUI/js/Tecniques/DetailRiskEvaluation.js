@@ -3,20 +3,31 @@
     riskEvaluationId: null,
     cnaeId: null,
     workStationId: null,
+    selectTabId: null,
+    notification: null,
 
+    spanNotificationId: "spanNotification",
     tabStripDetailRiskEvaluationId: "tabStripDetailRiskEvaluation",
     
-    init: function (riskEvaluationId, cnaeId, workStationId) {
+    init: function (riskEvaluationId, cnaeId, workStationId, selectTabId, notification) {
         kendo.culture("es-ES");
 
         this.riskEvaluationId = riskEvaluationId;
         this.cnaeId = cnaeId;
         this.workStationId = workStationId;
+        this.selectTabId = selectTabId;
+        this.notification = notification;
         
         this.createTabStripDetailRiskEvaluation();
     },
     
     createTabStripDetailRiskEvaluation: function () {
+        if (this.notification) {
+            GeneralData.showNotification(Constants.ok, "", "success");
+        } else {
+            $("#" + this.spanNotificationId).hide();
+        }
+
         var tabStrip = $("#" + this.tabStripDetailRiskEvaluationId).kendoTabStrip().data("kendoTabStrip");
         tabStrip.append({
             text: "RIESGOS DETECTADOS",
@@ -28,7 +39,7 @@
         });
  
         tabStrip = $("#" + this.tabStripDetailRiskEvaluationId).data("kendoTabStrip");
-        tabStrip.select(0);
+        tabStrip.select(this.selectTabId);
     },
 
     goToWorkStations: function () {
@@ -57,8 +68,9 @@
             url: "/Tecniques/DetailRiskEvaluation",
             data: {
                 riskEvaluationId: id,
-                cnaeId: RiskEvaluation.cnaeId,
-                workStationId: RiskEvaluation.workStationId
+                cnaeId: DetailRiskEvaluation.cnaeId,
+                workStationId: DetailRiskEvaluation.workStationId,
+                selectTabId: 0
             }
         };
         GeneralData.goToActionController(params);

@@ -101,6 +101,7 @@
             detailTemplate: this.getTemplateChildren(),
             detailInit: this.childrenWorkStations,
             resizable: true,
+            scrollable: true,
             autoScroll: true,
             selectable: true,
             sortable: {
@@ -114,9 +115,20 @@
                     if (dataItem.Id === WorkStations.cnaeSelected) {
                         var select = grid.tbody.find('tr[data-uid="' + dataItem.uid + '"]');
                         grid.expandRow(select);
-                        WorkStations.cnaeSelected = null;
+                        grid.select(select);
+                        WorkStations.cnaeSelected = null;          
                     }
                 });
+            },
+            change: function(e) {
+                var scrollContentOffset = this.element.find("tbody").offset().top;
+                var selectContentOffset = this.select().offset().top;
+                var distance = selectContentOffset - scrollContentOffset;
+
+                //    animate our scroll
+                this.element.find(".k-grid-content").animate({
+                    scrollTop: distance
+                }, 400);
             }
         });
     },
