@@ -104,8 +104,38 @@
 
         [HttpGet]
         public ActionResult RiskDetected(int riskEvaluationId)
-        {            
-            return PartialView(Service.GetRiskEvaluationById(riskEvaluationId));
+        {
+            var riskEvaluationVM = AutoMapper.Mapper.Map<RiskEvaluationViewModel>(Service.GetRiskEvaluationById(riskEvaluationId));
+            riskEvaluationVM.SelectTab = 0;
+
+            return PartialView(riskEvaluationVM);
+        }
+
+        [HttpGet]
+        public ActionResult CorrectiveActions(int riskEvaluationId)
+        {
+            var riskEvaluationVM = AutoMapper.Mapper.Map<RiskEvaluationViewModel>(Service.GetRiskEvaluationById(riskEvaluationId));
+            riskEvaluationVM.SelectTab = 1;
+
+            return PartialView(riskEvaluationVM);
+        }
+
+        [HttpGet]
+        public ActionResult IndividualProtectionEquipments(int riskEvaluationId)
+        {
+            var riskEvaluationVM = AutoMapper.Mapper.Map<RiskEvaluationViewModel>(Service.GetRiskEvaluationById(riskEvaluationId));
+            riskEvaluationVM.SelectTab = 2;
+
+            return PartialView(riskEvaluationVM);
+        }
+
+        [HttpGet]
+        public ActionResult CollectiveProtectionEquipments(int riskEvaluationId)
+        {
+            var riskEvaluationVM = AutoMapper.Mapper.Map<RiskEvaluationViewModel>(Service.GetRiskEvaluationById(riskEvaluationId));
+            riskEvaluationVM.SelectTab = 3;
+
+            return PartialView(riskEvaluationVM);
         }
 
         [HttpGet]
@@ -580,10 +610,11 @@
         }
 
         [HttpPost]
-        public ActionResult UpdateRiskEvaluation(RiskEvaluation riskEvaluation)
+        public ActionResult UpdateRiskEvaluation(RiskEvaluationViewModel riskEvaluationVM)
         {
             try
             {
+                var riskEvaluation = AutoMapper.Mapper.Map<RiskEvaluation>(riskEvaluationVM);
                 var result = Service.UpdateRiskEvaluation(riskEvaluation.Id, riskEvaluation);
 
                 ViewBag.RiskEvaluationId = riskEvaluation.Id;
@@ -599,23 +630,23 @@
                 }
                 
                 ViewBag.WorkStationId = riskEvaluation.WorkStationId;
-                ViewBag.SelectTabId = 0;
+                ViewBag.SelectTabId = riskEvaluationVM.SelectTab;
 
                 if (result.Status != Status.Error)
                 {
                     ViewBag.Notification = "La Evaluación del Riesgo de ha actualizado correctamente";
 
-                    return PartialView("~/Views/Tecniques/DetailRiskEvaluation.cshtml", Service.GetRiskEvaluationById(riskEvaluation.Id));
+                    return PartialView("~/Views/Tecniques/DetailRiskEvaluation.cshtml", Service.GetRiskEvaluationById(riskEvaluationVM.Id));
                 }
 
                 ViewBag.Error = new List<string> { result.Message };
-                return PartialView("~/Views/Tecniques/DetailRiskEvaluation.cshtml", Service.GetRiskEvaluationById(riskEvaluation.Id));
+                return PartialView("~/Views/Tecniques/DetailRiskEvaluation.cshtml", Service.GetRiskEvaluationById(riskEvaluationVM.Id));
             }
             catch (Exception e)
             {
                 ViewBag.Error = new List<string> { e.Message };
 
-                return PartialView("~/Views/Tecniques/DetailRiskEvaluation.cshtml", Service.GetRiskEvaluationById(riskEvaluation.Id));
+                return PartialView("~/Views/Tecniques/DetailRiskEvaluation.cshtml", Service.GetRiskEvaluationById(riskEvaluationVM.Id));
             }
         }
     }

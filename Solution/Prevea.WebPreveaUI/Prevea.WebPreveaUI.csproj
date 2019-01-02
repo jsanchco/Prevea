@@ -720,10 +720,13 @@
     <Content Include="js\GeneralData.js" />
     <Content Include="js\Shared\Templates.js" />
     <Content Include="js\Start\Start.js" />
+    <Content Include="js\Tecniques\CollectiveProtectionEquipments.js" />
+    <Content Include="js\Tecniques\CorrectiveActions.js" />
     <Content Include="js\Tecniques\DeltaCodes.js" />
     <Content Include="js\Tecniques\DetailRiskEvaluation.js" />
     <Content Include="js\Tecniques\DetailTemplatePreventivePlan.js" />
     <Content Include="js\Tecniques\HistoricTecniques.js" />
+    <Content Include="js\Tecniques\IndividualProtectionEquipments.js" />
     <Content Include="js\Tecniques\RiskDetected.js" />
     <Content Include="js\Tecniques\RiskEvaluation.js" />
     <Content Include="js\Tecniques\TemplatePreventivePlans.js" />
@@ -1221,6 +1224,9 @@
     <Content Include="Views\Shared\AddSignature.cshtml" />
     <Content Include="Views\Tecniques\DetailRiskEvaluation.cshtml" />
     <Content Include="Views\Tecniques\RiskDetected.cshtml" />
+    <Content Include="Views\Tecniques\CorrectiveActions.cshtml" />
+    <Content Include="Views\Tecniques\IndividualProtectionEquipments.cshtml" />
+    <Content Include="Views\Tecniques\CollectiveProtectionEquipments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

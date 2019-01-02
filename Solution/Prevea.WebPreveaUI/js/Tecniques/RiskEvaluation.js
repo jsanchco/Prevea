@@ -189,13 +189,6 @@
                     template: "#=PriorityName#"
                 },
                 {
-                    field: "Preventive",
-                    title: "Medidas Preventivas"
-                    //encoded: false
-                    //editor: RiskEvaluation.preventiveEditor,
-                    //template: "#= RiskEvaluation.getColumnTemplatePreventive(data.Preventive) #"
-                },
-                {
                     title: "Comandos",
                     width: 120,
                     groupable: "false",

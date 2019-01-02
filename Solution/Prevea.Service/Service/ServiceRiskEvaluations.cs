@@ -70,6 +70,9 @@
             try
             {
                 riskEvaluation.RiskDetected = System.Net.WebUtility.HtmlDecode(riskEvaluation.RiskDetected);
+                riskEvaluation.IndividualProtectionEquipments = System.Net.WebUtility.HtmlDecode(riskEvaluation.IndividualProtectionEquipments);
+                riskEvaluation.CollectiveProtectionEquipments = System.Net.WebUtility.HtmlDecode(riskEvaluation.CollectiveProtectionEquipments);
+
                 riskEvaluation = Repository.UpdateRiskEvaluation(id, riskEvaluation);
 
                 if (riskEvaluation == null)

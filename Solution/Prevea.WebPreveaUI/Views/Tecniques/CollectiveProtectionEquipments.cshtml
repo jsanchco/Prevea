@@ -1,7 +1,7 @@
 ﻿@model RiskEvaluationViewModel
 
 <script>
-    RiskDetected.init(@Model.Id);
+    CollectiveProtectionEquipments.init(@Model.Id);
 </script>
 
 <div class="row">
@@ -9,15 +9,15 @@
         @using (Ajax.BeginForm("UpdateRiskEvaluation", "Tecniques", null, new AjaxOptions
         {
             HttpMethod = "POST",
-            UpdateTargetId = "framePpalRiskDetected"
-        }, new { id = "formRiskDetected" }))
+            UpdateTargetId = "framePpalCollectiveProtectionEquipments"
+        }, new { id = "formCollectiveProtectionEquipments" }))
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
 
-            @Html.TextAreaFor(model => model.RiskDetected, new
+            @Html.TextAreaFor(model => model.CollectiveProtectionEquipments, new
             {
-                id = "editorRiskDetected",
+                id = "editorCollectiveProtectionEquipments",
                 style = "height: 57vh; width: 100%",
                 rows = 10,
                 cols = 30
@@ -32,11 +32,11 @@
                 @Html.HiddenFor(model => model.Severity)
                 @Html.HiddenFor(model => model.RiskValue)
                 @Html.HiddenFor(model => model.Priority)
+                @Html.HiddenFor(model => model.RiskDetected)
                 @Html.HiddenFor(model => model.IndividualProtectionEquipments)
-                @Html.HiddenFor(model => model.CollectiveProtectionEquipments)
                 @Html.HiddenFor(model => model.SelectTab)
 
-                <input type="submit" id="btnValidateRiskDetected" value="Guardar" class="btn btn-prevea btn" />
+                <input type="submit" id="btnValidateCollectiveProtectionEquipments" value="Guardar" class="btn btn-prevea btn" />
 
             </div>
         }

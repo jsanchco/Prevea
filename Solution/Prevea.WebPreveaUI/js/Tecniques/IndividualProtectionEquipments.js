@@ -1,8 +1,8 @@
-﻿var RiskDetected = kendo.observable({
+﻿var IndividualProtectionEquipments = kendo.observable({
 
     riskEvaluationId: null,
 
-    editorRiskDetectedId: "editorRiskDetected",
+    editorIndividualProtectionEquipmentsId: "editorIndividualProtectionEquipments",
 
     init: function (riskEvaluationId) {
         kendo.culture("es-ES");
@@ -13,12 +13,12 @@
     },
 
     createKendoWidgets: function () {
-        $("#" + this.editorRiskDetectedId).kendoEditor({
+        $("#" + this.editorIndividualProtectionEquipmentsId).kendoEditor({
             resizable: {
                 content: true
             },
             tools: [
-                {                  
+                {
                 }
             ]
         });

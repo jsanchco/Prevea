@@ -25,6 +25,8 @@
         public int RiskValue { get; set; }
         public int Priority { get; set; }
         public string RiskDetected { get; set; }
+        public string IndividualProtectionEquipments { get; set; }
+        public string CollectiveProtectionEquipments { get; set; }
 
     }
 }

@@ -33,6 +33,18 @@
             text: "RIESGOS DETECTADOS",
             contentUrl: kendo.format("/Tecniques/RiskDetected?riskEvaluationId={0}", this.riskEvaluationId)
         });
+        tabStrip.append({
+            text: "MEDIDAS CORRECTORAS",
+            contentUrl: kendo.format("/Tecniques/CorrectiveActions?riskEvaluationId={0}", this.riskEvaluationId)
+        });
+        tabStrip.append({
+            text: "EQUIPOS de PROTECCIÓN INDIVIDUAL",
+            contentUrl: kendo.format("/Tecniques/IndividualProtectionEquipments?riskEvaluationId={0}", this.riskEvaluationId)
+        });
+        tabStrip.append({
+            text: "EQUIPOS de PROTECCIÓN COLECTIVA",
+            contentUrl: kendo.format("/Tecniques/CollectiveProtectionEquipments?riskEvaluationId={0}", this.riskEvaluationId)
+        });
 
         $("#" + this.tabStripDetailRiskEvaluationId).kendoTabStrip({
             scrollable: false
@@ -70,7 +82,7 @@
                 riskEvaluationId: id,
                 cnaeId: DetailRiskEvaluation.cnaeId,
                 workStationId: DetailRiskEvaluation.workStationId,
-                selectTabId: 0
+                selectTabId: DetailRiskEvaluation.selectTabId
             }
         };
         GeneralData.goToActionController(params);

@@ -19,5 +19,8 @@
         public int Priority { get; set; }
         public string PriorityName { get; set; }
         public string RiskDetected { get; set; }
+        public string IndividualProtectionEquipments { get; set; }
+        public string CollectiveProtectionEquipments { get; set; }
+        public int SelectTab { get; set; }
     }
 }
