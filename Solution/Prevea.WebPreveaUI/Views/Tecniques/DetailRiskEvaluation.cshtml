@@ -1,5 +1,7 @@
-﻿<script>
-    DetailRiskEvaluation.init(@ViewBag.RiskEvaluationId, @ViewBag.CnaeId, @ViewBag.WorkStationId, @ViewBag.SelectTabId, '@ViewBag.Notification');    
+﻿@model RiskEvaluationViewModel
+
+<script>
+    DetailRiskEvaluation.init(@Model.Id, @ViewBag.CnaeId, @Model.WorkStationId, @ViewBag.SelectTabId, '@ViewBag.Notification');    
 </script>
 
 <style>

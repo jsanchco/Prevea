@@ -99,7 +99,7 @@
             if (!string.IsNullOrEmpty(workStation.ProfessionalCategory))
                 ViewBag.WorkStation = $"[{workStation.Cnae.Key}] {workStation.Cnae.Name} / {ViewBag.WorkStation} ({workStation.ProfessionalCategory})";
 
-            return PartialView();
+            return PartialView(AutoMapper.Mapper.Map<RiskEvaluationViewModel>(Service.GetRiskEvaluationById(riskEvaluationId)));
         }
 
         [HttpGet]
@@ -634,19 +634,19 @@
 
                 if (result.Status != Status.Error)
                 {
-                    ViewBag.Notification = "La Evaluación del Riesgo de ha actualizado correctamente";
+                    ViewBag.Notification = "La Evaluación del Riesgo de ha actualizado correctamente";                    
 
-                    return PartialView("~/Views/Tecniques/DetailRiskEvaluation.cshtml", Service.GetRiskEvaluationById(riskEvaluationVM.Id));
+                    return PartialView("~/Views/Tecniques/DetailRiskEvaluation.cshtml", AutoMapper.Mapper.Map<RiskEvaluationViewModel>(Service.GetRiskEvaluationById(riskEvaluationVM.Id)));
                 }
 
                 ViewBag.Error = new List<string> { result.Message };
-                return PartialView("~/Views/Tecniques/DetailRiskEvaluation.cshtml", Service.GetRiskEvaluationById(riskEvaluationVM.Id));
+                return PartialView("~/Views/Tecniques/DetailRiskEvaluation.cshtml", AutoMapper.Mapper.Map<RiskEvaluationViewModel>(Service.GetRiskEvaluationById(riskEvaluationVM.Id)));
             }
             catch (Exception e)
             {
                 ViewBag.Error = new List<string> { e.Message };
 
-                return PartialView("~/Views/Tecniques/DetailRiskEvaluation.cshtml", Service.GetRiskEvaluationById(riskEvaluationVM.Id));
+                return PartialView("~/Views/Tecniques/DetailRiskEvaluation.cshtml", AutoMapper.Mapper.Map<RiskEvaluationViewModel>(Service.GetRiskEvaluationById(riskEvaluationVM.Id)));
             }
         }
     }

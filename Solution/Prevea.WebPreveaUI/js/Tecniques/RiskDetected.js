@@ -9,7 +9,7 @@
 
         this.riskEvaluationId = riskEvaluationId;
 
-        this.createKendoWidgets();
+        //this.createKendoWidgets();
     },
 
     createKendoWidgets: function () {
