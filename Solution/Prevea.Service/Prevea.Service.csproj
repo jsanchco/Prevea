@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\ServiceContractualDocumentTypes.cs" />
+    <Compile Include="Service\ServiceCorrectiveActions.cs" />
     <Compile Include="Service\ServiceDataMails.cs" />
     <Compile Include="Service\ServiceDeltaCodes.cs" />
     <Compile Include="Service\ServiceEmployees.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Service\ServicePaymentMethods.cs" />
     <Compile Include="Service\ServicePreventivePlans.cs" />
     <Compile Include="Service\ServicePreventivePlanTemplatePreventivePlans.cs" />
+    <Compile Include="Service\ServicePriorityCorrectiveActions.cs" />
     <Compile Include="Service\ServiceRequestMedicalExaminationEmployees.cs" />
     <Compile Include="Service\ServiceRequestMedicalExaminationEmployeeStates.cs" />
     <Compile Include="Service\ServiceRequestMedicalExaminations.cs" />

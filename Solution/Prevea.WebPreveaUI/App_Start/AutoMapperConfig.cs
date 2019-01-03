@@ -174,6 +174,10 @@
 
             AutoMapper.Mapper.CreateMap<TemplateMedicalExaminationViewModel, TemplatePreventivePlan>();
             AutoMapper.Mapper.CreateMap<TemplatePreventivePlan, TemplatePreventivePlanViewModel>();
+
+            AutoMapper.Mapper.CreateMap<CorrectiveActionViewModel, CorrectiveAction>();
+            AutoMapper.Mapper.CreateMap<CorrectiveAction, CorrectiveActionViewModel>()
+                .ForMember(x => x.PriorityCorrectiveActionDescription, x => x.MapFrom(y => y.PriorityCorrectiveAction.Description));
         }
     }
 }

@@ -187,6 +187,8 @@
                     return "Alta";
                 case "Critical":
                     return "Crítica";
+                case "Baja":
+                    return "Baja";
 
                 default:
                     return name;

@@ -60,6 +60,7 @@
     <Compile Include="Repository\RepositoryCompanies.cs" />
     <Compile Include="Repository\RepositoryConfigurations.cs" />
     <Compile Include="Repository\RepositoryContactPersons.cs" />
+    <Compile Include="Repository\RepositoryCorrectiveActions.cs" />
     <Compile Include="Repository\RepositoryDeltaCodes.cs" />
     <Compile Include="Repository\RepositoryDoctorsMedicalExaminationEmployee.cs" />
     <Compile Include="Repository\RepositoryDocuments.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Repository\RepositoryPaymentMethods.cs" />
     <Compile Include="Repository\RepositoryPreventivePlans.cs" />
     <Compile Include="Repository\RepositoryPreventivePlanTemplatePreventivePlans.cs" />
+    <Compile Include="Repository\RepositoryPriorityCorrectiveActions.cs" />
     <Compile Include="Repository\RepositoryRequestMedicalExaminationEmployees.cs" />
     <Compile Include="Repository\RepositoryRequestMedicalExaminationEmployeeStates.cs" />
     <Compile Include="Repository\RepositoryRequestMedicalExaminationStates.cs" />

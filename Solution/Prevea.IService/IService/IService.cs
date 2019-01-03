@@ -478,5 +478,21 @@
         List<CriticalNivel> GetCriticalNivels();
 
         #endregion
+
+        #region CorrectiveActions
+
+        List<CorrectiveAction> GetCorrectiveActions();
+        CorrectiveAction GetCorrectiveActionById(int id);
+        Result SaveCorrectiveAction(CorrectiveAction correctiveAction);
+        Result DeleteCorrectiveAction(int id);
+
+        #endregion
+
+        #region PriorityCorrectiveActions
+
+        List<PriorityCorrectiveAction> GetPriorityCorrectiveActions();
+        PriorityCorrectiveAction GetPriorityCorrectiveAction(int id);
+
+        #endregion
     }
 }
