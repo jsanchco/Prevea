@@ -5,25 +5,29 @@
 </script>
 
 <div class="row">
+
     <div class="col-sm-12">
+
         @using (Ajax.BeginForm("UpdateRiskEvaluation", "Tecniques", null, new AjaxOptions
         {
             HttpMethod = "POST",
-            UpdateTargetId = "framePpalRiskDetected"
-        }, new { id = "formRiskDetected" }))
+            UpdateTargetId = "framePpal"
+        }, new { id = "formCorrectiveActions" }))
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
 
             @Html.TextAreaFor(model => model.RiskDetected, new
             {
-                id = "editorRiskDetected",
+                id = "editorCorrectiveActions",
                 style = "height: 57vh; width: 100%",
                 rows = 10,
                 cols = 30
             })
 
-            <div class="col-sm-12" style="margin-left: -15px; margin-top: 10px">
+            <p/>
+
+            <div class="form-actions">
 
                 @Html.HiddenFor(model => model.Id)
                 @Html.HiddenFor(model => model.WorkStationId)
@@ -36,11 +40,10 @@
                 @Html.HiddenFor(model => model.CollectiveProtectionEquipments)
                 @Html.HiddenFor(model => model.SelectTab)
 
-                <input type="submit" id="btnValidateRiskDetected" value="Guardar" class="btn btn-prevea btn" />
+                <input type="submit" id="btnValidate" value="Guardar" class="btn btn-prevea btn" />
 
             </div>
         }
-
     </div>
 
 </div>

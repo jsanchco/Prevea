@@ -246,7 +246,7 @@
                     tables += "S/COSTE";
                     tables += "</td>";
                     tables += "<td style='text-align: justify; border: 1px solid black; padding: 6px;'>";
-                    tables += riskEvaluation.RiskDetected;
+                    tables += GetFormatHTML(riskEvaluation.RiskDetected);
                     tables += "</td>";
                     tables += "</tr>";
                 }
@@ -328,6 +328,22 @@
                 default:
                     return string.Empty;
             }
+        }
+
+        private static string GetFormatHTML(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                return text;
+
+            if (text.IndexOf("\n", StringComparison.Ordinal) == -1)
+                return text;
+
+            text = text.Replace("\r\n", @"</P><P>");
+            text = text.Replace("\n", @"</P><P>");
+
+            text = "<P>" + text;
+
+            return text + "</P>";
         }
     }
 }

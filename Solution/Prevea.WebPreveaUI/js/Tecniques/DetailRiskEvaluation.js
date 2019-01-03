@@ -16,18 +16,35 @@
         this.cnaeId = cnaeId;
         this.workStationId = workStationId;
         this.selectTabId = selectTabId;
-        this.notification = notification;
+
+        if (notification) {
+            GeneralData.showNotification(Constants.ok, "", "success");
+        } else {
+            $("#" + this.spanNotificationId).hide();
+        }
         
         this.createTabStripDetailRiskEvaluation();
     },
-    
-    createTabStripDetailRiskEvaluation: function () {
-        if (this.notification) {
+
+    init1: function () {
+        kendo.culture("es-ES");
+
+        this.riskEvaluationId = 5;
+        this.cnaeId = 1;
+        this.workStationId = 1;
+        this.selectTabId = 0;
+        var notification = "";
+
+        if (notification) {
             GeneralData.showNotification(Constants.ok, "", "success");
         } else {
             $("#" + this.spanNotificationId).hide();
         }
 
+        this.createTabStripDetailRiskEvaluation();
+    },
+    
+    createTabStripDetailRiskEvaluation: function () {
         var tabStrip = $("#" + this.tabStripDetailRiskEvaluationId).kendoTabStrip().data("kendoTabStrip");
         tabStrip.append({
             text: "RIESGOS DETECTADOS",
