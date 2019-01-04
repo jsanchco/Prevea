@@ -482,6 +482,7 @@
         #region CorrectiveActions
 
         List<CorrectiveAction> GetCorrectiveActions();
+        List<CorrectiveAction> GetCorrectiveActionsByRiskEvaluation(int riskEvaluationId);
         CorrectiveAction GetCorrectiveActionById(int id);
         Result SaveCorrectiveAction(CorrectiveAction correctiveAction);
         Result DeleteCorrectiveAction(int id);

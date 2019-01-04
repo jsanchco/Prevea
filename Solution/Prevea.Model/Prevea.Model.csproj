@@ -143,6 +143,7 @@
     <Compile Include="ViewModel\PaymentModeViewModel.cs" />
     <Compile Include="ViewModel\PreventivePlanViewModel.cs" />
     <Compile Include="ViewModel\CorrectiveActionViewModel.cs" />
+    <Compile Include="ViewModel\PriorityCorrectiveActionViewModel.cs" />
     <Compile Include="ViewModel\RequestMedicalExaminationEmployeeViewModel.cs" />
     <Compile Include="ViewModel\RequestMedicalExaminationsViewModel.cs" />
     <Compile Include="ViewModel\RiskEvaluationViewModel.cs" />

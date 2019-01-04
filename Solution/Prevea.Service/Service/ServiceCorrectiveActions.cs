@@ -16,6 +16,11 @@
             return Repository.GetCorrectiveActions();
         }
 
+        public List<CorrectiveAction> GetCorrectiveActionsByRiskEvaluation(int riskEvaluationId)
+        {
+            return Repository.GetCorrectiveActionsByRiskEvaluation(riskEvaluationId);
+        }
+
         public CorrectiveAction GetCorrectiveActionById(int id)
         {
             return Repository.GetCorrectiveActionById(id);

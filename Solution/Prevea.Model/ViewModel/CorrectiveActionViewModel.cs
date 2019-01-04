@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public string Description { get; set; }
+        public int RiskEvaluationId { get; set; }
         public int PriorityCorrectiveActionId { get; set; }
         public string PriorityCorrectiveActionDescription { get; set; }
     }

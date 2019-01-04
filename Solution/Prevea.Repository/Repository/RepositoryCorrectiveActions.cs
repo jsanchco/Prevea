@@ -20,6 +20,14 @@
                 .ToList();
         }
 
+        public List<CorrectiveAction> GetCorrectiveActionsByRiskEvaluation(int riskEvaluationId)
+        {
+            return Context.CorrectiveActions
+                .Where(x => x.RiskEvaluationId == riskEvaluationId)
+                .Include(x => x.PriorityCorrectiveAction)
+                .ToList();
+        }
+
         public CorrectiveAction GetCorrectiveActionById(int id)
         {
             return Context.CorrectiveActions

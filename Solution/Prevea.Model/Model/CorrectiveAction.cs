@@ -11,6 +11,8 @@
         [Key, Required]
         public int Id { get; set; }
         public string Description { get; set; }
+        public int RiskEvaluationId { get; set; }
+        public virtual RiskEvaluation RiskEvaluation { get; set; }
         public int PriorityCorrectiveActionId { get; set; }
         public virtual PriorityCorrectiveAction PriorityCorrectiveAction { get; set; }
     }

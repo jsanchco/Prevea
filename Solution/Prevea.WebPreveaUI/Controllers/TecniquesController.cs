@@ -676,5 +676,105 @@
             return PartialView("~/Views/Tecniques/DetailRiskEvaluation.cshtml",
                 AutoMapper.Mapper.Map<RiskEvaluationViewModel>(Service.GetRiskEvaluationById(riskEvaluationVM.Id)));
         }
+
+        [HttpGet]
+        public JsonResult CorrectiveActions_Read([DataSourceRequest] DataSourceRequest request, int riskEvaluationId)
+        {
+            var data = AutoMapper.Mapper.Map<List<CorrectiveActionViewModel>>(Service.GetCorrectiveActionsByRiskEvaluation(riskEvaluationId));
+
+            return this.Jsonp(data);
+        }
+
+        public ActionResult CorrectiveActions_Create()
+        {
+            try
+            {
+                var correctiveAction = this.DeserializeObject<CorrectiveAction>("correctiveAction");
+                if (correctiveAction == null)
+                {
+                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del CorrectiveAction" });
+                }
+
+                var result = Service.SaveCorrectiveAction(AutoMapper.Mapper.Map<CorrectiveAction>(correctiveAction));
+
+                if (result.Status != Status.Error)
+                {
+                    return this.Jsonp(AutoMapper.Mapper.Map<CorrectiveActionViewModel>(result.Object));
+                }
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del CorrectiveAction" });
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del CorrectiveAction" });
+            }
+        }
+
+        public JsonResult CorrectiveActions_Update()
+        {
+            try
+            {
+                var correctiveAction = this.DeserializeObject<CorrectiveAction>("correctiveAction");
+                if (correctiveAction == null)
+                {
+                    return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del CorrectiveAction" });
+                }
+
+                var result = Service.SaveCorrectiveAction(correctiveAction);
+
+                if (result.Status != Status.Error)
+                {
+                    var correctiveActionVM = AutoMapper.Mapper.Map<CorrectiveActionViewModel>(result.Object);
+                    return this.Jsonp(AutoMapper.Mapper.Map<CorrectiveActionViewModel>(result.Object));
+                }
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del CorrectiveAction" });
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del CorrectiveAction" });
+            }
+        }
+
+        public ActionResult CorrectiveActions_Destroy()
+        {
+            try
+            {
+                var correctiveAction = this.DeserializeObject<CorrectiveAction>("correctiveAction");
+                if (correctiveAction == null)
+                {
+                    return this.Jsonp(
+                        new { Errors = "Se ha producido un error en el Borrado del CorrectiveAction" });
+                }
+
+                var result = Service.DeleteCorrectiveAction(correctiveAction.Id);
+
+                if (result.Status == Status.Error)
+                {
+                    return this.Jsonp(
+                        new { Errors = "Se ha producido un error en el Borrado del correctiveAction" });
+                }
+
+                return this.Jsonp(AutoMapper.Mapper.Map<CorrectiveActionViewModel>(correctiveAction));
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en el Borrado del TemplatePreventivePlan" });
+            }
+        }
+
+        [HttpGet]
+        public JsonResult PriorityCorrectiveActions_Read([DataSourceRequest] DataSourceRequest request)
+        {
+            var data = AutoMapper.Mapper.Map<List<PriorityCorrectiveActionViewModel>>(Service.GetPriorityCorrectiveActions());
+
+            return this.Jsonp(data);
+        }
     }
 }
