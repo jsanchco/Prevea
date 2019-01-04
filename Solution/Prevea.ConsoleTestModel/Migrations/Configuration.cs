@@ -367,6 +367,13 @@ namespace Prevea.ConsoleTestModel.Migrations
                 context.CriticalNivels.AddOrUpdate(new CriticalNivel { Name = type.ToString() });
             }
             context.SaveChanges();
+
+            var priorityCorrectiveActions = (EnPriorityCorrectiveAction[])Enum.GetValues(typeof(EnPriorityCorrectiveAction));
+            foreach (var type in priorityCorrectiveActions)
+            {
+                context.PriorityCorrectiveActions.AddOrUpdate(new PriorityCorrectiveAction { Name = type.ToString() });
+            }
+            context.SaveChanges();
         }
     }
 }

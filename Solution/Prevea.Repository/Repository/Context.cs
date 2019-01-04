@@ -70,6 +70,8 @@
         public DbSet<Incidence> Incidences { get; set; }
         public DbSet<IncidenceState> IncidenceStates { get; set; }
         public DbSet<CriticalNivel> CriticalNivels { get; set; }
+        public DbSet<CorrectiveAction> CorrectiveActions { get; set; }
+        public DbSet<PriorityCorrectiveAction> PriorityCorrectiveActions { get; set; }
 
         #endregion
 

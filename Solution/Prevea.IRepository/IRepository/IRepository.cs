@@ -471,7 +471,23 @@
 
         List<IncidenceState> GetIncidenceStates();
         List<CriticalNivel> GetCriticalNivels();
-  
+
+        #endregion
+
+        #region CorrectiveActions
+
+        List<CorrectiveAction> GetCorrectiveActions();
+        CorrectiveAction GetCorrectiveActionById(int id);
+        CorrectiveAction SaveCorrectiveAction(CorrectiveAction correctiveAction);
+        bool DeleteCorrectiveAction(int id);
+
+        #endregion
+
+        #region PriorityCorrectiveActions
+
+        List<PriorityCorrectiveAction> GetPriorityCorrectiveActions();
+        PriorityCorrectiveAction GetPriorityCorrectiveAction(int id);
+
         #endregion
     }
 }

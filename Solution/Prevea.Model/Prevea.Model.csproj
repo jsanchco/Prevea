@@ -64,6 +64,7 @@
     <Compile Include="Model\CompanyState.cs" />
     <Compile Include="Model\Configuration.cs" />
     <Compile Include="Model\ContactPerson.cs" />
+    <Compile Include="Model\CorrectiveAction.cs" />
     <Compile Include="Model\CriticalNivel.cs" />
     <Compile Include="Model\DataMail.cs" />
     <Compile Include="Model\DataMailState.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Model\PaymentMethod.cs" />
     <Compile Include="Model\PreventivePlan.cs" />
     <Compile Include="Model\PreventivePlanTemplatePreventivePlan.cs" />
+    <Compile Include="Model\PriorityCorrectiveAction.cs" />
     <Compile Include="Model\RequestMedicalExaminationEmployee.cs" />
     <Compile Include="Model\RequestMedicalExaminationEmployeeState.cs" />
     <Compile Include="Model\RequestMedicalExaminations.cs" />
@@ -140,6 +142,7 @@
     <Compile Include="ViewModel\PaymentMethodViewModel.cs" />
     <Compile Include="ViewModel\PaymentModeViewModel.cs" />
     <Compile Include="ViewModel\PreventivePlanViewModel.cs" />
+    <Compile Include="ViewModel\CorrectiveActionViewModel.cs" />
     <Compile Include="ViewModel\RequestMedicalExaminationEmployeeViewModel.cs" />
     <Compile Include="ViewModel\RequestMedicalExaminationsViewModel.cs" />
     <Compile Include="ViewModel\RiskEvaluationViewModel.cs" />
