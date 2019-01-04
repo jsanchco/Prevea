@@ -81,7 +81,7 @@
 
                                 e.items[0].set("DocumentId", response.contract.Id);
                             } else {
-                                GeneralData.showNotification(Constants.ko, "", "error");
+                                GeneralData.showNotification("Esta Empresa aún no tiene contrato", "", "error");
                             }
                         }
                     });
