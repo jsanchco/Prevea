@@ -699,7 +699,7 @@
 
                 if (result.Status != Status.Error)
                 {
-                    return this.Jsonp(AutoMapper.Mapper.Map<CorrectiveActionViewModel>(result.Object));
+                    return this.Jsonp(AutoMapper.Mapper.Map<CorrectiveActionViewModel>(Service.GetCorrectiveActionById(correctiveAction.Id)));
                 }
 
                 return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del CorrectiveAction" });
@@ -726,8 +726,7 @@
 
                 if (result.Status != Status.Error)
                 {
-                    var correctiveActionVM = AutoMapper.Mapper.Map<CorrectiveActionViewModel>(result.Object);
-                    return this.Jsonp(AutoMapper.Mapper.Map<CorrectiveActionViewModel>(result.Object));
+                    return this.Jsonp(AutoMapper.Mapper.Map<CorrectiveActionViewModel>(Service.GetCorrectiveActionById(correctiveAction.Id)));
                 }
 
                 return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación del CorrectiveAction" });
@@ -759,7 +758,7 @@
                         new { Errors = "Se ha producido un error en el Borrado del correctiveAction" });
                 }
 
-                return this.Jsonp(AutoMapper.Mapper.Map<CorrectiveActionViewModel>(correctiveAction));
+                return this.Jsonp(correctiveAction);
             }
             catch (Exception e)
             {
