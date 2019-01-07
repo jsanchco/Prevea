@@ -1,4 +1,6 @@
-﻿namespace Prevea.WebPreveaUI.App_Start
+﻿using System.Runtime.CompilerServices;
+
+namespace Prevea.WebPreveaUI.App_Start
 {
     #region Using
 
@@ -138,7 +140,8 @@
                 .ForMember(x => x.Name, x => x.MapFrom(y => y.FirstName + " " + y.LastName));
 
             AutoMapper.Mapper.CreateMap<WorkStationViewModel, WorkStation>();
-            AutoMapper.Mapper.CreateMap<WorkStation, WorkStationViewModel>();
+            AutoMapper.Mapper.CreateMap<WorkStation, WorkStationViewModel>()
+                .ForMember(x => x.CnaeDescription, x => x.MapFrom(y => $"[{y.Cnae.CustomKey}] -> {y.Cnae.Name}"));
 
             AutoMapper.Mapper.CreateMap<DeltaCodeViewModel, DeltaCode>();
             AutoMapper.Mapper.CreateMap<DeltaCode, DeltaCodeViewModel>();

@@ -7,5 +7,6 @@
         public string Description { get; set; }
         public string ProfessionalCategory { get; set; }
         public int CnaeId { get; set; }
+        public string CnaeDescription { get; set; }
     }
 }

@@ -6,6 +6,9 @@
     confirmId: "confirm",
     cnaesDataSource: null,
 
+    addWorkStationExistingWindow: null,
+    addWorkStationExistingId: "addWorkStationExisting",
+
     init: function (cnaeSelected) {
         kendo.culture("es-ES");
 
@@ -213,6 +216,11 @@
         detailRow.find(".gridWorkStations").kendoGrid({
             columns: [
                 {
+                    field: "Id",
+                    title: "",
+                    width: 80
+                },
+                {
                     field: "Name",
                     title: "Puesto de Trabajo",
                     width: 200,
@@ -286,7 +294,7 @@
                 allowUnsort: false
             },
             groupable: false,
-            toolbar: WorkStations.getTemplateWorkStationsToolBar(),
+            toolbar: WorkStations.getTemplateWorkStationsToolBar(e.data.id),
             editable: {
                 mode: "inline",
                 confirmation: false
@@ -306,10 +314,11 @@
         grid.setDataSource(dataSourceChildren);
     },
 
-    getTemplateWorkStationsToolBar: function () {
+    getTemplateWorkStationsToolBar: function (cnaeSelected) {
         var html = "<div class='toolbar'>";
         html += "<span name='create' id='createWorkStation'>";
-        html += "<a class='btn btn-prevea k-grid-add' role='button'> Agregar nuevo</a>";
+        html += "<a class='btn btn-prevea k-grid-add' role='button'> Agregar nuevo</a>&nbsp; &nbsp;";
+        html += kendo.format("<a class='btn btn-prevea' role='button' onclick='WorkStations.goToAddWorkStationExisting(\"{0}\")'> Agregar Puesto de Trabajo Existente</a>", cnaeSelected);
         html += "</span></div>";
 
         return html;
@@ -370,5 +379,26 @@
             }
         };
         GeneralData.goToActionController(params);
+    },
+
+    goToAddWorkStationExisting: function (cnaeSelected) {
+        this.setUpAddWorkStationExistingWindow(cnaeSelected);
+        this.addWorkStationExistingWindow.data("kendoWindow").center().open();
+    },
+
+    setUpAddWorkStationExistingWindow: function (cnaeSelected) {
+        var url = kendo.format("/Tecniques/AddWorkStationExisting?cnaeSelected={0}", cnaeSelected);
+        this.addWorkStationExistingWindow = $("#" + this.addWorkStationExistingId);
+        this.addWorkStationExistingWindow.kendoWindow({
+            width: "900px",
+            height: "800px",
+            title: "Puestos de Trabajo",
+            visible: false,
+            modal: true,
+            actions: [
+                "Close"
+            ],
+            content: url
+        });
     }
 });

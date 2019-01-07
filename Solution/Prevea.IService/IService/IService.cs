@@ -390,6 +390,7 @@
         WorkStation GetWorkStationById(int id);
         Result SaveWorkStation(WorkStation workStation);
         Result DeleteWorkStation(int id);
+        Result SaveWorkStationsInCNAE(int cnaeSelected, int[] workStationsSelected);
 
         #endregion
 

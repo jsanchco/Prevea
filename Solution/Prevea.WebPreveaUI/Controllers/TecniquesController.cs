@@ -775,5 +775,33 @@
 
             return this.Jsonp(data);
         }
+
+        [HttpGet]
+        public ActionResult AddWorkStationExisting(int cnaeSelected)
+        {
+            var cnae = Service.GetCnae(cnaeSelected);
+
+            ViewBag.CnaeSelected = cnaeSelected;
+            ViewBag.Title = $"Puestos de Trabajo para incluir en el CNAE: [{cnae.CustomKey}] -> {cnae.Name}";
+
+            return PartialView("~/Views/Tecniques/AddWorkStationExisting.cshtml");
+        }
+
+        [HttpGet]
+        public JsonResult WorkSations_Read([DataSourceRequest] DataSourceRequest request)
+        {
+            var data = AutoMapper.Mapper.Map<List<WorkStationViewModel>>(Service.GetWorkStations());
+
+            return this.Jsonp(data);
+        }
+
+        public JsonResult SaveWorkStationsInCNAE(int cnaeSelected, int[] workStationsSelected)
+        {
+            var result = Service.SaveWorkStationsInCNAE(cnaeSelected, workStationsSelected);
+
+            return Json(result.Status == Status.Ok ? 
+                new { result = new Result { Status = Status.Ok } } : 
+                new { result = new Result { Status = Status.Error } }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

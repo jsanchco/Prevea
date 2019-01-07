@@ -730,6 +730,7 @@
     <Content Include="js\Tecniques\RiskDetected.js" />
     <Content Include="js\Tecniques\RiskEvaluation.js" />
     <Content Include="js\Tecniques\TemplatePreventivePlans.js" />
+    <Content Include="js\Tecniques\AddWorkStationExisting.js" />
     <Content Include="js\Tecniques\WorkStations.js" />
     <Content Include="js\User\ContactAs.js" />
     <Content Include="js\User\Users.js" />
@@ -1227,6 +1228,7 @@
     <Content Include="Views\Tecniques\CorrectiveActions.cshtml" />
     <Content Include="Views\Tecniques\IndividualProtectionEquipments.cshtml" />
     <Content Include="Views\Tecniques\CollectiveProtectionEquipments.cshtml" />
+    <Content Include="Views\Tecniques\AddWorkStationExisting.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
