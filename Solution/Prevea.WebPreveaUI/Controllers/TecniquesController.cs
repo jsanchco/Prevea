@@ -782,7 +782,7 @@
             var cnae = Service.GetCnae(cnaeSelected);
 
             ViewBag.CnaeSelected = cnaeSelected;
-            ViewBag.Title = $"Puestos de Trabajo para incluir en el CNAE: [{cnae.CustomKey}] -> {cnae.Name}";
+            ViewBag.Title = $"[{cnae.CustomKey}] -> {cnae.Name}";
 
             return PartialView("~/Views/Tecniques/AddWorkStationExisting.cshtml");
         }

@@ -337,7 +337,7 @@
     },
 
     goToEditWorkStation: function (id, cnaeId) {
-        var grid = $("#gridWorkStations").find(cnaeId + "gridWorkStations").prevObject.data("kendoGrid");
+        var grid = $("." + cnaeId + "gridWorkStations").data("kendoGrid");
         var item = grid.dataSource.get(id);
         var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
 
@@ -358,7 +358,7 @@
                 },
                 {
                     text: "Borrar", action: function () {
-                        var grid = $("#gridWorkStations").find(cnaeId + "gridWorkStations").prevObject.data("kendoGrid");
+                        var grid = $("." + cnaeId + "gridWorkStations").data("kendoGrid");
                         var item = grid.dataSource.get(id);
                         var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
 

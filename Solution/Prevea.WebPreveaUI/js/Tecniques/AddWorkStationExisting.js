@@ -1,6 +1,7 @@
 ﻿var AddWorkStationExisting = kendo.observable({
 
-    cnaeSelected: null, 
+    cnaeSelected: null,
+    title: null,
 
     gridWorkStationsExistingId: "gridWorkStationsExisting",
     confirmId: "confirm",
@@ -9,9 +10,10 @@
 
     init: function (cnaeSelected, title) {
         this.cnaeSelected = cnaeSelected;
+        this.title = title;
 
         var windowAddWorkStationExisting = $("#addWorkStationExisting").data("kendoWindow");
-        windowAddWorkStationExisting.title(title);
+        windowAddWorkStationExisting.title("Puestos de Trabajo para incluir en el CNAE: " + title);
 
         this.createWorkStationsExistingDataSource();
         this.createWorkStationsExistingGrid();
@@ -113,7 +115,30 @@
         windowAddWorkStationExisting.close();
     },
 
-    goToAddWorkStationToCNAE: function () {
+    goToAddWorkStationToCNAE: function() {
+        var dialog = $("#" + this.confirmId);
+        dialog.kendoDialog({
+            width: "400px",
+            title: "<strong>Puestos de Trabajo</strong>",
+            closable: false,
+            modal: true,
+            content: kendo.format("¿Quieres <strong>Agregar</strong> estos Puestos de Trabajo al CNAE: {0}?", AddWorkStationExisting.title),
+            actions: [
+                {
+                    text: "Cancelar", primary: true
+                },
+                {
+                    text: "Aceptar", action: function () {
+                        AddWorkStationExisting.addWorkStationToCNAE();
+                    }
+                }
+            ]
+        });
+        dialog.data("kendoDialog").open();
+
+    },
+
+    addWorkStationToCNAE: function () {
         var windowAddWorkStationExisting = $("#addWorkStationExisting").data("kendoWindow");
 
         var grid = $("#" + this.gridWorkStationsExistingId).data("kendoGrid");
@@ -136,7 +161,7 @@
             success: function (response) {
                 if (response.result.Status === Constants.resultStatus.Ok) {
 
-                    var grid = $("#gridWorkStations").find(AddWorkStationExisting.cnaeSelected + "gridWorkStations").prevObject.data("kendoGrid");                    
+                    var grid = $("." + AddWorkStationExisting.cnaeSelected + "gridWorkStations").data("kendoGrid");                
                     if (typeof grid !== "undefined") {
                         grid.dataSource.read();
                     }                    
