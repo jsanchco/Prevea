@@ -99,7 +99,8 @@
             var editorSnippets = new Dictionary<string, string>
             {
                 { "Título", GetSnippetTitle(template.Name, preventivePlan) },
-                { "Tablas de Riesgos", GetSnippetTablesRisks(preventivePlan) }
+                { "Tablas de Riesgos", GetSnippetTablesRisks(preventivePlan) },
+                { "Información Básica de la Empresa", GetSnippetBasicInformationCompany(preventivePlan) }
             };
 
             return editorSnippets;
@@ -254,6 +255,46 @@
                 tables += "</table>";
                 tables += "<br/><br/>";
             }
+
+            return tables;
+        }
+
+        private string GetSnippetBasicInformationCompany(PreventivePlan preventivePlan)
+        {
+            var tables = string.Empty;
+
+            tables += "<br/><br/>";
+            tables += "<table style='margin-left: auto; margin-right: auto; border: 1px solid black; font-size: 12px; font-family: Arial;'>";
+            tables += "<tr style='border: 1px solid black; padding: 6px; border: 1px solid black; '>";
+            tables += "<td colspan='3' style='padding: 6px; border: 1px solid black; '>";
+            tables += "<p style='font-weight: bold;'>PREVEA</p>";
+            tables += "<p style='font-weight: bold;'>CONSULTORES Y PROYECTOS, S.L.</p>";
+            tables += "<p>C/ Abad Juan Catalán. 38. 28032 Madrid</p><br />";
+            tables += "<p style='font-weight: bold;'>SERVICIO DE PREVENCIÓN AJENO</p>";
+            tables += "</td>";
+            tables += "<td colspan='5' style='padding: 6px; border: 1px solid black; border: 1px solid black; '>";
+            tables += "<p style='text-align: center; font-weight: bold;'>DATOS IDENTIFICATIVOS de la EMPRESA</p>";
+            tables += "</td>";
+            tables += "</tr>";
+            tables += "<tr style='border: 1px solid black; padding: 6px;  font-size: 12px; font-family: Arial; padding: 6px;'>";
+            tables += "<td colspan='4' style='padding: 6px; border: 1px solid black; '>";
+            tables += $"<strong>ACTIVIDAD:</strong> {preventivePlan.Company.Cnae.Name}";
+            //tables += $"<strong>ACTIVIDAD:</strong> {preventivePlan.Company.Cnae.Name}";
+            tables += "</td>";
+            tables += "<td colspan='3' style='padding: 6px; border: 1px solid black; '>";
+            tables += "<strong>PUESTO:</strong> ¿?";
+            tables += "</td>";
+            tables += "<td colspan='1' style='padding: 6px; border: 1px solid black; '>";
+            tables += "Nº TRABAJADORES: 1";
+            tables += "</td>";
+            tables += "</tr>";
+            tables += "<tr style='border: 1px solid black; font-size: 12px; font-family: Arial; padding: 6px;'>";
+            tables += "<td colspan='8' style='padding: 6px; border: 1px solid black; '>";
+            tables += "<p style='text-align: center; font-weight: bold;'>EVALUACION DE RIESGOS Y PLANIFICACION PREVENTIVA</p>";
+            tables += "</td>";
+            tables += "</tr>";
+            tables += "</table>";
+            tables += "<br/><br/>";
 
             return tables;
         }
