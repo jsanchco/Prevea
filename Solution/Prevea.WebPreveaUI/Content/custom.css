@@ -108,11 +108,11 @@ body {
 }
 
 .sectionReportBox {
-    border-style: solid; 
-    border-width: thin; 
-    background: blue;
-    font-size: large; 
-    font-weight: bold; 
+    border-style: solid;
+    border-width: thin;
+    background: #14425C;
+    font-size: large;
+    font-weight: bold;
     color: white;
 }
 
