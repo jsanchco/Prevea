@@ -60,7 +60,7 @@
         <div class="row">
             <div class="col-xs-4" style="font-size: large; font-weight: bold; text-align: left">OFERTA DE SERVICIO</div>
             <div class="col-xs-offset-4 col-xs-4">
-                <div class="row" style="font-size: 12px; border-style: solid; border-width: thin; background: #ccccff;">
+                <div class="row" style="font-size: 12px; border-style: solid; border-width: thin; background: #37B7FF;">
                     <div style="display: inline-block">
                         <div>&nbsp;Nº OFERTA</div>
                         <div>&nbsp;FECHA</div>
@@ -322,7 +322,7 @@
 
         <div class="row">
             <div class="col-xs-2">
-                <span style="font-weight: bold; color: red;">FORMA de COBRO</span>
+                <span style="font-weight: bold; color: #903619;">FORMA de COBRO</span>
             </div>
             <div class="col-xs-2">
                 <span style="">
@@ -346,7 +346,7 @@
                 </span>
             </div>
             <div class="col-xs-2">
-                <span style="font-weight: bold; color: red;">MODALIDAD de PAGO</span>
+                <span style="font-weight: bold; color: #903619;">MODALIDAD de PAGO</span>
             </div>
             <div class="col-xs-2">
                 <span style="">
@@ -354,7 +354,7 @@
                 </span>
             </div>
             <div class="col-xs-2">
-                <span style="font-weight: bold; color: red;">COBRO de R. MÉDICOS</span>
+                <span style="font-weight: bold; color: #903619;">COBRO de R. MÉDICOS</span>
             </div>
             <div class="col-xs-2">
                 <span style="">
@@ -365,7 +365,7 @@
 
         <div class="row">
             <div class="col-xs-2 col-xs-offset-4">
-                <span style="font-weight: bold; color: red;">Nº de CUENTA</span>
+                <span style="font-weight: bold; color: #903619;">Nº de CUENTA</span>
             </div>
             <div class="col-xs-3">
                 <span style="">
@@ -612,11 +612,21 @@
         <br />
 
         <div class="row">
-            <div class="col-xs-offset-2 col-xs-4" style="background: #ccccff">
+            <div class="col-xs-6" style="background: #ccccff">
                 ESPECIALIDADES TÉCNICAS
             </div>
             <div class="col-xs-2" style="background: #ccccff">
-                @totalAmountTecniques €
+                @{
+                    var amountTecniques = 0.0m;
+                    if (Model.Company.SimulationCompanyActive.Simulation.ForeignPreventionService != null &&
+                        Model.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques != null)
+                    {
+                        amountTecniques = (decimal)Model.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques;
+                    }
+
+                }
+                @amountTecniques €
+                @*@totalAmountTecniques €*@
             </div>
             <div class="col-xs-4" style="background: #ccccff">
                 (IVA NO INCLUIDO)
@@ -626,11 +636,21 @@
         <br />
 
         <div class="row">
-            <div class="col-xs-offset-2 col-xs-4" style="background: #ccccff">
+            <div class="col-xs-6" style="background: #ccccff">
                 VIGILANCIA DE LA SALUD
             </div>
             <div class="col-xs-2" style="background: #ccccff">
-                @totalAmountHealthVigilance €
+                @{
+                    var amountHealthVigilance = 0.0m;
+                    if (Model.Company.SimulationCompanyActive.Simulation.ForeignPreventionService != null &&
+                        Model.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance != null)
+                    {
+                        amountHealthVigilance = (decimal)Model.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance;
+                    }
+
+                }
+                @amountHealthVigilance €
+                @*@totalAmountHealthVigilance €*@
             </div>
             <div class="col-xs-4" style="background: #ccccff">
                 (IVA NO INCLUIDO)
@@ -640,11 +660,21 @@
         <br />
 
         <div class="row">
-            <div class="col-xs-offset-2 col-xs-4" style="background: #ccccff">
+            <div class="col-xs-6" style="background: #ccccff">
                 REC. MÉDICO REALIZADO EN CLÍNICA
             </div>
             <div class="col-xs-2" style="background: #ccccff">
-                @totalAmountMedicalExamination €
+                @{
+                    var amountMedicalExamination = 0.0m;
+                    if (Model.Company.SimulationCompanyActive.Simulation.ForeignPreventionService != null &&
+                        Model.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination != null)
+                    {
+                        amountMedicalExamination = (decimal)Model.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination;
+                    }
+
+                }
+                @amountMedicalExamination €
+                @*@totalAmountMedicalExamination €*@
             </div>
             <div class="col-xs-4" style="background: #ccccff">
                 (EXENTO DE IVA)
@@ -665,6 +695,30 @@
                     }
                 }
                 @textModePaymentMedicalExamination
+            </div>
+        </div>
+
+        <br />
+        
+        @{
+            var iva = ((string) ViewBag.IVA).Substring(2) + "%";
+            var sum = totalAmountTecniques + totalAmountHealthVigilance;
+        }
+
+        <div class="row" style="text-align: center;">
+            <div class="col-xs-6 sectionReportBox" style="background: white; color: black;">
+                (@amountTecniques * @Model.Company.SimulationCompanyActive.Simulation.NumberEmployees * @iva) + (@amountMedicalExamination * @Model.Company.SimulationCompanyActive.Simulation.NumberEmployees * @iva) = @sum €
+            </div>
+            <div class="col-xs-6 sectionReportBox" style="background: white; color: black; border-left-style: none;">
+                ESPECIALIDADES TÉCNICAS + V. SALUD (I.V.A. incluido) 
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col-xs-6 sectionReportBox" style="background: white; color: black; border-top-style: none;">
+                FORMA DE PAGO
+            </div>
+            <div class="col-xs-6 sectionReportBox" style="background: white; color: black; border-top-style: none; border-left-style: none">
+                RECONOCIMIENTOS MÉDICOS (Exentos de I.V.A.) 
             </div>
         </div>
 
@@ -717,7 +771,7 @@
                         EMPRESA
                     </div>
                     <div class="col-xs-4">
-                        @Model.Name
+                        @Model.Company.Name
                     </div>
                 </div>
                 <div class="row">
