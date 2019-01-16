@@ -1117,7 +1117,58 @@
 
                 #region CON_SPA
                 case 9: // CON_SPA
-                    return View("~/Views/CommercialTool/Companies/Reports/ContractSPAReport.cshtml", document.Company);
+                    ViewBag.ContractualDocumentId = documentId;
+                    ViewBag.ContractualDocumentEnrollment = document.Name;
+                    ViewBag.IVA = Service.GetTagValue("IVA");
+
+                    workCenters = Service.GetWorkCentersByCompany((int)document.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
+                    ViewBag.NumberWorkCenters = workCenters.Count;
+
+                    provincesWorkCenters = string.Empty;
+                    if (workCenters.Count > 0)
+                    {
+                        var distinctWorkCenters = workCenters
+                            .GroupBy(x => x.Province.Trim())
+                            .Select(g => new
+                            {
+                                Field = g.Key,
+                                Count = g.Count()
+                            }).ToList();
+
+
+                        if (distinctWorkCenters.Count == 1)
+                        {
+                            provincesWorkCenters = distinctWorkCenters[0].Count == 1 ?
+                                $"{distinctWorkCenters[0].Field.Trim()}." :
+                                $"{distinctWorkCenters[0].Field.Trim()}({distinctWorkCenters[0].Count}).";
+                        }
+                        else
+                        {
+                            for (var i = 0; i < distinctWorkCenters.Count; i++)
+                            {
+                                var workCenter = distinctWorkCenters[i];
+                                var newWorkCenter = workCenter.Field.Trim();
+                                if (newWorkCenter != string.Empty)
+                                {
+                                    if (i == distinctWorkCenters.Count - 1)
+                                    {
+                                        provincesWorkCenters += distinctWorkCenters[i].Count == 1 ?
+                                            $"{newWorkCenter}." :
+                                            $"{newWorkCenter}({distinctWorkCenters[i].Count}).";
+                                    }
+                                    else
+                                    {
+                                        provincesWorkCenters += distinctWorkCenters[i].Count == 1 ?
+                                            $"{newWorkCenter}, " :
+                                            $"{newWorkCenter}({distinctWorkCenters[i].Count}), ";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    ViewBag.ProvincesWorkCenters = provincesWorkCenters;
+
+                    return View("~/Views/CommercialTool/Companies/Reports/ContractSPAReport.cshtml", document);
                 #endregion
 
                 #region CON_FOR
@@ -1357,9 +1408,9 @@
             ViewBag.ProvincesWorkCenters = provincesWorkCenters;
 
             if (isPartialView)
-                return PartialView("~/Views/CommercialTool/Companies/Reports/ContractSPAReport.cshtml", contractualDocument.Company);
+                return PartialView("~/Views/CommercialTool/Companies/Reports/ContractSPAReport.cshtml", contractualDocument);
 
-            return View("~/Views/CommercialTool/Companies/Reports/ContractSPAReport.cshtml", contractualDocument.Company);
+            return View("~/Views/CommercialTool/Companies/Reports/ContractSPAReport.cshtml", contractualDocument);
         }
 
         [HttpGet]

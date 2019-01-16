@@ -45,7 +45,7 @@
             </div>
 
             <div class="col-xs-offset-2 col-sm-4">
-                <div class="row" style="font-size: 12px;">
+                <div class="row" style="font-size: 16px; font-weight: bold">
                     <div>PREVEA SPA</div>
                     <div>C/ Abad Juan Catalán, 38 28032-Madrid</div>
                     <div>Tfno.- 917602713</div>
@@ -60,12 +60,12 @@
         <div class="row">
             <div class="col-xs-4" style="font-size: large; font-weight: bold; text-align: left">OFERTA DE SERVICIO</div>
             <div class="col-xs-offset-4 col-xs-4">
-                <div class="row" style="font-size: 12px; border-style: solid; border-width: thin; background: #37B7FF;">
-                    <div style="display: inline-block">
+                <div class="row" style="font-size: 12px; border-style: solid; border-width: thin; background: #ccccff;">
+                    <div style="display: inline-block; font-weight: bold">
                         <div>&nbsp;Nº OFERTA</div>
                         <div>&nbsp;FECHA</div>
                     </div>
-                    <div style="display: inline-block">
+                    <div style="display: inline-block; font-weight: bold">
                         <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@ViewBag.ContractualDocumentEnrollment</div>
                         <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Model.Date.ToShortDateString()</div>
                     </div>
@@ -89,7 +89,7 @@
 
         <div class="row">
             <div class="col-xs-3">
-                <span style="font-weight: bold;">RAZÓN SOCIAL/AUTÓNOMO</span>
+                <span style="font-weight: bold;">R.SOCIAL/AUTÓNOMO</span>
             </div>
             <div class="col-xs-9">
                 <span style="">
@@ -133,7 +133,7 @@
 
         <div class="row">
             <div class="col-xs-3">
-                <span style="font-weight: bold;">PERSONA de CONTACTO</span>
+                <span style="font-weight: bold;">CONTACTO</span>
             </div>
             <div class="col-xs-9">
                 <span style="">
@@ -226,10 +226,10 @@
         }
 
         <div class="row" style="text-align: left;">
-            <div class="col-xs-4">
+            <div class="col-xs-5">
                 SEGURIDAD EN EL TRABAJO
             </div>
-            <div class="col-xs-2" style="font-weight: bold">
+            <div class="col-xs-1" style="font-weight: bold">
                 @tecniches
             </div>
             <div class="col-xs-4">
@@ -241,10 +241,10 @@
         </div>
 
         <div class="row" style="text-align: left;">
-            <div class="col-xs-4">
+            <div class="col-xs-5">
                 ERGONOMÍA Y PSICOSOCIOLOGÍA
             </div>
-            <div class="col-xs-2" style="font-weight: bold">
+            <div class="col-xs-1" style="font-weight: bold">
                 @tecniches
             </div>
             <div class="col-xs-4">
@@ -321,10 +321,10 @@
         <br />
 
         <div class="row">
-            <div class="col-xs-2">
+            <div class="col-xs-3">
                 <span style="font-weight: bold; color: #903619;">FORMA de COBRO</span>
             </div>
-            <div class="col-xs-2">
+            <div class="col-xs-3">
                 <span style="">
                     @{
                         var paymentMethod = string.Empty;
@@ -346,28 +346,29 @@
                 </span>
             </div>
             <div class="col-xs-2">
-                <span style="font-weight: bold; color: #903619;">MODALIDAD de PAGO</span>
+                <span style="font-weight: bold; color: #903619;">M. PAGO</span>
             </div>
-            <div class="col-xs-2">
+            <div class="col-xs-4">
                 <span style="">
                     @Model.Company.PaymentMethod.ModePayment.Description
                 </span>
             </div>
-            <div class="col-xs-2">
-                <span style="font-weight: bold; color: #903619;">COBRO de R. MÉDICOS</span>
+        </div>        
+
+        <div class="row">
+            <div class="col-xs-3">
+                <span style="font-weight: bold; color: #903619;">COBRO R. MÉDICOS</span>
             </div>
-            <div class="col-xs-2">
+            <div class="col-xs-3">
                 <span style="">
                     @Model.Company.PaymentMethod.ModePaymentMedicalExamination.Description
                 </span>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-xs-2 col-xs-offset-4">
-                <span style="font-weight: bold; color: #903619;">Nº de CUENTA</span>
+            <div class="col-xs-2">
+                <span style="font-weight: bold; color: #903619;">Nº CUENTA</span>
             </div>
-            <div class="col-xs-3">
+            <div class="col-xs-4">
                 <span style="">
                     @Model.Company.PaymentMethod.AccountNumber
                 </span>
@@ -416,13 +417,15 @@
                 ·  Información a los trabajadores sobre los riesgos para la seguridad y salud en el trabajo, sobre las medidas y actividades de protección y prevención y sobre las medidas de emergencia. Queda incluido lo concerniente a la formación inicial de los trabajadores.
             </div>
             <div class="col-xs-12">
-                ·  Asesoramiento y apoyo para definir las necesidades formativas de los trabajadores, de manera que se puedan incluir en un plan de formación general que elabore la Empresa Contratante, de acuerdo a la evaluación de riesgos.
+                ·  Asesoramiento y apoyo en la elaboración de normas de actuación en caso de emergencia.
             </div>
+            <div class="col-xs-12">
+                ·  Asesoramiento y apoyo para definir las necesidades formativas de los trabajadores, de manera que se puedan incluir en un plan de formación general que elabore la Empresa Contratante, de acuerdo a la evaluación de riesgos.
+            </div>            
             <div class="col-xs-12">
                 ·  Asesoramiento en el control y gestión de seguridad en el sector de actividad que corresponda, así como en los aspectos relativos a la coordinación de actividades empresariales.
             </div>
-
-
+            
             <div class="col-xs-12">
                 &nbsp;
             </div>
@@ -441,10 +444,15 @@
             <div class="col-xs-12">
                 &nbsp;
             </div>
-
+            <div class="col-xs-12">
+                &nbsp;
+            </div>
 
             <div class="col-xs-12">
                 ·  Elaboración de la <strong>Memoria Anual</strong> a la finalización de la actividad, como resumen de las actividades de Prevención Técnica desarrolladas por PREVEA. Dado su carácter recapitulativo, se entregará transcurrido el período anual de referencia.
+            </div>            
+            <div class="col-xs-12">
+                ·  Diseño del sistema necesario para el registro y mantenimiento de la documentación que puede ser solicitada por cualquier administración, en materia de seguridad y salud, según las obligaciones establecidas en la legislación vigente.
             </div>
             <div class="col-xs-12">
                 ·  Asesoramiento y apoyo para el cumplimiento de la obligación de realizar la investigación de accidentes e incidentes, siempre que sea requerido por la Empresa Contratante.
@@ -516,32 +524,33 @@
             <div class="col-xs-12">
                 &nbsp;&nbsp;&nbsp;&nbsp;o <strong>Examen Médico:</strong>
             </div>
+            
+            <div class="col-xs-12">
+                &nbsp;
+            </div>
+            <div class="col-xs-12">
+                &nbsp;
+            </div>
+            <div class="col-xs-12">
+                &nbsp;
+            </div>
+            <div class="col-xs-12">
+                &nbsp;
+            </div>
+            <div class="col-xs-12">
+                &nbsp;
+            </div>
+            <div class="col-xs-12">
+                &nbsp;
+            </div>
+
+
             <div class="col-xs-12">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Estudio Biométrico de los trabajadores:</strong> Peso, Talla, Índice de Masa Corporal, Tensión Arterial, Pulso.
             </div>
             <div class="col-xs-12">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Hábitos e Historia Médica</strong>
             </div>
-
-            <div class="col-xs-12">
-                &nbsp;
-            </div>
-            <div class="col-xs-12">
-                &nbsp;
-            </div>
-            <div class="col-xs-12">
-                &nbsp;
-            </div>
-            <div class="col-xs-12">
-                &nbsp;
-            </div>
-            <div class="col-xs-12">
-                &nbsp;
-            </div>
-            <div class="col-xs-12">
-                &nbsp;
-            </div>
-
             <div class="col-xs-12">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <strong>Inspección general y por aparatos:</strong> Oro-faringe, Tórax, Auscultación Pulmonar y Cardiaca, Abdomen, Sistema Músculo Esquelético,
             </div>
@@ -596,7 +605,7 @@
         <br />
 
         <div class="row" style="text-align: center;">
-            <div class="col-xs-12 sectionReportBox" style="background: white; color: black">
+            <div class="col-xs-12 sectionReportBox" style="background: white; color: #14425C; border-width: medium">
                 PRECIO
             </div>
         </div>
@@ -612,7 +621,7 @@
         <br />
 
         <div class="row">
-            <div class="col-xs-6" style="background: #ccccff">
+            <div class="col-xs-5" style="background: #ccccff">
                 ESPECIALIDADES TÉCNICAS
             </div>
             <div class="col-xs-2" style="background: #ccccff">
@@ -628,7 +637,10 @@
                 @amountTecniques €
                 @*@totalAmountTecniques €*@
             </div>
-            <div class="col-xs-4" style="background: #ccccff">
+            <div class="col-xs-2" style="background: #ccccff;">
+                €/Trabajador
+            </div>
+            <div class="col-xs-3" style="background: #ccccff">
                 (IVA NO INCLUIDO)
             </div>
         </div>
@@ -636,7 +648,7 @@
         <br />
 
         <div class="row">
-            <div class="col-xs-6" style="background: #ccccff">
+            <div class="col-xs-5" style="background: #ccccff">
                 VIGILANCIA DE LA SALUD
             </div>
             <div class="col-xs-2" style="background: #ccccff">
@@ -652,7 +664,10 @@
                 @amountHealthVigilance €
                 @*@totalAmountHealthVigilance €*@
             </div>
-            <div class="col-xs-4" style="background: #ccccff">
+            <div class="col-xs-2" style="background: #ccccff;">
+                €/Trabajador
+            </div>
+            <div class="col-xs-3" style="background: #ccccff">
                 (IVA NO INCLUIDO)
             </div>
         </div>
@@ -660,7 +675,7 @@
         <br />
 
         <div class="row">
-            <div class="col-xs-6" style="background: #ccccff">
+            <div class="col-xs-5" style="background: #ccccff">
                 REC. MÉDICO REALIZADO EN CLÍNICA
             </div>
             <div class="col-xs-2" style="background: #ccccff">
@@ -676,7 +691,10 @@
                 @amountMedicalExamination €
                 @*@totalAmountMedicalExamination €*@
             </div>
-            <div class="col-xs-4" style="background: #ccccff">
+            <div class="col-xs-2" style="background: #ccccff;">
+                €/Trabajador
+            </div>
+            <div class="col-xs-3" style="background: #ccccff">
                 (EXENTO DE IVA)
             </div>
         </div>
@@ -702,22 +720,23 @@
         
         @{
             var iva = ((string) ViewBag.IVA).Substring(2) + "%";
-            var sum = totalAmountTecniques + totalAmountHealthVigilance;
+            decimal sum = totalAmountTecniques * Convert.ToDecimal(ViewBag.IVA) + totalAmountHealthVigilance * Convert.ToDecimal(ViewBag.IVA);
+            sum = Math.Round(sum, 2);
         }
 
         <div class="row" style="text-align: center;">
-            <div class="col-xs-6 sectionReportBox" style="background: white; color: black;">
-                (@amountTecniques * @Model.Company.SimulationCompanyActive.Simulation.NumberEmployees * @iva) + (@amountMedicalExamination * @Model.Company.SimulationCompanyActive.Simulation.NumberEmployees * @iva) = @sum €
+            <div class="col-xs-5 sectionReportBox" style="background: white; color: black; text-align: left; font-size: 12px;">
+                (@amountTecniques * @Model.Company.SimulationCompanyActive.Simulation.NumberEmployees * @iva) + (@amountHealthVigilance * @Model.Company.SimulationCompanyActive.Simulation.NumberEmployees * @iva) = @sum €
             </div>
-            <div class="col-xs-6 sectionReportBox" style="background: white; color: black; border-left-style: none;">
+            <div class="col-xs-7 sectionReportBox" style="background: white; color: black; border-left-style: none; text-align: left; font-size: 12px;">
                 ESPECIALIDADES TÉCNICAS + V. SALUD (I.V.A. incluido) 
             </div>
         </div>
         <div class="row" style="text-align: center;">
-            <div class="col-xs-6 sectionReportBox" style="background: white; color: black; border-top-style: none;">
-                FORMA DE PAGO
+            <div class="col-xs-5 sectionReportBox" style="background: white; color: black; border-top-style: none; text-align: left; font-size: 12px;">
+                (@amountMedicalExamination * @Model.Company.SimulationCompanyActive.Simulation.NumberEmployees) = @totalAmountMedicalExamination €
             </div>
-            <div class="col-xs-6 sectionReportBox" style="background: white; color: black; border-top-style: none; border-left-style: none">
+            <div class="col-xs-7 sectionReportBox" style="background: white; color: black; border-top-style: none; border-left-style: none; text-align: left; font-size: 12px;">
                 RECONOCIMIENTOS MÉDICOS (Exentos de I.V.A.) 
             </div>
         </div>
@@ -725,7 +744,7 @@
         <br />
 
         <div class="row" style="text-align: center;">
-            <div class="col-xs-12 sectionReportBox" style="background: white; color: black">
+            <div class="col-xs-12 sectionReportBox" style="background: white; color: #14425C; border-width: medium">
                 FORMA DE PAGO
             </div>
         </div>
@@ -765,12 +784,12 @@
         <br />
 
         <div class="row">
-            <div class="col-xs-8">
+            <div class="col-xs-12">
                 <div class="row">
                     <div class="col-xs-4">
                         EMPRESA
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-8">
                         @Model.Company.Name
                     </div>
                 </div>
@@ -778,7 +797,7 @@
                     <div class="col-xs-4">
                         NOMBRE
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-8">
                         @Model.Company.ContactPersons.FirstOrDefault().User.FirstName  @Model.Company.ContactPersons.FirstOrDefault().User.LastName
                     </div>
                 </div>
@@ -786,7 +805,7 @@
                     <div class="col-xs-4">
                         CARGO
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-8">
                         @Model.Company.ContactPersons.FirstOrDefault().User.WorkStationCustom
                     </div>
                 </div>

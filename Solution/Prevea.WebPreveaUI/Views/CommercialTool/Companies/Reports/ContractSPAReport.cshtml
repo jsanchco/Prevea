@@ -1,13 +1,167 @@
-﻿@model Company
+﻿@model Document
 
 @{
     Layout = "~/Views/Shared/_LayoutReport.cshtml";
 }
 
-<style>
-    div {
-        color: black;
-    }
-</style>
+@section script {
+    <script src="~/Scripts/signature_pad.min.js"></script>
+}
 
-Contrato SPA
+<script>
+    $(document).ready(function () {
+        var wrapper = document.querySelector(".signature-pad");
+        var canvas = wrapper.querySelector("canvas");
+        var hiddenInput = wrapper.querySelector('input[type="hidden"]');
+
+        this.signaturePad = new SignaturePad(canvas);
+
+        // Read base64 string from hidden input
+        var base64str = hiddenInput.value;
+
+        if (base64str) {
+            this.signaturePad.fromDataURL("data:image/png;base64," + base64str);
+        }
+
+        if (hiddenInput.disabled) {
+            this.signaturePad.off();
+        } else {
+            this.signaturePad.onEnd = function () {
+                base64str = AddSignature.signaturePad.toDataURL().split(",")[1];
+                hiddenInput.value = base64str;
+            };
+        }
+    });
+</script>
+
+
+<div id="pageContractSPAReport">
+    <div style="font-size: 14px;">
+        <div class="row">
+            <div class="col-xs-4">
+                <a href="#">
+                    <img alt="" src="~/Images/Logo_report.png">
+                </a>
+            </div>
+
+            <div class="col-xs-offset-2 col-sm-4">
+                <div class="row" style="font-size: 16px; font-weight: bold">
+                    <div>PREVEA SPA</div>
+                    <div>C/ Abad Juan Catalán, 38 28032-Madrid</div>
+                    <div>Tfno.- 917602713</div>
+                    <div>prevea@preveaspa.com</div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <br />
+
+        <div class="row">
+            <div class="col-xs-offset-8 col-xs-4">
+                <div class="row" style="font-size: 12px; border-style: solid; border-width: thin; background: #ccccff;">
+                    <div style="display: inline-block; font-weight: bold">
+                        <div>&nbsp;Nº CONTRATO</div>
+                        <div>&nbsp;FECHA</div>
+                    </div>
+                    <div style="display: inline-block; font-weight: bold">
+                        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@ViewBag.ContractualDocumentEnrollment</div>
+                        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Model.Date.ToShortDateString()</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <br />
+
+        <div class="row">
+            <div class="col-xs-12" style="font-size: large; font-weight: bold; text-align: left">CONTRATO PARA LA PRESTACIÓN DE SERVICIO DE PREVENCIÓN</div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <hr />
+            </div>
+        </div>
+
+        <div class="row" style="">
+            <div class="col-xs-12">
+                En la ciudad de MADRID a @Model.Date.ToLongDateString()
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row" style="">
+            <div class="col-xs-12" style="font-weight: bold;">
+                REUNIDOS
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row" style="">
+            <div class="col-xs-12" style="">
+                De una parte <strong>D. VIRGILIO CARRASCO MARTINEZ</strong>, mayor de edad, con D.N.I. número 51919038B, actuando en nombre y representación de la Entidad <strong>PREVEA CONSULTORES Y PROYECTOS, S.L.</strong>, con C.I.F. número: <strong>B86252962</strong>, con domicilio social sito en <strong>Calle Abad Juan Catalán Nº 38 2ºA</strong>, en la ciudad de Madrid, acreditado por el Instituto Regional de Seguridad y Salud en el Trabajo de la Comunidad de Madrid como Servicio Ajeno de Prevención de Riesgos Laborales para las especialidades siguientes: Seguridad en el Trabajo, Higiene Industrial, y Ergonomía, Psicosociología Aplicada, y Medicina del Trabajo con número de expediente CM108-5 (en adelante PREVEA).
+            </div>
+        </div>
+
+        <br />
+
+        @{
+            var nameContactPerson = string.Empty;
+            var dni = string.Empty;
+            var addressCompany = string.Empty;
+
+            if (Model.Company.ContactPersons != null && Model.Company.ContactPersons.FirstOrDefault().User != null)
+            {
+                nameContactPerson = Model.Company.ContactPersons.FirstOrDefault().User.FirstName + " " + Model.Company.ContactPersons.FirstOrDefault().User.LastName;
+                dni = Model.Company.ContactPersons.FirstOrDefault().User.DNI;
+            }
+
+            addressCompany = Model.Company.Address + ", " + Model.Company.Location;
+        }
+
+        <div class="row" style="">
+            <div class="col-xs-12" style="">
+                Y de otra D. <strong>@nameContactPerson</strong> mayor de edad, con D.N.I número <strong>@dni</strong>, actuando en representación de la Entidad <strong>@Model.Company.Name</strong>, con C.I.F. número: <strong>@Model.Company.NIF</strong>, con domicilio social sito en <strong>@addressCompany</strong> (en adelante EMPRESA CONTRATANTE).
+                Ambas partes se reconocen con capacidad y representación suficientes y por ello:
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row" style="">
+            <div class="col-xs-12" style="font-weight: bold;">
+                MANIFIESTAN
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+
+        <div class="row">
+            <div class="col-xs-offset-2 col-xs-4 signature-pad">
+                <canvas class="panel panel-default" style="border-color: transparent;"></canvas>
+                @Html.HiddenFor(model => model.Signature)
+            </div>
+            <div class="col-xs-offset-2 col-xs-4">
+                <img src="~/Images/companySeal.png" style="text-align: center" alt="Firma de Empresa" />
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-xs-offset-8 col-xs-2">
+                FECHA
+            </div>
+            <div class="col-xs-2">
+                @DateTime.Now.ToString("dd/MM/yyyy")
+            </div>
+        </div>
+
+    </div>
+</div>
