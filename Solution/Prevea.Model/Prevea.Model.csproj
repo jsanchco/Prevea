@@ -64,6 +64,7 @@
     <Compile Include="Model\CompanyState.cs" />
     <Compile Include="Model\Configuration.cs" />
     <Compile Include="Model\ContactPerson.cs" />
+    <Compile Include="Model\ContactPersonType.cs" />
     <Compile Include="Model\CorrectiveAction.cs" />
     <Compile Include="Model\CriticalNivel.cs" />
     <Compile Include="Model\DataMail.cs" />
