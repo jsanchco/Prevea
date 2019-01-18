@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Service\ServiceContactPersonTypes.cs" />
     <Compile Include="Service\ServiceContractualDocumentTypes.cs" />
     <Compile Include="Service\ServiceCorrectiveActions.cs" />
     <Compile Include="Service\ServiceDataMails.cs" />

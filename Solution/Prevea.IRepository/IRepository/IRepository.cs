@@ -490,5 +490,14 @@
         PriorityCorrectiveAction GetPriorityCorrectiveAction(int id);
 
         #endregion
+
+        #region ContactPersonTypes
+
+        List<ContactPersonType> GetContactPersonTypes();
+        ContactPersonType GetContactPersonTypeById(int contactPersonId);
+        List<ContactPerson> GetContactPersonByCompanyAndContactPersonType(int companyId, int contactPersonType);
+        List<ContactPersonType> GetContactPersonRemainingByCompany(int companyId);
+
+        #endregion
     }
 }

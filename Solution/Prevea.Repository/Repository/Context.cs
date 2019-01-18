@@ -72,6 +72,7 @@
         public DbSet<CriticalNivel> CriticalNivels { get; set; }
         public DbSet<CorrectiveAction> CorrectiveActions { get; set; }
         public DbSet<PriorityCorrectiveAction> PriorityCorrectiveActions { get; set; }
+        public DbSet<ContactPersonType> ContactPersonTypes { get; set; }
 
         #endregion
 

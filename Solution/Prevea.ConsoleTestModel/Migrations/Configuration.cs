@@ -374,6 +374,13 @@ namespace Prevea.ConsoleTestModel.Migrations
                 context.PriorityCorrectiveActions.AddOrUpdate(new PriorityCorrectiveAction { Name = type.ToString() });
             }
             context.SaveChanges();
+
+            var contactPersonTypes = (EnContactPersonType[])Enum.GetValues(typeof(EnContactPersonType));
+            foreach (var type in contactPersonTypes)
+            {
+                context.ContactPersonTypes.AddOrUpdate(new ContactPersonType { Name = type.ToString() });
+            }
+            context.SaveChanges();
         }
     }
 }
