@@ -834,6 +834,12 @@
             foreach (var contactPerson in data)
             {
                 contactPerson.CompanyId = companyId;
+                if (contactPerson.Id != null)
+                {
+                    var cp = Service.GetContactPersonByUserId((int)contactPerson.Id);
+                    contactPerson.ContactPersonTypeId = cp.ContactPersonTypeId;
+                    contactPerson.ContactPersonTypeDescription = cp.ContactPersonType.Description;
+                }
             }
 
             return this.Jsonp(data);
