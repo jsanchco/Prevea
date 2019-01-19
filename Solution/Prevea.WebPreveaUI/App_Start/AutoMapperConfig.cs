@@ -185,6 +185,8 @@ namespace Prevea.WebPreveaUI.App_Start
             AutoMapper.Mapper.CreateMap<PriorityCorrectiveActionViewModel, PriorityCorrectiveAction>();
             AutoMapper.Mapper.CreateMap<PriorityCorrectiveAction, PriorityCorrectiveActionViewModel>();
 
+            AutoMapper.Mapper.CreateMap<ContactPersonTypeViewModel, ContactPersonType>();
+            AutoMapper.Mapper.CreateMap<ContactPersonType, ContactPersonTypeViewModel>();
         }
     }
 }

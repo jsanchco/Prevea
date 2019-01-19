@@ -25,7 +25,7 @@
             return Repository.GetContactPersonByCompanyAndContactPersonType(companyId, contactPersonType);
         }
 
-        public List<ContactPersonType> GetContactPersonRemainingByCompany(int companyId)
+        public List<ContactPersonType> GetContactPersonTypesRemainingByCompany(int companyId)
         {
             return Repository.GetContactPersonRemainingByCompany(companyId);
         }

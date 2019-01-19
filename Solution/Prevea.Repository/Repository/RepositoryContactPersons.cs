@@ -7,6 +7,7 @@
     using System.Linq;
     using System.Data.Entity;
     using System.Collections.Generic;
+    using System.Data.Entity.Migrations;
 
     #endregion
 
@@ -17,7 +18,8 @@
             return Context.ContactPersons
                 .Include(x => x.Company)
                 .Include(x => x.User)
-                .ToList();                ;
+                .Include(x => x.ContactPersonType)
+                .ToList();
         }
 
         public ContactPerson GetContactPersonById(int contactPersonId)
@@ -25,7 +27,17 @@
             return Context.ContactPersons
                 .Include(x => x.Company)
                 .Include(x => x.User)
+                .Include(x => x.ContactPersonType)
                 .FirstOrDefault(x => x.Id == contactPersonId);
+        }
+
+        public ContactPerson GetContactPersonByUserId(int userId)
+        {
+            return Context.ContactPersons
+                .Include(x => x.Company)
+                .Include(x => x.User)
+                .Include(x => x.ContactPersonType)
+                .FirstOrDefault(x => x.UserId == userId);
         }
 
         public ContactPerson SaveContactPerson(ContactPerson contactPerson)
@@ -34,7 +46,7 @@
             {
                 try
                 {
-                    Context.ContactPersons.Add(contactPerson);
+                    Context.ContactPersons.AddOrUpdate(contactPerson);
                     Context.SaveChanges();
 
                     dbContextTransaction.Commit();

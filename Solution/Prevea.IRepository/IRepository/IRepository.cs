@@ -130,6 +130,7 @@
         #region ContactPerson
         List<ContactPerson> GetContactPersons();
         ContactPerson GetContactPersonById(int contactPersonId);
+        ContactPerson GetContactPersonByUserId(int userId);
         ContactPerson SaveContactPerson(ContactPerson contactPerson);
         bool DeleteContactPerson(ContactPerson contactPerson);
         #endregion

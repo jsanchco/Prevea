@@ -216,11 +216,6 @@
         detailRow.find(".gridWorkStations").kendoGrid({
             columns: [
                 {
-                    field: "Id",
-                    title: "",
-                    width: 80
-                },
-                {
                     field: "Name",
                     title: "Puesto de Trabajo",
                     width: 200,

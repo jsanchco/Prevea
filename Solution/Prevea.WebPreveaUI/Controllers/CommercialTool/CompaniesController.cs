@@ -856,9 +856,24 @@
                 }
 
                 var data = AutoMapper.Mapper.Map<User>(contactPerson);
-                var result = Service.SaveContactPersonCompany((int)EnRole.ContactPerson, (int)contactPerson.CompanyId, data);
+                var result = Service.SaveContactPersonCompany((int)EnRole.ContactPerson, (int)contactPerson.CompanyId, contactPerson.ContactPersonTypeId, data);
 
-                return result.Status != Status.Error ? this.Jsonp(contactPerson) : this.Jsonp(new { Errors = "Se ha producido un error en la Grabación de la Persona de Contacto" });
+                if (result.Status != Status.Error)
+                {
+                    var user = result.Object as User;
+                    if (user != null)
+                    {
+                        contactPerson.Id = user.Id;
+
+                        var cp = Service.GetContactPersonByUserId((int)contactPerson.Id);
+                        contactPerson.ContactPersonTypeId = cp.ContactPersonTypeId;
+                        contactPerson.ContactPersonTypeDescription = cp.ContactPersonType.Description;
+                    }
+
+                    return this.Jsonp(contactPerson);
+                }
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación de la Persona de Contacto" });
             }
             catch (Exception e)
             {
@@ -905,18 +920,24 @@
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación de la Persona de Contacto" });
                 }
 
-                var result = Service.SaveContactPersonCompany((int)EnRole.ContactPerson, (int)contactPerson.CompanyId, AutoMapper.Mapper.Map<User>(contactPerson));
+                var result = Service.SaveContactPersonCompany((int)EnRole.ContactPerson, (int)contactPerson.CompanyId, contactPerson.ContactPersonTypeId, AutoMapper.Mapper.Map<User>(contactPerson));
 
                 if (result.Status != Status.Error)
                 {
                     var user = result.Object as User;
                     if (user != null)
+                    {
                         contactPerson.Id = user.Id;
+
+                        var cp = Service.GetContactPersonByUserId((int)contactPerson.Id);
+                        contactPerson.ContactPersonTypeId = cp.ContactPersonTypeId;
+                        contactPerson.ContactPersonTypeDescription = cp.ContactPersonType.Description;
+                    }
 
                     return this.Jsonp(contactPerson);
                 }
 
-                return result.Status != Status.Error ? this.Jsonp(contactPerson) : this.Jsonp(new { Errors = "Se ha producido un error en la Grabación de la Persona de Contacto" });
+                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación de la Persona de Contacto" });
             }
             catch (Exception e)
             {
@@ -941,6 +962,28 @@
 
                 return Json(subscribe ? new { Errors = "Se ha producido un error al Dar de Alta a la Persona de Contacto" } : new { Errors = "Se ha producido un error al Dar de Baja a la Persona de Contacto" });
             }
+        }
+
+        public JsonResult GetContactPersonTypesRemainingByCompany([DataSourceRequest] DataSourceRequest request, int companyId, int contactPersonTypeSelected)
+        {
+            var contactPersonTypesRemaining = Service.GetContactPersonTypesRemainingByCompany(companyId);
+            if (contactPersonTypeSelected != 0 && contactPersonTypeSelected != (int)EnContactPersonType.Invited)
+            {
+                contactPersonTypesRemaining.Add(Service.GetContactPersonTypeById(contactPersonTypeSelected));
+            }
+            var data = AutoMapper.Mapper.Map<List<ContactPersonTypeViewModel>>(contactPersonTypesRemaining);
+
+            return this.Jsonp(data);
+        }
+
+        [HttpPost]
+        public JsonResult IsContactPersonInvited(int userId)
+        {
+            var contactPerson = Service.GetContactPersonByUserId(userId);
+            if (contactPerson != null && contactPerson.ContactPersonTypeId == (int)EnContactPersonType.Invited)
+                return Json(new { result = true }, JsonRequestBehavior.AllowGet);
+
+            return Json(new { result = false }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

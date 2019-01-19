@@ -123,6 +123,7 @@
     <Compile Include="ViewModel\ClinicViewModel.cs" />
     <Compile Include="ViewModel\CnaeViewModel.cs" />
     <Compile Include="ViewModel\CompanyViewModel.cs" />
+    <Compile Include="ViewModel\ContactPersonTypeViewModel.cs" />
     <Compile Include="ViewModel\DataMailViewModel.cs" />
     <Compile Include="ViewModel\DeltaCodeViewModel.cs" />
     <Compile Include="ViewModel\DoctorViewModel.cs" />

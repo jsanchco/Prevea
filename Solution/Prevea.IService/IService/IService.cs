@@ -64,7 +64,7 @@
         List<Employee> GetEmployeesByCompany(int companyId);
         List<User> GetUsersByUser(int id);
         Result SaveUser(int? roleId, User user);
-        Result SaveContactPersonCompany(int roleId, int companyId, User user);
+        Result SaveContactPersonCompany(int roleId, int companyId, int contactPersonTypeId, User user);
         Result SaveEmployeeCompany(int roleId, int companyId, User user);
         Result DeleteContactPersonCompany(int companyId, int userId);
         Result DeleteEmployeeCompany(int companyId, int userId);
@@ -502,7 +502,7 @@
         List<ContactPersonType> GetContactPersonTypes();
         ContactPersonType GetContactPersonTypeById(int contactPersonId);
         List<ContactPerson> GetContactPersonByCompanyAndContactPersonType(int companyId, int contactPersonType);
-        List<ContactPersonType> GetContactPersonRemainingByCompany(int companyId);
+        List<ContactPersonType> GetContactPersonTypesRemainingByCompany(int companyId);
 
         #endregion
     }

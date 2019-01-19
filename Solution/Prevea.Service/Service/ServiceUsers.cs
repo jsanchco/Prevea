@@ -113,7 +113,7 @@
             }
         }
 
-        public Result SaveContactPersonCompany(int roleId, int companyId, User user)
+        public Result SaveContactPersonCompany(int roleId, int companyId, int contactPersonTypeId, User user)
         {
             try
             {
@@ -131,21 +131,27 @@
                     };
                 }
 
-                if (isUpdate)
-                {
-                    return new Result
-                    {
-                        Message = "La Grabación de la Persona de Contacto se ha producido con éxito",
-                        Object = user,
-                        Status = Status.Ok
-                    };
-                }
-
                 var contactPerson = new ContactPerson
                 {
                     UserId = user.Id,
-                    CompanyId = companyId
+                    CompanyId = companyId,
+                    ContactPersonTypeId = contactPersonTypeId
                 };
+                if (isUpdate)
+                {
+                    var cp = Repository.GetContactPersonByUserId(user.Id);
+                    if (cp == null)
+                    {
+                        return new Result
+                        {
+                            Message = "Se ha producido un error en la Grabación de la Persona de Contacto",
+                            Object = null,
+                            Status = Status.Error
+                        };
+                    }
+                    contactPerson.Id = cp.Id;
+                }
+
                 contactPerson = Repository.SaveContactPerson(contactPerson);
                 if (contactPerson == null)
                 {
