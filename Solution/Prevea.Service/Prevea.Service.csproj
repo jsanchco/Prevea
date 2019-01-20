@@ -30,12 +30,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -75,6 +79,7 @@
     <Compile Include="Service\ServiceNotifications.cs" />
     <Compile Include="Service\ServiceNotificationTypes.cs" />
     <Compile Include="Service\ServicePaymentMethods.cs" />
+    <Compile Include="Service\ServicePDF.cs" />
     <Compile Include="Service\ServicePreventivePlans.cs" />
     <Compile Include="Service\ServicePreventivePlanTemplatePreventivePlans.cs" />
     <Compile Include="Service\ServicePriorityCorrectiveActions.cs" />

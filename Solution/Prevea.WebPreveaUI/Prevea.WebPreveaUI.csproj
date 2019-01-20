@@ -1232,7 +1232,7 @@
     <Content Include="Views\Tecniques\AddWorkStationExisting.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\PDF\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

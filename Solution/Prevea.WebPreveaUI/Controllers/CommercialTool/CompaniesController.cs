@@ -17,6 +17,7 @@
     using System.Web;
     using Model.CustomModel;
     using IRepository.IRepository;
+    using Prevea.Service.Service;
 
     #endregion
 
@@ -1100,6 +1101,10 @@
             {
                 #region OFE_SPA
                 case 6: // OFE_SPA
+                    var result = Service.GenerateOfferSPAReport(document, Server.MapPath("~"));
+                    if (result.Status == Status.Error)
+                        return View("~/Views/CommercialTool/Companies/Reports/ContractSPAReport.cshtml", document);
+
                     ViewBag.ContractualDocumentId = documentId;
                     ViewBag.ContractualDocumentEnrollment = document.Name;
                     ViewBag.IVA = Service.GetTagValue("IVA");

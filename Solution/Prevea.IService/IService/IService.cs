@@ -505,5 +505,11 @@
         List<ContactPersonType> GetContactPersonTypesRemainingByCompany(int companyId);
 
         #endregion
+
+        #region Reports
+
+        Result GenerateOfferSPAReport(Model.Model.Document documentSPA, string route);
+
+        #endregion
     }
 }
