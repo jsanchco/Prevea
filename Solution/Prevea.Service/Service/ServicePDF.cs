@@ -1,4 +1,6 @@
-﻿namespace Prevea.Service.Service
+﻿using Prevea.Model.Model;
+
+namespace Prevea.Service.Service
 {
     #region Using
 
@@ -70,6 +72,12 @@
                 pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
                 GetDescriptionVigilanciaSalud(pdf);
                 pdf.NewPage();
+                pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
+                pdf.Add(GetTableTitle("PRESUPUESTO"));
+                pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
+                pdf.Add(GetTableTitleTransparent("PRECIO"));
+                pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
+                GetDescriptionPrecio(pdf, documentSPA);
 
                 pdf.Close();
                 pdfWriter.Close();
@@ -605,6 +613,53 @@
 
             phrase = new Phrase("Oro-faringe, Tórax, Auscultación Pulmonar y Cardiaca, Abdomen, Sistema Músculo Esquelético, Sistema Venoso Periférico, Piel y Lesiones Dérmicas, Sistema Nervioso, Otoscopia.", _STANDARFONT_10);
             pdf.Add(phrase);
+        }
+
+        private void GetDescriptionPrecio(Document pdf, Model.Model.Document document)
+        {
+            var totalAmountTecniques = 0.0m;
+            var totalAmountHealthVigilance = 0.0m;
+            var totalAmountMedicalExamination = 0.0m;
+            decimal total;
+
+            var IVA = GetTagValue("IVA");
+            if (document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService != null)
+            {
+                if (document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques != null)
+                {
+                    totalAmountTecniques = (decimal)document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques * document.Company.SimulationCompanyActive.Simulation.NumberEmployees;
+                }
+                if (document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance != null)
+                {
+                    totalAmountHealthVigilance = (decimal)document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance * document.Company.SimulationCompanyActive.Simulation.NumberEmployees;
+                }
+                if (document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination != null)
+                {
+                    totalAmountMedicalExamination = (decimal)document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination * document.Company.SimulationCompanyActive.Simulation.NumberEmployees;
+                }
+            }
+
+            if (document.Company.PaymentMethod.ModePaymentMedicalExaminationId == (int)EnModePaymentMedicalExamination.ALaFirmaDelContrato)
+            {
+                total = totalAmountTecniques * Convert.ToDecimal(IVA) + totalAmountHealthVigilance * Convert.ToDecimal(IVA) + totalAmountMedicalExamination;
+            }
+            else
+            {
+                total = totalAmountTecniques * Convert.ToDecimal(IVA) + totalAmountHealthVigilance * Convert.ToDecimal(IVA);
+            }
+            total = Math.Round(total, 2);
+
+            var amountTecniques = 0.0m;
+            if (document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService != null &&
+                document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques != null)
+            {
+                amountTecniques = (decimal)document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques;
+            }
+
+            var phrase = new Phrase("Como contraprestación económica por las citadas actividades, la Empresa Contratante abonará a PREVEA las siguientes cantidades:", _STANDARFONT_10);
+            pdf.Add(phrase);
+
+            pdf.Add(new Chunk("\n"));
         }
     }
 
