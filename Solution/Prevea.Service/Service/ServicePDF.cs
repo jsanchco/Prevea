@@ -78,6 +78,11 @@ namespace Prevea.Service.Service
                 pdf.Add(GetTableTitleTransparent("PRECIO"));
                 pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
                 GetDescriptionPrecio(pdf, documentSPA);
+                pdf.NewPage();
+                pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
+                pdf.Add(GetTableTitle("ACEPTACIÓN DE PRESUPUESTO"));
+                pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
+                pdf.Add(GetAceptacionPresupuesto(documentSPA));
 
                 pdf.Close();
                 pdfWriter.Close();
@@ -660,6 +665,290 @@ namespace Prevea.Service.Service
             pdf.Add(phrase);
 
             pdf.Add(new Chunk("\n"));
+
+            var pdfPTable = new PdfPTable(4) { WidthPercentage = 100 };
+            var widths = new[] { 40f, 10f, 25f, 25f };
+            pdfPTable.SetWidths(widths);
+
+            var pdfCell = new PdfPCell(new Phrase("ESPECIALIDADES TÉCNICAS", _STANDARFONT_10))
+            {
+                BorderWidth = 0,
+                BackgroundColor = new BaseColor(204, 204, 255),
+                HorizontalAlignment = Element.ALIGN_LEFT,
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                PaddingTop = 2f,
+                PaddingBottom = 6f
+            };
+            pdfPTable.AddCell(pdfCell);
+            pdfCell = new PdfPCell(new Phrase(amountTecniques.ToString(), _STANDARFONT_10))
+            {
+                BorderWidth = 0,
+                BackgroundColor = new BaseColor(204, 204, 255),
+                HorizontalAlignment = Element.ALIGN_CENTER,
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                PaddingTop = 2f,
+                PaddingBottom = 6f
+            };
+            pdfPTable.AddCell(pdfCell);
+            pdfCell = new PdfPCell(new Phrase("€/Trabajador", _STANDARFONT_10))
+            {
+                BorderWidth = 0,
+                BackgroundColor = new BaseColor(204, 204, 255),
+                HorizontalAlignment = Element.ALIGN_CENTER,
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                PaddingTop = 2f,
+                PaddingBottom = 6f
+            };           
+            pdfPTable.AddCell(pdfCell);
+            pdfCell = new PdfPCell(new Phrase("(IVA NO INCLUIDO)", _STANDARFONT_10))
+            {
+                BorderWidth = 0,
+                BackgroundColor = new BaseColor(204, 204, 255),
+                HorizontalAlignment = Element.ALIGN_CENTER,
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                PaddingTop = 2f,
+                PaddingBottom = 6f
+            };
+            pdfPTable.AddCell(pdfCell);
+
+            pdf.Add(pdfPTable);
+            pdf.Add(new Chunk("\n"));
+
+            var amountHealthVigilance = 0.0m;
+            if (document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService != null &&
+                document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance != null)
+            {
+                amountHealthVigilance = (decimal)document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance;
+            }
+
+            pdfPTable = new PdfPTable(4) { WidthPercentage = 100 };
+            widths = new[] { 40f, 10f, 25f, 25f };
+            pdfPTable.SetWidths(widths);
+
+            pdfCell = new PdfPCell(new Phrase("VIGILANCIA DE LA SALUD", _STANDARFONT_10))
+            {
+                BorderWidth = 0,
+                BackgroundColor = new BaseColor(204, 204, 255),
+                HorizontalAlignment = Element.ALIGN_LEFT,
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                PaddingTop = 2f,
+                PaddingBottom = 6f
+            };
+            pdfPTable.AddCell(pdfCell);
+            pdfCell = new PdfPCell(new Phrase(amountHealthVigilance.ToString(), _STANDARFONT_10))
+            {
+                BorderWidth = 0,
+                BackgroundColor = new BaseColor(204, 204, 255),
+                HorizontalAlignment = Element.ALIGN_CENTER,
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                PaddingTop = 2f,
+                PaddingBottom = 6f
+            };
+            pdfPTable.AddCell(pdfCell);
+            pdfCell = new PdfPCell(new Phrase("€/Trabajador", _STANDARFONT_10))
+            {
+                BorderWidth = 0,
+                BackgroundColor = new BaseColor(204, 204, 255),
+                HorizontalAlignment = Element.ALIGN_CENTER,
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                PaddingTop = 2f,
+                PaddingBottom = 6f
+            };
+            pdfPTable.AddCell(pdfCell);
+            pdfCell = new PdfPCell(new Phrase("(IVA NO INCLUIDO)", _STANDARFONT_10))
+            {
+                BorderWidth = 0,
+                BackgroundColor = new BaseColor(204, 204, 255),
+                HorizontalAlignment = Element.ALIGN_CENTER,
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                PaddingTop = 2f,
+                PaddingBottom = 6f
+            };
+            pdfPTable.AddCell(pdfCell);
+
+            pdf.Add(pdfPTable);
+            pdf.Add(new Chunk("\n"));
+
+            var amountMedicalExamination = 0.0m;
+            if (document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService != null &&
+                document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination != null)
+            {
+                amountMedicalExamination = (decimal)document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination;
+            }
+
+            pdfPTable = new PdfPTable(4) { WidthPercentage = 100 };
+            widths = new[] { 40f, 10f, 25f, 25f };
+            pdfPTable.SetWidths(widths);
+
+            pdfCell = new PdfPCell(new Phrase("REC. MÉDICO REALIZADO EN CLÍNICA", _STANDARFONT_10))
+            {
+                BorderWidth = 0,
+                BackgroundColor = new BaseColor(204, 204, 255),
+                HorizontalAlignment = Element.ALIGN_LEFT,
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                PaddingTop = 2f,
+                PaddingBottom = 6f
+            };
+            pdfPTable.AddCell(pdfCell);
+            pdfCell = new PdfPCell(new Phrase(amountMedicalExamination.ToString(), _STANDARFONT_10))
+            {
+                BorderWidth = 0,
+                BackgroundColor = new BaseColor(204, 204, 255),
+                HorizontalAlignment = Element.ALIGN_CENTER,
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                PaddingTop = 2f,
+                PaddingBottom = 6f
+            };
+            pdfPTable.AddCell(pdfCell);
+            pdfCell = new PdfPCell(new Phrase("€/Trabajador", _STANDARFONT_10))
+            {
+                BorderWidth = 0,
+                BackgroundColor = new BaseColor(204, 204, 255),
+                HorizontalAlignment = Element.ALIGN_CENTER,
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                PaddingTop = 2f,
+                PaddingBottom = 6f
+            };
+            pdfPTable.AddCell(pdfCell);
+            pdfCell = new PdfPCell(new Phrase("(IVA NO INCLUIDO)", _STANDARFONT_10))
+            {
+                BorderWidth = 0,
+                BackgroundColor = new BaseColor(204, 204, 255),
+                HorizontalAlignment = Element.ALIGN_CENTER,
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                PaddingTop = 2f,
+                PaddingBottom = 6f
+            };
+            pdfPTable.AddCell(pdfCell);
+
+            pdf.Add(pdfPTable);
+
+            var textModePaymentMedicalExamination = string.Empty;
+            if (document.Company.PaymentMethod.ModePaymentMedicalExaminationId == (int)EnModePaymentMedicalExamination.ALaFirmaDelContrato)
+            {
+                textModePaymentMedicalExamination = "(Los reconocimientos médicos se facturarán a la firma del contrato)";
+            }
+            if (document.Company.PaymentMethod.ModePaymentMedicalExaminationId == (int)EnModePaymentMedicalExamination.ALaRealizacion)
+            {
+                textModePaymentMedicalExamination = "(Los reconocimientos médicos se facturarán una vez realizados)";
+            }
+
+            phrase = new Phrase(textModePaymentMedicalExamination, _STANDARFONT_10);
+            pdf.Add(phrase);
+
+            var iva = IVA.Substring(2) + "%";
+            decimal sum = totalAmountTecniques * Convert.ToDecimal(IVA) + totalAmountHealthVigilance * Convert.ToDecimal(IVA);
+            sum = Math.Round(sum, 2);
+
+            pdfPTable = new PdfPTable(2) { WidthPercentage = 100 };
+            widths = new[] { 45f, 55f };
+            pdfPTable.SetWidths(widths);
+
+            pdfCell = new PdfPCell(new Phrase($"({amountTecniques} * {document.Company.SimulationCompanyActive.Simulation.NumberEmployees} * {iva}) + ({amountHealthVigilance} * {document.Company.SimulationCompanyActive.Simulation.NumberEmployees} * {iva}) = {sum} €", _STANDARFONT_10))
+            {
+                HorizontalAlignment = Element.ALIGN_LEFT,
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                PaddingTop = 2f,
+                PaddingBottom = 6f
+            };
+            pdfPTable.AddCell(pdfCell);
+
+            pdfCell = new PdfPCell(new Phrase("ESPECIALIDADES TÉCNICAS + V. SALUD (I.V.A. incluido)", _STANDARFONT_10))
+            {
+                HorizontalAlignment = Element.ALIGN_LEFT,
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                PaddingTop = 2f,
+                PaddingBottom = 6f
+            };
+            pdfPTable.AddCell(pdfCell);
+
+            pdfCell = new PdfPCell(new Phrase($"({amountMedicalExamination} * {document.Company.SimulationCompanyActive.Simulation.NumberEmployees}) = {totalAmountMedicalExamination} €", _STANDARFONT_10))
+            {
+                HorizontalAlignment = Element.ALIGN_LEFT,
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                PaddingTop = 2f,
+                PaddingBottom = 6f
+            };
+            pdfPTable.AddCell(pdfCell);
+            pdfCell = new PdfPCell(new Phrase("RECONOCIMIENTOS MÉDICOS (Exentos de I.V.A.) ", _STANDARFONT_10))
+            {
+                HorizontalAlignment = Element.ALIGN_LEFT,
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                PaddingTop = 2f,
+                PaddingBottom = 6f
+            };
+            pdfPTable.AddCell(pdfCell);
+
+            pdf.Add(pdfPTable);
+            pdf.Add(new Chunk("\n"));
+
+            pdfPTable = new PdfPTable(3) { WidthPercentage = 100 };
+            widths = new[] { 25f, 25f, 50f };
+            pdfPTable.SetWidths(widths);
+
+            pdfCell = new PdfPCell(new Phrase("TOTAL:", _STANDARFONT_10_BOLD))
+            {
+                BorderWidth = 0,
+                HorizontalAlignment = Element.ALIGN_RIGHT,
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                PaddingTop = 2f,
+                PaddingBottom = 6f
+            };
+            pdfPTable.AddCell(pdfCell);
+
+            pdfCell = new PdfPCell(new Phrase($"{total} €", _STANDARFONT_10))
+            {
+                BorderWidth = 0,
+                BackgroundColor = new BaseColor(204, 204, 255),
+                HorizontalAlignment = Element.ALIGN_CENTER,
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                PaddingTop = 2f,
+                PaddingBottom = 6f
+            };
+            pdfPTable.AddCell(pdfCell);
+
+            pdfCell = new PdfPCell(new Phrase("(I.V.A. incluido)", _STANDARFONT_10))
+            {
+                BorderWidth = 0,
+                HorizontalAlignment = Element.ALIGN_LEFT,
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                PaddingTop = 2f,
+                PaddingBottom = 6f
+            };
+            pdfPTable.AddCell(pdfCell);
+            pdf.Add(pdfPTable);
+        }
+
+        private PdfPTable GetAceptacionPresupuesto(Model.Model.Document document)
+        {
+            var pdfPTable = new PdfPTable(2) { WidthPercentage = 100 };
+            var widths = new[] { 30f, 70f };
+            pdfPTable.SetWidths(widths);
+
+            var pdfCell = new PdfPCell(new Phrase("EMPRESA", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
+            pdfPTable.AddCell(pdfCell);
+            pdfCell = new PdfPCell(new Phrase(document.Company.Name, _STANDARFONT_10)) { BorderWidth = 0 };
+            pdfPTable.AddCell(pdfCell);
+            pdfCell = new PdfPCell(new Phrase("NOMBRE", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
+            pdfPTable.AddCell(pdfCell);
+            var contactPerson = document.Company.ContactPersons.FirstOrDefault(x =>
+                x.ContactPersonTypeId == (int)Model.Model.EnContactPersonType.ContactPerson);
+            pdfCell = contactPerson != null ?
+                new PdfPCell(new Phrase($"{contactPerson.User.FirstName} {contactPerson.User.LastName}", _STANDARFONT_10)) { BorderWidth = 0 } :
+                new PdfPCell(new Phrase(" ", _STANDARFONT_10)) { BorderWidth = 0 };
+            pdfPTable.AddCell(pdfCell);
+            pdfCell = new PdfPCell(new Phrase("CARGO", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
+            pdfPTable.AddCell(pdfCell);
+            pdfCell = contactPerson != null ?
+                new PdfPCell(new Phrase($"{contactPerson.User.WorkStationCustom}", _STANDARFONT_10)) { BorderWidth = 0 } :
+                new PdfPCell(new Phrase(" ", _STANDARFONT_10)) { BorderWidth = 0 };
+            pdfPTable.AddCell(pdfCell);
+            pdfCell = new PdfPCell(new Phrase("FIRMA Y SELLO", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
+            pdfPTable.AddCell(pdfCell);
+            pdfCell = new PdfPCell(new Phrase(" ", _STANDARFONT_10)) { BorderWidth = 0 };
+            pdfPTable.AddCell(pdfCell);
+
+            return pdfPTable;
         }
     }
 
