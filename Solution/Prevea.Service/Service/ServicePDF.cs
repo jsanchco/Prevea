@@ -82,7 +82,7 @@ namespace Prevea.Service.Service
                 pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
                 pdf.Add(GetTableTitle("ACEPTACIÓN DE PRESUPUESTO"));
                 pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
-                pdf.Add(GetAceptacionPresupuesto(documentSPA));
+                GetAceptacionPresupuesto(pdf, documentSPA, route);
 
                 pdf.Close();
                 pdfWriter.Close();
@@ -919,7 +919,7 @@ namespace Prevea.Service.Service
             pdf.Add(pdfPTable);
         }
 
-        private PdfPTable GetAceptacionPresupuesto(Model.Model.Document document)
+        private void GetAceptacionPresupuesto(Document pdf, Model.Model.Document document, string route)
         {
             var pdfPTable = new PdfPTable(2) { WidthPercentage = 100 };
             var widths = new[] { 30f, 70f };
@@ -943,12 +943,61 @@ namespace Prevea.Service.Service
                 new PdfPCell(new Phrase($"{contactPerson.User.WorkStationCustom}", _STANDARFONT_10)) { BorderWidth = 0 } :
                 new PdfPCell(new Phrase(" ", _STANDARFONT_10)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase("FIRMA Y SELLO", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
-            pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase(" ", _STANDARFONT_10)) { BorderWidth = 0 };
+
+            pdf.Add(pdfPTable);
+            pdf.Add(new Chunk("\n"));
+
+            var paragraph = new Paragraph("FIRMA Y SELLO", _STANDARFONT_10_BOLD)
+            {
+                Alignment = Element.ALIGN_CENTER
+            };
+            pdf.Add(paragraph);
+            pdf.Add(new Chunk("\n"));
+
+            pdfPTable = new PdfPTable(2) { WidthPercentage = 100 };
+            widths = new[] { 50f, 50f };
+            pdfPTable.SetWidths(widths);
+
+            if (document.Signature == null)
+            {
+                pdfCell = new PdfPCell(new Phrase("", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
+                pdfPTable.AddCell(pdfCell);
+            }
+            else
+            {
+                using (var memoryStream = new MemoryStream(document.Signature))
+                {
+                    var imageFirm = Image.GetInstance(memoryStream);
+                    imageFirm.ScalePercent(50f);
+                    pdfCell = new PdfPCell(imageFirm)
+                    {
+                        BorderWidth = 0,
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                    };
+                    pdfPTable.AddCell(pdfCell);
+                }
+            }
+
+            var image = Image.GetInstance($"{route}\\Images\\companySeal.png");
+            image.ScalePercent(50f);
+            var pdfCellImage = new PdfPCell(image)
+            {
+                BorderWidth = 0,
+                HorizontalAlignment = Element.ALIGN_CENTER,
+            };
+            pdfPTable.AddCell(pdfCellImage);
+
+            pdfCell = new PdfPCell(new Phrase("", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
 
-            return pdfPTable;
+            pdfCell = new PdfPCell(new Phrase($"FECHA  {DateTime.Now.ToShortDateString()}", _STANDARFONT_10))
+            {
+                BorderWidth = 0,
+                HorizontalAlignment = Element.ALIGN_CENTER,
+            };
+            pdfPTable.AddCell(pdfCell);
+
+            pdf.Add(pdfPTable);
         }
     }
 

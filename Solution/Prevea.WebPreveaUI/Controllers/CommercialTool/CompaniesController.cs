@@ -1102,6 +1102,13 @@
                 #region OFE_SPA
                 case 6: // OFE_SPA
                     var result = Service.GenerateOfferSPAReport(document, Server.MapPath("~"));
+                    if (result.Status != Status.Error)
+                    {
+                        var fileName = $"~\\App_Data\\PDF\\{document.Name}{document.Extension}";
+                        return DownloadPdfByUrl(fileName);
+                        //return File(fileName, "application/pdf", Server.UrlEncode(fileName));
+                    }        
+
                     if (result.Status == Status.Error)
                         return View("~/Views/CommercialTool/Companies/Reports/ContractSPAReport.cshtml", document);
 

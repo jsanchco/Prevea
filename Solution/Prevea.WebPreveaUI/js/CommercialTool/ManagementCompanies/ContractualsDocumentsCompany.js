@@ -397,7 +397,8 @@
         if (data.Extension) {
             if (data.AreaStoreInServer === false) {
                 html += kendo.format(
-                    "<a toggle='tooltip' title='Abrir Documento' onclick='ContractualsDocumentsCompany.openContractualDocument(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>&nbsp;&nbsp;",
+                    "<a toggle='tooltip' title='Abrir Documento' onclick='ContractualsDocumentsCompany.openContractualDocument(\"{0}\")' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>&nbsp;&nbsp;",
+                    //"<a toggle='tooltip' title='Abrir Documento' onclick='ContractualsDocumentsCompany.openContractualDocument(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>&nbsp;&nbsp;",
                     data.Id);
             } else {
                 html += kendo.format(
@@ -601,7 +602,7 @@
     },
 
     openContractualDocument: function (id) {
-        var win = window.open("", "_blank");
+        //var win = window.open("", "_blank");
         var url = kendo.format("/Companies/ContractualDocumentReport?documentId={0}", id);
         win.location = url;
     },
