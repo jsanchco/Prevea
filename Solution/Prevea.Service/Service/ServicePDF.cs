@@ -44,7 +44,7 @@ namespace Prevea.Service.Service
                 pdf.Add(GetHeader(route));
                 pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
                 pdf.Add(new Paragraph("OFERTA DE SERVICIO", _STANDARFONT_14_BOLD));
-                pdf.Add(GetTableN_Document(documentSPA));
+                pdf.Add(GetTableN_DocumentOffer(documentSPA));
                 pdf.Add(GetLineSeparator());
                 pdf.Add(GetTableTitle("EMPRESA"));
                 pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
@@ -109,6 +109,47 @@ namespace Prevea.Service.Service
             }
         }
 
+        public Result GenerateConractSPAReport(Model.Model.Document documentSPA, string route)
+        {
+            try
+            {
+                var pdf = new Document(PageSize.LETTER);
+                var path = Path.GetDirectoryName(HttpContext.Current.Server.MapPath(documentSPA.UrlRelative));
+                Directory.CreateDirectory(path);
+                var pdfWriter = PdfWriter.GetInstance(pdf, new FileStream(HttpContext.Current.Server.MapPath(documentSPA.UrlRelative), FileMode.Create));
+                var pageEventHelper = new PageEventHelper();
+                pdfWriter.PageEvent = pageEventHelper;
+
+                pdf.AddTitle(documentSPA.Name);
+                pdf.AddCreator(_CREATOR);
+                pdf.Open();
+
+                pdf.Add(GetHeader(route));
+                pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
+                pdf.Add(new Paragraph("CONTRATO PARA LA PRESTACIÓN DE SERVICIO DE PREVENCIÓN", _STANDARFONT_14_BOLD));
+                pdf.Add(GetTableN_DocumentContract(documentSPA));
+
+                pdf.Close();
+                pdfWriter.Close();
+
+                return new Result
+                {
+                    Message = $"Se generó correctamente el archivo PDF: {documentSPA.Name}",
+                    Object = pdf,
+                    Status = Status.Ok
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Result
+                {
+                    Message = ex.Message,
+                    Object = null,
+                    Status = Status.Error
+                };
+            }
+        }
+
         private PdfPTable GetHeader(string route)
         {
             var pdfPTable = new PdfPTable(2) { WidthPercentage = 100 };
@@ -134,11 +175,27 @@ namespace Prevea.Service.Service
             return pdfPTable;
         }
 
-        private PdfPTable GetTableN_Document(Model.Model.Document document)
+        private PdfPTable GetTableN_DocumentOffer(Model.Model.Document document)
         {
             var pdfPTable = new PdfPTable(2) { WidthPercentage = 40, HorizontalAlignment = 2 };
 
             var pdfCell = new PdfPCell(new Phrase("Nº OFERTA", _STANDARFONT_10_BOLD)) { BackgroundColor = new BaseColor(204, 204, 255), BorderWidthRight = 0, BorderWidthBottom = 0 };
+            pdfPTable.AddCell(pdfCell);
+            pdfCell = new PdfPCell(new Phrase(document.Name, _STANDARFONT_10_BOLD)) { BackgroundColor = new BaseColor(204, 204, 255), BorderWidthLeft = 0, BorderWidthBottom = 0 };
+            pdfPTable.AddCell(pdfCell);
+            pdfCell = new PdfPCell(new Phrase("FECHA", _STANDARFONT_10_BOLD)) { BackgroundColor = new BaseColor(204, 204, 255), BorderWidthRight = 0, BorderWidthTop = 0 };
+            pdfPTable.AddCell(pdfCell);
+            pdfCell = new PdfPCell(new Phrase(document.Date.ToShortDateString(), _STANDARFONT_10_BOLD)) { BackgroundColor = new BaseColor(204, 204, 255), BorderWidthLeft = 0, BorderWidthTop = 0 };
+            pdfPTable.AddCell(pdfCell);
+
+            return pdfPTable;
+        }
+
+        private PdfPTable GetTableN_DocumentContract(Model.Model.Document document)
+        {
+            var pdfPTable = new PdfPTable(2) { WidthPercentage = 40, HorizontalAlignment = 2 };
+
+            var pdfCell = new PdfPCell(new Phrase("Nº CONTRATO", _STANDARFONT_10_BOLD)) { BackgroundColor = new BaseColor(204, 204, 255), BorderWidthRight = 0, BorderWidthBottom = 0 };
             pdfPTable.AddCell(pdfCell);
             pdfCell = new PdfPCell(new Phrase(document.Name, _STANDARFONT_10_BOLD)) { BackgroundColor = new BaseColor(204, 204, 255), BorderWidthLeft = 0, BorderWidthBottom = 0 };
             pdfPTable.AddCell(pdfCell);

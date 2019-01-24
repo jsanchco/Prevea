@@ -1104,6 +1104,8 @@
                 {
                     case 6: // OFE_SPA
                         return Json(Service.GenerateOfferSPAReport(document, Server.MapPath("~")), JsonRequestBehavior.AllowGet);
+                    case 9: // OFE_SPA
+                        return Json(Service.GenerateConractSPAReport(document, Server.MapPath("~")), JsonRequestBehavior.AllowGet);
 
                     default:
                         return Json(new Result { Status = Status.Error, Message = "Imposible generar el Documento" }, JsonRequestBehavior.AllowGet);

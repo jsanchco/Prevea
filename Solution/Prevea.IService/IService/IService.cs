@@ -509,6 +509,7 @@
         #region Reports
 
         Result GenerateOfferSPAReport(Model.Model.Document documentSPA, string route);
+        Result GenerateConractSPAReport(Model.Model.Document documentSPA, string route);
 
         #endregion
     }
