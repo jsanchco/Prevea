@@ -602,9 +602,28 @@
     },
 
     openContractualDocument: function (id) {
-        //var win = window.open("", "_blank");
-        var url = kendo.format("/Companies/ContractualDocumentReport?documentId={0}", id);
-        win.location = url;
+        $.ajax({
+            url: "/Companies/GenerateReport",
+            type: "post",
+            cache: false,
+            datatype: "json",
+            data: {
+                documentId: id
+            },
+            success: function (result) {
+                if (result.Status === Constants.resultStatus.Ok) {
+                    GeneralData.showNotification(Constants.ok, "", "success");
+                    GeneralData.goToOpenFile(id);
+                } else {
+                    GeneralData.showNotification(result.Message, "", "error");
+                }
+            },
+            error: function (result) {
+                GeneralData.showNotification(Constants.ko, "", "error");
+
+                console.log(result);
+            }
+        });
     },
 
     updateRowFromSignature: function(contractualDocumentId, isEmpty) {

@@ -1091,6 +1091,32 @@
         }
         #endregion
 
+        [HttpPost]
+        public JsonResult GenerateReport(int documentId)
+        {
+            try
+            {
+                var document = Service.GetDocument(documentId);
+                if (document == null)
+                    return Json(new { result = false, message = "Documento no encontrado" }, JsonRequestBehavior.AllowGet);
+
+                switch (document.AreaId)
+                {
+                    case 6: // OFE_SPA
+                        return Json(Service.GenerateOfferSPAReport(document, Server.MapPath("~")), JsonRequestBehavior.AllowGet);
+
+                    default:
+                        return Json(new Result { Status = Status.Error, Message = "Imposible generar el Documento" }, JsonRequestBehavior.AllowGet);
+                }                
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+                return Json(new Result { Status = Status.Error, Message = e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [HttpGet]
         public ActionResult ContractualDocumentReport(int documentId)
         {

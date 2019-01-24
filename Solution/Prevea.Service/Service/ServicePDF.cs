@@ -1,4 +1,5 @@
-﻿using Prevea.Model.Model;
+﻿// ReSharper disable InconsistentNaming
+using Prevea.Model.Model;
 
 namespace Prevea.Service.Service
 {
@@ -10,6 +11,8 @@ namespace Prevea.Service.Service
     using iTextSharp.text.pdf;
     using System;
     using System.Linq;
+    using System.Globalization;
+    using System.Web;
 
     #endregion
 
@@ -27,9 +30,10 @@ namespace Prevea.Service.Service
         {
             try
             {
-                var pdf = new Document(PageSize.LETTER); 
-                var fileName = $"{route}\\App_Data\\PDF\\{documentSPA.Name}{documentSPA.Extension}";
-                var pdfWriter = PdfWriter.GetInstance(pdf, new FileStream(fileName, FileMode.Create));
+                var pdf = new Document(PageSize.LETTER);
+                var path = Path.GetDirectoryName(HttpContext.Current.Server.MapPath(documentSPA.UrlRelative));
+                Directory.CreateDirectory(path);
+                var pdfWriter = PdfWriter.GetInstance(pdf, new FileStream(HttpContext.Current.Server.MapPath(documentSPA.UrlRelative), FileMode.Create));
                 var pageEventHelper = new PageEventHelper();
                 pdfWriter.PageEvent = pageEventHelper;
 
@@ -208,7 +212,7 @@ namespace Prevea.Service.Service
             pdfCell = new PdfPCell(new Phrase("CONTACTO", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
             var contactPerson = document.Company.ContactPersons.FirstOrDefault(x =>
-                x.ContactPersonTypeId == (int)Model.Model.EnContactPersonType.ContactPerson);
+                x.ContactPersonTypeId == (int)EnContactPersonType.ContactPerson);
             pdfCell = contactPerson != null ? 
                 new PdfPCell(new Phrase($"{contactPerson.User.FirstName} {contactPerson.User.LastName}", _STANDARFONT_10)) { BorderWidth = 0 } : 
                 new PdfPCell(new Phrase(" ", _STANDARFONT_10)) { BorderWidth = 0 };
@@ -285,7 +289,7 @@ namespace Prevea.Service.Service
             if (document.CompanyId == null)
                 return new Phrase(" ", _STANDARFONT_10_BOLD);
 
-            var workCenters = GetWorkCentersByCompany((int)document.CompanyId).Where(x => x.WorkCenterStateId == (int)Model.Model.EnWorkCenterState.Alta).ToList();
+            var workCenters = GetWorkCentersByCompany((int)document.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
             var numberWorkCenters = workCenters.Count;
 
             var provincesWorkCenters = string.Empty;
@@ -680,7 +684,7 @@ namespace Prevea.Service.Service
                 PaddingBottom = 6f
             };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase(amountTecniques.ToString(), _STANDARFONT_10))
+            pdfCell = new PdfPCell(new Phrase(amountTecniques.ToString(CultureInfo.InvariantCulture), _STANDARFONT_10))
             {
                 BorderWidth = 0,
                 BackgroundColor = new BaseColor(204, 204, 255),
@@ -735,7 +739,7 @@ namespace Prevea.Service.Service
                 PaddingBottom = 6f
             };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase(amountHealthVigilance.ToString(), _STANDARFONT_10))
+            pdfCell = new PdfPCell(new Phrase(amountHealthVigilance.ToString(CultureInfo.InvariantCulture), _STANDARFONT_10))
             {
                 BorderWidth = 0,
                 BackgroundColor = new BaseColor(204, 204, 255),
@@ -790,7 +794,7 @@ namespace Prevea.Service.Service
                 PaddingBottom = 6f
             };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase(amountMedicalExamination.ToString(), _STANDARFONT_10))
+            pdfCell = new PdfPCell(new Phrase(amountMedicalExamination.ToString(CultureInfo.InvariantCulture), _STANDARFONT_10))
             {
                 BorderWidth = 0,
                 BackgroundColor = new BaseColor(204, 204, 255),
@@ -932,7 +936,7 @@ namespace Prevea.Service.Service
             pdfCell = new PdfPCell(new Phrase("NOMBRE", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
             var contactPerson = document.Company.ContactPersons.FirstOrDefault(x =>
-                x.ContactPersonTypeId == (int)Model.Model.EnContactPersonType.ContactPerson);
+                x.ContactPersonTypeId == (int)EnContactPersonType.ContactPerson);
             pdfCell = contactPerson != null ?
                 new PdfPCell(new Phrase($"{contactPerson.User.FirstName} {contactPerson.User.LastName}", _STANDARFONT_10)) { BorderWidth = 0 } :
                 new PdfPCell(new Phrase(" ", _STANDARFONT_10)) { BorderWidth = 0 };
