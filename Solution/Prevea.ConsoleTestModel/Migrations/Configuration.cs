@@ -76,9 +76,9 @@ namespace Prevea.ConsoleTestModel.Migrations
                 new Area { Name = "OFE_SPA", Description = "Oferta SPA", EntityId = 2, Url = "~/App_Data/Company/OFE/SPA/", StoreInServer = false }, // 6
                 new Area { Name = "OFE_FOR", Description = "Oferta Formación", EntityId = 2, Url = "~/App_Data/Company/OFE/FOR/", StoreInServer = false }, // 7
                 new Area { Name = "OFE_GES", Description = "Oferta Gestoría", EntityId = 2, Url = "~/App_Data/Company/OFE/GES/", StoreInServer = false  }, // 8
-                new Area { Name = "CON_SPA", Description = "Contrato SPA", EntityId = 2, Url = "~/App_Data/Company/CON/SPA/", StoreInServer = false }, // 9
-                new Area { Name = "CON_FOR", Description = "Contrato Formación", EntityId = 2, Url = "~/App_Data/Company/CON/FOR/", StoreInServer = false }, // 10
-                new Area { Name = "CON_GES", Description = "Contrato Gestoría", EntityId = 2, Url = "~/App_Data/Company/CON/GES/", StoreInServer = false }, // 11
+                new Area { Name = "CTO_SPA", Description = "Contrato SPA", EntityId = 2, Url = "~/App_Data/Company/CTO/SPA/", StoreInServer = false }, // 9
+                new Area { Name = "CTO_FOR", Description = "Contrato Formación", EntityId = 2, Url = "~/App_Data/Company/CTO/FOR/", StoreInServer = false }, // 10
+                new Area { Name = "CTO_GES", Description = "Contrato Gestoría", EntityId = 2, Url = "~/App_Data/Company/CTO/GES/", StoreInServer = false }, // 11
                 new Area { Name = "ANX", Description = "Anexo", EntityId = 2, Url = "~/App_Data/Company/ANX/", StoreInServer = true }, // 12
                 new Area { Name = "OTR", Description = "Otros Documentos", EntityId = 2, Url = "~/App_Data/Company/OTR/", StoreInServer = true }, // 13
                 new Area { Name = "UNS", Description = "Baja Documento", EntityId = 2, Url = "~/App_Data/Company/UNS/", StoreInServer = false }, // 14
