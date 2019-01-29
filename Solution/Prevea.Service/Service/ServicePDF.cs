@@ -141,7 +141,7 @@ namespace Prevea.Service.Service
                 GetReunidos(pdf, documentSPA);
                 pdf.Add(new Chunk("\n"));
                 pdf.Add(new Chunk("\n"));
-                GetManifiestan(pdf, documentSPA);
+                GetManifiestan(pdf, documentSPA, route);
 
                 pdf.Close();
                 pdfWriter.Close();
@@ -166,7 +166,7 @@ namespace Prevea.Service.Service
 
         private PdfPTable GetHeader(string route)
         {
-            var pdfPTable = new PdfPTable(2) {WidthPercentage = 100};
+            var pdfPTable = new PdfPTable(2) { WidthPercentage = 100 };
 
             var image = Image.GetInstance($"{route}\\Images\\Logo_report.png");
             image.ScalePercent(50f);
@@ -177,14 +177,14 @@ namespace Prevea.Service.Service
             };
             pdfPTable.AddCell(pdfCellImage);
 
-            var pdfCell = new PdfPCell(new Phrase("PREVEA SPA", _STANDARFONT_14_BOLD)) {BorderWidth = 0};
+            var pdfCell = new PdfPCell(new Phrase("PREVEA SPA", _STANDARFONT_14_BOLD)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
             pdfCell = new PdfPCell(new Phrase("C/ Abad Juan Catalán, 38 28032-Madrid", _STANDARFONT_14_BOLD))
-                {BorderWidth = 0};
+            { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase("Tfno.- 917602713", _STANDARFONT_14_BOLD)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase("Tfno.- 917602713", _STANDARFONT_14_BOLD)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase("prevea@preveaspa.com", _STANDARFONT_14_BOLD)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase("prevea@preveaspa.com", _STANDARFONT_14_BOLD)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
 
             return pdfPTable;
@@ -192,23 +192,27 @@ namespace Prevea.Service.Service
 
         private PdfPTable GetTableN_DocumentOffer(Model.Model.Document document)
         {
-            var pdfPTable = new PdfPTable(2) {WidthPercentage = 40, HorizontalAlignment = 2};
+            var pdfPTable = new PdfPTable(2) { WidthPercentage = 40, HorizontalAlignment = 2 };
 
             var pdfCell = new PdfPCell(new Phrase("Nº OFERTA", _STANDARFONT_10_BOLD))
             {
-                BackgroundColor = new BaseColor(204, 204, 255), BorderWidthRight = 0, BorderWidthBottom = 0
+                BackgroundColor = new BaseColor(204, 204, 255),
+                BorderWidthRight = 0,
+                BorderWidthBottom = 0
             };
             pdfPTable.AddCell(pdfCell);
             pdfCell = new PdfPCell(new Phrase(document.Name, _STANDARFONT_10_BOLD))
             {
-                BackgroundColor = new BaseColor(204, 204, 255), BorderWidthLeft = 0, BorderWidthBottom = 0
+                BackgroundColor = new BaseColor(204, 204, 255),
+                BorderWidthLeft = 0,
+                BorderWidthBottom = 0
             };
             pdfPTable.AddCell(pdfCell);
             pdfCell = new PdfPCell(new Phrase("FECHA", _STANDARFONT_10_BOLD))
-                {BackgroundColor = new BaseColor(204, 204, 255), BorderWidthRight = 0, BorderWidthTop = 0};
+            { BackgroundColor = new BaseColor(204, 204, 255), BorderWidthRight = 0, BorderWidthTop = 0 };
             pdfPTable.AddCell(pdfCell);
             pdfCell = new PdfPCell(new Phrase(document.Date.ToShortDateString(), _STANDARFONT_10_BOLD))
-                {BackgroundColor = new BaseColor(204, 204, 255), BorderWidthLeft = 0, BorderWidthTop = 0};
+            { BackgroundColor = new BaseColor(204, 204, 255), BorderWidthLeft = 0, BorderWidthTop = 0 };
             pdfPTable.AddCell(pdfCell);
 
             return pdfPTable;
@@ -216,23 +220,27 @@ namespace Prevea.Service.Service
 
         private PdfPTable GetTableN_DocumentContract(Model.Model.Document document)
         {
-            var pdfPTable = new PdfPTable(2) {WidthPercentage = 40, HorizontalAlignment = 2};
+            var pdfPTable = new PdfPTable(2) { WidthPercentage = 40, HorizontalAlignment = 2 };
 
             var pdfCell = new PdfPCell(new Phrase("Nº CONTRATO", _STANDARFONT_10_BOLD))
             {
-                BackgroundColor = new BaseColor(204, 204, 255), BorderWidthRight = 0, BorderWidthBottom = 0
+                BackgroundColor = new BaseColor(204, 204, 255),
+                BorderWidthRight = 0,
+                BorderWidthBottom = 0
             };
             pdfPTable.AddCell(pdfCell);
             pdfCell = new PdfPCell(new Phrase(document.Name, _STANDARFONT_10_BOLD))
             {
-                BackgroundColor = new BaseColor(204, 204, 255), BorderWidthLeft = 0, BorderWidthBottom = 0
+                BackgroundColor = new BaseColor(204, 204, 255),
+                BorderWidthLeft = 0,
+                BorderWidthBottom = 0
             };
             pdfPTable.AddCell(pdfCell);
             pdfCell = new PdfPCell(new Phrase("FECHA", _STANDARFONT_10_BOLD))
-                {BackgroundColor = new BaseColor(204, 204, 255), BorderWidthRight = 0, BorderWidthTop = 0};
+            { BackgroundColor = new BaseColor(204, 204, 255), BorderWidthRight = 0, BorderWidthTop = 0 };
             pdfPTable.AddCell(pdfCell);
             pdfCell = new PdfPCell(new Phrase(document.Date.ToShortDateString(), _STANDARFONT_10_BOLD))
-                {BackgroundColor = new BaseColor(204, 204, 255), BorderWidthLeft = 0, BorderWidthTop = 0};
+            { BackgroundColor = new BaseColor(204, 204, 255), BorderWidthLeft = 0, BorderWidthTop = 0 };
             pdfPTable.AddCell(pdfCell);
 
             return pdfPTable;
@@ -246,7 +254,7 @@ namespace Prevea.Service.Service
 
         private PdfPTable GetTableTitle(string title)
         {
-            var pdfPTable = new PdfPTable(1) {WidthPercentage = 100};
+            var pdfPTable = new PdfPTable(1) { WidthPercentage = 100 };
             var pdfCell = new PdfPCell(new Phrase(title, _STANDARFONT_14_BOLD_WHITE))
             {
                 BackgroundColor = new BaseColor(20, 66, 92),
@@ -262,7 +270,7 @@ namespace Prevea.Service.Service
 
         private PdfPTable GetTableTitleTransparent(string title)
         {
-            var pdfPTable = new PdfPTable(1) {WidthPercentage = 100};
+            var pdfPTable = new PdfPTable(1) { WidthPercentage = 100 };
             var pdfCell = new PdfPCell(new Phrase(title, _STANDARFONT_14_BOLD))
             {
                 HorizontalAlignment = Element.ALIGN_CENTER,
@@ -277,56 +285,57 @@ namespace Prevea.Service.Service
 
         private PdfPTable GetTableCompanyData(Model.Model.Document document)
         {
-            var pdfPTable = new PdfPTable(2) {WidthPercentage = 100};
-            var widths = new[] {30f, 70f};
+            var pdfPTable = new PdfPTable(2) { WidthPercentage = 100 };
+            var widths = new[] { 30f, 70f };
             pdfPTable.SetWidths(widths);
 
-            var pdfCell = new PdfPCell(new Phrase("R.SOCIAL/AUTÓNOMO", _STANDARFONT_10_BOLD)) {BorderWidth = 0};
+            var pdfCell = new PdfPCell(new Phrase("R.SOCIAL/AUTÓNOMO", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase(document.Company.Name, _STANDARFONT_10)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase(document.Company.Name, _STANDARFONT_10)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase("CIF/NIF", _STANDARFONT_10_BOLD)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase("CIF/NIF", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase(document.Company.NIF, _STANDARFONT_10)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase(document.Company.NIF, _STANDARFONT_10)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase("DOMICILIO SOCIAL", _STANDARFONT_10_BOLD)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase("DOMICILIO SOCIAL", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase(document.Company.Address, _STANDARFONT_10)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase(document.Company.Address, _STANDARFONT_10)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase("ACTIVIDAD", _STANDARFONT_10_BOLD)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase("ACTIVIDAD", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase(document.Company.Cnae.Name, _STANDARFONT_10)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase(document.Company.Cnae.Name, _STANDARFONT_10)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
 
-            pdfCell = new PdfPCell(new Phrase("CONTACTO", _STANDARFONT_10_BOLD)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase("CONTACTO", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
             var contactPerson = document.Company.ContactPersons.FirstOrDefault(x =>
-                x.ContactPersonTypeId == (int) EnContactPersonType.ContactPerson);
+                x.ContactPersonTypeId == (int)EnContactPersonType.ContactPerson);
             pdfCell = contactPerson != null
                 ? new PdfPCell(new Phrase($"{contactPerson.User.FirstName} {contactPerson.User.LastName}",
-                    _STANDARFONT_10)) {BorderWidth = 0}
-                : new PdfPCell(new Phrase(" ", _STANDARFONT_10)) {BorderWidth = 0};
+                    _STANDARFONT_10))
+                { BorderWidth = 0 }
+                : new PdfPCell(new Phrase(" ", _STANDARFONT_10)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
 
-            pdfCell = new PdfPCell(new Phrase("CARGO", _STANDARFONT_10_BOLD)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase("CARGO", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
             pdfCell = contactPerson != null
-                ? new PdfPCell(new Phrase($"{contactPerson.User.WorkStationCustom}", _STANDARFONT_10)) {BorderWidth = 0}
-                : new PdfPCell(new Phrase(" ", _STANDARFONT_10)) {BorderWidth = 0};
+                ? new PdfPCell(new Phrase($"{contactPerson.User.WorkStationCustom}", _STANDARFONT_10)) { BorderWidth = 0 }
+                : new PdfPCell(new Phrase(" ", _STANDARFONT_10)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
 
-            pdfCell = new PdfPCell(new Phrase("TELÉFONO", _STANDARFONT_10_BOLD)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase("TELÉFONO", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
             pdfCell = contactPerson != null
-                ? new PdfPCell(new Phrase($"{contactPerson.User.PhoneNumber}", _STANDARFONT_10)) {BorderWidth = 0}
-                : new PdfPCell(new Phrase(" ", _STANDARFONT_10)) {BorderWidth = 0};
+                ? new PdfPCell(new Phrase($"{contactPerson.User.PhoneNumber}", _STANDARFONT_10)) { BorderWidth = 0 }
+                : new PdfPCell(new Phrase(" ", _STANDARFONT_10)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
 
-            pdfCell = new PdfPCell(new Phrase("E-MAIL", _STANDARFONT_10_BOLD)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase("E-MAIL", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
             pdfCell = contactPerson != null
-                ? new PdfPCell(new Phrase($"{contactPerson.User.Email}", _STANDARFONT_10)) {BorderWidth = 0}
-                : new PdfPCell(new Phrase(" ", _STANDARFONT_10)) {BorderWidth = 0};
+                ? new PdfPCell(new Phrase($"{contactPerson.User.Email}", _STANDARFONT_10)) { BorderWidth = 0 }
+                : new PdfPCell(new Phrase(" ", _STANDARFONT_10)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
 
             return pdfPTable;
@@ -354,25 +363,25 @@ namespace Prevea.Service.Service
                 }
             }
 
-            var pdfPTable = new PdfPTable(4) {WidthPercentage = 100};
-            var widths = new[] {40f, 10f, 40f, 10f};
+            var pdfPTable = new PdfPTable(4) { WidthPercentage = 100 };
+            var widths = new[] { 40f, 10f, 40f, 10f };
             pdfPTable.SetWidths(widths);
 
-            var pdfCell = new PdfPCell(new Phrase("SEGURIDAD EN EL TRABAJO", _STANDARFONT_10)) {BorderWidth = 0};
+            var pdfCell = new PdfPCell(new Phrase("SEGURIDAD EN EL TRABAJO", _STANDARFONT_10)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase(tecniches, _STANDARFONT_10_BOLD)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase(tecniches, _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase("HIGIENE INDUSTRIAL", _STANDARFONT_10)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase("HIGIENE INDUSTRIAL", _STANDARFONT_10)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase(tecniches, _STANDARFONT_10_BOLD)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase(tecniches, _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase("ERGONOMÍA Y PSICOSOCIOLOGÍA", _STANDARFONT_10)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase("ERGONOMÍA Y PSICOSOCIOLOGÍA", _STANDARFONT_10)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase(tecniches, _STANDARFONT_10_BOLD)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase(tecniches, _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase("MEDICINA DEL TRABAJO", _STANDARFONT_10)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase("MEDICINA DEL TRABAJO", _STANDARFONT_10)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase(health, _STANDARFONT_10_BOLD)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase(health, _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
 
             return pdfPTable;
@@ -383,8 +392,8 @@ namespace Prevea.Service.Service
             if (document.CompanyId == null)
                 return new Phrase(" ", _STANDARFONT_10_BOLD);
 
-            var workCenters = GetWorkCentersByCompany((int) document.CompanyId)
-                .Where(x => x.WorkCenterStateId == (int) EnWorkCenterState.Alta).ToList();
+            var workCenters = GetWorkCentersByCompany((int)document.CompanyId)
+                .Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
             var numberWorkCenters = workCenters.Count;
 
             var provincesWorkCenters = string.Empty;
@@ -458,28 +467,29 @@ namespace Prevea.Service.Service
 
         private PdfPTable GetFormaPago(Model.Model.Document document)
         {
-            var pdfPTable = new PdfPTable(4) {WidthPercentage = 100};
-            var widths = new[] {20f, 30f, 20f, 30f};
+            var pdfPTable = new PdfPTable(4) { WidthPercentage = 100 };
+            var widths = new[] { 20f, 30f, 20f, 30f };
             pdfPTable.SetWidths(widths);
 
-            var pdfCell = new PdfPCell(new Phrase("MÉTDODO PAGO", _STANDARFONT_10_BOLD_CUSTOMCOLOR)) {BorderWidth = 0};
+            var pdfCell = new PdfPCell(new Phrase("MÉTDODO PAGO", _STANDARFONT_10_BOLD_CUSTOMCOLOR)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
             pdfCell = new PdfPCell(new Phrase(document.Company.PaymentMethod.ModePayment.Description, _STANDARFONT_10))
-                {BorderWidth = 0};
+            { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase("COBRO R. MÉDICOS", _STANDARFONT_10_BOLD_CUSTOMCOLOR)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase("COBRO R. MÉDICOS", _STANDARFONT_10_BOLD_CUSTOMCOLOR)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
             pdfCell = new PdfPCell(new Phrase(document.Company.PaymentMethod.ModePaymentMedicalExamination.Description,
-                _STANDARFONT_10)) {BorderWidth = 0};
+                _STANDARFONT_10))
+            { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase("Nº CUENTA", _STANDARFONT_10_BOLD_CUSTOMCOLOR)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase("Nº CUENTA", _STANDARFONT_10_BOLD_CUSTOMCOLOR)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
             pdfCell = new PdfPCell(new Phrase(document.Company.PaymentMethod.AccountNumber, _STANDARFONT_10))
-                {BorderWidth = 0};
+            { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase(" ", _STANDARFONT_10)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase(" ", _STANDARFONT_10)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase(" ", _STANDARFONT_10)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase(" ", _STANDARFONT_10)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
 
             return pdfPTable;
@@ -791,7 +801,7 @@ namespace Prevea.Service.Service
                     null)
                 {
                     totalAmountTecniques =
-                        (decimal) document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService
+                        (decimal)document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService
                             .AmountTecniques * document.Company.SimulationCompanyActive.Simulation.NumberEmployees;
                 }
 
@@ -799,7 +809,7 @@ namespace Prevea.Service.Service
                         .AmountHealthVigilance != null)
                 {
                     totalAmountHealthVigilance =
-                        (decimal) document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService
+                        (decimal)document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService
                             .AmountHealthVigilance *
                         document.Company.SimulationCompanyActive.Simulation.NumberEmployees;
                 }
@@ -808,14 +818,14 @@ namespace Prevea.Service.Service
                         .AmountMedicalExamination != null)
                 {
                     totalAmountMedicalExamination =
-                        (decimal) document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService
+                        (decimal)document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService
                             .AmountMedicalExamination *
                         document.Company.SimulationCompanyActive.Simulation.NumberEmployees;
                 }
             }
 
             if (document.Company.PaymentMethod.ModePaymentMedicalExaminationId ==
-                (int) EnModePaymentMedicalExamination.ALaFirmaDelContrato)
+                (int)EnModePaymentMedicalExamination.ALaFirmaDelContrato)
             {
                 total = totalAmountTecniques * Convert.ToDecimal(IVA) +
                         totalAmountHealthVigilance * Convert.ToDecimal(IVA) + totalAmountMedicalExamination;
@@ -832,7 +842,7 @@ namespace Prevea.Service.Service
             if (document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService != null &&
                 document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountTecniques != null)
             {
-                amountTecniques = (decimal) document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService
+                amountTecniques = (decimal)document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService
                     .AmountTecniques;
             }
 
@@ -844,8 +854,8 @@ namespace Prevea.Service.Service
 
             pdf.Add(new Chunk("\n"));
 
-            var pdfPTable = new PdfPTable(4) {WidthPercentage = 100};
-            var widths = new[] {40f, 10f, 25f, 25f};
+            var pdfPTable = new PdfPTable(4) { WidthPercentage = 100 };
+            var widths = new[] { 40f, 10f, 25f, 25f };
             pdfPTable.SetWidths(widths);
 
             var pdfCell = new PdfPCell(new Phrase("ESPECIALIDADES TÉCNICAS", _STANDARFONT_10))
@@ -897,12 +907,12 @@ namespace Prevea.Service.Service
                 document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountHealthVigilance !=
                 null)
             {
-                amountHealthVigilance = (decimal) document.Company.SimulationCompanyActive.Simulation
+                amountHealthVigilance = (decimal)document.Company.SimulationCompanyActive.Simulation
                     .ForeignPreventionService.AmountHealthVigilance;
             }
 
-            pdfPTable = new PdfPTable(4) {WidthPercentage = 100};
-            widths = new[] {40f, 10f, 25f, 25f};
+            pdfPTable = new PdfPTable(4) { WidthPercentage = 100 };
+            widths = new[] { 40f, 10f, 25f, 25f };
             pdfPTable.SetWidths(widths);
 
             pdfCell = new PdfPCell(new Phrase("VIGILANCIA DE LA SALUD", _STANDARFONT_10))
@@ -955,12 +965,12 @@ namespace Prevea.Service.Service
                 document.Company.SimulationCompanyActive.Simulation.ForeignPreventionService.AmountMedicalExamination !=
                 null)
             {
-                amountMedicalExamination = (decimal) document.Company.SimulationCompanyActive.Simulation
+                amountMedicalExamination = (decimal)document.Company.SimulationCompanyActive.Simulation
                     .ForeignPreventionService.AmountMedicalExamination;
             }
 
-            pdfPTable = new PdfPTable(4) {WidthPercentage = 100};
-            widths = new[] {40f, 10f, 25f, 25f};
+            pdfPTable = new PdfPTable(4) { WidthPercentage = 100 };
+            widths = new[] { 40f, 10f, 25f, 25f };
             pdfPTable.SetWidths(widths);
 
             pdfCell = new PdfPCell(new Phrase("REC. MÉDICO REALIZADO EN CLÍNICA", _STANDARFONT_10))
@@ -1009,14 +1019,14 @@ namespace Prevea.Service.Service
 
             var textModePaymentMedicalExamination = string.Empty;
             if (document.Company.PaymentMethod.ModePaymentMedicalExaminationId ==
-                (int) EnModePaymentMedicalExamination.ALaFirmaDelContrato)
+                (int)EnModePaymentMedicalExamination.ALaFirmaDelContrato)
             {
                 textModePaymentMedicalExamination =
                     "(Los reconocimientos médicos se facturarán a la firma del contrato)";
             }
 
             if (document.Company.PaymentMethod.ModePaymentMedicalExaminationId ==
-                (int) EnModePaymentMedicalExamination.ALaRealizacion)
+                (int)EnModePaymentMedicalExamination.ALaRealizacion)
             {
                 textModePaymentMedicalExamination = "(Los reconocimientos médicos se facturarán una vez realizados)";
             }
@@ -1029,8 +1039,8 @@ namespace Prevea.Service.Service
                           totalAmountHealthVigilance * Convert.ToDecimal(IVA);
             sum = Math.Round(sum, 2);
 
-            pdfPTable = new PdfPTable(2) {WidthPercentage = 100};
-            widths = new[] {45f, 55f};
+            pdfPTable = new PdfPTable(2) { WidthPercentage = 100 };
+            widths = new[] { 45f, 55f };
             pdfPTable.SetWidths(widths);
 
             pdfCell = new PdfPCell(new Phrase(
@@ -1075,8 +1085,8 @@ namespace Prevea.Service.Service
             pdf.Add(pdfPTable);
             pdf.Add(new Chunk("\n"));
 
-            pdfPTable = new PdfPTable(3) {WidthPercentage = 100};
-            widths = new[] {25f, 25f, 50f};
+            pdfPTable = new PdfPTable(3) { WidthPercentage = 100 };
+            widths = new[] { 25f, 25f, 50f };
             pdfPTable.SetWidths(widths);
 
             pdfCell = new PdfPCell(new Phrase("TOTAL:", _STANDARFONT_10_BOLD))
@@ -1114,28 +1124,29 @@ namespace Prevea.Service.Service
 
         private void GetAceptacionPresupuesto(Document pdf, Model.Model.Document document, string route)
         {
-            var pdfPTable = new PdfPTable(2) {WidthPercentage = 100};
-            var widths = new[] {30f, 70f};
+            var pdfPTable = new PdfPTable(2) { WidthPercentage = 100 };
+            var widths = new[] { 30f, 70f };
             pdfPTable.SetWidths(widths);
 
-            var pdfCell = new PdfPCell(new Phrase("EMPRESA", _STANDARFONT_10_BOLD)) {BorderWidth = 0};
+            var pdfCell = new PdfPCell(new Phrase("EMPRESA", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase(document.Company.Name, _STANDARFONT_10)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase(document.Company.Name, _STANDARFONT_10)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase("NOMBRE", _STANDARFONT_10_BOLD)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase("NOMBRE", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
             var contactPerson = document.Company.ContactPersons.FirstOrDefault(x =>
-                x.ContactPersonTypeId == (int) EnContactPersonType.ContactPerson);
+                x.ContactPersonTypeId == (int)EnContactPersonType.ContactPerson);
             pdfCell = contactPerson != null
                 ? new PdfPCell(new Phrase($"{contactPerson.User.FirstName} {contactPerson.User.LastName}",
-                    _STANDARFONT_10)) {BorderWidth = 0}
-                : new PdfPCell(new Phrase(" ", _STANDARFONT_10)) {BorderWidth = 0};
+                    _STANDARFONT_10))
+                { BorderWidth = 0 }
+                : new PdfPCell(new Phrase(" ", _STANDARFONT_10)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase("CARGO", _STANDARFONT_10_BOLD)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase("CARGO", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
             pdfCell = contactPerson != null
-                ? new PdfPCell(new Phrase($"{contactPerson.User.WorkStationCustom}", _STANDARFONT_10)) {BorderWidth = 0}
-                : new PdfPCell(new Phrase(" ", _STANDARFONT_10)) {BorderWidth = 0};
+                ? new PdfPCell(new Phrase($"{contactPerson.User.WorkStationCustom}", _STANDARFONT_10)) { BorderWidth = 0 }
+                : new PdfPCell(new Phrase(" ", _STANDARFONT_10)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
 
             pdf.Add(pdfPTable);
@@ -1148,13 +1159,13 @@ namespace Prevea.Service.Service
             pdf.Add(paragraph);
             pdf.Add(new Chunk("\n"));
 
-            pdfPTable = new PdfPTable(2) {WidthPercentage = 100};
-            widths = new[] {50f, 50f};
+            pdfPTable = new PdfPTable(2) { WidthPercentage = 100 };
+            widths = new[] { 50f, 50f };
             pdfPTable.SetWidths(widths);
 
             if (document.Signature == null)
             {
-                pdfCell = new PdfPCell(new Phrase("", _STANDARFONT_10_BOLD)) {BorderWidth = 0};
+                pdfCell = new PdfPCell(new Phrase("", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
                 pdfPTable.AddCell(pdfCell);
             }
             else
@@ -1181,7 +1192,7 @@ namespace Prevea.Service.Service
             };
             pdfPTable.AddCell(pdfCellImage);
 
-            pdfCell = new PdfPCell(new Phrase("", _STANDARFONT_10_BOLD)) {BorderWidth = 0};
+            pdfCell = new PdfPCell(new Phrase("", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
 
             pdfCell = new PdfPCell(new Phrase($"FECHA  {DateTime.Now.ToShortDateString()}", _STANDARFONT_10))
@@ -1274,7 +1285,7 @@ namespace Prevea.Service.Service
             pdf.Add(phrase);
         }
 
-        private void GetManifiestan(Document pdf, Model.Model.Document document)
+        private void GetManifiestan(Document pdf, Model.Model.Document document, string route)
         {
             var phrase = new Phrase("MAIFIESTAN", _STANDARFONT_10_BOLD);
             pdf.Add(phrase);
@@ -1334,6 +1345,7 @@ namespace Prevea.Service.Service
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("La EMPRESA CONTRATANTE", _STANDARFONT_10);
             pdf.Add(phrase);
+            pdf.Add(new Chunk("\n"));
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("El alcance de las actividades preventivas incluidas en el presente concierto se limita a las expresamente descritas en el ANEXO I.", _STANDARFONT_10);
             pdf.Add(phrase);
@@ -1433,16 +1445,16 @@ namespace Prevea.Service.Service
             phrase = new Phrase("", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("•En caso de no poder acudir a las citas concertadas", _STANDARFONT_10);
+            phrase = new Phrase("-En caso de no poder acudir a las citas concertadas", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("•Si la EMPRESA CONTRATANTE", _STANDARFONT_10);
+            phrase = new Phrase("-Si la EMPRESA CONTRATANTE", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("•Asimismo y en cualquiera de los dos casos anteriores", _STANDARFONT_10);
+            phrase = new Phrase("-Asimismo y en cualquiera de los dos casos anteriores", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("•En el caso de que durante la vigencia del contrato", _STANDARFONT_10);
+            phrase = new Phrase("-En el caso de que durante la vigencia del contrato", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("", _STANDARFONT_10);
@@ -1517,6 +1529,7 @@ namespace Prevea.Service.Service
             phrase = new Phrase("5.- PREVEA realizará sus acciones como encargado de tratamiento de acuerdo a las instrucciones que le indique EMPRESA CONTRATANTE", _STANDARFONT_10);
             pdf.Add(phrase);
 
+
             pdf.NewPage();
 
             phrase = new Phrase("6.- A la finalización de la relación entre las partes", _STANDARFONT_10);
@@ -1546,16 +1559,51 @@ namespace Prevea.Service.Service
             phrase = new Phrase("", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("Por la EMPRESA CONTRATANTE. S.L.   Por PREVEA CONSULTORES Y PROYECTOS", _STANDARFONT_10);
-            pdf.Add(phrase);
-            pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("Fdo: D.       Fdo: D. VIRGILIO CARRASCO MARTINEZ", _STANDARFONT_10);
-            pdf.Add(phrase);
+
+            var pdfPTable = new PdfPTable(2) { WidthPercentage = 100 };
+            var widths = new[] { 50f, 50f };
+            pdfPTable.SetWidths(widths);
+
+            var pdfCell = new PdfPCell(new Phrase("Por la EMPRESA CONTRATANTE. S.L.   Por PREVEA CONSULTORES Y PROYECTOS", _STANDARFONT_10)) { BorderWidth = 0 };
+            pdfPTable.AddCell(pdfCell);
+            pdfCell = new PdfPCell(new Phrase("Fdo: D.       Fdo: D. VIRGILIO CARRASCO MARTINEZ", _STANDARFONT_10)) { BorderWidth = 0 };
+            pdfPTable.AddCell(pdfCell);
+
+            if (document.Signature == null)
+            {
+                pdfCell = new PdfPCell(new Phrase("", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
+                pdfPTable.AddCell(pdfCell);
+            }
+            else
+            {
+                using (var memoryStream = new MemoryStream(document.Signature))
+                {
+                    var imageFirm = Image.GetInstance(memoryStream);
+                    imageFirm.ScalePercent(50f);
+                    pdfCell = new PdfPCell(imageFirm)
+                    {
+                        BorderWidth = 0,
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                    };
+                    pdfPTable.AddCell(pdfCell);
+                }
+            }
+
+            var image = Image.GetInstance($"{route}\\Images\\companySeal.png");
+            image.ScalePercent(50f);
+            var pdfCellImage = new PdfPCell(image)
+            {
+                BorderWidth = 0,
+                HorizontalAlignment = Element.ALIGN_CENTER,
+            };
+            pdfPTable.AddCell(pdfCellImage);
+            pdf.Add(pdfPTable);
+
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase(" ", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("ANEXO I AL CONTRATO DE PREVENCIÓN DE RIESGOS LABORALES ", _STANDARFONT_10);
+            phrase = new Phrase("ANEXO \"I\" AL CONTRATO DE PREVENCIÓN DE RIESGOS LABORALES ", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("", _STANDARFONT_10);
@@ -1632,7 +1680,9 @@ namespace Prevea.Service.Service
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("2.1.2. Diseño y redacción del Plan de Prevención de Riesgos Laborales", _STANDARFONT_10);
             pdf.Add(phrase);
-            pdf.Add(new Chunk("\n"));
+
+            pdf.NewPage();
+
             phrase = new Phrase("2.1.3. Evaluación de los factores de riesgo que puedan afectar a la seguridad y salud de los trabajadores en los términos previstos en el artículo 16 de la Ley 31-995 de Prevención de Riesgos Laborales", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
@@ -1650,9 +1700,7 @@ namespace Prevea.Service.Service
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("2.1.8. Investigación de accidentes de trabajo y enfermedades profesionales.", _STANDARFONT_10);
             pdf.Add(phrase);
-
-            pdf.NewPage();
-
+            pdf.Add(new Chunk("\n"));
             phrase = new Phrase("2.1.9. Valoración mediante mediciones puntuales de condiciones ambientales de ruido", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
@@ -1748,9 +1796,9 @@ namespace Prevea.Service.Service
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("2.3. Especialidades Preventivas de Higiene Industrial:", _STANDARFONT_10);
             pdf.Add(phrase);
-            pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("", _STANDARFONT_10);
-            pdf.Add(phrase);
+
+            pdf.NewPage();
+
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("2.3.1. Actividades generales: Con respecto a la especialidad de HIGIENE INDUSTRIAL", _STANDARFONT_10);
             pdf.Add(phrase);
@@ -1769,9 +1817,7 @@ namespace Prevea.Service.Service
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("•Mediciones de contaminantes químicos y realización de sus respectivos estudios o informes", _STANDARFONT_10);
             pdf.Add(phrase);
-
-            pdf.NewPage();
-
+            pdf.Add(new Chunk("\n"));
             phrase = new Phrase("•Estudios de exposición a riesgos biológicos y realización de sus respectivos informes", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
@@ -1873,10 +1919,9 @@ namespace Prevea.Service.Service
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("•Las pruebas que se realizarán al contratar los reconocimientos médicos individuales", _STANDARFONT_10);
             pdf.Add(phrase);
-            pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("", _STANDARFONT_10);
-            pdf.Add(phrase);
-            pdf.Add(new Chunk("\n"));
+
+            pdf.NewPage();
+
             phrase = new Phrase("2.5.3. Otras Pruebas Complementarias:", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
@@ -1894,9 +1939,7 @@ namespace Prevea.Service.Service
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("3.-ACTIVIDADES EXCLUIDAS:", _STANDARFONT_10);
             pdf.Add(phrase);
-
-            pdf.NewPage();
-
+            pdf.Add(new Chunk("\n"));
             phrase = new Phrase("", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
@@ -2001,10 +2044,9 @@ namespace Prevea.Service.Service
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("Por la EMPRESA CONTRATANTE", _STANDARFONT_10);
             pdf.Add(phrase);
-            pdf.Add(new Chunk("\n"));
-            phrase = new Phrase(" ", _STANDARFONT_10);
-            pdf.Add(phrase);
-            pdf.Add(new Chunk("\n"));
+
+            pdf.NewPage();
+
             phrase = new Phrase("ANEXO DE AMPLIACION DE SERVICIOS CONCERTADOS", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
@@ -2019,9 +2061,7 @@ namespace Prevea.Service.Service
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("PRIMERO.• La Entidad __________________________", _STANDARFONT_10);
             pdf.Add(phrase);
-
-            pdf.NewPage();
-
+            pdf.Add(new Chunk("\n"));
             phrase = new Phrase("SEGUNDO.• Desde la firma del presente ANEXO del contrato de Servicio de Prevención", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
