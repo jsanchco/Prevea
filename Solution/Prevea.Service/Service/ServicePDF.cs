@@ -1593,7 +1593,7 @@ namespace Prevea.Service.Service
             phrase = new Phrase("", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("1.-CENTROS DE TRABAJO CONTRATADOS", _STANDARFONT_10_BOLD);
+            phrase = new Phrase("1.- CENTROS DE TRABAJO CONTRATADOS", _STANDARFONT_10_BOLD);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("En desarrollo a la cláusula Primera del contrato suscrito por las partes, el centro (o los centros) de trabajo, la actividad y el número de trabajadores de la EMPRESA CONTRATANTE sobre los que PREVEA toma el compromiso de ejercer la prestación de servicios son los siguientes:", _STANDARFONT_10);
