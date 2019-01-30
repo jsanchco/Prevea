@@ -116,7 +116,7 @@ namespace Prevea.Service.Service
             }
         }
 
-        public Result GenerateConractSPAReport(Model.Model.Document documentSPA, string route)
+        public Result GenerateContractSPAReport(Model.Model.Document documentSPA, string route)
         {
             try
             {
