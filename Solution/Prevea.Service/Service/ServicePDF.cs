@@ -1290,13 +1290,7 @@ namespace Prevea.Service.Service
             var phrase = new Phrase("MAIFIESTAN", _STANDARFONT_10_BOLD);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            pdf.Add(new Chunk("\n"));
 
-            phrase = new Phrase("MANIFIESTAN", _STANDARFONT_10);
-            pdf.Add(phrase);
-            pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("", _STANDARFONT_10);
-            pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("I.- Que la Ley 31-995 de 8 de noviembre de Prevención de Riesgos Laborales establece los principios generales relativos a la prevención de los riesgos derivados de las condiciones de trabajo para tratar de establecer un adecuado nivel de protección de la seguridad y salud de los trabajadores, mediante la promoción de la mejora de las condiciones de trabajo, como obligación expresa que recae en el empresario.", _STANDARFONT_10);
             pdf.Add(phrase);
@@ -1309,7 +1303,9 @@ namespace Prevea.Service.Service
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("IV.- Que la entidad PREVEA, es una entidad acreditada para actuar como servicio de prevención de conformidad con lo dispuesto en la Ley 31-995 y demás disposiciones concordantes, habiendo sido acreditado por el Instituto Regional de Seguridad y Salud en el Trabajo de la Comunidad de Madrid, tal como consta en el encabezamiento de este contrato.", _STANDARFONT_10);
             pdf.Add(phrase);
-            pdf.Add(new Chunk("\n"));
+
+            pdf.NewPage();
+
             phrase = new Phrase("V.- Que la EMPRESA CONTRATANTE tras estudiar las distintas modalidades organizativas recogidas en la Ley 31-995, y realizadas las preceptivas consultas previas a que se refiere el artículo 33 de la mencionada ley, ha optado por concertar con un Servicio de Prevención Ajeno, por no contar con suficientes recursos propios para el desarrollo de la actividad preventiva, en la forma y condiciones expresadas en el presente contrato y/o ulteriores que lo modifiquen o sustituyan, y que ambas partes suscriben.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
@@ -1322,13 +1318,13 @@ namespace Prevea.Service.Service
             phrase = new Phrase("", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("ACUERDAN", _STANDARFONT_10);
+            phrase = new Phrase("ACUERDAN", _STANDARFONT_10_BOLD);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("Suscribir el correspondiente contrato para la prestación de servicio de prevención", _STANDARFONT_10);
+            phrase = new Phrase("Suscribir el correspondiente contrato para la prestación de servicio de prevención, con base en las siguientes:", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("", _STANDARFONT_10);
@@ -1359,43 +1355,46 @@ namespace Prevea.Service.Service
             phrase = new Phrase("Para el desarrollo de las actuaciones pactadas, la EMPRESA CONTRATANTE viene obligada a:", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("a) Permitir el acceso al centro o centros de trabajo de las personas que, designadas por PREVEA, deban realizar todos o parte de los servicios contratados.", _STANDARFONT_10);
+            pdf.Add(new Chunk("\n"));
+            phrase = new Phrase("a)Permitir el acceso al centro o centros de trabajo de las personas que, designadas por PREVEA, deban realizar todos o parte de los servicios contratados.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("b)	Comunicar a PREVEA, la relación nominal de trabajadores, el puesto que ocupan y los cambios que puedan producirse en los mismos. Así como, comunicar los trabajadores especialmente sensibles, temporal o permanentemente y los puestos que ocupan, con especial atención de mujeres embarazadas y a los menores.", _STANDARFONT_10);
+            phrase = new Phrase("b)Comunicar a PREVEA, la relación nominal de trabajadores, el puesto que ocupan y los cambios que puedan producirse en los mismos. Así como, comunicar los trabajadores especialmente sensibles, temporal o permanentemente y los puestos que ocupan, con especial atención de mujeres embarazadas y a los menores.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("c)	Facilitar al servicio de prevención PREVEA, con carácter previo a iniciar las actividades contratadas, toda la información relativa a la organización, características y complejidad del trabajo, proceso de producción de la contratante, relación de las materias primas y sustancias utilizadas, equipos de trabajo e instalaciones existentes en la empresa, puestos de trabajo y tareas realizadas, información que conste en la empresa sobre el número y estado de salud de los trabajadores, y en general cualquier condición de trabajo entendida según define el artículo 4 de la Ley 31-995. Así mismo, en el caso que se produzca cualquier modificación en las condiciones de trabajo durante la vigencia del presente contrato, la EMPRESA CONTRATANTE, lo notificará fehacientemente a PREVEA con objeto de poder realizar las revisiones que correspondan, especialmente en lo referido al Plan de Prevención, Evaluación de Riesgos Laborales y Planificación de la Actividad Preventiva. PREVEA no se hace responsable de las consecuencias derivadas de la inexactitud de las informaciones facilitadas por la EMPRESA CONTRATANTE, o la falta de suministro de la misma conforme a lo anteriormente expuesto, quedando exonerada de cualquier responsabilidad por este motivo.", _STANDARFONT_10);
+            phrase = new Phrase("c)Facilitar al servicio de prevención PREVEA, con carácter previo a iniciar las actividades contratadas, toda la información relativa a la organización, características y complejidad del trabajo, proceso de producción de la contratante, relación de las materias primas y sustancias utilizadas, equipos de trabajo e instalaciones existentes en la empresa, puestos de trabajo y tareas realizadas, información que conste en la empresa sobre el número y estado de salud de los trabajadores, y en general cualquier condición de trabajo entendida según define el artículo 4 de la Ley 31-995. Así mismo, en el caso que se produzca cualquier modificación en las condiciones de trabajo durante la vigencia del presente contrato, la EMPRESA CONTRATANTE, lo notificará fehacientemente a PREVEA con objeto de poder realizar las revisiones que correspondan, especialmente en lo referido al Plan de Prevención, Evaluación de Riesgos Laborales y Planificación de la Actividad Preventiva. PREVEA no se hace responsable de las consecuencias derivadas de la inexactitud de las informaciones facilitadas por la EMPRESA CONTRATANTE, o la falta de suministro de la misma conforme a lo anteriormente expuesto, quedando exonerada de cualquier responsabilidad por este motivo.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("d)	Poner a disposición de PREVEA, la información prevista en los artículos 31.2 y 30.3 de la Ley 31-995, en relación con los artículos 18 y 23 en cuanto al acceso a la información y documentación de la EMPRESA CONTRATANTE", _STANDARFONT_10);
+            phrase = new Phrase("d)Poner a disposición de PREVEA, la información prevista en los artículos 31.2 y 30.3 de la Ley 31-995, en relación con los artículos 18 y 23 en cuanto al acceso a la información y documentación de la EMPRESA CONTRATANTE", _STANDARFONT_10);
+            pdf.Add(phrase);
+
+            pdf.NewPage();
+            
+            phrase = new Phrase("e)Firmar la recepción de informes y recomendaciones emitidos por PREVEA.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("e) Firmar la recepción de informes y recomendaciones emitidos por PREVEA.", _STANDARFONT_10);
+            phrase = new Phrase("f)Facilitar cualquier información no contemplada en los supuestos anteriores y que con criterio técnico de las personas que vayan a emitir el asesoramiento y apoyo al empresario, estimen razonables y necesarias en su normal actuación.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("f)	Facilitar cualquier información no contemplada en los supuestos anteriores y que con criterio técnico de las personas que vayan a emitir el asesoramiento y apoyo al empresario, estimen razonables y necesarias en su normal actuación.", _STANDARFONT_10);
+            phrase = new Phrase("g)Integrar la actividad preventiva, de conformidad con lo dispuesto en el artículo 1.1 del Reglamento de los Servicios de Prevención, lo que implica la atribución de todos los niveles jerárquicos y la asunción por estos de la obligación de incluir la prevención de riesgos en cualquier actividad que realicen u ordenen y en todas las decisiones que adopten, así como la ejecución del Plan de Prevención, exonerando a PREVEA de cualquier responsabilidad derivada de dicho incumplimiento.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("g)	Integrar la actividad preventiva, de conformidad con lo dispuesto en el artículo 1.1 del Reglamento de los Servicios de Prevención, lo que implica la atribución de todos los niveles jerárquicos y la asunción por estos de la obligación de incluir la prevención de riesgos en cualquier actividad que realicen u ordenen y en todas las decisiones que adopten, así como la ejecución del Plan de Prevención, exonerando a PREVEA de cualquier responsabilidad derivada de dicho incumplimiento.", _STANDARFONT_10);
+            phrase = new Phrase("h)La empresa contratante manifiesta que asume directamente y bajo su total responsabilidad, la ejecución y puesta en práctica de las medidas preventivas necesarias y asegurarse de su efectiva aplicación, eximiendo a PREVEA de cualquier reclamación que se pudiera plantear derivada de la no aplicación de las mismas.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("h)	La empresa contratante manifiesta que asume directamente y bajo su total responsabilidad, la ejecución y puesta en práctica de las medidas preventivas necesarias y asegurarse de su efectiva aplicación, eximiendo a PREVEA de cualquier reclamación que se pudiera plantear derivada de la no aplicación de las mismas.", _STANDARFONT_10);
+            phrase = new Phrase("i)Comunicar a PREVEA aquellos posibles riesgos no detectados en las evaluaciones y que son conocidos por la EMPRESA CONTRATANTE, debiendo para ello revisar el contenido de los informes elaborados por PREVEA, y comunicar en su caso, las omisiones o inexactitudes que puedan contener con respecto a la actividad de la empresa, entendiéndose en caso contrario que el informe contempla todo lo informado por la empresa.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("i)	Comunicar a PREVEA aquellos posibles riesgos no detectados en las evaluaciones y que son conocidos por la EMPRESA CONTRATANTE, debiendo para ello revisar el contenido de los informes elaborados por PREVEA, y comunicar en su caso, las omisiones o inexactitudes que puedan contener con respecto a la actividad de la empresa, entendiéndose en caso contrario que el informe contempla todo lo informado por la empresa.", _STANDARFONT_10);
+            phrase = new Phrase("j)Comunicar a PREVEA de manera fehaciente los accidentes de trabajo que se produzcan durante la vigencia de este contrato.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("j)	Comunicar a PREVEA de manera fehaciente los accidentes de trabajo que se produzcan durante la vigencia de este contrato.", _STANDARFONT_10);
+            phrase = new Phrase("k)Comunicar a PREVEA las actividades o funciones realizadas con recursos propios o con otros recursos ajenos, para facilitar la colaboración y coordinación entre los mismos.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("k)	Comunicar a PREVEA las actividades o funciones realizadas con recursos propios o con otros recursos ajenos, para facilitar la colaboración y coordinación entre los mismos.", _STANDARFONT_10);
+            phrase = new Phrase("l)Comunicar a PREVEA los daños a la salud derivados del trabajo", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("l) Comunicar a PREVEA los daños a la salud derivados del trabajo", _STANDARFONT_10);
-            pdf.Add(phrase);
-            pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("m)	Comunicar a PREVEA de la existencia o apertura de centros de trabajo sometidos a la normativa de Seguridad y Salud en obras de Construcción.", _STANDARFONT_10);
+            phrase = new Phrase("m)Comunicar a PREVEA de la existencia o apertura de centros de trabajo sometidos a la normativa de Seguridad y Salud en obras de Construcción.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("", _STANDARFONT_10);
@@ -1403,31 +1402,32 @@ namespace Prevea.Service.Service
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("TERCERA: OBLICACIONES DE PREVEA. ", _STANDARFONT_10_BOLD);
             pdf.Add(phrase);
-            phrase = new Phrase("Para el desarrollo de las actuaciones pactadas", _STANDARFONT_10);
+            phrase = new Phrase("Para el desarrollo de las actuaciones pactadas, PREVEA viene obligada a:", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("a) Realizar las actividades preventivas para cada una de las especialidades contratadas recogidas en el ANEXO I al presente contrato.", _STANDARFONT_10);
+            pdf.Add(new Chunk("\n"));
+            phrase = new Phrase("a)Realizar las actividades preventivas para cada una de las especialidades contratadas recogidas en el ANEXO I al presente contrato.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("b)	En caso de tener que revisar la evaluación de riesgos, con ocasión de los daños para la salud de los trabajadores que se hayan producido y en los casos exigidos por el ordenamiento jurídico, PREVEA se compromete a realizar dicha actividad, siempre y cuando se comunique de forma fehaciente.", _STANDARFONT_10);
+            phrase = new Phrase("b)En caso de tener que revisar la evaluación de riesgos, con ocasión de los daños para la salud de los trabajadores que se hayan producido y en los casos exigidos por el ordenamiento jurídico, PREVEA se compromete a realizar dicha actividad, siempre y cuando se comunique de forma fehaciente.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("c)	PREVEA realizará, con la periodicidad que requieran los riesgos existentes, la actividad de seguimiento y valoración de la implantación de las actividades preventivas derivadas de la evaluación.", _STANDARFONT_10);
+            phrase = new Phrase("c)PREVEA realizará, con la periodicidad que requieran los riesgos existentes, la actividad de seguimiento y valoración de la implantación de las actividades preventivas derivadas de la evaluación.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("d)	PREVEA realizará la memoria anual de actividades preventivas y la valoración de la efectividad de la integración de la prevención de riesgos laborales en el sistema general de gestión de la empresa a través de la implantación y aplicación del plan de prevención de riesgos laborales en relación con las actividades preventivas concertadas. Igualmente facilitará la memoria y la programación anual a las que se refiere el apartado artículo 39.2 de la Ley 31-995.", _STANDARFONT_10);
+            phrase = new Phrase("d)PREVEA realizará la memoria anual de actividades preventivas y la valoración de la efectividad de la integración de la prevención de riesgos laborales en el sistema general de gestión de la empresa a través de la implantación y aplicación del plan de prevención de riesgos laborales en relación con las actividades preventivas concertadas. Igualmente facilitará la memoria y la programación anual a las que se refiere el apartado artículo 39.2 de la Ley 31-995.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("e) PREVEA dedicará anualmente los recursos humanos y materiales necesarios para la realización de las actividades concertadas.", _STANDARFONT_10);
+            phrase = new Phrase("e)PREVEA dedicará anualmente los recursos humanos y materiales necesarios para la realización de las actividades concertadas.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("f)	PREVEA asesorará al empresario, a los trabajadores, sus representantes y a los órganos de representación especializados, en los términos establecidos en la normativa aplicable.", _STANDARFONT_10);
+            phrase = new Phrase("f)PREVEA asesorará al empresario, a los trabajadores, sus representantes y a los órganos de representación especializados, en los términos establecidos en la normativa aplicable.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("g)	PREVEA informará a la EMPRESA CONTRATANTE de las actividades preventivas concretas que sean legalmente exigibles y que no queden cubiertas por el concierto.", _STANDARFONT_10);
+            phrase = new Phrase("g)PREVEA informará a la EMPRESA CONTRATANTE de las actividades preventivas concretas que sean legalmente exigibles y que no queden cubiertas por el concierto.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("h)	Cuando la EMPRESA CONTRATANTE realice actividades o cuente con centros de trabajo sometidos a la normativa de Seguridad y Salud en obras de Construcción, los servicios concertados se realizarán respecto de los centros u obras en las que intervenga y que aparezcan reflejados en el ANEXO I, o en su caso posteriores ANEXOS previa comunicación de la EMPRESA CONTRATANTE de los mismos.", _STANDARFONT_10);
+            phrase = new Phrase("h)Cuando la EMPRESA CONTRATANTE realice actividades o cuente con centros de trabajo sometidos a la normativa de Seguridad y Salud en obras de Construcción, los servicios concertados se realizarán respecto de los centros u obras en las que intervenga y que aparezcan reflejados en el ANEXO I, o en su caso posteriores ANEXOS previa comunicación de la EMPRESA CONTRATANTE de los mismos.", _STANDARFONT_10);
             pdf.Add(phrase);
 
             pdf.NewPage();
@@ -1477,7 +1477,9 @@ namespace Prevea.Service.Service
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("", _STANDARFONT_10);
             pdf.Add(phrase);
-            pdf.Add(new Chunk("\n"));
+
+            pdf.NewPage();
+
             phrase = new Phrase("SEXTA: CONDICIONES ECONÓMICAS. ", _STANDARFONT_10_BOLD);
             pdf.Add(phrase);
             phrase = new Phrase("Se estipula un precio de, como remuneración del Servicio de Prevención contratado, con el desglose y condiciones establecidas en el Anexo I, del presente contrato. Al importe del precio mencionado, se añadirán los tributos que graven la prestación de las actividades preventivas. Las partes acuerdan, la revisión automática del precio pactado por la variación en: las actividades preventivas a desarrollar con PREVEA, el número de trabajadores en plantilla, nivel de riesgo de la empresa o del número de centros de trabajo de dicha EMPRESA CONTRATANTE. Así mismo, PREVEA, en caso de renovar el contrato, se reserva el derecho de incrementar el precio acordado, según las variaciones que experimente el Índice de Precios al Consumo (I.P.C), así como las variaciones que experimente el mercado.", _STANDARFONT_10);
@@ -1524,7 +1526,9 @@ namespace Prevea.Service.Service
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("", _STANDARFONT_10);
             pdf.Add(phrase);
-            pdf.Add(new Chunk("\n"));
+
+            pdf.NewPage();
+
             phrase = new Phrase("Cláusula de Confidencialidad y de Encargado de Tratamiento", _STANDARFONT_10_BOLD);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
@@ -1545,10 +1549,7 @@ namespace Prevea.Service.Service
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("5.- PREVEA realizará sus acciones como encargado de tratamiento de acuerdo a las instrucciones que le indique EMPRESA CONTRATANTE, y también expresamente de acuerdo a las normativas aplicables al objeto de la relación establecida en el presente contrato.", _STANDARFONT_10);
             pdf.Add(phrase);
-
-
-            pdf.NewPage();
-
+            pdf.Add(new Chunk("\n"));
             phrase = new Phrase("6.- A la finalización de la relación entre las partes, PREVEA devolverá o destruirá la información proporcionada por EMPRESA CONTRATANTE, con expresa reserva de todo lo dispuesto en la normativa vigente aplicable, en lo necesario para la tutela judicial efectiva, a disposición de los órganos administrativos y jurisdiccionales competentes, en los plazos previstos por la ley.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
@@ -1579,52 +1580,13 @@ namespace Prevea.Service.Service
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("", _STANDARFONT_10);
             pdf.Add(phrase);
-            pdf.Add(new Chunk("\n"));
 
-            var pdfPTable = new PdfPTable(2) { WidthPercentage = 100 };
-            var widths = new[] { 50f, 50f };
-            pdfPTable.SetWidths(widths);
+            pdf.NewPage();
 
-            var pdfCell = new PdfPCell(new Phrase("Por la EMPRESA CONTRATANTE. S.L. Por PREVEA CONSULTORES Y PROYECTOS", _STANDARFONT_10)) { BorderWidth = 0 };
-            pdfPTable.AddCell(pdfCell);
-            pdfCell = new PdfPCell(new Phrase("Fdo: D. VIRGILIO CARRASCO MARTINEZ", _STANDARFONT_10)) { BorderWidth = 0 };
-            pdfPTable.AddCell(pdfCell);
+            AddSignatureToContract(pdf, document, route);
 
-            //if (document.Signature == null)
-            //{
-            //    pdfCell = new PdfPCell(new Phrase("", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
-            //    pdfPTable.AddCell(pdfCell);
-            //}
-            //else
-            //{
-            //    using (var memoryStream = new MemoryStream(document.Signature))
-            //    {
-            //        var imageFirm = Image.GetInstance(memoryStream);
-            //        imageFirm.ScalePercent(50f);
-            //        pdfCell = new PdfPCell(imageFirm)
-            //        {
-            //            BorderWidth = 0,
-            //            HorizontalAlignment = Element.ALIGN_CENTER,
-            //        };
-            //        pdfPTable.AddCell(pdfCell);
-            //    }
-            //}
+            pdf.NewPage();
 
-            var image = Image.GetInstance($"{route}\\Images\\companySeal.png");
-            image.ScalePercent(50f);
-            var pdfCellImage = new PdfPCell(image)
-            {
-                BorderWidth = 0,
-                HorizontalAlignment = Element.ALIGN_CENTER,
-                Colspan = 2
-            };
-            pdfPTable.AddCell(pdfCellImage);
-            pdf.Add(pdfPTable);
-
-            pdf.Add(new Chunk("\n"));
-            phrase = new Phrase(" ", _STANDARFONT_10);
-            pdf.Add(phrase);
-            pdf.Add(new Chunk("\n"));
             phrase = new Phrase("ANEXO \"I\" AL CONTRATO DE PREVENCIÓN DE RIESGOS LABORALES ", _STANDARFONT_10_BOLD);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
@@ -1698,7 +1660,7 @@ namespace Prevea.Service.Service
             phrase = new Phrase("", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("2.- ESPECIALIDADES Y ACTIVIDADES CONCERTADAS.", _STANDARFONT_10_BOLD);
+            phrase = new Phrase("2.- ESPECIALIDADES Y ACTIVIDADES CONCERTADAS", _STANDARFONT_10_BOLD);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("Desde la firma del presente contrato, la entidad PREVEA, prestará de forma multidisciplinar para las especialidades contratadas las actividades preventivas que se detallan a continuación, y que han sido concertadas de mutuo acuerdo por ambas partes:", _STANDARFONT_10);
@@ -1709,6 +1671,7 @@ namespace Prevea.Service.Service
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("2.1. Actividades preventivas incluidas con carácter general:", _STANDARFONT_10_BOLD);
             pdf.Add(phrase);
+            pdf.Add(new Chunk("\n"));
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("2.1.1. Programación Anual de la Actividad Preventiva.", _STANDARFONT_10);
             pdf.Add(phrase);
@@ -1721,9 +1684,7 @@ namespace Prevea.Service.Service
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("2.1.4. Planificación de la Actividad preventiva y determinación de las prioridades en la adopción de las medidas preventivas adecuadas.", _STANDARFONT_10);
             pdf.Add(phrase);
-
-            pdf.NewPage();
-            
+            pdf.Add(new Chunk("\n"));
             phrase = new Phrase("2.1.5.	Información de los Trabajadores de su puesto de trabajo, en virtud de los artículo 18 de la Ley 31-995 de Prevención de Riesgos Laborales.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
@@ -1735,7 +1696,9 @@ namespace Prevea.Service.Service
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("2.1.8. Investigación de accidentes de trabajo y enfermedades profesionales.", _STANDARFONT_10);
             pdf.Add(phrase);
-            pdf.Add(new Chunk("\n"));
+
+            pdf.NewPage();
+            
             phrase = new Phrase("2.1.9.	Valoración mediante mediciones puntuales de condiciones ambientales de ruido, iluminación, temperatura y humedad.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
@@ -1791,7 +1754,9 @@ namespace Prevea.Service.Service
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("", _STANDARFONT_10);
             pdf.Add(phrase);
-            pdf.Add(new Chunk("\n"));
+
+            pdf.NewPage();
+
             phrase = new Phrase("2.2.2. Otras actividades específicas:", _STANDARFONT_10_BOLD);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
@@ -1834,6 +1799,7 @@ namespace Prevea.Service.Service
             phrase = new Phrase("2.3. Especialidades Preventivas de Higiene Industrial:", _STANDARFONT_10_BOLD);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
+            pdf.Add(new Chunk("\n"));
             phrase = new Phrase("2.3.1. Actividades generales: ", _STANDARFONT_10_BOLD);
             pdf.Add(phrase);
             phrase = new Phrase("Con respecto a la especialidad de HIGIENE INDUSTRIAL, PREVEA. Se compromete a identificar, evaluar y proponer las medidas correctoras que procedan, considerando para ello todos los riesgos de esta naturaleza existentes en la empresa, y valorar la necesidad o no de realizar mediciones higiénicas al respecto.", _STANDARFONT_10);
@@ -1841,9 +1807,7 @@ namespace Prevea.Service.Service
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("PREVEA se compromete a comunicar a la EMPRESA CONTRATANTE la necesidad de realizar otras actividades específicas cuando resulte legalmente exigibles, o recomendables en base a criterios técnicos, y que de forma no exhaustiva se recogen en el apartado 2.3.2.", _STANDARFONT_10);
             pdf.Add(phrase);
-
-            pdf.NewPage();
-           
+            pdf.Add(new Chunk("\n"));
             phrase = new Phrase("2.3.2. Otras actividades específicas:", _STANDARFONT_10_BOLD);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
@@ -1867,7 +1831,9 @@ namespace Prevea.Service.Service
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("", _STANDARFONT_10);
             pdf.Add(phrase);
-            pdf.Add(new Chunk("\n"));
+
+            pdf.NewPage();
+            
             phrase = new Phrase("2.4. Especialidades Preventivas de Ergonomía y Psicosociología Aplicada:", _STANDARFONT_10_BOLD);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
@@ -1879,8 +1845,6 @@ namespace Prevea.Service.Service
             phrase = new Phrase("Con respecto a la especialidad de ERGONOMIA Y PSICOSOCIOLOGIA APLICADA, PREVEA se compromete a identificar, evaluar y proponer las medidas correctoras que procedan, considerando para ello todos los riesgos de esta naturaleza existentes en la empresa. PREVEA se compromete a la revisión de la Evaluación de Riesgos en los casos legalmente exigidos, en particular con ocasión de daños para la salud de los trabajadores PREVEA se compromete a comunicar a la EMPRESA CONTRATANTE la necesidad de realizar otras actividades específicas cuando resulte legalmente exigibles, o recomendables en base a criterios técnicos, y que de forma no exhaustiva se recogen en el 2.4.2.", _STANDARFONT_10);           
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("", _STANDARFONT_10);
-            pdf.Add(phrase);
             phrase = new Phrase("2.4.2. Otras actividades específicas:", _STANDARFONT_10_BOLD);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
@@ -1918,19 +1882,19 @@ namespace Prevea.Service.Service
             phrase = new Phrase("Se realizarán las siguientes actividades:", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("-Análisis con criterios epidemiológicos", _STANDARFONT_10);
+            phrase = new Phrase("-Análisis con criterios epidemiológicos, siempre que las condiciones lo determinen, de los resultados de los reconocimientos médicos individuales y específicos, realizados en su conjunto.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("-Análisis de las ausencias que", _STANDARFONT_10);
+            phrase = new Phrase("-Análisis de las ausencias que, por motivos de salud, tenga el trabajador a los efectos de poder identificar cualquier relación entre las causas de enfermedad y los riesgos para la salud que puedan presentarse en los lugares de trabajo, previa comunicación de forma fehaciente a PREVEA.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("-Proporcionar información a los trabajadores en relación con los efectos para la salud derivados de los riesgos del trabajo y realizar actividades formativas en primeros auxilios.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("-Colaboración con los servicios de atención primaria de salud y de asistencia sanitaria especializada para el diagnóstico", _STANDARFONT_10);
+            phrase = new Phrase("-Colaboración con los servicios de atención primaria de salud y de asistencia sanitaria especializada para el diagnóstico, tratamiento y rehabilitación de enfermedades relacionadas con el trabajo, y con las Administraciones sanitarias competentes en materia de salud laboral.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("-Estudio y valoración de los riesgos que puedan afectar a las trabajadoras embarazadas o en situación de parto reciente", _STANDARFONT_10);
+            phrase = new Phrase("-Estudio y valoración de los riesgos que puedan afectar a las trabajadoras embarazadas o en situación de parto reciente, a los menores y a los trabajadores especialmente sensibles a determinados riesgos por sus características personales, estado biológico o discapacidades físicas, psíquicas o sensoriales conocidas.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("-Resumen de las actividades realizadas durante el concierto en la memoria anual de actividades.", _STANDARFONT_10);
@@ -1938,51 +1902,54 @@ namespace Prevea.Service.Service
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("", _STANDARFONT_10);
             pdf.Add(phrase);
-            pdf.Add(new Chunk("\n"));
+
+            pdf.NewPage();
+
             phrase = new Phrase("2.5.2. Reconocimientos Médicos Individuales: ", _STANDARFONT_10_BOLD);
             pdf.Add(phrase);
             phrase = new Phrase("Se realizarán las siguientes actuaciones:", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("-Realización de los exámenes de salud de los trabajadores", _STANDARFONT_10);
+            phrase = new Phrase("-Realización de los exámenes de salud de los trabajadores, iniciales o periódicos, en función de los riesgos inherentes a su trabajo, de acuerdo con la legislación vigente, consistente en un examen médico para poder realizar una correcta valoración de su estado de salud.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("-Entrega al Empresario de la información sobre la Aptitud del trabajador para desempeñar el puesto de trabajo y de las conclusiones de los exámenes de salud con objeto de mejorar las medidas de prevención y protección de los trabajadores.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("-Entrega del resultado de los exámenes de salud dirigidos a los trabajadores", _STANDARFONT_10);
+            phrase = new Phrase("-Entrega del resultado de los exámenes de salud dirigidos a los trabajadores, donde se establecen las conclusiones y recomendaciones sobre su salud.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("-Las pruebas que se realizarán al contratar los reconocimientos médicos individuales", _STANDARFONT_10);
+            phrase = new Phrase("-Las pruebas que se realizarán al contratar los reconocimientos médicos individuales, según protocolo, podrán incluir hemograma general (20 parámetros), bioquímica sanguínea general (12 parámetros), perfil sistemático de orina (10 parámetros), ECG, espirometría, audiometría y control visión, sin ningún coste adicional para la empresa contratante.", _STANDARFONT_10);
             pdf.Add(phrase);
+            pdf.Add(new Chunk("\n"));
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("2.5.3. Otras Pruebas Complementarias:", _STANDARFONT_10_BOLD);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("-Pruebas complementarias o parámetros analíticos suplementarios que se tengan que realizar en función de lo estipulado en el protocolo médico específico a aplicar en cada caso", _STANDARFONT_10);
+            phrase = new Phrase("-Pruebas complementarias o parámetros analíticos suplementarios que se tengan que realizar en función de lo estipulado en el protocolo médico específico a aplicar en cada caso, según la evaluación de riesgos.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("-Pruebas de radio diagnóstico.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("Las pruebas complementarias recogidas en el apartado 2.5.3", _STANDARFONT_10);
-            pdf.Add(phrase);
-
-            pdf.NewPage();
-
-            phrase = new Phrase("3.-ACTIVIDADES EXCLUIDAS:", _STANDARFONT_10_BOLD);
+            pdf.Add(new Chunk("\n"));
+            phrase = new Phrase("Las pruebas complementarias recogidas en el apartado 2.5.3, no están incluidas en los precios indicados en el apartado 4 del presente Anexo. El desarrollo de dichas actividades requiere la aceptación y pago por parte de la EMPRESA CONTRATANTE de manera previa a su realización.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("No se incluyen en el presente concierto las siguientes actividades", _STANDARFONT_10);
+            pdf.Add(new Chunk("\n"));
+            phrase = new Phrase("3.- ACTIVIDADES EXCLUIDAS", _STANDARFONT_10_BOLD);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("- Certificaciones de instalaciones o maquinaría", _STANDARFONT_10);
+            phrase = new Phrase("No se incluyen en el presente concierto las siguientes actividades, pudiendo ser legalmente exigibles:", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("- Asesoramiento jurídico frente a frente a requerimientos", _STANDARFONT_10);
+            phrase = new Phrase("-Certificaciones de instalaciones o maquinaría, o puestas en conformidad propias de Organismos de Control Autorizado.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("- Actividades preventivas que afecten a instalaciones o a trabajadores situadas o que presten servicio fuera del ámbito territorial de actuación de PREVEA.", _STANDARFONT_10);
+            phrase = new Phrase("-Asesoramiento jurídico frente a frente a requerimientos, reclamaciones, infracciones y sanciones.", _STANDARFONT_10);
+            pdf.Add(phrase);
+            pdf.Add(new Chunk("\n"));
+            phrase = new Phrase("-Actividades preventivas que afecten a instalaciones o a trabajadores situadas o que presten servicio fuera del ámbito territorial de actuación de PREVEA.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("", _STANDARFONT_10);
@@ -1991,22 +1958,28 @@ namespace Prevea.Service.Service
             phrase = new Phrase("Otras exclusiones:", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("- No incluirá", _STANDARFONT_10);
+            phrase = new Phrase("-No incluirá, en caso de requerirse, el coste de traducción a lengua extranjera de la documentación, formación o información generada por PREVEA", _STANDARFONT_10);
+            pdf.Add(phrase);
+            pdf.Add(new Chunk("\n"));
+            phrase = new Phrase("", _STANDARFONT_10);
+            pdf.Add(phrase);
+
+            pdf.NewPage();
+
+            phrase = new Phrase("4.- CONDICIONES ECONÓMICAS", _STANDARFONT_10_BOLD);
+            pdf.Add(phrase);
+            pdf.Add(new Chunk("\n"));
+            phrase = new Phrase("La empresa contratante se compromete a satisfacer a PREVEA., la cantidad de ", _STANDARFONT_10);
+            pdf.Add(phrase);
+            phrase = new Phrase("1580,00 €uros", _STANDARFONT_10_BOLD);
+            pdf.Add(phrase);
+            phrase = new Phrase(", fijada como precio anual en la cláusula Sexta del presente contrato, desglosada de la siguiente manera:", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("4.-CONDICIONES ECONÓMICAS:", _STANDARFONT_10_BOLD);
-            pdf.Add(phrase);
-            pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("La empresa contratante se compromete a satisfacer a PREVEA.", _STANDARFONT_10);
-            pdf.Add(phrase);
-            pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("", _STANDARFONT_10);
-            pdf.Add(phrase);
-            pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("-Actividades correspondientes ", _STANDARFONT_10);
+            phrase = new Phrase("Actividades correspondientes ", _STANDARFONT_10);
             pdf.Add(phrase);
             phrase = new Phrase("A LAS ESPECIALIDADES TECNICAS DE SEGURIDAD, HIGIENE, ERGONOMIA Y PSICOSOCIOLOGIA APLICADAS Y VIGILANCIA DE LA SALUD", _STANDARFONT_10_BOLD);
             pdf.Add(phrase);
@@ -2016,7 +1989,8 @@ namespace Prevea.Service.Service
             GetDescriptionPrecio(pdf, document);
 
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("5. FORMA DE PAGO.", _STANDARFONT_10_BOLD);
+            pdf.Add(new Chunk("\n"));
+            phrase = new Phrase("5.- FORMA DE PAGO", _STANDARFONT_10_BOLD);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("- El pago se realizará: ", _STANDARFONT_10);
@@ -2032,20 +2006,15 @@ namespace Prevea.Service.Service
             phrase = new Phrase("", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("6. IMPUESTOS. ", _STANDARFONT_10_BOLD);
+            phrase = new Phrase("6.- IMPUESTOS", _STANDARFONT_10_BOLD);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
             phrase = new Phrase("Todos los impuestos que graven la prestación de los servicios concertados mediante la suscripción del presente contrato serán de cuenta de la empresa contratante.", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("", _STANDARFONT_10);
-            pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("", _STANDARFONT_10);
-            pdf.Add(phrase);
-            pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("Por la EMPRESA CONTRATANTE", _STANDARFONT_10);
-            pdf.Add(phrase);
+
+            AddSignatureToContract(pdf, document, route);
 
             pdf.NewPage();
 
@@ -2061,9 +2030,7 @@ namespace Prevea.Service.Service
             phrase = new Phrase("", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
-            phrase = new Phrase("PRIMERO.- La Entidad ", _STANDARFONT_10);
-            pdf.Add(phrase);
-            phrase = new Phrase($"{document.Company.Name}", _STANDARFONT_10);
+            phrase = new Phrase("PRIMERO.- La Entidad __________________", _STANDARFONT_10);
             pdf.Add(phrase);
 
             pdf.Add(new Chunk("\n"));
@@ -2249,6 +2216,61 @@ namespace Prevea.Service.Service
             phrase = new Phrase("____ de __________ de 201_", _STANDARFONT_10);
             pdf.Add(phrase);
             pdf.Add(new Chunk("\n"));
+        }
+
+        private void AddSignatureToContract(Document pdf, Model.Model.Document document, string route)
+        {
+            var pdfPTable = new PdfPTable(2) { WidthPercentage = 100 };
+            var widths = new[] { 50f, 50f };
+            pdfPTable.SetWidths(widths);
+
+
+            var pdfCell = new PdfPCell(new Phrase($"Por la EMPRESA CONTRATANTE. {document.Company.Name}", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
+            pdfPTable.AddCell(pdfCell);
+            pdfCell = new PdfPCell(new Phrase("Por PREVEA CONSULTORES Y PROYECTOS, S.L.", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
+            pdfPTable.AddCell(pdfCell);
+
+            var contactPerson = document.Company.ContactPersons.FirstOrDefault(x =>
+                x.ContactPersonTypeId == (int)EnContactPersonType.LegalRepresentative);
+            pdfCell = contactPerson != null
+                ? new PdfPCell(new Phrase($"Fdo: D. {contactPerson.User.FirstName} {contactPerson.User.LastName}",
+                        _STANDARFONT_10_BOLD))
+                { BorderWidth = 0 }
+                : new PdfPCell(new Phrase(" ", _STANDARFONT_10)) { BorderWidth = 0 };
+            pdfPTable.AddCell(pdfCell);
+
+            pdfCell = new PdfPCell(new Phrase("Fdo: D. VIRGILIO CARRASCO MARTINEZ", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
+            pdfPTable.AddCell(pdfCell);
+
+            if (document.Signature == null)
+            {
+                pdfCell = new PdfPCell(new Phrase("", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
+                pdfPTable.AddCell(pdfCell);
+            }
+            else
+            {
+                using (var memoryStream = new MemoryStream(document.Signature))
+                {
+                    var imageFirm = Image.GetInstance(memoryStream);
+                    imageFirm.ScalePercent(50f);
+                    pdfCell = new PdfPCell(imageFirm)
+                    {
+                        BorderWidth = 0,
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                    };
+                    pdfPTable.AddCell(pdfCell);
+                }
+            }
+
+            var image = Image.GetInstance($"{route}\\Images\\companySeal.png");
+            image.ScalePercent(50f);
+            var pdfCellImage = new PdfPCell(image)
+            {
+                BorderWidth = 0,
+                HorizontalAlignment = Element.ALIGN_CENTER
+            };
+            pdfPTable.AddCell(pdfCellImage);
+            pdf.Add(pdfPTable);
         }
     }
 
