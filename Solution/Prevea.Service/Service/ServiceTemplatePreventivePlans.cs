@@ -265,11 +265,11 @@
 
             result += "<br/><br/>";
 
-            result += "<table style='width:100%;'><tbody><tr style='height:100%;'><td style='width:33%; color:white; padding-left:20px; background-color: #007CC0;'><h3>Nº EVALUACIÓN</h3></td><td style='width:67%; border: 1px solid black; padding-left:20px; '><h3>&nbsp;</h3></td></tr></tbody></table>";
-            result += "<table style='width:100%;'><tbody><tr style='height:100%;'><td style='width:33%; color:white; padding-left:20px; background-color: #007CC0;'><h3>TIPO</h3></td><td style='width:67%; border: 1px solid black; padding-left:20px; '><h3>PERIÓDICA</h3></td></tr></tbody></table>";
-            result += $"<table style='width:100%;'><tbody><tr style='height:100%;'><td style='width:33%; color:white; padding-left:20px; background-color: #007CC0;'><h3>FECHA</h3></td><td style='width:67%; border: 1px solid black; padding-left:20px; '><h3>{DateTime.Now.ToShortDateString()}</h3></td></tr></tbody></table>";
-            result += $"<table style='width:100%;'><tbody><tr style='height:100%;'><td style='width:33%; color:white; padding-left:20px; background-color: #007CC0;'><h3>ACTIVIDAD CNAE</h3></td><td style='width:67%; border: 1px solid black; padding-left:20px; '><h3>{preventivePlan.Company.Cnae.Name}</h3></td></tr></tbody></table>";
-            result += $"<table style='width:100%;'><tbody><tr style='height:100%;'><td style='width:33%; color:white; padding-left:20px; background-color: #007CC0;'><h3>RAZÓN SOCIAL</h3></td><td style='width:67%; border: 1px solid black; padding-left:20px; '><h3>{preventivePlan.Company.Name}</h3></td></tr></tbody></table>";
+            result += "<table align='center' style='width:90%;'><tbody><tr style='height:100%;'><td style='width:33%; color:white; padding-left:20px; background-color: #007CC0;'><h3>Nº EVALUACIÓN</h3></td><td style='width:67%; border: 1px solid black; padding-left:20px; '><h3>&nbsp;</h3></td></tr></tbody></table>";
+            result += "<table align='center' style='width:90%;'><tbody><tr style='height:100%;'><td style='width:33%; color:white; padding-left:20px; background-color: #007CC0;'><h3>TIPO</h3></td><td style='width:67%; border: 1px solid black; padding-left:20px; '><h3>PERIÓDICA</h3></td></tr></tbody></table>";
+            result += $"<table align='center' style='width:90%;'><tbody><tr style='height:100%;'><td style='width:33%; color:white; padding-left:20px; background-color: #007CC0;'><h3>FECHA</h3></td><td style='width:67%; border: 1px solid black; padding-left:20px; '><h3>{DateTime.Now.ToShortDateString()}</h3></td></tr></tbody></table>";
+            result += $"<table align='center' style='width:90%;'><tbody><tr style='height:100%;'><td style='width:33%; color:white; padding-left:20px; background-color: #007CC0;'><h3>ACTIVIDAD CNAE</h3></td><td style='width:67%; border: 1px solid black; padding-left:20px; '><h3>{preventivePlan.Company.Cnae.Name}</h3></td></tr></tbody></table>";
+            result += $"<table align='center' style='width:90%;'><tbody><tr style='height:100%;'><td style='width:33%; color:white; padding-left:20px; background-color: #007CC0;'><h3>RAZÓN SOCIAL</h3></td><td style='width:67%; border: 1px solid black; padding-left:20px; '><h3>{preventivePlan.Company.Name}</h3></td></tr></tbody></table>";
 
             var contactPerson = preventivePlan.Company.ContactPersons.FirstOrDefault(x =>
                 x.ContactPersonTypeId == (int)EnContactPersonType.LegalRepresentative);
@@ -277,11 +277,11 @@
                 $"{contactPerson.User.FirstName} {contactPerson.User.LastName}" : 
                 string.Empty;
 
-            result += $"<table style='width:100%;'><tbody><tr style='height:100%;'><td style='width:33%; color:white; padding-left:20px; background-color: #007CC0;'><h3>REPRESENTANTE</h3></td><td style='width:67%; border: 1px solid black; padding-left:20px; '><h3>{nameContactPerson}</h3></td></tr></tbody></table>";
-            result += $"<table style='width:100%;'><tbody><tr style='height:100%;'><td style='width:33%; color:white; padding-left:20px; background-color: #007CC0;'><h3>DOMICILIO</h3></td><td style='width:67%; border: 1px solid black; padding-left:20px; '><h3>{preventivePlan.Company.Address}</h3></td></tr></tbody></table>";
-            result += $"<table style='width:100%;'><tbody><tr style='height:100%;'><td style='width:33%; color:white; padding-left:20px; background-color: #007CC0;'><h3>C.P.</h3></td><td style='width:67%; border: 1px solid black; padding-left:20px; '><h3>{preventivePlan.Company.PostalCode}</h3></td></tr></tbody></table>";
-            result += $"<table style='width:100%;'><tbody><tr style='height:100%;'><td style='width:33%; color:white; padding-left:20px; background-color: #007CC0;'><h3>LOCALIDAD</h3></td><td style='width:67%; border: 1px solid black; padding-left:20px; '><h3>{preventivePlan.Company.Province}</h3></td></tr></tbody></table>";
-            result += "<table style='width:100%;'><tbody><tr style='height:100%;'><td style='width:100%; color:white; padding-left:20px; background-color: #007CC0;'><h3>CENTROS DE TRABAJO</h3></td></tr></tbody></table>";
+            result += $"<table align='center' style='width:90%;'><tbody><tr style='height:100%;'><td style='width:33%; color:white; padding-left:20px; background-color: #007CC0;'><h3>REPRESENTANTE</h3></td><td style='width:67%; border: 1px solid black; padding-left:20px; '><h3>{nameContactPerson}</h3></td></tr></tbody></table>";
+            result += $"<table align='center' style='width:90%;'><tbody><tr style='height:100%;'><td style='width:33%; color:white; padding-left:20px; background-color: #007CC0;'><h3>DOMICILIO</h3></td><td style='width:67%; border: 1px solid black; padding-left:20px; '><h3>{preventivePlan.Company.Address}</h3></td></tr></tbody></table>";
+            result += $"<table align='center' style='width:90%;'><tbody><tr style='height:100%;'><td style='width:33%; color:white; padding-left:20px; background-color: #007CC0;'><h3>C.P.</h3></td><td style='width:67%; border: 1px solid black; padding-left:20px; '><h3>{preventivePlan.Company.PostalCode}</h3></td></tr></tbody></table>";
+            result += $"<table align='center' style='width:90%;'><tbody><tr style='height:100%;'><td style='width:33%; color:white; padding-left:20px; background-color: #007CC0;'><h3>LOCALIDAD</h3></td><td style='width:67%; border: 1px solid black; padding-left:20px; '><h3>{preventivePlan.Company.Province}</h3></td></tr></tbody></table>";
+            result += "<table align='center' style='width:90%;'><tbody><tr style='height:100%;'><td style='width:100%; color:white; padding-left:20px; background-color: #007CC0;'><h3>CENTROS DE TRABAJO</h3></td></tr></tbody></table>";
 
             result += "<br/><br/>";
 
