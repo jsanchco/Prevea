@@ -308,7 +308,8 @@ namespace Prevea.Service.Service
             pdfCell = new PdfPCell(new Phrase("CONTACTO", _STANDARFONT_10_BOLD)) { BorderWidth = 0 };
             pdfPTable.AddCell(pdfCell);
             var contactPerson = document.Company.ContactPersons.FirstOrDefault(x =>
-                x.ContactPersonTypeId == (int)EnContactPersonType.ContactPerson);
+                x.ContactPersonTypeId == (int)EnContactPersonType.ContactPerson ||
+                x.ContactPersonTypeId == (int)EnContactPersonType.LegalRepresentative);
             pdfCell = contactPerson != null
                 ? new PdfPCell(new Phrase($"{contactPerson.User.FirstName} {contactPerson.User.LastName}",
                     _STANDARFONT_10))
