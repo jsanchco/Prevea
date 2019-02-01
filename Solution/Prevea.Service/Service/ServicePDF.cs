@@ -68,10 +68,6 @@ namespace Prevea.Service.Service
                 pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
                 GetObservaciones(pdf, documentSPA);
                 pdf.NewPage();
-                pdf.Add(GetTableTitle("FORMA DE PAGO"));
-                pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
-                pdf.Add(GetFormaPago(documentSPA));
-                pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
                 pdf.Add(GetTableTitle("ACTIVIDADES OFERTADAS POR ESPECIALIDADES"));
                 pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
                 pdf.Add(GetTableTitleTransparent(
@@ -83,13 +79,16 @@ namespace Prevea.Service.Service
                 pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
                 GetDescriptionVigilanciaSalud(pdf);
                 pdf.NewPage();
-                pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
                 pdf.Add(GetTableTitle("PRESUPUESTO"));
                 pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
                 pdf.Add(GetTableTitleTransparent("PRECIO"));
                 pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
                 GetDescriptionPrecio(pdf, documentSPA);
                 pdf.NewPage();
+                pdf.Add(GetTableTitle("FORMA DE PAGO"));
+                pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
+                pdf.Add(GetFormaPago(documentSPA));
+                pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
                 pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
                 pdf.Add(GetTableTitle("ACEPTACIÓN DE PRESUPUESTO"));
                 pdf.Add(new Paragraph(" ", _STANDARFONT_14_BOLD));
@@ -588,9 +587,7 @@ namespace Prevea.Service.Service
             phrase = new Phrase(
                 "a la finalización de la actividad, como resumen de las actividades de Prevención Técnica desarrolladas por PREVEA. Dado su carácter recapitulativo, se entregará transcurrido el período anual de referencia.",
                 _STANDARFONT_10);
-            pdf.Add(phrase);
-
-            pdf.NewPage();
+            pdf.Add(phrase);            
 
             phrase = new Phrase(
                 "·  Diseño del sistema necesario para el registro y mantenimiento de la documentación que puede ser solicitada por cualquier administración, en materia de seguridad y salud, según las obligaciones establecidas en la legislación vigente.",
@@ -611,7 +608,7 @@ namespace Prevea.Service.Service
                 _STANDARFONT_10);
             pdf.Add(phrase);
 
-            pdf.Add(new Chunk("\n"));
+            pdf.NewPage();
 
             phrase = new Phrase(
                 "·  Asesoría y asistencia jurídica relacionada con las especialidades preventivas contratadas.",
