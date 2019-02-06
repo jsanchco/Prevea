@@ -227,7 +227,13 @@
                 commandCell.html(html);
             }
         });
-        kendo.bind($("#" + this.gridWorkCentersCompanyId), this);
+
+        if (GeneralData.userRoleId === Constants.role.Super ||
+            GeneralData.userRoleId === Constants.role.ContactPerson) {
+            $("#addWorkCenter").removeAttr("disabled");
+            $("#addWorkCenter").prop("disabled", true);
+
+        }
     },
 
     establishmentTypesDropDownEditor: function (container, options) {
@@ -256,7 +262,7 @@
     getTemplateToolBar: function () {
         var html = "<div class='toolbar'>";
         html += "<span name='create' id='createWorkCenter'>";
-        html += "<a class='btn btn-prevea k-grid-add' role='button'> Agregar nuevo</a>";
+        html += "<a class='btn btn-prevea k-grid-add' role='button' id='addWorkCenter'> Agregar nuevo</a>";
         html += "</span></div>";
 
         return html;
