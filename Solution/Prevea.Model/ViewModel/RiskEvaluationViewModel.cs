@@ -21,6 +21,7 @@
         public string RiskDetected { get; set; }
         public string IndividualProtectionEquipments { get; set; }
         public string CollectiveProtectionEquipments { get; set; }
+        public string Normative { get; set; }
         public int SelectTab { get; set; }
     }
 }

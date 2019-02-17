@@ -62,6 +62,10 @@
             text: "EQUIPOS de PROTECCIÓN COLECTIVA",
             contentUrl: kendo.format("/Tecniques/CollectiveProtectionEquipments?riskEvaluationId={0}", this.riskEvaluationId)
         });
+        tabStrip.append({
+            text: "NORMATIVA",
+            contentUrl: kendo.format("/Tecniques/Normative?riskEvaluationId={0}", this.riskEvaluationId)
+        });
 
         $("#" + this.tabStripDetailRiskEvaluationId).kendoTabStrip({
             scrollable: false

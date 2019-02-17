@@ -147,6 +147,16 @@
         }
 
         [HttpGet]
+        public ActionResult Normative(int riskEvaluationId)
+        {
+            var riskEvaluationVM =
+                AutoMapper.Mapper.Map<RiskEvaluationViewModel>(Service.GetRiskEvaluationById(riskEvaluationId));
+            riskEvaluationVM.SelectTab = 4;
+
+            return PartialView(riskEvaluationVM);
+        }
+
+        [HttpGet]
         public JsonResult Cnaes_Read([DataSourceRequest] DataSourceRequest request)
         {
             var data = AutoMapper.Mapper.Map<List<CnaeViewModel>>(Service.GetCnaes());
