@@ -987,6 +987,16 @@
             return Json(new { result = false }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult IsContactPersonContactPerson(int userId)
+        {
+            var contactPerson = Service.GetContactPersonByUserId(userId);
+            if (contactPerson != null && contactPerson.ContactPersonTypeId == (int)EnContactPersonType.ContactPerson)
+                return Json(new { result = true }, JsonRequestBehavior.AllowGet);
+
+            return Json(new { result = false }, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region Contractual Documents

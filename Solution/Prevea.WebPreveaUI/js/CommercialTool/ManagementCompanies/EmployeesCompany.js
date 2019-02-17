@@ -155,7 +155,11 @@
                 commandCell.html(html);
             }
         });
-        kendo.bind($("#" + this.gridEmployeesCompanyId), this);
+
+        if (GeneralData.userRoleId === Constants.role.Super) {
+            $("#addEmployeeCompany").removeAttr("disabled");
+            $("#addEmployeeCompany").prop("disabled", true);
+        }
     },
 
     createEmployeesCompanyDataSource: function () {
@@ -254,7 +258,7 @@
     getTemplateToolBar: function () {
         var html = "<div class='toolbar'>";
         html += "<span name='create' id='createUser'>";
-        html += "<a class='btn btn-prevea k-grid-add' role='button'> Agregar nuevo</a>";
+        html += "<a class='btn btn-prevea k-grid-add' role='button' id='addEmployeeCompany'> Agregar nuevo</a>";
         html += "</span></div>";
 
         return html;
