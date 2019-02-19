@@ -100,7 +100,8 @@
             {
                 { "Título", GetSnippetTitle(template.Name, preventivePlan) },
                 { "Tablas de Riesgos", GetSnippetTablesRisks(preventivePlan) },
-                { "Información Básica de la Empresa", GetSnippetBasicInformationCompany(preventivePlan) }
+                { "Información Básica de la Empresa", GetSnippetBasicInformationCompany(preventivePlan) },
+                { "Puestos y Personas", GetSnippetWorkStationAndEmployees(preventivePlan) }
             };
 
             return editorSnippets;
@@ -311,6 +312,65 @@
             result += "</tbody></table>";
 
             result += "<br/><br/>";
+
+            return result;
+        }
+
+        private string GetSnippetWorkStationAndEmployees(PreventivePlan preventivePlan)
+        {
+            var result = string.Empty;
+
+            var users = preventivePlan.Company.Employees.Select(x => x.User);
+            var distinctWorkStations = users
+                .GroupBy(y => y.WorkStationId)
+                .Select(z => new
+                {
+                    Id = z.Key,
+                    Count = z.Select(l => l.Id).Distinct().Count()
+                })
+                .ToList();
+
+            var index = 1;
+            foreach (var workStationCount in distinctWorkStations)
+            {
+                if (workStationCount.Id == null)
+                    continue;
+
+                var workSation = GetWorkStationById((int) workStationCount.Id);
+                result += "<br/><br/>";
+
+                result += "<table style='width:90%; margin: 0 auto;'><tbody>" +
+                          "<tr style='height:100%;'>" +
+                          $"<td style='width:95%;'><h2>{workSation.Name}</h2></td>" +
+                          $"<td rowspan='2' style='text-align: center;'><h1>P{index:00}</h1></td>" +
+                          "</tr>" +
+                          "<tr style='height:100%;'>" +
+                          $"<td style=''>[{workSation.Cnae.CustomKey}] {workSation.ProfessionalCategory}</td>" +
+                          "</tr>" +
+                          "</tbody></table>";
+
+                result += "<table style='width:90%; margin: 0 auto;'><tbody>" +
+                          "<tr style='height:100%;'>" +
+                          "<td style=''>Descripción Puesto</td>" +
+                          "</tr>" +
+                          "<tr style='height:100%;'>" +
+                          $"<td style='font-weight: bold;'><h2>{workSation.Description}</h2></td>" +
+                          "</tr>" +
+                          "<tr style='height:100%;'>" +
+                          "<td style=''>Riesgos Detectados del Puesto</td>" +
+                          "</tr>";
+
+                result += "<td style='font-weight: bold;'>";
+                foreach (var riskEvaluation in workSation.RiskEvaluations)
+                {
+                    result += $"<P> - [R{riskEvaluation.Id:000}] {riskEvaluation.DeltaCode.Name}</P>";
+                }
+                result += "</td'>";
+
+                result += "</tbody></table>";
+
+                index++;
+            }
 
             return result;
         }
