@@ -141,6 +141,7 @@ namespace Prevea.WebPreveaUI.App_Start
 
             AutoMapper.Mapper.CreateMap<WorkStationViewModel, WorkStation>();
             AutoMapper.Mapper.CreateMap<WorkStation, WorkStationViewModel>()
+                //.ForMember(x => x.Name, x => x.MapFrom(y => string.IsNullOrEmpty(y.ProfessionalCategory) ? y.Name : $"{y.Name} [{y.ProfessionalCategory}]"))
                 .ForMember(x => x.CnaeDescription, x => x.MapFrom(y => $"[{y.Cnae.CustomKey}] -> {y.Cnae.Name}"));
 
             AutoMapper.Mapper.CreateMap<DeltaCodeViewModel, DeltaCode>();

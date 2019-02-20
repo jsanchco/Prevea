@@ -341,31 +341,62 @@
 
                 result += "<table style='width:90%; margin: 0 auto;'><tbody>" +
                           "<tr style='height:100%;'>" +
-                          $"<td style='width:95%;'><h2>{workSation.Name}</h2></td>" +
+                          $"<td style='width:95%;'><p><strong><span style='font-size:medium;'>[{workSation.Cnae.CustomKey}] {workSation.Name}</span></strong></p></td>" +
                           $"<td rowspan='2' style='text-align: center;'><h1>P{index:00}</h1></td>" +
                           "</tr>" +
                           "<tr style='height:100%;'>" +
-                          $"<td style=''>[{workSation.Cnae.CustomKey}] {workSation.ProfessionalCategory}</td>" +
+                          $"<td style=''> {workSation.ProfessionalCategory}</td>" +
                           "</tr>" +
                           "</tbody></table>";
+
+                result += "<br/>";
 
                 result += "<table style='width:90%; margin: 0 auto;'><tbody>" +
                           "<tr style='height:100%;'>" +
                           "<td style=''>Descripción Puesto</td>" +
                           "</tr>" +
                           "<tr style='height:100%;'>" +
-                          $"<td style='font-weight: bold;'><h2>{workSation.Description}</h2></td>" +
+                          $"<td style='width:95%;'><p><strong><span style='font-size:medium;'>{workSation.Description}</span></strong></p></td>" +
                           "</tr>" +
-                          "<tr style='height:100%;'>" +
-                          "<td style=''>Riesgos Detectados del Puesto</td>" +
-                          "</tr>";
+                          "</tbody></table>";
 
-                result += "<td style='font-weight: bold;'>";
+                result += "<br/>";
+
+                result += "<table style='width:90%; margin: 0 auto;'><tbody>" +
+                          "<tr style='height:100%;'>" +
+                          "<td colspan='2' style=''>Riesgos Detectados del Puesto</td>" +
+                          "</tr>";                
+
                 foreach (var riskEvaluation in workSation.RiskEvaluations)
                 {
+                    result += "<tr style='height:100%;'>";
+                    result += "<td style='font-weight: bold;'>";
                     result += $"<P> - [R{riskEvaluation.Id:000}] {riskEvaluation.DeltaCode.Name}</P>";
+                    result += "</td'>";
+
+                    result += "<td style='font-weight: bold;'>";
+                    result += $"<P style='text-align: center;'>{GetRiskValueName(riskEvaluation.RiskValue)}</P>";
+                    result += "</td'>";
+                    result += "</tr>";
                 }
-                result += "</td'>";
+
+                result += "</tbody></table>";
+
+                result += "<br/>";
+
+                result += "<table style='width:90%; margin: 0 auto;'><tbody>" +
+                          "<tr style='height:100%;'>" +
+                          "<td style=''>Trabajadores vinculados al Puesto</td>" +
+                          "</tr>";
+                foreach (var user in users)
+                {
+                    if (user.WorkStationId != workSation.Id)
+                        continue;
+
+                    result += "<tr style='height:100%;'>" +
+                              $"<td style='width:95%;'><p><strong> - {user.FirstName} {user.LastName}</strong></p></td>" +
+                              "</tr>";
+                }
 
                 result += "</tbody></table>";
 
@@ -373,6 +404,26 @@
             }
 
             return result;
+        }
+
+        private string GetRiskValueName(int riskValue)
+        {
+            switch (riskValue)
+            {
+                case 1:
+                    return "<span style='color: green;'>TRIVIAL</span>";
+                case 2:
+                    return "<span style='color: yellow;'>TOLERABLE</span>";
+                case 3:
+                    return "<span style='color: orange;'>MODERADO</span>";
+                case 4:
+                    return "<span style='color: red;'>IMPORTANTE</span>";
+                case 5:
+                    return "<span style='color: black;'>INTOLERABLE</span>";
+
+                default:
+                    return string.Empty;
+            }
         }
 
         private static string GetProbability(int probability)

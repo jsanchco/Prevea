@@ -27,6 +27,7 @@
                     fields: {
                         Id: { type: "number" },
                         Name: { type: "string" },
+                        ProfessionalCategory: { type: "string" },
                         Description: { type: "string" },
                         CnaeDescription: { type: "string" }
                     }
@@ -50,6 +51,10 @@
                 {
                     field: "Name",
                     title: "Nombre",
+                    width: 200
+                }, {
+                    field: "ProfessionalCategory",
+                    title: "Categoría",
                     width: 200
                 }, {
                     field: "Description",
