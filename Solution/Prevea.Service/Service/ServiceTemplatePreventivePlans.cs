@@ -372,7 +372,7 @@
                 {
                     result += "<tr style='height:100%;'>";
                     result += "<td style='font-weight: bold;'>";
-                    result += $"<P> - [R{riskEvaluation.Id:000}] {riskEvaluation.DeltaCode.Name}</P>";
+                    result += $"<P> - [R{riskEvaluation.DeltaCodeId:000}] {riskEvaluation.DeltaCode.Name}</P>";
                     result += "</td'>";
 
                     result += "<td style='font-weight: bold;'>";
