@@ -187,6 +187,12 @@
                     return "Alta";
                 case "Critical":
                     return "Crítica";
+                case "Baja":
+                    return "Baja";
+                case "LegalRepresentative":
+                    return "Representante Legal";
+                case "Invited":
+                    return "Invitado";
 
                 default:
                     return name;

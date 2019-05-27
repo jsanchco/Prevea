@@ -17,6 +17,7 @@
     using System.Web;
     using Model.CustomModel;
     using IRepository.IRepository;
+    using Prevea.Service.Service;
 
     #endregion
 
@@ -834,6 +835,12 @@
             foreach (var contactPerson in data)
             {
                 contactPerson.CompanyId = companyId;
+                if (contactPerson.Id != null)
+                {
+                    var cp = Service.GetContactPersonByUserId((int)contactPerson.Id);
+                    contactPerson.ContactPersonTypeId = cp.ContactPersonTypeId;
+                    contactPerson.ContactPersonTypeDescription = cp.ContactPersonType.Description;
+                }
             }
 
             return this.Jsonp(data);
@@ -850,9 +857,24 @@
                 }
 
                 var data = AutoMapper.Mapper.Map<User>(contactPerson);
-                var result = Service.SaveContactPersonCompany((int)EnRole.ContactPerson, (int)contactPerson.CompanyId, data);
+                var result = Service.SaveContactPersonCompany((int)EnRole.ContactPerson, (int)contactPerson.CompanyId, contactPerson.ContactPersonTypeId, data);
 
-                return result.Status != Status.Error ? this.Jsonp(contactPerson) : this.Jsonp(new { Errors = "Se ha producido un error en la Grabación de la Persona de Contacto" });
+                if (result.Status != Status.Error)
+                {
+                    var user = result.Object as User;
+                    if (user != null)
+                    {
+                        contactPerson.Id = user.Id;
+
+                        var cp = Service.GetContactPersonByUserId((int)contactPerson.Id);
+                        contactPerson.ContactPersonTypeId = cp.ContactPersonTypeId;
+                        contactPerson.ContactPersonTypeDescription = cp.ContactPersonType.Description;
+                    }
+
+                    return this.Jsonp(contactPerson);
+                }
+
+                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación de la Persona de Contacto" });
             }
             catch (Exception e)
             {
@@ -899,18 +921,24 @@
                     return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación de la Persona de Contacto" });
                 }
 
-                var result = Service.SaveContactPersonCompany((int)EnRole.ContactPerson, (int)contactPerson.CompanyId, AutoMapper.Mapper.Map<User>(contactPerson));
+                var result = Service.SaveContactPersonCompany((int)EnRole.ContactPerson, (int)contactPerson.CompanyId, contactPerson.ContactPersonTypeId, AutoMapper.Mapper.Map<User>(contactPerson));
 
                 if (result.Status != Status.Error)
                 {
                     var user = result.Object as User;
                     if (user != null)
+                    {
                         contactPerson.Id = user.Id;
+
+                        var cp = Service.GetContactPersonByUserId((int)contactPerson.Id);
+                        contactPerson.ContactPersonTypeId = cp.ContactPersonTypeId;
+                        contactPerson.ContactPersonTypeDescription = cp.ContactPersonType.Description;
+                    }
 
                     return this.Jsonp(contactPerson);
                 }
 
-                return result.Status != Status.Error ? this.Jsonp(contactPerson) : this.Jsonp(new { Errors = "Se ha producido un error en la Grabación de la Persona de Contacto" });
+                return this.Jsonp(new { Errors = "Se ha producido un error en la Grabación de la Persona de Contacto" });
             }
             catch (Exception e)
             {
@@ -935,6 +963,38 @@
 
                 return Json(subscribe ? new { Errors = "Se ha producido un error al Dar de Alta a la Persona de Contacto" } : new { Errors = "Se ha producido un error al Dar de Baja a la Persona de Contacto" });
             }
+        }
+
+        public JsonResult GetContactPersonTypesRemainingByCompany([DataSourceRequest] DataSourceRequest request, int companyId, int contactPersonTypeSelected)
+        {
+            var contactPersonTypesRemaining = Service.GetContactPersonTypesRemainingByCompany(companyId);
+            if (contactPersonTypeSelected != 0 && contactPersonTypeSelected != (int)EnContactPersonType.Invited)
+            {
+                contactPersonTypesRemaining.Add(Service.GetContactPersonTypeById(contactPersonTypeSelected));
+            }
+            var data = AutoMapper.Mapper.Map<List<ContactPersonTypeViewModel>>(contactPersonTypesRemaining);
+
+            return this.Jsonp(data);
+        }
+
+        [HttpPost]
+        public JsonResult IsContactPersonInvited(int userId)
+        {
+            var contactPerson = Service.GetContactPersonByUserId(userId);
+            if (contactPerson != null && contactPerson.ContactPersonTypeId == (int)EnContactPersonType.Invited)
+                return Json(new { result = true }, JsonRequestBehavior.AllowGet);
+
+            return Json(new { result = false }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult IsContactPersonContactPerson(int userId)
+        {
+            var contactPerson = Service.GetContactPersonByUserId(userId);
+            if (contactPerson != null && contactPerson.ContactPersonTypeId == (int)EnContactPersonType.ContactPerson)
+                return Json(new { result = true }, JsonRequestBehavior.AllowGet);
+
+            return Json(new { result = false }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
@@ -1041,6 +1101,34 @@
         }
         #endregion
 
+        [HttpPost]
+        public JsonResult GenerateReport(int documentId)
+        {
+            try
+            {
+                var document = Service.GetDocument(documentId);
+                if (document == null)
+                    return Json(new { result = false, message = "Documento no encontrado" }, JsonRequestBehavior.AllowGet);
+
+                switch (document.AreaId)
+                {
+                    case 6: // OFE_SPA
+                        return Json(Service.GenerateOfferSPAReport(document, Server.MapPath("~")), JsonRequestBehavior.AllowGet);
+                    case 9: // OFE_SPA
+                        return Json(Service.GenerateContractSPAReport(document, Server.MapPath("~")), JsonRequestBehavior.AllowGet);
+
+                    default:
+                        return Json(new Result { Status = Status.Error, Message = "Imposible generar el Documento" }, JsonRequestBehavior.AllowGet);
+                }                
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+                return Json(new Result { Status = Status.Error, Message = e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [HttpGet]
         public ActionResult ContractualDocumentReport(int documentId)
         {
@@ -1051,6 +1139,17 @@
             {
                 #region OFE_SPA
                 case 6: // OFE_SPA
+                    var result = Service.GenerateOfferSPAReport(document, Server.MapPath("~"));
+                    if (result.Status != Status.Error)
+                    {
+                        var fileName = $"~\\App_Data\\PDF\\{document.Name}{document.Extension}";
+                        return DownloadPdfByUrl(fileName);
+                        //return File(fileName, "application/pdf", Server.UrlEncode(fileName));
+                    }        
+
+                    if (result.Status == Status.Error)
+                        return View("~/Views/CommercialTool/Companies/Reports/ContractSPAReport.cshtml", document);
+
                     ViewBag.ContractualDocumentId = documentId;
                     ViewBag.ContractualDocumentEnrollment = document.Name;
                     ViewBag.IVA = Service.GetTagValue("IVA");
@@ -1117,7 +1216,58 @@
 
                 #region CON_SPA
                 case 9: // CON_SPA
-                    return View("~/Views/CommercialTool/Companies/Reports/ContractSPAReport.cshtml", document.Company);
+                    ViewBag.ContractualDocumentId = documentId;
+                    ViewBag.ContractualDocumentEnrollment = document.Name;
+                    ViewBag.IVA = Service.GetTagValue("IVA");
+
+                    workCenters = Service.GetWorkCentersByCompany((int)document.CompanyId).Where(x => x.WorkCenterStateId == (int)EnWorkCenterState.Alta).ToList();
+                    ViewBag.NumberWorkCenters = workCenters.Count;
+
+                    provincesWorkCenters = string.Empty;
+                    if (workCenters.Count > 0)
+                    {
+                        var distinctWorkCenters = workCenters
+                            .GroupBy(x => x.Province.Trim())
+                            .Select(g => new
+                            {
+                                Field = g.Key,
+                                Count = g.Count()
+                            }).ToList();
+
+
+                        if (distinctWorkCenters.Count == 1)
+                        {
+                            provincesWorkCenters = distinctWorkCenters[0].Count == 1 ?
+                                $"{distinctWorkCenters[0].Field.Trim()}." :
+                                $"{distinctWorkCenters[0].Field.Trim()}({distinctWorkCenters[0].Count}).";
+                        }
+                        else
+                        {
+                            for (var i = 0; i < distinctWorkCenters.Count; i++)
+                            {
+                                var workCenter = distinctWorkCenters[i];
+                                var newWorkCenter = workCenter.Field.Trim();
+                                if (newWorkCenter != string.Empty)
+                                {
+                                    if (i == distinctWorkCenters.Count - 1)
+                                    {
+                                        provincesWorkCenters += distinctWorkCenters[i].Count == 1 ?
+                                            $"{newWorkCenter}." :
+                                            $"{newWorkCenter}({distinctWorkCenters[i].Count}).";
+                                    }
+                                    else
+                                    {
+                                        provincesWorkCenters += distinctWorkCenters[i].Count == 1 ?
+                                            $"{newWorkCenter}, " :
+                                            $"{newWorkCenter}({distinctWorkCenters[i].Count}), ";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    ViewBag.ProvincesWorkCenters = provincesWorkCenters;
+
+                    return View("~/Views/CommercialTool/Companies/Reports/ContractSPAReport.cshtml", document);
                 #endregion
 
                 #region CON_FOR
@@ -1357,9 +1507,9 @@
             ViewBag.ProvincesWorkCenters = provincesWorkCenters;
 
             if (isPartialView)
-                return PartialView("~/Views/CommercialTool/Companies/Reports/ContractSPAReport.cshtml", contractualDocument.Company);
+                return PartialView("~/Views/CommercialTool/Companies/Reports/ContractSPAReport.cshtml", contractualDocument);
 
-            return View("~/Views/CommercialTool/Companies/Reports/ContractSPAReport.cshtml", contractualDocument.Company);
+            return View("~/Views/CommercialTool/Companies/Reports/ContractSPAReport.cshtml", contractualDocument);
         }
 
         [HttpGet]

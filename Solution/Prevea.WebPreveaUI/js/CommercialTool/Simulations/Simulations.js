@@ -360,7 +360,7 @@
         if (gridId === Simulations.gridSimulationsId) {
             grid = $("#" + Simulations.gridSimulationsId).data("kendoGrid");
         } else {
-            grid = $("#gridSimulationsChildren").find(simulationParent + "gridSimulationsChildren").prevObject.data("kendoGrid");
+            grid = $("." + simulationParent + "gridSimulationsChildren").data("kendoGrid");
         }
 
         var item = grid.dataSource.get(simulationId);
@@ -400,7 +400,7 @@
                         if (gridId === Simulations.gridSimulationsId) {
                             grid = $("#" + Simulations.gridSimulationsId).data("kendoGrid");
                         } else {
-                            grid = $("#gridSimulationsChildren").find(simulationParent + "gridSimulationsChildren").prevObject.data("kendoGrid");
+                            grid = $("." + simulationParent + "gridSimulationsChildren").data("kendoGrid");
                         }
 
                         var item = grid.dataSource.get(simulationId);

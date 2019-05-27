@@ -1,0 +1,50 @@
+﻿@model RiskEvaluationViewModel
+
+<script>
+    Normative.init(@Model.Id);
+</script>
+
+<div class="row">
+
+    <div class="col-sm-12">
+
+        @using (Ajax.BeginForm("UpdateRiskEvaluation", "Tecniques", null, new AjaxOptions
+        {
+            HttpMethod = "POST",
+            UpdateTargetId = "framePpal"
+        }, new { id = "formCollectiveProtectionEquipments" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            @Html.TextAreaFor(model => model.Normative, new
+            {
+                id = "editorNormative",
+                style = "height: 57vh; width: 100%",
+                rows = 10,
+                cols = 30
+            })
+
+            <p />
+
+            <div class="form-actions">
+
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.WorkStationId)
+                @Html.HiddenFor(model => model.DeltaCodeId)
+                @Html.HiddenFor(model => model.Probability)
+                @Html.HiddenFor(model => model.Severity)
+                @Html.HiddenFor(model => model.RiskValue)
+                @Html.HiddenFor(model => model.Priority)
+                @Html.HiddenFor(model => model.RiskDetected)
+                @Html.HiddenFor(model => model.IndividualProtectionEquipments)
+                @Html.HiddenFor(model => model.CollectiveProtectionEquipments)
+                @Html.HiddenFor(model => model.SelectTab)
+
+                <input type="submit" id="btnValidate" value="Guardar" class="btn btn-prevea btn" />
+
+            </div>
+        }
+    </div>
+
+</div>

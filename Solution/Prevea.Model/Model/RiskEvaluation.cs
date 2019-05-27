@@ -1,4 +1,7 @@
-﻿namespace Prevea.Model.Model
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace Prevea.Model.Model
 {
     #region Using
 
@@ -24,6 +27,10 @@
         public int Severity { get; set; }
         public int RiskValue { get; set; }
         public int Priority { get; set; }
-        public string Preventive { get; set; }
+        public string RiskDetected { get; set; }
+        public string IndividualProtectionEquipments { get; set; }
+        public string CollectiveProtectionEquipments { get; set; }
+        public string Normative { get; set; }
+        public virtual ICollection<CorrectiveAction> CorrectiveActions { get; set; }
     }
 }

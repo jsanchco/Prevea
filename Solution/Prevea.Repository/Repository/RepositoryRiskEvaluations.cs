@@ -69,6 +69,33 @@
             }
         }
 
+        public RiskEvaluation UpdateRiskEvaluation(int id, RiskEvaluation riskEvaluation)
+        {
+            using (var dbContextTransaction = Context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var riskEvaluationFind = Context.RiskEvaluations.Find(id);
+                    if (riskEvaluationFind == null)
+                        return null;
+
+                    Context.Entry(riskEvaluationFind).CurrentValues.SetValues(riskEvaluation);
+                    Context.SaveChanges();
+
+                    dbContextTransaction.Commit();
+
+                    return riskEvaluation;
+                }
+                catch (Exception ex)
+                {
+                    dbContextTransaction.Rollback();
+
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    return null;
+                }
+            }
+        }
+
         public bool DeleteRiskEvaluation(int id)
         {
             using (var dbContextTransaction = Context.Database.BeginTransaction())

@@ -130,6 +130,7 @@
         #region ContactPerson
         List<ContactPerson> GetContactPersons();
         ContactPerson GetContactPersonById(int contactPersonId);
+        ContactPerson GetContactPersonByUserId(int userId);
         ContactPerson SaveContactPerson(ContactPerson contactPerson);
         bool DeleteContactPerson(ContactPerson contactPerson);
         #endregion
@@ -405,6 +406,7 @@
         List<RiskEvaluation> GetRiskEvaluationsByDeltaCode(int deltaCodeId);
         RiskEvaluation GetRiskEvaluationById(int id);
         RiskEvaluation SaveRiskEvaluation(RiskEvaluation riskEvaluation);
+        RiskEvaluation UpdateRiskEvaluation(int id, RiskEvaluation riskEvaluation);
         bool DeleteRiskEvaluation(int id);
 
         #endregion
@@ -470,7 +472,33 @@
 
         List<IncidenceState> GetIncidenceStates();
         List<CriticalNivel> GetCriticalNivels();
-  
+
+        #endregion
+
+        #region CorrectiveActions
+
+        List<CorrectiveAction> GetCorrectiveActions();
+        List<CorrectiveAction> GetCorrectiveActionsByRiskEvaluation(int riskEvaluationId);
+        CorrectiveAction GetCorrectiveActionById(int id);
+        CorrectiveAction SaveCorrectiveAction(CorrectiveAction correctiveAction);
+        bool DeleteCorrectiveAction(int id);
+
+        #endregion
+
+        #region PriorityCorrectiveActions
+
+        List<PriorityCorrectiveAction> GetPriorityCorrectiveActions();
+        PriorityCorrectiveAction GetPriorityCorrectiveAction(int id);
+
+        #endregion
+
+        #region ContactPersonTypes
+
+        List<ContactPersonType> GetContactPersonTypes();
+        ContactPersonType GetContactPersonTypeById(int contactPersonId);
+        List<ContactPerson> GetContactPersonByCompanyAndContactPersonType(int companyId, int contactPersonType);
+        List<ContactPersonType> GetContactPersonRemainingByCompany(int companyId);
+
         #endregion
     }
 }

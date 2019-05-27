@@ -6,12 +6,21 @@
     companyId: null,
 
     contactPersonsCompanyDataSource: null,
+    contactPersonTypeDataSorce: null,
+    isInvited: false,
+    isContactPerson: false,
 
     init: function (companyId) {
         this.companyId = companyId;
 
         this.createContactPersonsCompanyDataSource();
+        this.createContactPersonTypeDataSource();
         this.createContactPersonsCompanyGrid();
+
+        if (GeneralData.userRoleId === Constants.role.ContactPerson) {
+            this.isContactPersonInvited();
+            //this.isContactPersonContactPerson();
+        }        
     },
 
     createContactPersonsCompanyDataSource: function () {
@@ -31,7 +40,9 @@
                         UserStateId: { type: "number", defaultValue: 1 },
                         CompanyId: { type: "number", defaultValue: that.companyId },
                         BirthDate: { type: "date", defaultValue:  new Date() },
-                        ChargeDate: { type: "date" }
+                        ChargeDate: { type: "date" },
+                        ContactPersonTypeId: { type: "number" },
+                        ContactPersonTypeDescription: { type: "string" }
                     }
                 }
             },
@@ -83,6 +94,35 @@
         });
     },
 
+    createContactPersonTypeDataSource: function () {
+        ContactPersonsCompany.contactPersonTypeDataSorce = new kendo.data.DataSource({
+            schema: {
+                model: {
+                    id: "Id",
+                    fields: {
+                        Id: { type: "number" },
+                        Name: { type: "string" },
+                        Description: { type: "string" }
+                    }
+                }
+            },
+            transport: {
+                read: {
+                    url: "/Companies/GetContactPersonTypesRemainingByCompany",
+                    dataType: "jsonp",
+                    data: { companyId: this.companyId }
+                },
+                parameterMap: function (options, operation) {
+                    if (operation === "read") {
+                        return { companyId: options.companyId };
+                    }
+ 
+                    return null;
+                }
+            }
+        });
+    },
+
     createContactPersonsCompanyGrid: function () {
         var that = this;
         $("#" + this.gridContactPersonsCompanyId).kendoGrid({
@@ -110,6 +150,12 @@
                 title: "DNI",
                 width: 100,
                 groupable: "false"
+            }, {
+                field: "ContactPersonTypeId",
+                title: "Tipo",
+                width: 160,
+                editor: ContactPersonsCompany.contactPersonTypesDropDownEditor,
+                template: "#= ContactPersonTypeDescription #"
             }, {
                 field: "WorkStationCustom",
                 title: "Puesto de Trabajo",
@@ -199,13 +245,60 @@
                 commandCell.html(html);
             }
         });
-        kendo.bind($("#" + this.gridContactPersonsCompanyId), this);
+
+        if (GeneralData.userRoleId === Constants.role.Super) {
+            $("#addContactPerson").removeAttr("disabled");
+            $("#addContactPerson").prop("disabled", true);
+
+        }
+    },
+
+    contactPersonTypesDropDownEditor: function (container, options) {
+        $("<input required name='" + options.field + "'/>")
+            .appendTo(container)
+            .kendoDropDownList({
+                dataTextField: "Description",
+                optionLabel: "Selecciona ...",
+                dataValueField: "Id",
+                dataSource: {
+                    schema: {
+                        model: {
+                            id: "Id",
+                            fields: {
+                                Id: { type: "number" },
+                                Name: { type: "string" },
+                                Description: { type: "string" }
+                            }
+                        }
+                    },
+                    transport: {
+                        read: {
+                            url: "/Companies/GetContactPersonTypesRemainingByCompany",
+                            dataType: "jsonp",
+                            data: {
+                                companyId: ContactPersonsCompany.companyId,
+                                contactPersonTypeSelected: options.model.ContactPersonTypeId
+                            }
+                        },
+                        parameterMap: function(options, operation) {
+                            if (operation === "read") {
+                                return {
+                                    companyId: options.companyId,
+                                    contactPersonTypeSelected: options.contactPersonTypeSelected
+                                };
+                            }
+
+                            return null;
+                        }
+                    }
+                }
+            });
     },
 
     getTemplateToolBar: function () {
         var html = "<div class='toolbar'>";
         html += "<span name='create' id='createUser'>";
-        html += "<a class='btn btn-prevea k-grid-add' role='button'> Agregar nuevo</a>";
+        html += "<a class='btn btn-prevea k-grid-add' role='button' id='addContactPerson'> Agregar nuevo</a>";
         html += "</span></div>";
 
         return html;
@@ -216,8 +309,17 @@
         if (data.UserStateId === 2 || data.UserStateId === 3) {
             html += kendo.format("<a toggle='tooltip' title='Dar de Alta' onclick='ContactPersonsCompany.goToSubscribeContactPersonsCompany(\"{0}\", true)' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-thumbs-up' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
         } else {
-            html += kendo.format("<a toggle='tooltip' title='Editar' onclick='ContactPersonsCompany.goToEditContactPersonsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
-            html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='ContactPersonsCompany.goToDeleteContactPersonsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
+            if (ContactPersonsCompany.isInvited === false) {
+                if (GeneralData.userId !== data.Id) {
+                    html += kendo.format(
+                        "<a toggle='tooltip' title='Editar' onclick='ContactPersonsCompany.goToEditContactPersonsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                        data.Id);
+
+                    html += kendo.format(
+                        "<a toggle='tooltip' title='Borrar' onclick='ContactPersonsCompany.goToDeleteContactPersonsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>&nbsp;&nbsp;",
+                        data.Id);
+                }
+            }
         }        
         html += kendo.format("</div>");
 
@@ -303,6 +405,47 @@
                 GeneralData.showNotification(Constants.ko, "", "error");
 
                 console.log(result);
+            }
+        });
+    },
+
+    isContactPersonInvited: function () {
+        $.ajax({
+            url: "/Companies/IsContactPersonInvited",
+            data: {
+                userId: GeneralData.userId
+            },
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                if (data.result === true) {
+                    $("#addContactPerson").removeAttr("disabled");
+                    $("#addContactPerson").prop("disabled", true);
+
+                    ContactPersonsCompany.isInvited = true;
+                }
+            },
+            error: function () {
+                GeneralData.showNotification(Constants.ko, "", "error");
+            }
+        });
+    },
+
+    isContactPersonContactPerson: function () {
+        $.ajax({
+            url: "/Companies/IsContactPersonContactPerson",
+            data: {
+                userId: GeneralData.userId
+            },
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                if (data.result === true) {
+                    ContactPersonsCompany.isContactPerson = true;
+                }
+            },
+            error: function () {
+                GeneralData.showNotification(Constants.ko, "", "error");
             }
         });
     }

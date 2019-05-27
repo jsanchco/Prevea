@@ -65,6 +65,44 @@
             }
         }
 
+        public Result UpdateRiskEvaluation(int id, RiskEvaluation riskEvaluation)
+        {
+            try
+            {
+                //riskEvaluation.RiskDetected = System.Net.WebUtility.HtmlDecode(riskEvaluation.RiskDetected);
+                //riskEvaluation.IndividualProtectionEquipments = System.Net.WebUtility.HtmlDecode(riskEvaluation.IndividualProtectionEquipments);
+                //riskEvaluation.CollectiveProtectionEquipments = System.Net.WebUtility.HtmlDecode(riskEvaluation.CollectiveProtectionEquipments);
+
+                riskEvaluation = Repository.UpdateRiskEvaluation(id, riskEvaluation);
+
+                if (riskEvaluation == null)
+                {
+                    return new Result
+                    {
+                        Message = "Se ha producido un error en la Grabación de la Evaluación del Riesgo",
+                        Object = null,
+                        Status = Status.Error
+                    };
+                }
+
+                return new Result
+                {
+                    Message = "La Grabación de la Evaluación del Riesgo se ha producido con éxito",
+                    Object = riskEvaluation,
+                    Status = Status.Ok
+                };
+            }
+            catch (Exception)
+            {
+                return new Result
+                {
+                    Message = "Se ha producido un error en la Grabación de la Evaluación del Riesgo",
+                    Object = riskEvaluation,
+                    Status = Status.Error
+                };
+            }
+        }
+
         public Result DeleteRiskEvaluation(int id)
         {
             try

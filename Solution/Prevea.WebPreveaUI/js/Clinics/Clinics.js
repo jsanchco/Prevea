@@ -157,11 +157,6 @@
                 mode: "single",
                 allowUnsort: false
             },
-            groupable: {
-                messages: {
-                    empty: "Arrastre un encabezado de columna y póngalo aquí para agrupar por ella"
-                }
-            },
             edit: function (e) {
                 var commandCell = e.container.find("td:last");
                 var html = "<div align='center'>";

@@ -295,11 +295,6 @@
                 mode: "single",
                 allowUnsort: false
             },
-            groupable: {
-                messages: {
-                    empty: "Arrastre un encabezado de columna y póngalo aquí para agrupar por ella"
-                }
-            },
             edit: function (e) {
                 var commandCell = e.container.find("td:last");
                 var html = "<div align='center'>";
@@ -390,7 +385,7 @@
     getTemplateToolBar: function () {
         var html = "<div class='toolbar'>";
         html += "<span name='create'>";
-        html += "<a id='createContractualDocument' class='btn btn-prevea k-grid-add' role='button'> Agregar nuevo</a>";
+        html += "<a id='createContractualDocument' class='btn btn-prevea k-grid-add' role='button' id='addContractualDocumentCompany'> Agregar nuevo</a>";
         html += "</span></div>";
 
         return html;
@@ -402,7 +397,8 @@
         if (data.Extension) {
             if (data.AreaStoreInServer === false) {
                 html += kendo.format(
-                    "<a toggle='tooltip' title='Abrir Documento' onclick='ContractualsDocumentsCompany.openContractualDocument(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>&nbsp;&nbsp;",
+                    "<a toggle='tooltip' title='Abrir Documento' onclick='ContractualsDocumentsCompany.openContractualDocument(\"{0}\")' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>&nbsp;&nbsp;",
+                    //"<a toggle='tooltip' title='Abrir Documento' onclick='ContractualsDocumentsCompany.openContractualDocument(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/pdf_opt.png'></a></div></a>&nbsp;&nbsp;",
                     data.Id);
             } else {
                 html += kendo.format(
@@ -414,7 +410,7 @@
             html += kendo.format("<a toggle='tooltip' title='Agregar Otro Documento' onclick='ContractualsDocumentsCompany.goToAddOtherDocument(\"{0}\")' target='_blank' style='cursor: pointer;'><img style='margin-top: -9px;' src='../../Images/unknown_opt.png'></a></div></a>&nbsp;&nbsp;&nbsp;", data.Id);
         }
 
-        if (GeneralData.userRoleId === Constants.role.PreveaPersonal) {
+        if (GeneralData.userRoleId === Constants.role.PreveaPersonal || GeneralData.userRoleId === Constants.role.Super) {
             //            html += kendo.format("<a toggle='tooltip' title='Editar' onclick='ContractualsDocumentsCompany.goToEditContractualsDocumentsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-edit' style='font-size: 18px;'></i></a>&nbsp;&nbsp;", data.Id);
             html += kendo.format("<a toggle='tooltip' title='Borrar' onclick='ContractualsDocumentsCompany.goToDeleteContractualsDocumentsCompany(\"{0}\")' target='_blank' style='cursor: pointer;'><i class='glyphicon glyphicon-trash' style='font-size: 18px;'></i></a>", data.Id);
         }
@@ -606,9 +602,28 @@
     },
 
     openContractualDocument: function (id) {
-        var win = window.open("", "_blank");
-        var url = kendo.format("/Companies/ContractualDocumentReport?documentId={0}", id);
-        win.location = url;
+        $.ajax({
+            url: "/Companies/GenerateReport",
+            type: "post",
+            cache: false,
+            datatype: "json",
+            data: {
+                documentId: id
+            },
+            success: function (result) {
+                if (result.Status === Constants.resultStatus.Ok) {
+                    GeneralData.showNotification(Constants.ok, "", "success");
+                    GeneralData.goToOpenFile(id);
+                } else {
+                    GeneralData.showNotification(result.Message, "", "error");
+                }
+            },
+            error: function (result) {
+                GeneralData.showNotification(Constants.ko, "", "error");
+
+                console.log(result);
+            }
+        });
     },
 
     updateRowFromSignature: function(contractualDocumentId, isEmpty) {

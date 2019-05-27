@@ -133,11 +133,6 @@
             sortable: {
                 mode: "single",
                 allowUnsort: false
-            },
-            groupable: {
-                messages: {
-                    empty: "Arrastre un encabezado de columna y póngalo aquí para agrupar por ella"
-                }
             }
         });
     },

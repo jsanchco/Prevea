@@ -52,5 +52,7 @@
         public int UserStateId { get; set; }
         public string UserStateName { get; set; }
         public string CollegiateNumber { get; set; }
+        public int ContactPersonTypeId { get; set; }
+        public string ContactPersonTypeDescription { get; set; }
     }
 }

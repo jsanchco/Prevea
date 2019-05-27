@@ -1,0 +1,122 @@
+﻿@model RiskEvaluationViewModel
+
+<script>
+    DetailRiskEvaluation.init(@Model.Id, @ViewBag.CnaeId, @Model.WorkStationId, @ViewBag.SelectTabId, '@ViewBag.Notification');    
+    //DetailRiskEvaluation.init1();    
+</script>
+
+<style>
+
+    .k-dropdown .k-input, .k-dropdown .k-state-focused .k-input, .k-menu .k-popup {
+        color: #999999;
+        height: 31px;
+        padding: 6px;
+    }
+
+    .k-autocomplete.k-state-default, .k-dropdown-wrap.k-state-default, .k-numeric-wrap.k-state-default, .k-picker-wrap.k-state-default {
+        border: 1px solid #ebebeb;
+        border-radius: 3px;
+    }
+
+    #tabStripDetailRiskEvaluation {
+        border-width: 0;
+    }
+
+    #tabStripDetailRiskEvaluation .k-panelbar > li.k-state-default > .k-link, .k-tabstrip-items .k-state-default .k-link {
+        font-weight: bold;
+        font-size: 15px;
+        padding: 0.8em;
+    }
+
+    #tabStripDetailRiskEvaluation .k-panelbar .k-tabstrip-top .k-tabstrip-items .k-state-active, .k-tabstrip-top .k-tabstrip-items .k-state-active {
+        border-bottom-width: 6px;
+        border-top-width: 0;
+        border-left-width: 0;
+        border-right-width: 0;
+    }
+
+    #tabStripDetailRiskEvaluation .k-animation-container, .k-animation-container *, .k-animation-container ::after, .k-block .k-header, .k-list-container, .k-widget, .k-widget *, .k-widget ::before {
+        box-sizing: border-box;
+    }
+
+    .k-multiselect-wrap {
+        height: 31px;
+    }
+
+    .k-dropdown .k-input, .k-dropdown .k-state-focused .k-input, .k-menu .k-popup {
+        color: #555555;
+    }
+
+    #tabStripDetailRiskEvaluation > .k-content {
+        overflow: visible;
+    }
+
+</style>
+
+<div class="row" id="pageDetailRiskEvaluation" style="margin: 8px">
+
+    <span id="spanNotification" style="display: none;"></span>
+
+    <div id="headerPartialView">
+        <div class="row">
+            <H1>Técnicas</H1>
+        </div><br />
+        <div class="row">
+            <div class="col-sm-12">
+                <ol class="breadcrumb bc-2">
+                    <li>
+                        <a id="br-tecniques|workStations" onclick="DetailRiskEvaluation.goToWorkStations()" style="cursor: pointer;">
+                            <i class="glyphicon glyphicon-asterisk"></i>
+                            Puestos de Trabajo
+                        </a>
+                    </li>
+                    <li>
+                        <a id="br-tecniques|riskEvaluation" onclick="DetailRiskEvaluation.goToRiskEvaluation('@ViewBag.CnaeId', '@ViewBag.WorkStationId')" style="cursor: pointer;">
+                            <i class="fa fa-flash"></i>
+                            Evaluación de Riesgos
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a id="br-tecniques|riskEvaluation" onclick="DetailRiskEvaluation.goToDetailRiskEvaluation('@ViewBag.RiskEvaluationId', '@ViewBag.CnaeId', '@ViewBag.WorkStationId')" style="cursor: pointer;">
+                            <i class="glyphicon glyphicon-list"></i>
+                            <strong>Medidas Preventivas de los Puestos de Trabajo</strong>
+                        </a>
+                    </li>
+
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div id="contentPartialView">
+        <div class="row">
+            <div class="col-sm-12">
+                <H3>@ViewBag.WorkStation</H3>
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="tabStripDetailRiskEvaluation"></div>
+            </div>
+        </div>
+    </div>
+    
+    @if (ViewBag.Error != null)
+    {
+        <div id="errorFromBack" class="alert alert-danger alert-dismissable" style="">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <ul>
+                @foreach (var error in ViewBag.Error)
+                {
+                    <li>
+                        @error
+                    </li>
+                }
+            </ul>
+        </div>
+    }   
+
+</div>

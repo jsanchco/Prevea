@@ -18,5 +18,9 @@
         [Required]
         public int UserId { get; set; }
         public virtual User User { get; set; }
+
+        [Required]
+        public int ContactPersonTypeId { get; set; }
+        public virtual ContactPersonType ContactPersonType { get; set; }
     }
 }

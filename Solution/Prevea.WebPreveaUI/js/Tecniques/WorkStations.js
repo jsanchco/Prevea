@@ -6,6 +6,9 @@
     confirmId: "confirm",
     cnaesDataSource: null,
 
+    addWorkStationExistingWindow: null,
+    addWorkStationExistingId: "addWorkStationExisting",
+
     init: function (cnaeSelected) {
         kendo.culture("es-ES");
 
@@ -101,6 +104,7 @@
             detailTemplate: this.getTemplateChildren(),
             detailInit: this.childrenWorkStations,
             resizable: true,
+            scrollable: true,
             autoScroll: true,
             selectable: true,
             sortable: {
@@ -114,9 +118,20 @@
                     if (dataItem.Id === WorkStations.cnaeSelected) {
                         var select = grid.tbody.find('tr[data-uid="' + dataItem.uid + '"]');
                         grid.expandRow(select);
-                        WorkStations.cnaeSelected = null;
+                        grid.select(select);
+                        WorkStations.cnaeSelected = null;          
                     }
                 });
+            },
+            change: function(e) {
+                var scrollContentOffset = this.element.find("tbody").offset().top;
+                var selectContentOffset = this.select().offset().top;
+                var distance = selectContentOffset - scrollContentOffset;
+
+                //    animate our scroll
+                this.element.find(".k-grid-content").animate({
+                    scrollTop: distance
+                }, 400);
             }
         });
     },
@@ -274,7 +289,7 @@
                 allowUnsort: false
             },
             groupable: false,
-            toolbar: WorkStations.getTemplateWorkStationsToolBar(),
+            toolbar: WorkStations.getTemplateWorkStationsToolBar(e.data.id),
             editable: {
                 mode: "inline",
                 confirmation: false
@@ -294,10 +309,11 @@
         grid.setDataSource(dataSourceChildren);
     },
 
-    getTemplateWorkStationsToolBar: function () {
+    getTemplateWorkStationsToolBar: function (cnaeSelected) {
         var html = "<div class='toolbar'>";
         html += "<span name='create' id='createWorkStation'>";
-        html += "<a class='btn btn-prevea k-grid-add' role='button'> Agregar nuevo</a>";
+        html += "<a class='btn btn-prevea k-grid-add' role='button'> Agregar nuevo</a>&nbsp; &nbsp;";
+        html += kendo.format("<a class='btn btn-prevea' role='button' onclick='WorkStations.goToAddWorkStationExisting(\"{0}\")'> Agregar Puesto de Trabajo Existente</a>", cnaeSelected);
         html += "</span></div>";
 
         return html;
@@ -316,7 +332,7 @@
     },
 
     goToEditWorkStation: function (id, cnaeId) {
-        var grid = $("#gridWorkStations").find(cnaeId + "gridWorkStations").prevObject.data("kendoGrid");
+        var grid = $("." + cnaeId + "gridWorkStations").data("kendoGrid");
         var item = grid.dataSource.get(id);
         var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
 
@@ -337,7 +353,7 @@
                 },
                 {
                     text: "Borrar", action: function () {
-                        var grid = $("#gridWorkStations").find(cnaeId + "gridWorkStations").prevObject.data("kendoGrid");
+                        var grid = $("." + cnaeId + "gridWorkStations").data("kendoGrid");
                         var item = grid.dataSource.get(id);
                         var tr = $("[data-uid='" + item.uid + "']", grid.tbody);
 
@@ -358,5 +374,26 @@
             }
         };
         GeneralData.goToActionController(params);
+    },
+
+    goToAddWorkStationExisting: function (cnaeSelected) {
+        this.setUpAddWorkStationExistingWindow(cnaeSelected);
+        this.addWorkStationExistingWindow.data("kendoWindow").center().open();
+    },
+
+    setUpAddWorkStationExistingWindow: function (cnaeSelected) {
+        var url = kendo.format("/Tecniques/AddWorkStationExisting?cnaeSelected={0}", cnaeSelected);
+        this.addWorkStationExistingWindow = $("#" + this.addWorkStationExistingId);
+        this.addWorkStationExistingWindow.kendoWindow({
+            width: "900px",
+            height: "800px",
+            title: "Puestos de Trabajo",
+            visible: false,
+            modal: true,
+            actions: [
+                "Close"
+            ],
+            content: url
+        });
     }
 });

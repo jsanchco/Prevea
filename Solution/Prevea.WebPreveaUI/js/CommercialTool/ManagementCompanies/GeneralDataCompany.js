@@ -37,6 +37,11 @@
             var numerictextbox = $("#" + this.textEmployeesNumberId).data("kendoNumericTextBox");
             numerictextbox.enable(false);
         }
+
+        if (GeneralData.userRoleId === Constants.role.Super) {
+            $("#" + this.btnValidateId).removeAttr("disabled");
+            $("#" + this.btnValidateId).prop("disabled", true);
+        }
     },
 
     validateForm: function () {

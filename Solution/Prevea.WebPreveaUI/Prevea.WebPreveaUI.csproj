@@ -655,6 +655,7 @@
     <Content Include="Images\loader-1.gif" />
     <Content Include="Images\loader-2.gif" />
     <Content Include="Images\Logo_report.png" />
+    <Content Include="Images\Logo_report_old.png" />
     <Content Include="Images\Logo.png" />
     <Content Include="Images\notes-lines.png" />
     <Content Include="Images\pdf_opt.png" />
@@ -720,11 +721,18 @@
     <Content Include="js\GeneralData.js" />
     <Content Include="js\Shared\Templates.js" />
     <Content Include="js\Start\Start.js" />
+    <Content Include="js\Tecniques\CollectiveProtectionEquipments.js" />
+    <Content Include="js\Tecniques\CorrectiveActions.js" />
     <Content Include="js\Tecniques\DeltaCodes.js" />
+    <Content Include="js\Tecniques\DetailRiskEvaluation.js" />
     <Content Include="js\Tecniques\DetailTemplatePreventivePlan.js" />
     <Content Include="js\Tecniques\HistoricTecniques.js" />
+    <Content Include="js\Tecniques\IndividualProtectionEquipments.js" />
+    <Content Include="js\Tecniques\Normative.js" />
+    <Content Include="js\Tecniques\RiskDetected.js" />
     <Content Include="js\Tecniques\RiskEvaluation.js" />
     <Content Include="js\Tecniques\TemplatePreventivePlans.js" />
+    <Content Include="js\Tecniques\AddWorkStationExisting.js" />
     <Content Include="js\Tecniques\WorkStations.js" />
     <Content Include="js\User\ContactAs.js" />
     <Content Include="js\User\Users.js" />
@@ -1217,9 +1225,16 @@
     <Content Include="Views\Shared\EditorTemplates\SignaturePad.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SignaturePad.cshtml" />
     <Content Include="Views\Shared\AddSignature.cshtml" />
+    <Content Include="Views\Tecniques\DetailRiskEvaluation.cshtml" />
+    <Content Include="Views\Tecniques\RiskDetected.cshtml" />
+    <Content Include="Views\Tecniques\CorrectiveActions.cshtml" />
+    <Content Include="Views\Tecniques\IndividualProtectionEquipments.cshtml" />
+    <Content Include="Views\Tecniques\CollectiveProtectionEquipments.cshtml" />
+    <Content Include="Views\Tecniques\AddWorkStationExisting.cshtml" />
+    <Content Include="Views\Tecniques\Normative.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\PDF\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

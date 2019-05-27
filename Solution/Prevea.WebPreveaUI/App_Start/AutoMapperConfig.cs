@@ -1,4 +1,6 @@
-﻿namespace Prevea.WebPreveaUI.App_Start
+﻿using System.Runtime.CompilerServices;
+
+namespace Prevea.WebPreveaUI.App_Start
 {
     #region Using
 
@@ -138,7 +140,9 @@
                 .ForMember(x => x.Name, x => x.MapFrom(y => y.FirstName + " " + y.LastName));
 
             AutoMapper.Mapper.CreateMap<WorkStationViewModel, WorkStation>();
-            AutoMapper.Mapper.CreateMap<WorkStation, WorkStationViewModel>();
+            AutoMapper.Mapper.CreateMap<WorkStation, WorkStationViewModel>()
+                //.ForMember(x => x.Name, x => x.MapFrom(y => string.IsNullOrEmpty(y.ProfessionalCategory) ? y.Name : $"{y.Name} [{y.ProfessionalCategory}]"))
+                .ForMember(x => x.CnaeDescription, x => x.MapFrom(y => $"[{y.Cnae.CustomKey}] -> {y.Cnae.Name}"));
 
             AutoMapper.Mapper.CreateMap<DeltaCodeViewModel, DeltaCode>();
             AutoMapper.Mapper.CreateMap<DeltaCode, DeltaCodeViewModel>();
@@ -174,6 +178,16 @@
 
             AutoMapper.Mapper.CreateMap<TemplateMedicalExaminationViewModel, TemplatePreventivePlan>();
             AutoMapper.Mapper.CreateMap<TemplatePreventivePlan, TemplatePreventivePlanViewModel>();
+
+            AutoMapper.Mapper.CreateMap<CorrectiveActionViewModel, CorrectiveAction>();
+            AutoMapper.Mapper.CreateMap<CorrectiveAction, CorrectiveActionViewModel>()
+                .ForMember(x => x.PriorityCorrectiveActionDescription, x => x.MapFrom(y => y.PriorityCorrectiveAction.Description));
+
+            AutoMapper.Mapper.CreateMap<PriorityCorrectiveActionViewModel, PriorityCorrectiveAction>();
+            AutoMapper.Mapper.CreateMap<PriorityCorrectiveAction, PriorityCorrectiveActionViewModel>();
+
+            AutoMapper.Mapper.CreateMap<ContactPersonTypeViewModel, ContactPersonType>();
+            AutoMapper.Mapper.CreateMap<ContactPersonType, ContactPersonTypeViewModel>();
         }
     }
 }

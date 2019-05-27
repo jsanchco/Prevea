@@ -1,0 +1,46 @@
+﻿<script>
+    AddWorkStationExisting.init(@ViewBag.CnaeSelected, '@ViewBag.Title');
+</script>
+
+<style>
+    .k-window-titlebar {
+        height: 20px;
+    }
+
+    .k-window-content .k-content {
+        position: static;
+    }
+
+    .k-block > .k-header, .k-window-titlebar {
+        position: static;
+    }
+
+    .k-window  div.k-window-content
+    {
+        overflow: hidden;
+    }
+</style>
+
+<div id="addWorkStationsExistingContainer">
+
+    <div id="confirm"></div>
+
+    <div id="contentPartialView">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="gridWorkStationsExisting" style="height: 70vh; margin-left: 25px; margin-right: 45px; margin-top: 20px;"></div>
+            </div>
+        </div>
+        
+        <div class="row" style="margin-top: 20px; margin-left: -8px; margin-right: -49px;">
+            <div class="col-xs-6" style="text-align: left; display: inline; margin-left: 16px; width: 45%;">
+                <button id="btn_WorkStationsExistingCancelar" type="button" class="btn btn-prevea btn-clear-canvas" onclick="AddWorkStationExisting.goToCloseWindow();">Cancelar</button>
+            </div> 
+            <div class="col-xs-5" style="text-align: right; display: inline; padding-right: 0px;">
+                <button id="btn_WorkStationsExistingCancelarSave" type="button" class="btn btn-prevea" onclick="AddWorkStationExisting.goToAddWorkStationToCNAE();">Guardar</button>
+            </div> 
+        </div>
+
+    </div>
+
+</div>
